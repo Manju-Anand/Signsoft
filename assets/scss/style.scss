@@ -1,0 +1,212 @@
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project        :   Dashlead– Bootstrap Admin Dashboard HTML Template
+Version        :   V.2
+Updated Date   :   03-10-2022
+Copyright      :   Spruko Technologies Private Limited 
+Author         :   Spruko
+Author URL     :   https://themeforest.net/user/sprukosoft
+Support	       :   support@spruko.com
+License        :   Licensed under ThemeForest License
+
+-------------------------------------------------------------------*/
+
+//---------- TABLE OF CONTENTS ----------//
+
+
+/*
+    Accordion
+    Alert
+    Badge
+    Bootstrap Styles
+    Breadcrumb
+    Button
+    Card
+    Carousel
+    Dropdowns
+    Input-group
+    List
+    Media
+    Modal
+    Navigation
+    Pagination
+    Panels
+    Popover
+    Progress
+    ribbons
+    Scrollspy
+    Tabs
+    Tooltip
+    Chat
+    Colorpicker
+    Datepicker
+    Jqvmap
+    Profile
+    Rangeslider
+    Rating
+    Select
+    Spinner
+    Tables
+    Avatar
+    Custom-control
+    Custom-pages
+    Custom-styles
+    landing
+    Container
+    Double-menu-styles
+    Footer
+    Grid
+    Header
+    Horizontal
+    Main menu
+    Rtl
+    Sidebar
+    Sidemenu
+    Calendar
+    Checkbox
+    Contact
+    Content
+    Form-editor
+    Form-wizard
+    Forms
+    Iconbar
+    Invoice
+    Mail
+    Radiobox
+    Table
+    Body style
+    Boxed
+    Color-header
+    Color-menu
+    Dark-header
+    Dark-menu
+    Dark-theme
+    Gradient-header
+    Gradient-menu
+    Light-header
+    Scrollable-layout
+    Transparent-theme
+    Background
+    Border
+    Height
+    Margin
+    Opacity
+    Padding
+    Positions
+    Typography
+    Width
+    Variables
+    
+
+*/
+
+@import "variables";
+
+
+/* ###### bootstrap ####### */
+@import "bootstrap/accordion";
+@import "bootstrap/alert";
+@import "bootstrap/badge";
+@import "bootstrap/bootstrap styles";
+@import "bootstrap/breadcrumb";
+@import "bootstrap/button";
+@import "bootstrap/card";
+@import "bootstrap/carousel";
+@import "bootstrap/dropdowns";
+@import "bootstrap/input-group";
+@import "bootstrap/list";
+@import "bootstrap/media";
+@import "bootstrap/modal";
+@import "bootstrap/navigation";
+@import "bootstrap/pagination";
+@import "bootstrap/panels";
+@import "bootstrap/popover";
+@import "bootstrap/progress";
+@import "bootstrap/ribbons";
+@import "bootstrap/scrollspy";
+@import "bootstrap/tabs";
+@import "bootstrap/tooltip";
+
+
+/* ###### Components ####### */
+@import "components/chat";
+@import "components/colorpicker";
+@import "components/datepicker";
+// @import "components/jqvmap";
+@import "components/Profile";
+@import "components/rangesilder";
+@import "components/rating";
+@import "components/select";
+@import "components/spinner";
+@import "components/tables";
+
+
+
+/* ###### Custom ####### */
+@import "custom/avatar";
+@import "custom/custom-control";
+@import "custom/custom-pages";
+@import "custom/custom-styles";
+@import "custom/landing";
+
+
+
+/* ###### Layouts ####### */
+@import "layouts/container";
+@import "layouts/double-menu-styles";
+@import "layouts/footer";
+@import "layouts/grid";
+@import "layouts/header";
+@import "layouts/horizontal";
+@import "layouts/main menu";
+@import "layouts/rtl";
+@import "layouts/sidebar";
+@import "layouts/sidemenu";
+
+
+/* ###### Library ####### */
+@import "library/calendar";
+@import "library/checkbox";
+@import "library/contact";
+@import "library/content";
+@import "library/form-editor";
+@import "library/form-wizard";
+@import "library/forms";
+@import "library/iconbar";
+@import "library/invoice";
+@import "library/mail";
+@import "library/radiobox";
+@import "library/table";
+
+
+/* ###### Switcher ####### */
+@import "switcher/body-style";
+@import "switcher/boxed";
+@import "switcher/color-header";
+@import "switcher/color-menu";
+@import "switcher/dark-header";
+@import "switcher/dark-menu";
+@import "switcher/dark-theme";
+@import "switcher/gradient-header";
+@import "switcher/gradient-menu";
+@import "switcher/light-header";
+@import "switcher/light-menu";
+@import "switcher/scrollable-layout";
+@import "switcher/transparent-theme";
+
+
+
+/* ###### Utilites ####### */
+@import "utlities/background";
+@import "utlities/border";
+@import "utlities/height";
+@import "utlities/margin";
+@import "utlities/opacity";
+@import "utlities/padding";
+@import "utlities/positions";
+@import "utlities/trypography";
+@import "utlities/width";
+
+
+

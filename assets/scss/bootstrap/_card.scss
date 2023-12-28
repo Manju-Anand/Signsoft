@@ -1,0 +1,233 @@
+/*---  Cards  ---*/
+
+.card-group {
+  display: flex;
+  flex-direction: column;
+
+  > .card {
+    margin-block-end: 15px;
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: rgb(var(--white));
+  background-clip: border-box;
+  border: 1px solid $border;
+  border-radius: 3px;f
+
+  > {
+    hr {
+      margin-inline-end: 0;
+      margin-inline-start: 0;
+    }
+
+    .list-group {
+      &:first-child .list-group-item:first-child {
+        border-start-start-radius: 3px;
+        border-start-end-radius: 3px;
+      }
+
+      &:last-child .list-group-item:last-child {
+        border-end-end-radius: 3px;
+        border-end-start-radius: 3px;
+      }
+    }
+  }
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.2rem;
+}
+
+.card-title {
+  margin-block-end: 0.75rem;
+  font-weight: 500;
+  color: $color;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.card-subtitle {
+  margin-block-start: -0.375rem;
+  margin-block-end: 0;
+}
+
+.card-text:last-child {
+  margin-block-end: 0;
+}
+
+.card-link {
+  &:hover {
+    text-decoration: none;
+  }
+
+  + .card-link {
+    margin-inline-start: 1.25rem;
+  }
+}
+ .card-header:first-child {
+      border-start-start-radius: 2px !important;
+      border-start-end-radius: 2px !important;
+      border-end-end-radius: 0 !important;
+      border-end-start-radius: 0 !important;
+      text-align: start;
+}
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-block-end: 0;
+  border-block-end: 1px solid $border;
+  background-color: var(--white);
+
+  &:first-child {
+    border-radius: calc(3px - 1px) calc(3px - 1px) 0 0;
+    border-radius: 0;
+  }
+
+  + .list-group .list-group-item:first-child {
+    border-block-start: 0;
+  }
+}
+
+.card-footer {
+  padding: 0.75rem 1.25rem;
+  background: rgb(var(--white));
+  border-block-start: 1px solid $border;
+
+  &:last-child {
+    border-radius: 0 0 calc(3px - 1px) calc(3px - 1px);
+  }
+}
+
+.card-img-overlay {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  padding: 1.25rem;
+}
+
+.card-img {
+  width: 100%;
+  border-radius: calc(3px - 1px);
+}
+
+.card-img-top {
+  width: 100%;
+  border-start-start-radius: calc(3px - 1px);
+  border-start-end-radius: calc(3px - 1px);
+}
+
+.card-img-bottom {
+  width: 100%;
+  border-end-end-radius: calc(3px - 1px);
+  border-end-start-radius: calc(3px - 1px);
+}
+
+.card-deck {
+  display: flex;
+  flex-direction: column;
+
+  .card {
+    margin-block-end: 15px;
+  }
+}
+
+.card-columns .card {
+  margin-block-end: 0.75rem;
+}
+
+.card {
+  &.text-white .card-title, &.tx-white .card-title {
+    color: rgb(var(--white));
+  }
+}
+
+.card-header, .card-footer {
+  position: relative;
+  border-color:$border;
+  padding-inline-start: 15px;
+  padding-inline-end: 15px;
+}
+
+.card-header-tab {
+  border-block-end: 0;
+  padding: 0;
+}
+
+@media (min-width: 576px) {
+  .card-deck {
+    flex-flow: row wrap;
+    margin-inline-end: -15px;
+    margin-inline-start: -15px;
+
+    .card {
+      display: flex;
+      flex: 1 0 0%;
+      flex-direction: column;
+      margin-inline-end: 15px;
+      margin-block-end: 0;
+      margin-inline-start: 15px;
+    }
+  }
+
+  .card-group {
+    flex-flow: row wrap;
+
+    > .card {
+      flex: 1 0 0%;
+      margin-block-end: 0;
+
+      + .card {
+        margin-inline-start: 0;
+        border-inline-start: 0;
+      }
+
+      &:not(:last-child) {
+        border-start-end-radius: 0;
+        border-end-end-radius: 0;
+
+        .card-img-top, .card-header {
+          border-start-end-radius: 0;
+        }
+
+        .card-img-bottom, .card-footer {
+          border-end-end-radius: 0;
+        }
+      }
+
+      &:not(:first-child) {
+        border-start-start-radius: 0;
+        border-end-start-radius: 0;
+
+        .card-img-top, .card-header {
+          border-start-start-radius: 0;
+        }
+
+        .card-img-bottom, .card-footer {
+          border-end-start-radius: 0;
+        }
+      }
+    }
+  }
+
+  .card-columns {
+    column-count: 3;
+    column-gap: 1.25rem;
+    orphans: 1;
+    widows: 1;
+
+    .card {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+}
+
+/*---  Cards  ---*/
