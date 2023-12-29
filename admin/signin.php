@@ -29,10 +29,10 @@
 		<!-- Switcher css -->
 		<link href="../assets/switcher/css/switcher.css" rel="stylesheet">
 		<link href="../assets/switcher/demo.css" rel="stylesheet">
-
+    
 	</head>
 
-	<body class="main-body ltr login-img">
+	<body class="main-body ltr login-img" style="background: url('../assets/img/login/adminlogin.jpg') no-repeat center center fixed; background-size: cover; margin: 0; padding: 0; font-family: 'Arial', sans-serif; color: #333;">
 
 
 		<!-- Loader -->
@@ -46,7 +46,7 @@
 
 			<!-- Row -->
 			<div class="row text-center ps-0 pe-0 ms-0 me-0">
-				<div class=" col-xl-6 col-lg-5 col-md-5 d-block mx-auto">
+				<div class=" col-xl-4 col-lg-5 col-md-5 d-block mx-auto">
 					<div class="text-center mb-2">
                         <a  href="index.php">
                             <img src="../assets/img/SLogoBlue.png" class="header-brand-img" alt="logo">
