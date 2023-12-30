@@ -292,21 +292,22 @@ function deletesplitup()
                     <div class="modal-body">
 
                         <div class="row">
+                        <input class="form-control" type="text" id="editsplitid" value="" readonly>
                             <div class="col-md-2">
                                 <label class="form-label" for="dept">Order ID :</label>
-                                <input class="form-control" type="text" id="quoteid" value="" readonly>
+                                <input class="form-control" type="text" id="editquoteid" value="" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="dept">Customer Name :</label>
-                                <input class="form-control" type="text" id="custname" value="" readonly>
+                                <input class="form-control" type="text" id="editcustname" value="" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label" for="dept">Brand Name :</label>
-                                <input class="form-control" type="text" id="brandname" value="" readonly>
+                                <input class="form-control" type="text" id="editbrandname" value="" readonly>
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label" for="dept">Quoted Amount</label>
-                                <input class="form-control" type="text" id="quoteamt" value="" readonly>
+                                <input class="form-control" type="text" id="editquoteamt" value="" readonly>
                             </div>
 
 
@@ -316,11 +317,11 @@ function deletesplitup()
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered mg-b-0" id="orderTable">
+                                    <table class="table table-bordered mg-b-0" id="editorderTable">
                                         <thead>
                                             <tr style="background-color: lightblue;">
                                                 <th>#</th>
-                                                <th>Item ID</th>
+                                                <th>Splitup ID</th>
                                                 <th>Item Name</th>
                                                 <th>Price</th>
 
@@ -340,7 +341,7 @@ function deletesplitup()
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn ripple btn-primary" id="saveChangesBtn" type="button">Save changes</button>
+                            <button class="btn ripple btn-primary" id="updateChangesBtn" type="button">Update changes</button>
                             <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
                         </div>
                     </div>
@@ -405,7 +406,7 @@ function deletesplitup()
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn ripple btn-primary" id="saveChangesBtn" type="button">Save changes</button>
+                          
                             <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
                         </div>
                     </div>
@@ -575,7 +576,68 @@ function deletesplitup()
                     }
                 });
 
+                // ******************* update code ************************
 
+                $('#updateChangesBtn').on('click', function() {
+                    // Calculate the total amount entered in the numeric column
+                    var totalAmount = 0;
+                    $('.numeric-column').each(function() {
+                        var numericValue = parseInt($(this).text()) || 0;
+                        totalAmount += numericValue;
+                    });
+
+                    // Get the value from the quoteamt input
+                    var quoteAmount = parseInt($('#editquoteamt').val()) || 0;
+                    var quoteId = $('#editquoteid').val();
+                    // Compare the total amount with quoteAmount
+                    if (totalAmount > quoteAmount) {
+                        alert('Total amount entered exceeds the Quoted Amount!');
+                    } else {
+                        // alert('Total amount is within the Quoted Amount.');
+
+                        // Save data to the server (replace this with your actual AJAX call)
+                        var tableData = [];
+                        var tablechk=0;
+                        $('#editorderTable tbody tr').each(function() {
+                            var priceValue = $(this).find('td:eq(3)').text().trim();
+                            if (priceValue !== "") {
+                                tablechk=1;
+                            var rowData = {
+                                itemId: $(this).find('td:nth-child(2)').text(),
+                                itemName: $(this).find('td:nth-child(3)').text(),
+                                price: $(this).find('td:nth-child(4)').text()
+                            };
+                            tableData.push(rowData);
+                        }
+                        });
+                       if ( tablechk == 1 ){
+                        // Send the data to the server using AJAX
+                        $.ajax({
+                            url: 'quote_splitup_update.php',
+                            method: 'POST',
+                            data: {
+                                quoteId: quoteId,
+                                tableData: JSON.stringify(tableData)
+                            },
+                            success: function(response) {
+                                console.log('Data updated successfully:', response); +
+                                alert('Data updated successfully:');
+                                $('#modaldemo2').modal('hide');
+                                window.location.href="quote_splitup.php";
+                            },
+                            error: function() {
+                                console.error('Error saving data to the server.');
+                                alert(response);
+                            }
+                        });
+                     } else {
+                        alert("Enter Itemwise Price ");
+                    }
+
+
+
+                    }
+                });
 
 
 
@@ -624,7 +686,28 @@ function deletesplitup()
                                 
                             } else if (action === 'edit') {
                                 // Redirect to the edit page
-                                window.location.href = 'edit-staff-allocation.php?edit=' + recordId;
+                                // Open the view modal
+                                $('#editquoteid').val(recordId);
+                                $('#editcustname').val(custname);
+                                $('#editbrandname').val(brandname);
+                                $('#editquoteamt').val(qutamt);
+
+
+                                $.ajax({
+                                    url: 'quotation_details_edit.php',
+                                    method: 'POST',
+                                    data: {
+                                        order_id: recordId
+                                    },
+                                    success: function(data) {
+                                        // Populate the table body with the fetched data
+                                        $('#editorderTable tbody').html(data);
+                                        $('#modaldemo2').modal('show');
+                                    },
+                                    error: function() {
+                                        alert('Error fetching data from the server.');
+                                    }
+                                });
                             }
                         } else {
                             // Record doesn't exist, show an alert

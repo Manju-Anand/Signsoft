@@ -29,23 +29,5 @@ if ($rowData['price'] !== ""){
 }
 
 
-
-
-
-// Example: Save the quoteId and tableData to a database table
-// $sql = "INSERT INTO quote_splitup (orderid, itemid, itemname, price,created,modified) VALUES ";
-// foreach ($tableData as $rowData) {
-  
-//     $sql .= "('$quoteId', '{$rowData['itemId']}', '{$rowData['itemName']}', '{$rowData['price']}','$postdate','$postdate'),";
- 
-// }
-// $sql = rtrim($sql, ',');
-
-// if ($conn->query($sql) === TRUE) {
-//     echo "Data saved successfully.";
-// } else {
-//     echo "Error: " . $sql . "<br>" . $conn->error;
-// }
-
 $conn->close();
 ?>
