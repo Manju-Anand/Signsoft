@@ -215,6 +215,7 @@
 													<ul class="sidemenu-list">
 														<li><a href="category.php" class="slide-item">Category</a></li>
 														<li><a href="subcategory.php" class="slide-item">Subcategory</a></li>
+														<li><a href="supplierslist.php" class="slide-item">Suppliers</a></li>
 													</ul>
 													
 												</div>
