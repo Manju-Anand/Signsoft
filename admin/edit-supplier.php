@@ -19,33 +19,13 @@ $designame="";
 $deptname="";
 $username="";
 $cmded="";
-$sqlemployee = "SELECT * FROM employee where id='" . $categid  . "'";
+$sqlemployee = "SELECT * FROM suppliers where id='" . $categid  . "'";
 $resultemployee = $connection->query($sqlemployee);
 
 if ($resultemployee->num_rows > 0) {
   while($rowemployee = $resultemployee->fetch_assoc()) {
 
-$sqldept = "SELECT * FROM department where id='" . $rowemployee['department_id']  . "'";
-$resultdept = $connection->query($sqldept);
-if ($resultdept->num_rows > 0) {
-  while($rowdept = $resultdept->fetch_assoc()) {
-    $deptname=$rowdept['department'];
-  }}
 
-$sqldesig = "SELECT * FROM designation where id='" . $rowemployee['desig_id']  . "'";
-$resultdesig = $connection->query($sqldesig);
-if ($resultdesig->num_rows > 0) {
-  while($rowdesig = $resultdesig->fetch_assoc()) {
-    $designame=$rowdesig['designation'];
-  }}
-
-$sqluser = "SELECT * FROM employee_user where id='" . $rowemployee['user_id']  . "'";
-$resultuser = $connection->query($sqluser);
-if ($resultuser->num_rows > 0) {
-  while($rowuser = $resultuser->fetch_assoc()) {
-    $username=$rowuser['email'];
-    $cmded=$rowuser['cmded'];
-  }}
 
 ?>
 <!DOCTYPE html>
@@ -107,9 +87,9 @@ if ($resultuser->num_rows > 0) {
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Edit Employee</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">Edit Supplier</h2>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Edit Employee</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Edit Supplier</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Masters</li>
                             </ol>
                         </div>
@@ -137,67 +117,31 @@ if ($resultuser->num_rows > 0) {
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Edit Employee</div>
+                                    <div class="card-title">Edit Supplier</div>
                                 </div>
-                                <form id="adddesig" method="post" action="" enctype="multipart/form-data">
+                                <form id="adddesig" method="post" action="">
                                 <input type="hidden" class="form-control" id="empid" name="empid" value="<?php echo $categid;  ?>">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="card-body">
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="empname">Employee Name :</label>
+                                                    <label class="col-md-3 form-label" for="supname">Supplier Name :</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="form-control" id="empname" name="empname" value="<?php echo $rowemployee['empname'] ?>" placeholder="Employee Name" required>
+                                                        <input type="text" class="form-control" id="supname" name="supname" value="<?php echo $rowemployee['supplier_name'] ?>" placeholder="Supplier Name" required>
                                                     </div>
                                                 </div>
                                                 <!-- -->
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="dept">Department :</label>
-                                                    <div class="col-md-9">
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
-                                                            <option value="" disabled selected>Select Department</option>
-                                                            <?php
-                                                            $query = "select * from department order by id desc";
-                                                            $select_posts = mysqli_query($connection, $query);
-                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                            ?>
-                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['department'] ?></option>
-                                                            <?php } ?>
-                                                            <option selected value="<?php echo $rowemployee['department_id'] ?>" data-questions="<?php echo $rowemployee['department_id']; ?>" data-ans="<?php echo $deptname; ?>"><?php echo $deptname ?></option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4" id="ajaxresult">
-                                                    <label class="col-md-3 form-label" for="desig">Designation :</label>
-                                                    <div class="col-md-9">
-                                                        <select name="desig" id="desig" class="form-control form-select select2" data-bs-placeholder="Select Designation" required>
-                                                        <option selected value="<?php echo $rowemployee['desig_id'] ?>" data-questions="<?php echo $rowemployee['desig_id']; ?>" data-ans="<?php echo $designame; ?>"><?php echo $designame ?></option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                               
 
                                                 <!-- Row -->
                                                 <div class="row">
                                                     <label class="col-md-3 form-label mb-4" for="addr">Address :</label>
                                                     <div class="col-md-9 mb-4">
-                                                        <textarea class="form-control" name="addr" id="addr" palceholder="Here Address"><?php echo $rowemployee['addres'] ?></textarea>
+                                                        <textarea class="form-control" rows="6" name="addr" id="addr" palceholder="Here Address"><?php echo $rowemployee['supplier_addr'] ?></textarea>
                                                     </div>
                                                 </div>
                                                 <!--End Rowcontent-->
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="poneno">Phone No :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="number" class="form-control" name="phoneno" id="phoneno" placeholder="" value="<?php echo $rowemployee['phoneno'] ?>" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="emailid">Email ID :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="email" name="emailid" id="emailid" class="form-control" value="<?php echo $rowemployee['emailid'] ?>"  placeholder="">
-                                                    </div>
-                                                </div>
+                                                
 
 
                                             </div>
@@ -205,65 +149,28 @@ if ($resultuser->num_rows > 0) {
                                         </div>
                                         <div class="col-md-6">
                                             <div class="card-body">
-                                            <style>
-                                                .password-container {
-                                                    position: relative;
-                                                }
-
-                                                .password-toggle {
-                                                    position: absolute;
-                                                    top: 50%;
-                                                    right: 20px;
-                                                    transform: translateY(-50%);
-                                                    cursor: pointer;
-                                                }
-                                            </style>
+                                          
+                                               
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label mb-4">Login E-mailid :</label>
+                                                    <label class="col-md-3 form-label" for="gstno">GST No :</label>
                                                     <div class="col-md-9">
-                                                        <input type="email" name="loginemailid" id="loginemailid" class="form-control"  value="<?php echo $username ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4 ">
-                                                    <label class="col-md-3 form-label mb-4">Login Password :</label>
-                                                    <div class="col-md-9  password-container">
-                                                        <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  -->
-                                                        <input type="password" class="form-control" autocomplete="off" name="loginpassword" id="loginpassword" placeholder="Password"  value="<?php echo $cmded ?>"  required>
-                                                        <span id="togglePassword" class="password-toggle" data-toggle="loginpassword" onclick="togglePasswordVisibility('loginpassword')">👁️</span>
+                                                        <input type="text" name="gstno" id="gstno" class="form-control"  value="<?php echo $rowemployee['supplier_gstno'] ?>" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="joindate">Joining Date :</label>
+                                                    <label class="col-md-3 form-label" for="poneno">Phone No :</label>
                                                     <div class="col-md-9">
-                                                        <input type="date" name="joindate" id="joindate" class="form-control"  value="<?php echo $rowemployee['joindate'] ?>" placeholder="">
+                                                        <input type="number" class="form-control" name="phoneno" id="phoneno" placeholder="" value="<?php echo $rowemployee['supplier_phoneno'] ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="bloodgroup">Blood Group :</label>
+                                                    <label class="col-md-3 form-label" for="emailid">Email ID :</label>
                                                     <div class="col-md-9">
-                                                        <select name="bloodgroup" id="bloodgroup" class="form-control form-select select2" data-bs-placeholder="Select Blood Group">
-                                                            <option value="A+">A+</option>
-                                                            <option value="A-">A-</option>
-                                                            <option value="B+">B+</option>
-                                                            <option value="B-">B-</option>
-                                                            <option value="AB+">AB+</option>
-                                                            <option value="AB-">AB-</option>
-                                                            <option value="O+">O+</option>
-                                                            <option value="O-">O-</option>
-                                                            <option selected value="<?php echo $rowemployee['bloodgrp'] ?>"><?php echo $rowemployee['bloodgrp'] ?></option>
-                                                        </select>
+                                                        <input type="email" name="emailid" id="emailid" class="form-control" value="<?php echo $rowemployee['supplier_email'] ?>"  placeholder="">
                                                     </div>
                                                 </div>
                                                
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label mb-4">Photo Upload :</label>
-                                                    <div class="col-md-6">
-                                                        <input class="form-control" type="file" name="files" id="files" accept=".jpg, .png, image/jpeg, image/png">
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <img src="../assets/img/staff/<?php echo $rowemployee['emppic'] ?>" name="uppic" id="uppic" width="40%">
-                                                    </div>
-                                                </div>
+                                                
                                                 <!--End Row-->
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="status">Status :</label>
@@ -283,7 +190,7 @@ if ($resultuser->num_rows > 0) {
                                         <div class="row">
                                             <div class="col-md-3"></div>
                                             <div class="col-md-9">
-                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Update Employee</button>
+                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Update Supplier</button>
                                                 <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
 
                                             </div>
@@ -293,81 +200,33 @@ if ($resultuser->num_rows > 0) {
                                     <?php
                                     if (isset($_POST['submit'])) {
                                         $empid = $_POST["empid"];
-                                        $empname = $_POST["empname"];
-                                        $department = $_POST["dept"];
-                                        $desig = $_POST["desig"];
+                                        $supname = $_POST["supname"];
+                                        
                                         $addr = $_POST["addr"];
                                         $phoneno = $_POST["phoneno"];
                                         $emailid = $_POST["emailid"];
-                                        $joindate = $_POST["joindate"];
-                                        $bloodgroup = $_POST["bloodgroup"];
-
-                                        $loginname = $_POST["loginemailid"];
-                                        $pass1 = $_POST["loginpassword"];
-
+                                        $gstno = $_POST["gstno"];
+                                        
                                       
 
                                         $status = $_POST["status"];
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
-                                        if (isset($_FILES['files']) && !empty($_FILES['files']['tmp_name'])) {
-                                            // File is uploaded, process it here
-                                            $file_tmpname = $_FILES['files']['tmp_name'];
-
-                                            $upload_dir = '../assets/img/staff/';
-                                            $file_tmpname = $_FILES['files']['tmp_name'];
-                                            $file_name = $_FILES['files']['name'];
-                                            $file_size = $_FILES['files']['size'];
-                                            $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
-                                            // Set upload file path
-                                            $filepath = $upload_dir . $file_name;
-                                            $randomNumber = mt_rand(100000, 999999);
-                                            // Create a new file name with the random number
-                                            $newFileName = $upload_dir  .  $randomNumber . '.' . $file_ext;
-                                            $saveFileName =   $randomNumber . '.' . $file_ext;
-                                            if (move_uploaded_file($file_tmpname,  $newFileName)) {
-                                                echo "{$file_name} successfully uploaded <br />";
-                                            } else {
-                                                echo "{$file_name} not uploaded <br />";
-                                            }
-                                        
-
-                                        $sql = "UPDATE employee set desig_id ='" . mysqli_real_escape_string($connection, $desig) . "',
-                                            status='" . mysqli_real_escape_string($connection, $status) . "',modified='" . mysqli_real_escape_string($connection, $postdate) . "'
-                                            ,department_id='" . mysqli_real_escape_string($connection, $department) . "',addres='" . mysqli_real_escape_string($connection, $addr) . "',
-                                            phoneno='" . mysqli_real_escape_string($connection, $phoneno) . "',emailid='" . mysqli_real_escape_string($connection, $emailid) . "',
-                                            joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
-                                            emppic='" . mysqli_real_escape_string($connection, $saveFileName) . "',bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
-                                            empname='" . mysqli_real_escape_string($connection, $empname) . "' WHERE id = {$empid}";
-                                        } else {
-                                            $sql = "UPDATE employee set desig_id ='" . mysqli_real_escape_string($connection, $desig) . "',
-                                            status='" . mysqli_real_escape_string($connection, $status) . "',modified='" . mysqli_real_escape_string($connection, $postdate) . "'
-                                            ,department_id='" . mysqli_real_escape_string($connection, $department) . "',addres='" . mysqli_real_escape_string($connection, $addr) . "',
-                                            phoneno='" . mysqli_real_escape_string($connection, $phoneno) . "',emailid='" . mysqli_real_escape_string($connection, $emailid) . "',
-                                            joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
-                                            bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
-                                            empname='" . mysqli_real_escape_string($connection, $empname) . "' WHERE id = {$empid}";
-                                            
-                                        }
-
-
-
-
-
+                                  
+                                            $sql = "UPDATE suppliers set status='" . mysqli_real_escape_string($connection, $status) . "',modified='" . mysqli_real_escape_string($connection, $postdate) . "'
+                                            ,supplier_addr='" . mysqli_real_escape_string($connection, $addr) . "',
+                                            supplier_phoneno='" . mysqli_real_escape_string($connection, $phoneno) . "',supplier_email	='" . mysqli_real_escape_string($connection, $emailid) . "',
+                                            supplier_gstno='" . mysqli_real_escape_string($connection, $gstno) . "',
+                                            supplier_name='" . mysqli_real_escape_string($connection, $supname) . "' WHERE id = {$empid}";
+                                    
                                         if ($connection->query($sql) === TRUE) {
                                             
                                         } else {
                                             echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                         }
 
-                                        $password = md5($pass1); //encrypt the password before saving in the database
-                                        $sqlempuser = "UPDATE employee_user SET email='$loginname',password='$password',
-                                        username='$empname',cmded='$pass1',designation='$desig',department='$department' WHERE empid='" . $empid . "'";
-                                        if ($connection->query($sqlempuser) === TRUE) {
-                                        }else {
-                                            echo "Error:ans1 " . $sqlempuser . "<br>" . $connection->error;
-                                        }
-                                        header("Location: employeelist.php");
+                                      
+                                        header("Location: supplierslist.php");
                                     }
                                     ?>
                                 </form>

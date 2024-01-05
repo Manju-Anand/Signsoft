@@ -106,53 +106,42 @@ include "includes/connection.php";
                                 <div class="card-header">
                                     <div class="card-title">Add New Supplier</div>
                                 </div>
-                                <form id="adddesig" method="post" action="" enctype="multipart/form-data">
+                                <form id="adddesig" method="post" action="">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="card-body">
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="empname">Employee Name :</label>
+                                                    <label class="col-md-3 form-label" for="empname">Supplier Name :</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="form-control" id="empname" name="empname" placeholder="Employee Name" required>
+                                                        <input type="text" class="form-control" id="supname" name="supname" placeholder="Supplier Name" required>
                                                     </div>
                                                 </div>
                                                 <!-- -->
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="dept">Department :</label>
-                                                    <div class="col-md-9">
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
-                                                            <option value="" disabled selected>Select Department</option>
-                                                            <?php
-                                                            $query = "select * from department order by id desc";
-                                                            $select_posts = mysqli_query($connection, $query);
-                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                            ?>
-                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['department'] ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4" id="ajaxresult">
-                                                    <label class="col-md-3 form-label" for="desig">Designation :</label>
-                                                    <div class="col-md-9">
-                                                        <select name="desig" id="desig" class="form-control form-select select2" data-bs-placeholder="Select Designation" required>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                        
 
                                                 <!-- Row -->
                                                 <div class="row">
                                                     <label class="col-md-3 form-label mb-4" for="addr">Address :</label>
                                                     <div class="col-md-9 mb-4">
-                                                        <textarea class="form-control" name="addr" id="addr" palceholder="Here Address"></textarea>
+                                                        <textarea class="form-control" rows="6" name="addr" id="addr" palceholder="Here Address"></textarea>
                                                     </div>
                                                 </div>
                                                 <!--End Rowcontent-->
+                                               
+                                                
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                           
+                                                
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="poneno">Phone No :</label>
+                                                    <label class="col-md-3 form-label" for="joindate">GST No :</label>
                                                     <div class="col-md-9">
-                                                        <input type="number" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
+                                                        <input type="text" name="sgstno" id="sgstno" class="form-control" placeholder="" >
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
@@ -161,66 +150,10 @@ include "includes/connection.php";
                                                         <input type="email" name="emailid" id="emailid" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
-
-
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="card-body">
-                                            <style>
-                                                .password-container {
-                                                    position: relative;
-                                                }
-
-                                                .password-toggle {
-                                                    position: absolute;
-                                                    top: 50%;
-                                                    right: 20px;
-                                                    transform: translateY(-50%);
-                                                    cursor: pointer;
-                                                }
-                                            </style>
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label mb-4">Login E-mailid :</label>
+                                                    <label class="col-md-3 form-label" for="poneno">Phone No :</label>
                                                     <div class="col-md-9">
-                                                        <input type="email" name="loginemailid" id="loginemailid" class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4 ">
-                                                    <label class="col-md-3 form-label mb-4">Login Password :</label>
-                                                    <div class="col-md-9  password-container">
-                                                        <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  -->
-                                                        <input type="password" class="form-control" autocomplete="off" name="loginpassword" id="loginpassword" placeholder="Password" required>
-                                                        <span id="togglePassword" class="password-toggle" data-toggle="loginpassword" onclick="togglePasswordVisibility('loginpassword')">👁️</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="joindate">Joining Date :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="date" name="joindate" id="joindate" class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="bloodgroup">Blood Group :</label>
-                                                    <div class="col-md-9">
-                                                        <select name="bloodgroup" id="bloodgroup" class="form-control form-select select2" data-bs-placeholder="Select Blood Group">
-                                                            <option value="A+">A+</option>
-                                                            <option value="A-">A-</option>
-                                                            <option value="B+">B+</option>
-                                                            <option value="B-">B-</option>
-                                                            <option value="AB+">AB+</option>
-                                                            <option value="AB-">AB-</option>
-                                                            <option value="O+">O+</option>
-                                                            <option value="O-">O-</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                               
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label mb-4">Photo Upload :</label>
-                                                    <div class="col-md-9">
-                                                        <input class="form-control" type="file" name="files" id="files" accept=".jpg, .png, image/jpeg, image/png">
+                                                        <input type="number" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
                                                     </div>
                                                 </div>
                                                 <!--End Row-->
@@ -242,7 +175,7 @@ include "includes/connection.php";
                                         <div class="row">
                                             <div class="col-md-3"></div>
                                             <div class="col-md-9">
-                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Add Employee</button>
+                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Add Supplier</button>
                                                 <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
 
                                             </div>
@@ -251,72 +184,33 @@ include "includes/connection.php";
                                     </div>
                                     <?php
                                     if (isset($_POST['submit'])) {
-                                        $empname = $_POST["empname"];
-                                        $department = $_POST["dept"];
-                                        $desig = $_POST["desig"];
+                                        $supname = $_POST["supname"];
                                         $addr = $_POST["addr"];
                                         $phoneno = $_POST["phoneno"];
                                         $emailid = $_POST["emailid"];
-                                        $joindate = $_POST["joindate"];
-                                        $bloodgroup = $_POST["bloodgroup"];
-
-                                        $loginname = $_POST["loginemailid"];
-                                        $pass1 = $_POST["loginpassword"];
-
-                                        $upload_dir = '../assets/img/staff/';
-                                        $file_tmpname = $_FILES['files']['tmp_name'];
-                                        $file_name = $_FILES['files']['name'];
-                                        $file_size = $_FILES['files']['size'];
-                                        $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
-                                        // Set upload file path
-                                        $filepath = $upload_dir . $file_name;
-                                        $randomNumber = mt_rand(100000, 999999);
-                                        // Create a new file name with the random number
-                                        $newFileName = $upload_dir  .  $randomNumber . '.' . $file_ext;
-                                        $saveFileName =   $randomNumber . '.' . $file_ext;
-                                        if (move_uploaded_file($file_tmpname,  $newFileName)) {
-                                            echo "{$file_name} successfully uploaded <br />";
-                                        } else {
-                                            echo "{$file_name} not uploaded <br />";
-                                        }
-
+                                        $sgstno = $_POST["sgstno"];
+                                  
                                         $status = $_POST["status"];
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
 
-                                        $sql = "INSERT INTO employee (empname,department_id,desig_id,status,created,modified,addres,phoneno,emailid,
-                                                joindate,emppic,bloodgrp) values('" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $department) . "',
-                                                '" . mysqli_real_escape_string($connection, $desig) . "','" . mysqli_real_escape_string($connection, $status) . "',
+                                        $sql = "INSERT INTO suppliers (supplier_name,status,created,modified,supplier_addr,supplier_phoneno,supplier_email,
+                                                supplier_gstno) values('" . mysqli_real_escape_string($connection, $supname) . "','" . mysqli_real_escape_string($connection, $status) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $postdate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $addr) . "',
                                                                 '" . mysqli_real_escape_string($connection, $phoneno) . "','" . mysqli_real_escape_string($connection, $emailid) . "',
-                                                                '" . mysqli_real_escape_string($connection, $joindate) . "',
-                                                                '" . mysqli_real_escape_string($connection, $saveFileName) . "','" . mysqli_real_escape_string($connection, $bloodgroup) . "')";
+                                                                '" . mysqli_real_escape_string($connection, $sgstno) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
 
                                             //  ======================= userid creation =========================  
                                             $last_emp_id = $connection->insert_id;
-                                            $password = md5($pass1); //encrypt the password before saving in the database
-                                            $queryuser = "INSERT INTO employee_user (username, email, password,designation,empid,cmded,department)
-                                                    VALUES('$empname', '$loginname', '$password','$desig','$last_emp_id','$pass1','$department)";
-
-                                            if ($connection->query($queryuser) === TRUE) {
-                                                $last_user_id = $connection->insert_id;
-
-                                                $sqlemp = "UPDATE employee SET user_id='$last_user_id' WHERE id='" . $last_emp_id . "'";
-
-                                                if ($connection->query($sqlemp) === TRUE) {
-                                                    header("Location: employeelist.php");
-                                                } else {
-                                                    echo "Error updating record: " . $connection->error;
-                                                }
-                                            }
+                                          
 
 
 
 
-                                            // header("Location: employeelist.php");
+                                            header("Location: supplierslist.php");
                                         } else {
                                             echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                         }

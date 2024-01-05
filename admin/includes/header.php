@@ -250,6 +250,40 @@
 								</a>
 								
 							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+								<span class="side-menu__icon">
+										<i class="fe fe-zap side_menu_img"></i>
+									</span>
+									<span class="side-menu__label">Payment Details</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side8" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side8">
+													<ul class="sidemenu-list">
+														<li><a href="add-payment.php" class="slide-item">Add Payment</a></li>
+														<li><a href="" class="slide-item">Payments List</a></li>
+														
+													</ul>
+													
+												</div>
+												
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+							
 							<li class="side-item side-item-category">Other Pages</li>
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
