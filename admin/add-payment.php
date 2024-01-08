@@ -79,7 +79,7 @@ include "includes/connection.php";
                             <h2 class="main-content-title tx-24 mg-b-5">Add Payment</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Payment Details</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Details</li>
+                                <li class="breadcrumb-item active" aria-current="page">Adding Form</li>
                             </ol>
                         </div>
                         <div class="btn-list">
@@ -105,9 +105,9 @@ include "includes/connection.php";
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
-                                <div class="card-header">
+                                <!-- <div class="card-header">
                                     <div class="card-title">Add New Payment Details</div>
-                                </div>
+                                </div> -->
                                 <form id="adddesig" method="post" action="">
 
 
@@ -115,6 +115,7 @@ include "includes/connection.php";
                                         <div class="col-md-12">
                                             <div class="card-body">
                                                 <div class="row mb-4">
+                                                    <h4>Order Details Display</h4>
                                                     <div class="col-md-4">
                                                         <label class="form-label" for="ordersdisplay">Orders :</label>
                                                         <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
@@ -123,8 +124,8 @@ include "includes/connection.php";
                                                             $queryorder = "select * from order_customers where order_status='Active' order by id desc";
                                                             $select_postsorder = mysqli_query($connection, $queryorder);
                                                             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
-                                                                                                                           ?>
-                                                                    <option value="<?php echo $roworder['id'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
+                                                            ?>
+                                                                <option value="<?php echo $roworder['id'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
                                                             <?php }
                                                             ?>
                                                         </select>
@@ -133,27 +134,23 @@ include "includes/connection.php";
                                                         <label class="form-label" for="branddisplay">Brand Name :</label>
                                                         <input type="text" class="form-control" id="branddisplay" name="branddisplay" placeholder="" readonly>
                                                     </div>
-                                                    <div class="col-md-4" style="margin: bottom 10px;">    
+                                                    <div class="col-md-2" style="margin: bottom 10px;">
                                                         <label class="form-label" for="amountdisplay">Quoted Amount :</label>
                                                         <input type="text" class="form-control" id="amountdisplay" name="amountdisplay" placeholder="" readonly>
                                                     </div>
-                                                    <br /><br /><hr><hr>
-                                                    <h4>Add Suppliers</h4>
+                                                    <div class="col-md-2" style="margin: bottom 10px;">
+                                                        <label class="form-label" for="orderiddisplay">Order Id :</label>
+                                                        <input type="text" class="form-control" id="orderiddisplay" name="orderiddisplay" placeholder="" readonly>
+                                                    </div>
+                                                    <br /><br />
+                                                    <hr>
+                                                    <hr>
+                                                    <h4>Add Suppliers [ If Any ]</h4>
                                                     <div class="col-md-3">
-                                                        <!-- <label class="form-label" for="orders">Orders :</label> -->
+                                                        <label class="form-label" for="orders">Orders :</label>
                                                         <select class="form-select mb-3" aria-label="Default select example" name="orders" id="orders" required>
                                                             <option value="" disabled selected>Select Order Entry</option>
-                                                            <?php
-                                                            $queryorder = "select * from order_category where id ='" . $orderid . "'";
-                                                            $select_postsorder = mysqli_query($connection, $queryorder);
-                                                            while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
-                                                                $query = "select * from category where id ='" . $roworder['category_id'] . "'";
-                                                                $select_posts = mysqli_query($connection, $query);
-                                                                while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                            ?>
-                                                                    <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['category'] ?></option>
-                                                            <?php }
-                                                            } ?>
+                                                          
                                                         </select>
                                                     </div>
                                                     <div class="col-md-3">
@@ -192,15 +189,15 @@ include "includes/connection.php";
                                                             <option value="Card">Card</option>
                                                             <option value="UPI">UPI</option>
                                                             <option value="Bank-Transfer">Bank Transfer</option>
-                                                        </select>             
+                                                        </select>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label class="form-label" for="workper">Customer Bill No :</label>
                                                         <input type="text" class="form-control" id="custbillno" name="custbillno" placeholder="Customer Bill No" required>
 
                                                     </div>
-                                                    
-                                                    
+
+
                                                     <div class="col-md-3">
                                                         <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
                                                         <button type="button" name="submit" class="btn btn-primary" onclick="addRow()" style="color:white;cursor:pointer;">Add Supplier Details</button>
@@ -241,6 +238,88 @@ include "includes/connection.php";
                                         </div>
 
                                     </div>
+
+                                    <br>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <div class="row mb-4">
+                                                    <h4>Add Payment Details for Customers</h4>
+
+
+
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="paytype">Payment Type :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="paytype" id="paytype" required>
+                                                            <option value="" disabled selected>Select Payment Type</option>
+                                                            <option value="Advance-Payment">Advance Payment</option>
+                                                            <option value="Intrim-Payment">Intrim Payment</option>
+                                                            <option value="Final-Payment">Final Payment</option>
+
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="paymenttransmode">Transaction Mode :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="paymenttransmode" id="paymenttransmode" required>
+                                                            <option value="" disabled selected>Select Transaction Mode</option>
+                                                            <option value="Cash">Cash</option>
+                                                            <option value="Card">Card</option>
+                                                            <option value="UPI">UPI</option>
+                                                            <option value="Bank-Transfer">Bank Transfer</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="paymentamt">Payment Amount :</label>
+                                                        <input type="text" class="form-control" id="paymentamt" name="paymentamt" placeholder="Payment Amount" required>
+
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="paycustbillno">Customer Bill No :</label>
+                                                        <input type="text" class="form-control" id="paycustbillno" name="paycustbillno" placeholder="Customer Bill No" required>
+
+                                                    </div>
+
+
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
+                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addPayment()" style="color:white;cursor:pointer;">Add Payment Details</button>
+
+                                                    </div>
+                                                    <hr>
+
+                                                    <div class="table-responsive">
+                                                        <style>
+                                                            .hidden-cell {
+                                                                display: none;
+                                                            }
+                                                        </style>
+                                                        <table class="table table-bordered mg-b-0" id="paydataTable">
+                                                            <thead>
+                                                                <tr style="background-color: #add8e6;">
+                                                                    <th>#</th>
+                                                                    <th>Payment Type</th>
+                                                                    <th>Transaction Mode</th>
+                                                                    <th>Payment Amount</th>
+                                                                    <th>Customer Bill No</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <div class="card-footer">
                                         <!--Row-->
                                         <div class="row">
@@ -256,12 +335,14 @@ include "includes/connection.php";
 
 
                                 </form>
-<br>
-<hr>
+                                <br>
+                                <hr>
+
+
 
                             </div>
                         </div>
-                       
+
                     </div>
                     <!-- /ROW-1 CLOSED -->
                 </div>
@@ -346,6 +427,16 @@ include "includes/connection.php";
     <script>
         var rowCounter = 0; // Move the initialization here
         function addRow() {
+            // Get the selected values from the first two select boxes
+            var selectBox1 = document.getElementById("orders").value;
+            var selectBox2 = document.getElementById("supplier").value;
+
+            // Check if both select boxes are selected
+            // if (selectBox1.selectedIndex === -1 || selectBox2.selectedIndex === -1) {
+            if (selectBox1 === "" || selectBox2 === "") {
+                alert("Please select values for the orders & suppliers.");
+                return; // Exit the function if not selected
+            }
             var table = document.getElementById("dataTable");
             var tbody = table.getElementsByTagName("tbody")[0]; // Get the tbody element
             var newRow = tbody.insertRow(tbody.rows.length); // Insert row into tbody
@@ -411,6 +502,64 @@ include "includes/connection.php";
             selectBox3.selectedIndex = -1;
         }
 
+// ==============================
+        var rowpaymentCounter = 0; // Move the initialization here
+        function addPayment() {
+            // alert("payment");
+            // Get the selected values from the first two select boxes
+            var selectBox3 = document.getElementById("paytype").value;
+            var selectBox4 = document.getElementById("paymenttransmode").value;
+            alert (selectBox3 );alert (selectBox4 );
+            // Check if both select boxes are selected
+            // if (selectBox1.selectedIndex === -1 || selectBox2.selectedIndex === -1) {
+            if (selectBox3 === "" || selectBox4 === "") {
+                alert("Please select values for the Payment Type & Transaction Mode.");
+                return; // Exit the function if not selected
+            }
+            var table = document.getElementById("paydataTable");
+            var tbody = table.getElementsByTagName("tbody")[0]; // Get the tbody element
+            var newRow = tbody.insertRow(tbody.rows.length); // Insert row into tbody
+
+
+            // Numbering Column
+            var cell1 = newRow.insertCell(0);
+
+            cell1.innerHTML = ++rowpaymentCounter; // Increment before setting the innerHTML
+
+            // Select Box 1
+            var cell2 = newRow.insertCell(1);
+            var selectBox1 = document.getElementById("paytype");
+            cell2.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
+
+                      // Select Box 1
+            var cell3 = newRow.insertCell(2);
+            var selectBox1 = document.getElementById("paymenttransmode");
+            cell3.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
+
+         
+            // Text Box 1
+            var cell4 = newRow.insertCell(3);
+            var textBox1 = document.getElementById("paymentamt");
+            cell4.innerHTML = textBox1.value;
+
+            // Text Box 2
+            var cell5 = newRow.insertCell(4);
+            var textBox2 = document.getElementById("paycustbillno");
+            cell5.innerHTML = textBox2.value;
+
+            // Text Box 3
+            
+            // Clear input values after adding to the table
+            textBox1.value = "";
+            textBox2.value = "";
+
+            // Clear select box values
+            selectBox1.selectedIndex = -1;
+            // selectBox2.selectedIndex = -1;
+            
+        }
+
+// ============================================
         function saveDataToDatabase() {
             var table = document.getElementById("dataTable");
             var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
@@ -424,23 +573,55 @@ include "includes/connection.php";
                 var cells = row.getElementsByTagName("td");
 
                 var rowData = {
-                    orderid: document.getElementById("orderid").value,
+                    orderid: document.getElementById("orderiddisplay").value,
                     entry: cells[1].innerHTML, // Adjust the index based on your table structure
                     entryid: cells[2].innerHTML, // Adjust the index based on your table structure
-                    staffName: cells[3].innerHTML, // Adjust the index based on your table structure
-                    staffid: cells[4].innerHTML, // Adjust the index based on your table structure
-                    workAssigned: cells[5].innerHTML, // Adjust the index based on your table structure
-                    deadline: cells[6].innerHTML, // Adjust the index based on your table structure
-                    percentOfWork: cells[7].innerHTML // Adjust the index based on your table structure
+                    SupplierName: cells[3].innerHTML, // Adjust the index based on your table structure
+                    Supplierid: cells[4].innerHTML, // Adjust the index based on your table structure
+                    workDone: cells[5].innerHTML, // Adjust the index based on your table structure
+                    SupplierBillNo: cells[6].innerHTML, // Adjust the index based on your table structure
+                    PaymentAmount: cells[7].innerHTML, // Adjust the index based on your table structure
+                    TransactionMode: cells[8].innerHTML, // Adjust the index based on your table structure
+                    CustomerBillNo: cells[9].innerHTML // Adjust the index based on your table structure
                     // Add more fields as needed
                 };
 
                 dataToSave.push(rowData);
             }
             console.log(rowData);
+            // ============= second table
+
+            var table1 = document.getElementById("paydataTable");
+            var rows1 = table1.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+            console.log("hai   :" + rows1)
+            var dataToSave1 = [];
+
+            // Iterate through each row
+            for (var i = 0; i < rows1.length; i++) {
+                console.log(i);
+                var row = rows1[i];
+                var cells = row.getElementsByTagName("td");
+
+                var rowData1 = {
+                    orderid: document.getElementById("orderiddisplay").value,
+                    PaymentType: cells[1].innerHTML, // Adjust the index based on your table structure
+                    TransactionMode: cells[2].innerHTML, // Adjust the index based on your table structure
+                    PaymentAmount: cells[3].innerHTML, // Adjust the index based on your table structure
+                    CustomerBillNo: cells[4].innerHTML, // Adjust the index based on your table structure
+                   
+                };
+
+                dataToSave.push(rowData1);
+            }
+            console.log(rowData1);
+            // ==============================================
+
+            
+
+
             // Send data to the server using AJAX
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "save-staff-allocation.php", true);
+            xhr.open("POST", "save-paymentdetails.php", true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function() {
@@ -448,42 +629,42 @@ include "includes/connection.php";
                     // Handle the response from the server if needed
                     console.log("res " + xhr.responseText);
                     alert("Succesfully Saved Data.");
-                    window.location.href = 'staffAllocation.php';
+                    // window.location.href = 'add-payment.php';
                 }
             };
 
             xhr.send(JSON.stringify(dataToSave));
         }
-
-
-
     </script>
 
-<script>
-    // Add an event listener to the select element
-    document.getElementById('ordersdisplay').addEventListener('change', function () {
-        // Get the selected option
-        var selectedOption = this.options[this.selectedIndex];
-        
-        // Get the values from the selected option
-        var selectedOrderId = selectedOption.value;
-        var selectedbrandName = selectedOption.getAttribute('data-brandName');
-        var selectedquoteAmt = selectedOption.getAttribute('data-quotedAmt');
-        // Update other input tags with the selected values
-        document.getElementById('amountdisplay').value = selectedquoteAmt;
-        document.getElementById('branddisplay').value = selectedbrandName;
-        // Fetch data for the second select using AJAX
-        $.ajax({
+    <script>
+        // Add an event listener to the select element
+        document.getElementById('ordersdisplay').addEventListener('change', function() {
+            // Get the selected option
+            var selectedOption = this.options[this.selectedIndex];
+
+            // Get the values from the selected option
+            var selectedOrderId = selectedOption.value;
+            var selectedbrandName = selectedOption.getAttribute('data-brandName');
+            var selectedquoteAmt = selectedOption.getAttribute('data-quotedAmt');
+            // Update other input tags with the selected values
+            document.getElementById('amountdisplay').value = selectedquoteAmt;
+            document.getElementById('branddisplay').value = selectedbrandName;
+            document.getElementById('orderiddisplay').value = selectedOrderId;
+            // Fetch data for the second select using AJAX
+            $.ajax({
                 type: 'POST',
                 url: 'getorderdetails.php', // Replace with the actual URL that fetches data based on selectedOrderId
-                data: { selectedOrderId: selectedOrderId },
-                success: function (data) {
+                data: {
+                    selectedOrderId: selectedOrderId
+                },
+                success: function(data) {
                     // Update options of the second select
                     $('#orders').html(data);
                 }
             });
-    });
-</script>
+        });
+    </script>
 </body>
 
 </html>
