@@ -150,7 +150,7 @@ include "includes/connection.php";
                                                         <label class="form-label" for="orders">Orders :</label>
                                                         <select class="form-select mb-3" aria-label="Default select example" name="orders" id="orders" required>
                                                             <option value="" disabled selected>Select Order Entry</option>
-                                                          
+
                                                         </select>
                                                     </div>
                                                     <div class="col-md-3">
@@ -178,7 +178,7 @@ include "includes/connection.php";
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label class="form-label" for="payamt">Payment Amount :</label>
-                                                        <input type="text" class="form-control" id="payamt" name="payamt" placeholder="Payment Amount" required>
+                                                        <input type="number" class="form-control" id="payamt" name="payamt" placeholder="Payment Amount" required>
 
                                                     </div>
                                                     <div class="col-md-3">
@@ -221,7 +221,7 @@ include "includes/connection.php";
                                                                     <th class="hidden-cell">Sup Id</th>
                                                                     <th>Work Done</th>
                                                                     <th>Supplier Bill No</th>
-                                                                    <th>Payment Amount</th>
+                                                                    <th style="text-align: right;">Payment Amount</th>
                                                                     <th>Transaction Mode</th>
                                                                     <th>Customer Bill No</th>
 
@@ -275,7 +275,7 @@ include "includes/connection.php";
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label class="form-label" for="paymentamt">Payment Amount :</label>
-                                                        <input type="text" class="form-control" id="paymentamt" name="paymentamt" placeholder="Payment Amount" required>
+                                                        <input type="number" class="form-control" id="paymentamt" name="paymentamt" placeholder="Payment Amount" required>
 
                                                     </div>
 
@@ -482,6 +482,7 @@ include "includes/connection.php";
             var cell8 = newRow.insertCell(7);
             var textBox3 = document.getElementById("payamt");
             cell8.innerHTML = textBox3.value;
+            cell8.style.textAlign = "right";
             // Text Box 3
             var cell9 = newRow.insertCell(8);
             var selectBox3 = document.getElementById("orders");
@@ -502,14 +503,15 @@ include "includes/connection.php";
             selectBox3.selectedIndex = -1;
         }
 
-// ==============================
+        // ==============================
         var rowpaymentCounter = 0; // Move the initialization here
         function addPayment() {
             // alert("payment");
             // Get the selected values from the first two select boxes
             var selectBox3 = document.getElementById("paytype").value;
             var selectBox4 = document.getElementById("paymenttransmode").value;
-            alert (selectBox3 );alert (selectBox4 );
+            // alert (selectBox3 );
+            // alert (selectBox4 );
             // Check if both select boxes are selected
             // if (selectBox1.selectedIndex === -1 || selectBox2.selectedIndex === -1) {
             if (selectBox3 === "" || selectBox4 === "") {
@@ -531,16 +533,17 @@ include "includes/connection.php";
             var selectBox1 = document.getElementById("paytype");
             cell2.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
 
-                      // Select Box 1
+            // Select Box 1
             var cell3 = newRow.insertCell(2);
             var selectBox1 = document.getElementById("paymenttransmode");
             cell3.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
 
-         
+
             // Text Box 1
             var cell4 = newRow.insertCell(3);
             var textBox1 = document.getElementById("paymentamt");
             cell4.innerHTML = textBox1.value;
+            cell4.style.textAlign = "right";
 
             // Text Box 2
             var cell5 = newRow.insertCell(4);
@@ -548,7 +551,7 @@ include "includes/connection.php";
             cell5.innerHTML = textBox2.value;
 
             // Text Box 3
-            
+
             // Clear input values after adding to the table
             textBox1.value = "";
             textBox2.value = "";
@@ -556,10 +559,10 @@ include "includes/connection.php";
             // Clear select box values
             selectBox1.selectedIndex = -1;
             // selectBox2.selectedIndex = -1;
-            
+
         }
 
-// ============================================
+        // ============================================
         function saveDataToDatabase() {
             var table = document.getElementById("dataTable");
             var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
@@ -608,16 +611,18 @@ include "includes/connection.php";
                     TransactionMode: cells[2].innerHTML, // Adjust the index based on your table structure
                     PaymentAmount: cells[3].innerHTML, // Adjust the index based on your table structure
                     CustomerBillNo: cells[4].innerHTML, // Adjust the index based on your table structure
-                   
+
                 };
 
-                dataToSave.push(rowData1);
+                dataToSave1.push(rowData1);
             }
             console.log(rowData1);
             // ==============================================
-
-            
-
+            // Combine the two arrays into a single object for the AJAX request
+            var combinedData = {
+                dataToSave: dataToSave,
+                dataToSave1: dataToSave1
+            };
 
             // Send data to the server using AJAX
             var xhr = new XMLHttpRequest();
@@ -625,15 +630,21 @@ include "includes/connection.php";
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Handle the response from the server if needed
-                    console.log("res " + xhr.responseText);
-                    alert("Succesfully Saved Data.");
-                    // window.location.href = 'add-payment.php';
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        // Handle the response from the server if needed
+                        console.log("res " + xhr.responseText);
+                        alert("Succesfully Saved Data.");
+                        window.location.href = 'add-payment.php';
+                    } else {
+                        // Handle errors if any
+                        console.error("Error saving data: " + xhr.status);
+                        alert("Error saving data. Please try again.");
+                    }
                 }
             };
 
-            xhr.send(JSON.stringify(dataToSave));
+            xhr.send(JSON.stringify(combinedData));
         }
     </script>
 
