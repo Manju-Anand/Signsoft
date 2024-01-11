@@ -14,20 +14,30 @@ $selectedOrderId = $_POST['selectedOrderId'];
 // Query the database based on the selected order ID
 $query = "SELECT * FROM payment_customer WHERE orderid = '$selectedOrderId'";
 $result = mysqli_query($connection, $query);
+$r=0;
 
-// Build the options for the second select
-$options = '<option value="" disabled selected>Select Option</option>';
 while ($row = mysqli_fetch_assoc($result)) {
-    $querycat = "select * from category where id ='" . $row['category_id'] . "'";
-    $select_postscat  = mysqli_query($connection, $querycat );
-    while ($rowcat = mysqli_fetch_assoc($select_postscat)) {
-    $options .= '<option value="' . $rowcat['id'] . '">' . $rowcat['category'] . '</option>';
-}
+    $r = $r + 1;
+    $rowid = "row_" . time();
+    ?>
+   <tr data-rowid="<?php echo $rowid;?>">
+    <td><?php echo $r;?></td>
+    <td><?php echo $row['payment_type'];?></td>
+    <td><?php echo $row['transaction_mode'];?></td>
+    <td><?php echo $row['payment_amount'];?></td>
+    <td><?php echo $row['customer_billno'];?></td>
+    <td><a class='btn btn-sm btn-primary edit-pay-btn'  data-bs-target='#paymentmodal' data-bs-toggle='modal' title='Edit' style='color:white'>
+        <span class='fe fe-edit'> </span></a>&nbsp;&nbsp;
+        <a class='btn btn-sm btn-danger delete-pay-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'> 
+        <span class='fe fe-trash-2'> </span></a></td>
+    
 
+</tr>
+<?php
 }
 // Close the database connection
 mysqli_close($connection);
 
 // Return the options as HTML
-echo $options;
+// echo $options;
 ?>
