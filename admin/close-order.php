@@ -76,10 +76,10 @@ $mainorderid = "";
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Add Payment Form</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5" style="color:brown;text-transform:uppercase; text-decoration: underline;">View & Close Order</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Payment Details</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Adding Form</li>
+                                <li class="breadcrumb-item active" aria-current="page">Closing Order Form</li>
                             </ol>
                         </div>
                         <div class="btn-list">
@@ -100,205 +100,114 @@ $mainorderid = "";
                         </div>
                     </div>
                     <!-- End Page Header -->
-
-                    <!-- ROW-1 OPEN -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <!-- <div class="card-header">
-                                    <div class="card-title">Add New Payment Details</div>
-                                </div> -->
-                                <form id="adddesig" method="post" action="">
-
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card-body">
-                                                <div class="row mb-4">
-                                                    <h4>Order Details Display</h4>
-                                                    <div class="col-md-4">
-                                                        <label class="form-label" for="ordersdisplay">Orders :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
-                                                            <option value="" disabled selected>Select Order Entry</option>
-                                                            <?php
-                                                            $queryorder = "select * from order_customers where order_status='Active' order by id desc";
-                                                            $select_postsorder = mysqli_query($connection, $queryorder);
-                                                            while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
-                                                                $mainorderid = $roworder['id'];
-                                                            ?>
-                                                                <option value="<?php echo $roworder['id'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
-                                                            <?php }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4" style="margin: bottom 10px;">
-                                                        <label class="form-label" for="branddisplay">Brand Name :</label>
-                                                        <input type="text" class="form-control" id="branddisplay" name="branddisplay" placeholder="" readonly>
-                                                    </div>
-                                                    <div class="col-md-2" style="margin: bottom 10px;">
-                                                        <label class="form-label" for="amountdisplay">Quoted Amount :</label>
-                                                        <input type="text" class="form-control" id="amountdisplay" name="amountdisplay" placeholder="" readonly>
-                                                    </div>
-                                                    <div class="col-md-2" style="margin: bottom 10px;">
-                                                        <label class="form-label" for="orderiddisplay">Order Id :</label>
-                                                        <input type="text" class="form-control" id="orderiddisplay" name="orderiddisplay" placeholder="" readonly>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
-                                                    </div>
-                                                    <!-- <br /> -->
-                                                    <!-- <hr> -->
-                                                    <hr>
-                                                    <h4>Add Suppliers [ If Any ]</h4>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="orders">Orders :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="orders" id="orders" required>
-                                                            <option value="" disabled selected>Select Order Entry</option>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="supplier">Supplier Name :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="supplier" id="supplier" required>
-                                                            <option value="" disabled selected>Select Supplier</option>
-                                                            <?php
-                                                            $query = "select * from suppliers order by id desc";
-                                                            $select_posts = mysqli_query($connection, $query);
-                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                            ?>
-                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['supplier_name'] ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="donework">Work Done :</label>
-                                                        <input type="text" class="form-control" id="donework" name="donework" placeholder="Work Done" required>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="supbillno">Supplier Bill No :</label>
-                                                        <input type="text" class="form-control" id="supbillno" name="supbillno" placeholder="Supplier Bill No" required>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="payamt">Payment Amount :</label>
-                                                        <input type="number" class="form-control" id="payamt" name="payamt" placeholder="Payment Amount" required>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="transmode">Transaction Mode :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="transmode" id="transmode" required>
-                                                            <option value="" disabled selected>Select Transaction Mode</option>
-                                                            <option value="Cash">Cash</option>
-                                                            <option value="Card">Card</option>
-                                                            <option value="UPI">UPI</option>
-                                                            <option value="Bank Transfer">Bank Transfer</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="workper">Customer Bill No :</label>
-                                                        <input type="text" class="form-control" id="custbillno" name="custbillno" placeholder="Customer Bill No" required>
-
-                                                    </div>
-
-
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
-                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addRow()" style="color:white;cursor:pointer;">Add Supplier Details</button>
-
-                                                    </div>
-                                                    <hr>
-
-                                                    <div class="table-responsive">
-                                                        <style>
-                                                            .hidden-cell {
-                                                                display: none;
-                                                            }
-                                                        </style>
-                                                        <table class="table table-bordered mg-b-0" id="dataTable">
-                                                            <thead>
-                                                                <tr style="background-color: #add8e6;">
-                                                                    <th>#</th>
-                                                                    <th>Order</th>
-                                                                    <th class="hidden-cell">order Id</th>
-                                                                    <th>Supplier Name</th>
-                                                                    <th class="hidden-cell">Sup Id</th>
-                                                                    <th>Work Done</th>
-                                                                    <th>Supplier Bill No</th>
-                                                                    <th style="text-align: right;">Payment Amount</th>
-                                                                    <th>Transaction Mode</th>
-                                                                    <th>Customer Bill No</th>
-                                                                    <th>Action</th>
-
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="ajaxsupplierresults">
-
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-
+                    <div class="card custom-card" id="success">
+                        <div class="card-header rounded-bottom-0">
+                            <h5 class="mt-2">View & Close Order</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="panel panel-primary">
+                                <div class="tab-menu-heading">
+                                    <div class="tabs-menu">
+                                        <!-- Tabs -->
+                                        <ul class="nav panel-tabs panel-success">
+                                            <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-user mx-1"></i></span>Order Details</a>
+                                            </li>
+                                            <li><a href="#tab18" data-bs-toggle="tab"><span><i class="fe fe-calendar mx-1"></i></span>Supplier Details</a>
+                                            </li>
+                                            <li><a href="#tab19" data-bs-toggle="tab"><span><i class="fe fe-settings mx-1"></i></span>Payment Details</a>
+                                            </li>
+                                            <li><a href="#tab20" data-bs-toggle="tab"><span><i class="fe fe-bell mx-1"></i></span>Quotation Splitup</a>
+                                            </li>
+                                            <li><a href="#tab21" data-bs-toggle="tab"><span><i class="fe fe-command mx-1"></i></span>Staff Allocation</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body tabs-menu-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab17">
+                                            <div class="row mb-4">
+                                                <div class="col-md-12">
+                                                    <label class="form-label" for="ordersdisplay">Orders :</label>
+                                                    <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
+                                                        <option value="" disabled selected>Select Order Entry</option>
+                                                        <?php
+                                                        $queryorder = "select * from order_customers where order_status='Active' order by id desc";
+                                                        $select_postsorder = mysqli_query($connection, $queryorder);
+                                                        while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+                                                            $mainorderid = $roworder['id'];
+                                                        ?>
+                                                            <option value="<?php echo $roworder['id'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
+                                                        <?php }
+                                                        ?>
+                                                    </select>
                                                 </div>
                                             </div>
+                                            <div class="row mb-4" id="orderdetails">
+                                                <!-- <div class="col-md-6" style="margin: bottom 10px;">
+                                                    <label class="form-label" for="branddisplay">Brand Name :</label>
+                                                    <input type="text" class="form-control" id="branddisplay" name="branddisplay" placeholder="" readonly>
+                                                </div>
+                                                <div class="col-md-6" style="margin: bottom 10px;">
+                                                    <label class="form-label" for="amountdisplay">Quoted Amount :</label>
+                                                    <input type="text" class="form-control" id="amountdisplay" name="amountdisplay" placeholder="" readonly>
+                                                </div>
+                                                <div class="col-md-6" style="margin: bottom 10px;">
+                                                    <label class="form-label" for="orderiddisplay">Order Id :</label>
+                                                    <input type="text" class="form-control" id="orderiddisplay" name="orderiddisplay" placeholder="" readonly>
+                                                </div> -->
+                                                
+
+
+
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-9">
+                                                <button type="button" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary" style="color:white;cursor:pointer;">Add Order</button>
+                                                <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
+
+                                            </div>
                                         </div>
-
-                                    </div>
-
-                                    <br>
-                                    <hr>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card-body">
-                                                <div class="row mb-4">
-                                                    <h4>Add Payment Details for Customers</h4>
+                                        </div>
+                                        <div class="tab-pane" id="tab18">
+                                            <div class="row mb-4">
 
 
+                                                <div class="table-responsive">
+                                                    <style>
+                                                        .hidden-cell {
+                                                            display: none;
+                                                        }
+                                                    </style>
+                                                    <table class="table table-bordered mg-b-0" id="dataTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Order</th>
+                                                                <th class="hidden-cell">order Id</th>
+                                                                <th>Supplier Name</th>
+                                                                <th class="hidden-cell">Sup Id</th>
+                                                                <th>Work Done</th>
+                                                                <th>Supplier Bill No</th>
+                                                                <th style="text-align: right;">Payment Amount</th>
+                                                                <th>Transaction Mode</th>
+                                                                <th>Customer Bill No</th>
+                                                                <th>Action</th>
 
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxsupplierresults">
 
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="paytype">Payment Type :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="paytype" id="paytype" required>
-                                                            <option value="" disabled selected>Select Payment Type</option>
-                                                            <option value="Advance Payment">Advance Payment</option>
-                                                            <option value="Intrim Payment">Intrim Payment</option>
-                                                            <option value="Final Payment">Final Payment</option>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 
-                                                        </select>
-                                                    </div>
-
-
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="paymenttransmode">Transaction Mode :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="paymenttransmode" id="paymenttransmode" required>
-                                                            <option value="" disabled selected>Select Transaction Mode</option>
-                                                            <option value="Cash">Cash</option>
-                                                            <option value="Card">Card</option>
-                                                            <option value="UPI">UPI</option>
-                                                            <option value="Bank Transfer">Bank Transfer</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="paymentamt">Payment Amount :</label>
-                                                        <input type="number" class="form-control" id="paymentamt" name="paymentamt" placeholder="Payment Amount" required>
-
-                                                    </div>
-
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="paycustbillno">Customer Bill No :</label>
-                                                        <input type="text" class="form-control" id="paycustbillno" name="paycustbillno" placeholder="Customer Bill No" required>
-
-                                                    </div>
-
-
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
-                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addPayment()" style="color:white;cursor:pointer;">Add Payment Details</button>
-
-                                                    </div>
-                                                    <hr>
-
-                                                    <div class="table-responsive">
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab19">
+                                            <div class="row mb-4">
+                                              <div class="table-responsive">
                                                         <style>
                                                             .hidden-cell {
                                                                 display: none;
@@ -322,34 +231,25 @@ $mainorderid = "";
                                                     </div>
 
                                                 </div>
-                                            </div>
                                         </div>
-
-                                    </div>
-                                    <div class="card-footer">
-                                        <!--Row-->
-                                        <div class="row">
-                                            <div class="col-md-3"></div>
-                                            <div class="col-md-9">
-                                                <button type="button" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary" style="color:white;cursor:pointer;">Add Order</button>
-                                                <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
-
-                                            </div>
+                                        <div class="tab-pane" id="tab20">
+                                            <p>page editors now use Lorem Ipsum as their default model text,
+                                                and a search for 'lorem ipsum' will uncover many web sites
+                                                still in their infancy. Various versions have evolved over
+                                                the years, sometimes
+                                                by accident, sometimes on purpose (injected humour and the
+                                                like</p>
+                                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                                                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                                                aliquyam erat, sed diam voluptua. At veroeoset</p>
                                         </div>
-                                        <!--End Row-->
                                     </div>
-
-
-                                </form>
-                                <br>
-                                <hr>
-
-
-
+                                </div>
                             </div>
                         </div>
-
                     </div>
+                    <!-- ROW-1 OPEN -->
+                   
                     <!-- /ROW-1 CLOSED -->
                 </div>
             </div>
@@ -566,7 +466,7 @@ $mainorderid = "";
 
     <!-- password-addon init -->
     <!-- <script src="../assets/js/password-addon.js"></script> -->
-    <script src="add-payment.js"></script>
+    <script src="view-payment.js"></script>
 
 
 

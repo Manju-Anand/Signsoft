@@ -4,7 +4,24 @@ include "includes/connection.php";
 
 // Get the data sent from the client
 $data = json_decode(file_get_contents("php://input"), true);
+// ====================== delete already entered datas =============
+$corderid =$data['correctorderid'];
+$sql = "DELETE FROM payment_supplier WHERE orderid='". $corderid ."'";
 
+if ($connection->query($sql) === TRUE) {
+  echo "Record deleted successfully";
+} else {
+  echo "Error deleting record: " . $connection->error;
+}
+$sql = "DELETE FROM payment_customer WHERE orderid='". $corderid ."'";
+
+if ($connection->query($sql) === TRUE) {
+  echo "Record deleted successfully";
+} else {
+  echo "Error deleting record: " . $connection->error;
+}
+
+// ====================== delete already entered datas =============
 // Iterate through the data and insert into the database
 foreach ($data['dataToSave'] as $row) {
     $orderid = $row['orderid'];

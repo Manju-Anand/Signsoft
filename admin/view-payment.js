@@ -425,23 +425,18 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
 
     // Get the values from the selected option
     var selectedOrderId = selectedOption.value;
-    var selectedbrandName = selectedOption.getAttribute('data-brandName');
-    var selectedquoteAmt = selectedOption.getAttribute('data-quotedAmt');
-    // Update other input tags with the selected values
-    document.getElementById('amountdisplay').value = selectedquoteAmt;
-    document.getElementById('branddisplay').value = selectedbrandName;
-    document.getElementById('orderiddisplay').value = selectedOrderId;
+ 
     // Fetch data for the second select using AJAX
     $.ajax({
         type: 'POST',
-        url: 'getorderdetails.php', // Replace with the actual URL that fetches data based on selectedOrderId
+        url: 'vieworderdetails.php', // Replace with the actual URL that fetches data based on selectedOrderId
         data: {
             selectedOrderId: selectedOrderId
         },
         success: function (data) {
             // Update options of the second select
-            $('#orders').html(data);
-            $('#modalorders').html(data);
+            $('#orderdetails').html(data);
+            
         }
     });
 
