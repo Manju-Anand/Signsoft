@@ -126,49 +126,150 @@ $mainorderid = "";
                                 <div class="panel-body tabs-menu-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab17">
-                                            <div class="row mb-4">
-                                                <div class="col-md-12">
-                                                    <label class="form-label" for="ordersdisplay">Orders :</label>
-                                                    <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
-                                                        <option value="" disabled selected>Select Order Entry</option>
-                                                        <?php
-                                                        $queryorder = "select * from order_customers where order_status='Active' order by id desc";
-                                                        $select_postsorder = mysqli_query($connection, $queryorder);
-                                                        while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
-                                                            $mainorderid = $roworder['id'];
-                                                        ?>
-                                                            <option value="<?php echo $roworder['id'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
-                                                        <?php }
-                                                        ?>
-                                                    </select>
+                                            <form method="post">
+                                                <div class="row mb-4">
+                                                    <div class="col-md-12">
+                                                        <label class="form-label" for="ordersdisplay">Orders :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
+                                                            <option value="" disabled selected>Select Order Entry</option>
+                                                            <?php
+                                                            $queryorder = "select * from order_customers where order_status='Active' order by id desc";
+                                                            $select_postsorder = mysqli_query($connection, $queryorder);
+                                                            while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+                                                                $mainorderid = $roworder['id'];
+                                                            ?>
+                                                                <option value="<?php echo $roworder['id'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
+                                                            <?php }
+                                                            ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-4" id="orderdetails">
-                                                <!-- <div class="col-md-6" style="margin: bottom 10px;">
-                                                    <label class="form-label" for="branddisplay">Brand Name :</label>
-                                                    <input type="text" class="form-control" id="branddisplay" name="branddisplay" placeholder="" readonly>
+                                                <div class="row mb-4">
+
+                                                    <div class="col-md-6" style="margin: bottom 10px;">
+                                                        <label class="form-label" for="status">Close Order :</label>
+                                                        <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
+                                                            <option value="" disabled selected>Select Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <label class="form-label" for="cquality">Client Quality :</label>
+                                                        <select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
+                                                            <option value="" disabled selected>Select Option</option>
+                                                            <option value="Good">Good</option>
+                                                            <option value="Average">Average</option>
+                                                            <option value="Poor">Poor</option>
+                                                        </select>
+                                                        <label class="col-md-3 form-label" for="notes">Notes if Any :</label>
+
+                                                        <textarea class="form-control" name="notes" id="notes" palceholder="Here notes" rows="4"></textarea>
+
+                                                    </div>
+                                                    <div class="col-md-6" style="margin: bottom 10px;" id="orderdetails"></div>
+
                                                 </div>
-                                                <div class="col-md-6" style="margin: bottom 10px;">
-                                                    <label class="form-label" for="amountdisplay">Quoted Amount :</label>
-                                                    <input type="text" class="form-control" id="amountdisplay" name="amountdisplay" placeholder="" readonly>
+
+                                                <div class="row">
+                                                    <div class="col-md-3"></div>
+                                                    <div class="col-md-9">
+                                                        <button type="submit" name="submit" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Close Order</button>
+                                                        <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
+                                                        <!-- float-end -->
+
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6" style="margin: bottom 10px;">
-                                                    <label class="form-label" for="orderiddisplay">Order Id :</label>
-                                                    <input type="text" class="form-control" id="orderiddisplay" name="orderiddisplay" placeholder="" readonly>
-                                                </div> -->
-                                                
+                                                <?php
+                                                if (isset($_POST['submit'])) {
+                                                    $closestatus = "false";
+                                                    $orderstatus = $_POST["status"];
+                                                    if ($orderstatus = "Yes") {
+                                                        $orderclosed = "Closed";
+                                                        $cquality = $_POST['cquality'];
+                                                        $quoteamt =$_POST['quoteamt'];
+                                                        $orderid = $_POST['ordersdisplay'];
+                                                        $statusreason = $_POST["notes"];
+
+                                                        date_default_timezone_set("Asia/Calcutta");
+                                                        $postdate = date("M d,Y h:i:s a");
+
+                                                        $sql = "SELECT * FROM payment_supplier where orderid='" . $orderid . "'";
+                                                        $result = $connection->query($sql);
+
+                                                        if ($result->num_rows > 0) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                if ($row['transaction_mode'] !== 'CASH') {
+                                                                    if ($row['supplier_billno'] !== '' ) {
+                                                                        // echo "suppliertrue";
+                                                                        $closestatus = "true";
+                                                                    } else {
+                                                                        // echo "supplierfalse";
+                                                                        $closestatus = "false";
+                                                                        goto pc;
+                                                                    }
+                                                                    if ( $row['customer_billno'] !== '') {
+                                                                        // echo "suppliertrue";
+                                                                        $closestatus = "true";
+                                                                    } else {
+                                                                        // echo "supplierfalse";
+                                                                        $closestatus = "false";
+                                                                        goto pc;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        pc:
+                                                        $sql = "SELECT * FROM payment_customer where orderid='" . $orderid . "'";
+                                                        $result = $connection->query($sql);
+
+                                                        if ($result->num_rows > 0) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                if ($row['transaction_mode'] !== 'CASH') {
+                                                                    if ($row['customer_billno'] !== '') {
+                                                                        // echo "custtrue";
+                                                                        $closestatus = "true";
+                                                                    } else {
+                                                                        // echo "custfalse";
+                                                                        $closestatus = "false";
+                                                                        goto ppc;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        ppc:
+
+                                                        if ($closestatus == "false") {
+                                                            echo "<script> alert('Order cannot be closed because there are missing billnos.'); </script>";
+                                                        } else {
+                                                            // *************** transaction entry ****** based on $cquality ****************
+                                                            if ($cquality=="Good"){
+
+                                                                $actid="1";
+                                                                $actname="Signefo";
+
+                                                            }elseif ($cquality=="Average") {
+                                                                $actid="2";
+                                                                $actname="Signefo Media";
+                                                            }else {
+                                                                $actid="";
+                                                                $actname="";
+                                                            }
+                                                            $querycategory = "INSERT INTO transactions (orderid, action, actid, amount, add_date, created)
+                                                            VALUES('$orderid','Credited','$actid', '$quoteamt','$postdate','$postdate')";
+
+                                                            if ($connection->query($querycategory) === TRUE) {
+                                                            }
 
 
+                                                            $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
+                                                            VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";
 
-                                            </div>
-                                            <div class="row">
-                                            <div class="col-md-3"></div>
-                                            <div class="col-md-9">
-                                                <button type="button" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary" style="color:white;cursor:pointer;">Add Order</button>
-                                                <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
-
-                                            </div>
-                                        </div>
+                                                            if ($connection->query($querycategory) === TRUE) {
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </form>
                                         </div>
                                         <div class="tab-pane" id="tab18">
                                             <div class="row mb-4">
@@ -193,7 +294,7 @@ $mainorderid = "";
                                                                 <th style="text-align: right;">Payment Amount</th>
                                                                 <th>Transaction Mode</th>
                                                                 <th>Customer Bill No</th>
-                                                                <th>Action</th>
+
 
                                                             </tr>
                                                         </thead>
@@ -207,41 +308,78 @@ $mainorderid = "";
                                         </div>
                                         <div class="tab-pane" id="tab19">
                                             <div class="row mb-4">
-                                              <div class="table-responsive">
-                                                        <style>
-                                                            .hidden-cell {
-                                                                display: none;
-                                                            }
-                                                        </style>
-                                                        <table class="table table-bordered mg-b-0" id="paydataTable">
-                                                            <thead>
-                                                                <tr style="background-color: #add8e6;">
-                                                                    <th>#</th>
-                                                                    <th>Payment Type</th>
-                                                                    <th>Transaction Mode</th>
-                                                                    <th>Payment Amount</th>
-                                                                    <th>Customer Bill No</th>
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="ajaxpaymentresults">
+                                                <div class="table-responsive">
+                                                    <style>
+                                                        .hidden-cell {
+                                                            display: none;
+                                                        }
+                                                    </style>
+                                                    <table class="table table-bordered mg-b-0" id="paydataTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Payment Type</th>
+                                                                <th>Transaction Mode</th>
+                                                                <th>Payment Amount</th>
+                                                                <th>Customer Bill No</th>
 
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxpaymentresults">
 
+                                                        </tbody>
+                                                    </table>
                                                 </div>
+
+                                            </div>
                                         </div>
                                         <div class="tab-pane" id="tab20">
-                                            <p>page editors now use Lorem Ipsum as their default model text,
-                                                and a search for 'lorem ipsum' will uncover many web sites
-                                                still in their infancy. Various versions have evolved over
-                                                the years, sometimes
-                                                by accident, sometimes on purpose (injected humour and the
-                                                like</p>
-                                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                                                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                                                aliquyam erat, sed diam voluptua. At veroeoset</p>
+                                            <div class="row mb-4">
+
+
+                                                <div class="table-responsive">
+
+                                                    <table class="table table-bordered mg-b-0" id="quotesplitupTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Item Name</th>
+                                                                <th>Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxquotesplitupresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab21">
+                                            <div class="row mb-4">
+
+
+                                                <div class="table-responsive">
+
+                                                    <table class="table table-bordered mg-b-0" id="staffallocateTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Category Assigned</th>
+                                                                <th>Employee Name</th>
+                                                                <th>Work Descripton</th>
+                                                                <th>Dead Line</th>
+                                                                <th>Percentage of Work</th>
+                                                                <th>Assigned Date</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxstaffallocateresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -249,160 +387,13 @@ $mainorderid = "";
                         </div>
                     </div>
                     <!-- ROW-1 OPEN -->
-                   
+
                     <!-- /ROW-1 CLOSED -->
                 </div>
             </div>
         </div>
         <!-- End Main Content-->
-        <!-- ===========================modals ======================================= -->
-        <!-- Basic modal -->
-        <div class="modal fade" id="suppliermodal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content modal-content-demo">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Edit Supplier Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <input type="text" class="form-control" id="modalrowid" name="modalrowid" required>
-
-                            <div class="col-md-6">
-                                <label class="form-label" for="orders">Orders :</label>
-                                <select class="form-select mb-3" aria-label="Default select example" name="modalorders" id="modalorders" required>
-                                    <option value="" disabled selected>Select Order Entry</option>
-
-                                    <?php
-
-                                    $query = "SELECT * FROM order_category WHERE order_id = ' $mainorderid'";
-                                    $result = mysqli_query($connection, $query);
-
-                                    // Build the options for the second select
-                                    $options = '<option value="" disabled selected>Select Option</option>';
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        $querycat = "select * from category where id ='" . $row['category_id'] . "'";
-                                        $select_postscat  = mysqli_query($connection, $querycat);
-                                        while ($rowcat = mysqli_fetch_assoc($select_postscat)) {
-                                            $options .= '<option value="' . $rowcat['id'] . '"  data-brandName="' .  $roworder['brandName'] . '" data-quotedAmt="' . $roworder['quotedAmt'] . '">' . $rowcat['category'] . '</option>';
-                                        }
-                                    }
-
-
-
-
-
-                                    ?>
-
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="supplier">Supplier Name :</label>
-                                <select class="form-select mb-3" aria-label="Default select example" name="modalsupplier" id="modalsupplier" required>
-                                    <option value="" disabled selected>Select Supplier</option>
-                                    <?php
-                                    $query = "select * from suppliers order by id desc";
-                                    $select_posts = mysqli_query($connection, $query);
-                                    while ($row = mysqli_fetch_assoc($select_posts)) {
-                                    ?>
-                                        <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['supplier_name'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="donework">Work Done :</label>
-                                <input type="text" class="form-control" id="modaldonework" name="modaldonework" placeholder="Work Done" required>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="supbillno">Supplier Bill No :</label>
-                                <input type="text" class="form-control" id="modalsupbillno" name="modalsupbillno" placeholder="Supplier Bill No" required>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="payamt">Payment Amount :</label>
-                                <input type="number" class="form-control" id="modalpayamt" name="modalpayamt" placeholder="Payment Amount" required>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="transmode">Transaction Mode :</label>
-                                <select class="form-select mb-3" aria-label="Default select example" name="modaltransmode" id="modaltransmode" required>
-                                    <option value="" disabled selected>Select Transaction Mode</option>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Card">Card</option>
-                                    <option value="UPI">UPI</option>
-                                    <option value="Bank Transfer">Bank Transfer</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="workper">Customer Bill No :</label>
-                                <input type="text" class="form-control" id="modalcustbillno" name="modalcustbillno" placeholder="Customer Bill No" required>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="saveChangesBtn" type="button">Save changes</button>
-                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Basic modal -->
-        <!-- Basic modal -->
-        <div class="modal fade" id="paymentmodal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content modal-content-demo">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Edit Payment Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <input type="text" class="form-control" id="modalpayrowid" name="modalpayrowid" required>
-
-                            <div class="col-md-6">
-                                <label class="form-label" for="paytype">Payment Type :</label>
-                                <select class="form-select mb-3" aria-label="Default select example" name="modalpaytype" id="modalpaytype" required>
-                                    <option value="" disabled selected>Select Payment Type</option>
-                                    <option value="Advance Payment">Advance Payment</option>
-                                    <option value="Intrim Payment">Intrim Payment</option>
-                                    <option value="Final Payment">Final Payment</option>
-
-                                </select>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <label class="form-label" for="paymenttransmode">Transaction Mode :</label>
-                                <select class="form-select mb-3" aria-label="Default select example" name="modalpaymenttransmode" id="modalpaymenttransmode" required>
-                                    <option value="" disabled selected>Select Transaction Mode</option>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Card">Card</option>
-                                    <option value="UPI">UPI</option>
-                                    <option value="Bank Transfer">Bank Transfer</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="paymentamt">Payment Amount :</label>
-                                <input type="number" class="form-control" id="modalpaymentamt" name="modalpaymentamt" placeholder="Payment Amount" required>
-
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label" for="paycustbillno">Customer Bill No :</label>
-                                <input type="text" class="form-control" id="modalpaycustbillno" name="modalpaycustbillno" placeholder="Customer Bill No" required>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="savepayChangesBtn" type="button">Save changes</button>
-                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Basic modal -->
-        <!-- ===========================modals ======================================= -->
+       
         <!-- Main Footer-->
         <?php include 'includes/footer.php'; ?>
         <!--End Footer-->

@@ -380,7 +380,11 @@ include "includes/connection.php";
                                                 }
                                             }
 
+                                            $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
+                                            VALUES('$last_lead_id', '$orderstatus','$postdate','$statusreason')";
 
+                                            if ($connection->query($querycategory) === TRUE) {
+                                            }
 
 
                                         

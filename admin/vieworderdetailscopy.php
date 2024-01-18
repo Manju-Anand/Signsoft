@@ -16,16 +16,19 @@ $selectedOrderId = $_POST['selectedOrderId'];
 $query = "SELECT * FROM order_customers WHERE id = '$selectedOrderId'";
 $result = mysqli_query($connection, $query);
 while ($row = mysqli_fetch_assoc($result)) {
-$options = '
+$options = '<div class="col-md-6" style="margin: bottom 10px;">
     <label class="form-label" for="branddisplay"><strong>Customer Name : </strong>'. $row['custName']  . '</label>
-
+</div>
+<div class="col-md-6" style="margin: bottom 10px;">
     <label class="form-label" for="branddisplay"><strong>Brand Name : </strong>'. $row['brandName']  . '</label>
-
+</div>
+<div class="col-md-6" style="margin: bottom 10px;">
     <label class="form-label" for="amountdisplay"><strong>Quoted Amount : </strong>'. $row['quotedAmt']  . '</label>
-<input type="text" id="quoteamt" name="quoteamt" value="'. $row['quotedAmt'] . '">
-
+</div>
+<div class="col-md-6" style="margin: bottom 10px;">
     <label class="form-label" for="orderiddisplay"><strong>Order Id : </strong>'. $row['id']  . '</label>
-
+</div>
+<div class="col-md-6" style="margin: bottom 10px;">
     <label class="form-label" for="orderiddisplay"><strong>Selected Categories & Subcategories : </strong></label>
      <ul class="list-style2 ms-3">';
 
@@ -61,7 +64,7 @@ $options = '
                             }
                         }
                     }
-                    $options .= '</ul>';
+                    $options .= '</ul></div>';
                     }
 
                     
