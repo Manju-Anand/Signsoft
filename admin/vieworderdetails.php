@@ -10,7 +10,7 @@ if (!$connection) {
 
 // Get the selected order ID from the AJAX request
 $selectedOrderId = $_POST['selectedOrderId'];
-
+    // <label class="form-label" for="orderiddisplay"><strong>Order Id : </strong>'. $row['id']  . '</label>
 
 // Query the database based on the selected order ID
 $query = "SELECT * FROM order_customers WHERE id = '$selectedOrderId'";
@@ -22,9 +22,9 @@ $options = '
     <label class="form-label" for="branddisplay"><strong>Brand Name : </strong>'. $row['brandName']  . '</label>
 
     <label class="form-label" for="amountdisplay"><strong>Quoted Amount : </strong>'. $row['quotedAmt']  . '</label>
-<input type="text" id="quoteamt" name="quoteamt" value="'. $row['quotedAmt'] . '">
+<input type="hidden" id="quoteamt" name="quoteamt" value="'. $row['quotedAmt'] . '">
 
-    <label class="form-label" for="orderiddisplay"><strong>Order Id : </strong>'. $row['id']  . '</label>
+
 
     <label class="form-label" for="orderiddisplay"><strong>Selected Categories & Subcategories : </strong></label>
      <ul class="list-style2 ms-3">';

@@ -260,6 +260,15 @@
 								
 							</li>
 							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="add-order-details.php">
+								<span class="side-menu__icon">
+										<i class="fe fe-zap side_menu_img"></i>
+									</span>
+									<span class="side-menu__label">Add Order Details</span>
+								</a>
+								
+							</li>
+							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="close-order.php">
 									<span class="side-menu__icon">
 										<i class="fe fe-book side_menu_img"></i>

@@ -19,7 +19,7 @@ $r=0;
 
 while ($row = mysqli_fetch_assoc($result)) {
     $r = $r + 1;
-    $rowid = "row_" . time();
+    $rowid = "row_" . mt_rand(20000, 200000) . "_" . time();
     ?>
    <tr data-rowid="<?php echo $rowid;?>">
     <td><?php echo $r;?></td>

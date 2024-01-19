@@ -259,6 +259,11 @@ $mainorderid = "";
                                                             if ($connection->query($querycategory) === TRUE) {
                                                             }
 
+                                                            $querycategory = "UPDATE order_customers SET order_status='Closed', close_date='" . $postdate . "' where id='" . $orderid . "'";
+
+                                                            if ($connection->query($querycategory) === TRUE) {
+                                                            }
+
 
                                                             $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
                                                             VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";

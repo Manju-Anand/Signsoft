@@ -232,7 +232,7 @@ $mainorderid = "";
 
                                                                 </tr>
                                                             </thead>
-                                                            <tbody id="ajaxsupplierresults">
+                                                            <tbody id="ajaxaddsupplierresults">
 
                                                             </tbody>
                                                         </table>
@@ -315,7 +315,7 @@ $mainorderid = "";
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody id="ajaxpaymentresults">
+                                                            <tbody id="ajaxaddpaymentresults">
 
                                                             </tbody>
                                                         </table>

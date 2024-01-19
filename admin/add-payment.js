@@ -249,6 +249,31 @@ $('#saveChangesBtn').on('click', function () {
     $('#suppliermodal').modal('hide');
 });
 
+$('#savepayChangesBtn').on('click', function () {
+    // Get the values from the modal fields
+    var modalpaytype = $('#modalpaytype').val();
+    var transmodeValue = $('#modalpaymenttransmode').val();
+    var custbillnoValue = $('#modalpaycustbillno').val();
+    var payamtValue = $('#modalpaymentamt').val();
+
+
+     
+   
+    $('#paystatus').val('Payment edited');
+    // Get the selected row in the table (assuming it has an id, adjust as needed)
+    var selectedRowId = $('#modalpayrowid').val(); // Update this to the actual input or method to get the row ID
+
+    // Update the corresponding row in the table
+    var selectedRow = $('#paydataTable tbody tr[data-rowid="' + selectedRowId + '"]');
+    selectedRow.find('td:eq(1)').text(modalpaytype); // Update with the correct column indices.
+    selectedRow.find('td:eq(2)').text(transmodeValue); // Update with the correct column indices.
+    selectedRow.find('td:eq(3)').text(payamtValue); // Update with the correct column indices
+    selectedRow.find('td:eq(4)').text(custbillnoValue); // Update with the correct column indices
+
+
+    // Hide the modal
+    $('#paymentmodal').modal('hide');
+});
 
 // ==============================
 var rowpaymentCounter = 0; // Move the initialization here
@@ -453,7 +478,7 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
         },
         success: function (data) {
 
-            $('#ajaxpaymentresults').html(data);
+            $('#ajaxaddpaymentresults').html(data);
         }
     });
 
@@ -465,7 +490,7 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
         },
         success: function (data) {
 
-            $('#ajaxsupplierresults').html(data);
+            $('#ajaxaddsupplierresults').html(data);
         }
     });
 });
