@@ -100,8 +100,18 @@
 										</div>
 									</li>
 									<li class="dropdown main-profile-menu">
-										<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar"
-												src="../assets/img/users/avatar.png"></a>
+									<?php
+										// Define an array of colors
+										$colors = array('bg-pink', 'bg-blue', 'bg-green', 'bg-purple', 'bg-orange','bg-primary','bg-cyan','bg-success');
+
+										// Choose a random color from the array
+										$randomColor = $colors[array_rand($colors)];
+										?>
+										<!-- <a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar"
+												src="../assets/img/users/avatar.png"></a> -->
+												<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
+														<?php echo strtoupper(substr($_SESSION['adminname'], 0, 1)); ?>
+													</div></a>
 										<div class="dropdown-menu">
 											<div class="header-navheading">
 												<h6 class="main-notification-title"><?php echo strtoupper($_SESSION['adminname']); ?></h6>

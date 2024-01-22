@@ -18848,7 +18848,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     position: absolute;
     inset-block-start: -6px;
     inset-inline-start: 50%;
-    width: 14px;
+    /* width: 14px; */
+    width: 10px;
     height: 14px;
     background: #fff;
     transform: rotate(45deg);

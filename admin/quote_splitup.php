@@ -480,13 +480,10 @@ function deletesplitup()
                     var quoteIdValue = $(this).data('quoteid');
                     $('#quoteid').val(quoteIdValue);
                     var custName = $(this).data('custname');
-
                     $('#custname').val(custName);
                     var brandName = $(this).data('brandname');
-
-                    $('#brandname').val(brandName);
+                   $('#brandname').val(brandName);
                     var quoteAmt = $(this).data('quotedamt');
-
                     $('#quoteamt').val(quoteAmt);
                     // Your code to be executed when the element is clicked
                     // alert('Element with id "quoteSplit" clicked! Data Quote ID: ' + quoteIdValue);

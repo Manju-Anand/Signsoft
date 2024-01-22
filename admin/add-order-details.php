@@ -104,209 +104,429 @@ $mainorderid = "";
 					<div class="col-md-12">
 						<div class="card custom-card mt-3" id="right">
 							<div class="card-header rounded-bottom-0">
-								<h5 class="mt-2">Tabs on Right Side</h5>
+								<h5 class="mt-2">You can Add & Edit order details here.</h5>
+                                <input type="text" id="paystatus" name="paystatus" value="Payment Add" readonly>
 							</div>
 							<div class="card-body">
-								<div class="tab_wrapper second_tab">
-									<ul class="tab_list">
-										<li class="active">Order Details</li>
-										<li>Quotation Splitup</li>
-										<li>Staff Allocation</li>
-										<li>Supplier Payment Details</li>
-										<li>Customer Payment Details</li>
-										<!-- <li>Tab 6</li> -->
-									</ul>
+                            <div class="panel panel-primary">
+                                <div class="tab-menu-heading">
+                                    <div class="tabs-menu">
+                                        <!-- Tabs -->
+                                        <ul class="nav panel-tabs panel-secondary">
+                                            <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-user mx-1"></i></span>Order Details</a>
+                                            </li>
+											<li><a href="#tab20" data-bs-toggle="tab"><span><i class="fe fe-bell mx-1"></i></span>Quotation Splitup</a>
+                                            </li>
+                                            <li><a href="#tab21" data-bs-toggle="tab"><span><i class="fe fe-command mx-1"></i></span>Staff Allocation</a>
+                                            </li>
+                                            <li><a href="#tab18" data-bs-toggle="tab"><span><i class="fe fe-calendar mx-1"></i></span>Supplier Details</a>
+                                            </li>
+                                            <li><a href="#tab19" data-bs-toggle="tab"><span><i class="fe fe-settings mx-1"></i></span>Payment Details</a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body tabs-menu-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab17">
+                                            <form method="post">
+                                                <div class="row mb-4">
+                                                    <div class="col-md-12">
+                                                        <label class="form-label" for="ordersdisplay">Orders :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
+                                                            <option value="" disabled selected>Select Order Entry</option>
+                                                            <?php
+                                                            $queryorder = "select * from order_customers where order_status='Active' order by id desc";
+                                                            $select_postsorder = mysqli_query($connection, $queryorder);
+                                                            while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+                                                                $mainorderid = $roworder['id'];
+                                                            ?>
+                                                                <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
+                                                            <?php }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
 
-									<div class="content_wrapper">
-										<div class="tab_content active">
-											<p>It is a long established fact that a reader will be distracted by
-												the readable content of a page when looking at its layout. The
-												point of using Lorem Ipsum is that it has a more-or-less normal
-												distribution
-												of letters, as opposed to using 'Content here, content here',
-												making it look like readable English. Many desktop publishing
-												packages and web page editors now use Lorem Ipsum as their
-												default model text,
-												and a search for 'lorem ipsum' will uncover many web sites still
-												in their infancy. Various versions have evolved over the years,
-												sometimes by accident, sometimes on purpose (injected humour and
-												the like)
-												It is a long established fact that a reader will be distracted
-												by the readable content of a page when looking at its layout.
-												The point of using Lorem Ipsum is that it has a more-or-less
-												normal distribution
-												of letters, as opposed to using 'Content here, content here',
-												making it look like readable English. Many desktop publishing
-												packages and web page editors now use Lorem Ipsum as their
-												default model text,
-												and a search for 'lorem ipsum' will uncover many web sites still
-												in their infancy. Various versions have evolved over the years,
-												sometimes by accident, sometimes on purpose (injected humour and
-												the like).</p>
-										</div>
+                                                 
+                                                    <div class="col-md-12" style="margin: bottom 10px;" id="orderdetails"></div>
 
-										<div class="tab_content">
-											<p>Contrary to popular belief, Lorem Ipsum is not simply random
-												text. It has roots in a piece of classical Latin literature from
-												45 BC, making it over 2000 years old. Richard McClintock, a
-												Latin professor at
-												Hampden-Sydney College in Virginia, looked up one of the more
-												obscure Latin words, consectetur, from a Lorem Ipsum passage,
-												and going through the cites of the word in classical literature,
-												discovered
-												the undoubtable source. Lorem Ipsum comes from sections 1.10.32
-												and 1.10.33 of"de Finibus Bonorum et Malorum" (The Extremes of
-												Good and Evil) by Cicero, written in 45 BC. This book is a
-												treatise on the
-												theory of ethics, very popular during the Renaissance. The first
-												line of Lorem Ipsum,"Lorem ipsum dolor sit amet..", comes from a
-												line in section 1.10.32. Contrary to popular belief, Lorem Ipsum
-												is not
-												simply random text. It has roots in a piece of classical Latin
-												literature from 45 BC, making it over 2000 years old. Richard
-												McClintock, a Latin professor at Hampden-Sydney College in
-												Virginia, looked
-												up one of the more obscure Latin words, consectetur, from a
-												Lorem Ipsum passage, and going through the cites of the word in
-												classical literature, discovered the undoubtable source. Lorem
-												Ipsum comes
-												from sections 1.10.32 and 1.10.33 of"de Finibus Bonorum et
-												Malorum" (The Extremes of Good and Evil) by Cicero, written in
-												45 BC. This book is a treatise on the theory of ethics, very
-												popular during the
-												Renaissance. The first line of Lorem Ipsum,"Lorem ipsum dolor
-												sit amet..", comes from a line in section 1.10.32.</p>
-										</div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3"></div>
+                                                    <div class="col-md-9">
+                                                        <button type="submit" name="submit" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Close Order</button>
+                                                        <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
+                                                        <!-- float-end -->
+
+                                                    </div>
+                                                </div>
+                                                <?php
+                                                if (isset($_POST['submit'])) {
+                                                    $closestatus = "false";
+                                                    $orderstatus = $_POST["status"];
+                                                    if ($orderstatus = "Yes") {
+                                                        $orderclosed = "Closed";
+                                                        $cquality = $_POST['cquality'];
+                                                        $quoteamt1 =$_POST['quoteamt1'];
+                                                        $orderid = $_POST['ordersdisplay'];
+                                                        $statusreason = $_POST["notes"];
+
+                                                        date_default_timezone_set("Asia/Calcutta");
+                                                        $postdate = date("M d,Y h:i:s a");
+
+                                                        $sql = "SELECT * FROM payment_supplier where orderid='" . $orderid . "'";
+                                                        $result = $connection->query($sql);
+
+                                                        if ($result->num_rows > 0) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                if ($row['transaction_mode'] !== 'CASH') {
+                                                                    if ($row['supplier_billno'] !== '' ) {
+                                                                        // echo "suppliertrue";
+                                                                        $closestatus = "true";
+                                                                    } else {
+                                                                        // echo "supplierfalse";
+                                                                        $closestatus = "false";
+                                                                        goto pc;
+                                                                    }
+                                                                    if ( $row['customer_billno'] !== '') {
+                                                                        // echo "suppliertrue";
+                                                                        $closestatus = "true";
+                                                                    } else {
+                                                                        // echo "supplierfalse";
+                                                                        $closestatus = "false";
+                                                                        goto pc;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        pc:
+                                                        $sql = "SELECT * FROM payment_customer where orderid='" . $orderid . "'";
+                                                        $result = $connection->query($sql);
+
+                                                        if ($result->num_rows > 0) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                if ($row['transaction_mode'] !== 'CASH') {
+                                                                    if ($row['customer_billno'] !== '') {
+                                                                        // echo "custtrue";
+                                                                        $closestatus = "true";
+                                                                    } else {
+                                                                        // echo "custfalse";
+                                                                        $closestatus = "false";
+                                                                        goto ppc;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        ppc:
+
+                                                        if ($closestatus == "false") {
+                                                            echo "<script> alert('Order cannot be closed because there are missing billnos.'); </script>";
+                                                        } else {
+                                                            // *************** transaction entry ****** based on $cquality ****************
+                                                            if ($cquality=="Good"){
+
+                                                                $actid="1";
+                                                                $actname="Signefo";
+
+                                                            }elseif ($cquality=="Average") {
+                                                                $actid="2";
+                                                                $actname="Signefo Media";
+                                                            }else {
+                                                                $actid="";
+                                                                $actname="";
+                                                            }
+                                                            $querycategory = "INSERT INTO transactions (orderid, action, actid, amount, add_date, created)
+                                                            VALUES('$orderid','Credited','$actid', '$quoteamt','$postdate','$postdate')";
+
+                                                            if ($connection->query($querycategory) === TRUE) {
+                                                            }
+
+                                                            $querycategory = "UPDATE order_customers SET order_status='Closed', close_date='" . $postdate . "' where id='" . $orderid . "'";
+
+                                                            if ($connection->query($querycategory) === TRUE) {
+                                                            }
 
 
-										<div class="tab_content">
-											<p>It is a long established fact that a reader will be distracted by
-												the readable content of a page when looking at its layout. The
-												point of using Lorem Ipsum is that it has a more-or-less normal
-												distribution
-												of letters, as opposed to using 'Content here, content here',
-												making it look like readable English. Many desktop publishing
-												packages and web page editors now use Lorem Ipsum as their
-												default model text,
-												and a search for 'lorem ipsum' will uncover many web sites still
-												in their infancy. Various versions have evolved over the years,
-												sometimes by accident, sometimes on purpose (injected humour and
-												the like)
-												It is a long established fact that a reader will be distracted
-												by the readable content of a page when looking at its layout.
-												The point of using Lorem Ipsum is that it has a more-or-less
-												normal distribution
-												of letters, as opposed to using 'Content here, content here',
-												making it look like readable English. Many desktop publishing
-												packages and web page editors now use Lorem Ipsum as their
-												default model text,
-												and a search for 'lorem ipsum' will uncover many web sites still
-												in their infancy. Various versions have evolved over the years,
-												sometimes by accident, sometimes on purpose (injected humour and
-												the like).</p>
-										</div>
+                                                            $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
+                                                            VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";
 
-										<div class="tab_content">
-											<p>Contrary to popular belief, Lorem Ipsum is not simply random
-												text. It has roots in a piece of classical Latin literature from
-												45 BC, making it over 2000 years old. Richard McClintock, a
-												Latin professor at
-												Hampden-Sydney College in Virginia, looked up one of the more
-												obscure Latin words, consectetur, from a Lorem Ipsum passage,
-												and going through the cites of the word in classical literature,
-												discovered
-												the undoubtable source. Lorem Ipsum comes from sections 1.10.32
-												and 1.10.33 of"de Finibus Bonorum et Malorum" (The Extremes of
-												Good and Evil) by Cicero, written in 45 BC. This book is a
-												treatise on the
-												theory of ethics, very popular during the Renaissance. The first
-												line of Lorem Ipsum,"Lorem ipsum dolor sit amet..", comes from a
-												line in section 1.10.32. Contrary to popular belief, Lorem Ipsum
-												is not
-												simply random text. It has roots in a piece of classical Latin
-												literature from 45 BC, making it over 2000 years old. Richard
-												McClintock, a Latin professor at Hampden-Sydney College in
-												Virginia, looked
-												up one of the more obscure Latin words, consectetur, from a
-												Lorem Ipsum passage, and going through the cites of the word in
-												classical literature, discovered the undoubtable source. Lorem
-												Ipsum comes
-												from sections 1.10.32 and 1.10.33 of"de Finibus Bonorum et
-												Malorum" (The Extremes of Good and Evil) by Cicero, written in
-												45 BC. This book is a treatise on the theory of ethics, very
-												popular during the
-												Renaissance. The first line of Lorem Ipsum,"Lorem ipsum dolor
-												sit amet..", comes from a line in section 1.10.32.</p>
-										</div>
+                                                            if ($connection->query($querycategory) === TRUE) {
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" id="tab20">
+                                            <div class="row mb-4">
+                                                <div class="col" style="text-align: right;">
+                                                <a data-bs-target='#modalquotesplitup' data-bs-toggle='modal' data-effect='effect-slide-in-right'
+                                                href='javascript:void(0);' id='quotesplitupbtn' data-quoteid='' style='font-size:15px;color:white;'>
+                                                <button class='btn btn-indigo' >Quotation Splitup</button></a>
+                                                </div><br>
+                                            
 
-										<div class="tab_content">
-											<p>There are many variations of passages of Lorem Ipsum available,
-												but the majority have suffered alteration in some form, by
-												injected humour, or randomised words which don't look even
-												slightly believable.
-												If you are going to use a passage of Lorem Ipsum, you need to be
-												sure there isn't anything embarrassing hidden in the middle of
-												text. All the Lorem Ipsum generators on the Internet tend to
-												repeat predefined
-												chunks as necessary, making this the first true generator on the
-												Internet. It uses a dictionary of over 200 Latin words, combined
-												with a handful of model sentence structures, to generate Lorem
-												Ipsum
-												which looks reasonable. The generated Lorem Ipsum is therefore
-												always free from repetition, injected humour, or
-												non-characteristic words etc. There are many variations of
-												passages of Lorem Ipsum available,
-												but the majority have suffered alteration in some form, by
-												injected humour, or randomised words which don't look even
-												slightly believable. If you are going to use a passage of Lorem
-												Ipsum, you need to
-												be sure there isn't anything embarrassing hidden in the middle
-												of text. All the Lorem Ipsum generators on the Internet tend to
-												repeat predefined chunks as necessary, making this the first
-												true generator
-												on the Internet. It uses a dictionary of over 200 Latin words,
-												combined with a handful of model sentence structures, to
-												generate Lorem Ipsum which looks reasonable. The generated Lorem
-												Ipsum is therefore
-												always free from repetition, injected humour, or
-												non-characteristic words etc.</p>
-										</div>
+                                                <div class="table-responsive">
 
-										<div class="tab_content">
-											<p>Contrary to popular belief, Lorem Ipsum is not simply random
-												text. It has roots in a piece of classical Latin literature from
-												45 BC, making it over 2000 years old. Richard McClintock, a
-												Latin professor at
-												Hampden-Sydney College in Virginia, looked up one of the more
-												obscure Latin words, consectetur, from a Lorem Ipsum passage,
-												and going through the cites of the word in classical literature,
-												discovered
-												the undoubtable source. Lorem Ipsum comes from sections 1.10.32
-												and 1.10.33 of"de Finibus Bonorum et Malorum" (The Extremes of
-												Good and Evil) by Cicero, written in 45 BC. This book is a
-												treatise on the
-												theory of ethics, very popular during the Renaissance. The first
-												line of Lorem Ipsum,"Lorem ipsum dolor sit amet..", comes from a
-												line in section 1.10.32. Contrary to popular belief, Lorem Ipsum
-												is not
-												simply random text. It has roots in a piece of classical Latin
-												literature from 45 BC, making it over 2000 years old. Richard
-												McClintock, a Latin professor at Hampden-Sydney College in
-												Virginia, looked
-												up one of the more obscure Latin words, consectetur, from a
-												Lorem Ipsum passage, and going through the cites of the word in
-												classical literature, discovered the undoubtable source. Lorem
-												Ipsum comes
-												from sections 1.10.32 and 1.10.33 of"de Finibus Bonorum et
-												Malorum" (The Extremes of Good and Evil) by Cicero, written in
-												45 BC. This book is a treatise on the theory of ethics, very
-												popular during the
-												Renaissance. The first line of Lorem Ipsum,"Lorem ipsum dolor
-												sit amet..", comes from a line in section 1.10.32.</p>
-										</div>
-									</div>
-								</div>
-							</div>
+                                                    <table class="table table-bordered mg-b-0" id="quotesplitupTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Item Name</th>
+                                                                <th>Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxquotesplitupresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab21">
+                                            <div class="row mb-4">
+                                          
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="dept">Orders :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
+                                                            <option value="" disabled selected>Select Order Entry</option>
+                                                         
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="staff">Staff Name :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="staff" id="staff" required>
+                                                            <option value="" disabled selected>Select Employee</option>
+                                                            <?php
+                                                            $query = "select * from employee order by id desc";
+                                                            $select_posts = mysqli_query($connection, $query);
+                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
+                                                            ?>
+                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['empname'] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="assignwork">Work Assigned :</label>
+                                                        <input type="text" class="form-control" id="assignwork" name="assignwork" placeholder="Work Assigned" required>
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="deadline">Deadline :</label>
+                                                        <input type="date" class="form-control" id="deadline" name="deadline" placeholder="Deadline" required>
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="workper">Percentage of work :</label>
+                                                        <input type="text" class="form-control" id="workper" name="workper" placeholder="Percentage of work" required>
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
+                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addstaffRow()" style="color:white;cursor:pointer;">Allocate Staff</button>
+
+                                                    </div>
+                                                    <hr>
+
+                                                <div class="table-responsive">
+
+                                                    <table class="table table-bordered mg-b-0" id="staffallocateTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Category Assigned</th>
+                                                                <th class="hidden-cell">order Id</th>
+                                                                <th>Employee Name</th>
+                                                                <th class="hidden-cell">Emp Id</th>
+                                                                <th>Work Descripton</th>
+                                                                <th>Dead Line</th>
+                                                                <th>Percentage of Work</th>
+                                                                <th>Assigned Date</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxstaffallocateresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab18">
+                                            <div class="row mb-4">
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="orders">Orders :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="orders" id="orders" required>
+                                                            <option value="" disabled selected>Select Order Entry</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="supplier">Supplier Name :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="supplier" id="supplier" required>
+                                                            <option value="" disabled selected>Select Supplier</option>
+                                                            <?php
+                                                            $query = "select * from suppliers order by id desc";
+                                                            $select_posts = mysqli_query($connection, $query);
+                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
+                                                            ?>
+                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['supplier_name'] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="donework">Work Done :</label>
+                                                        <input type="text" class="form-control" id="donework" name="donework" placeholder="Work Done" required>
+
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="supbillno">Supplier Bill No :</label>
+                                                        <input type="text" class="form-control" id="supbillno" name="supbillno" placeholder="Supplier Bill No" required>
+
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="payamt">Payment Amount :</label>
+                                                        <input type="number" class="form-control" id="payamt" name="payamt" placeholder="Payment Amount" required>
+
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="transmode">Transaction Mode :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="transmode" id="transmode" required>
+                                                            <option value="" disabled selected>Select Transaction Mode</option>
+                                                            <option value="Cash">Cash</option>
+                                                            <option value="Card">Card</option>
+                                                            <option value="UPI">UPI</option>
+                                                            <option value="Bank Transfer">Bank Transfer</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="workper">Customer Bill No :</label>
+                                                        <input type="text" class="form-control" id="custbillno" name="custbillno" placeholder="Customer Bill No" required>
+
+                                                    </div>
+
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
+                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addRow()" style="color:white;cursor:pointer;">Add Supplier Details</button>
+
+                                                    </div>
+													<hr>
+
+                                                <div class="table-responsive">
+                                                    <style>
+                                                        .hidden-cell {
+                                                            display: none;
+                                                        }
+                                                    </style>
+                                                    <table class="table table-bordered mg-b-0" id="dataTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Order</th>
+                                                                <th class="hidden-cell">order Id</th>
+                                                                <th>Supplier Name</th>
+                                                                <th class="hidden-cell">Sup Id</th>
+                                                                <th>Work Done</th>
+                                                                <th>Supplier Bill No</th>
+                                                                <th style="text-align: right;">Payment Amount</th>
+                                                                <th>Transaction Mode</th>
+                                                                <th>Customer Bill No</th>
+																<th>Action</th>
+
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxsupplierresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab19">
+                                            <div class="row mb-4">
+											<div class="col-md-3">
+                                                        <label class="form-label" for="paytype">Payment Type :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="paytype" id="paytype" required>
+                                                            <option value="" disabled selected>Select Payment Type</option>
+                                                            <option value="Advance Payment">Advance Payment</option>
+                                                            <option value="Intrim Payment">Intrim Payment</option>
+                                                            <option value="Final Payment">Final Payment</option>
+
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="paymenttransmode">Transaction Mode :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="paymenttransmode" id="paymenttransmode" required>
+                                                            <option value="" disabled selected>Select Transaction Mode</option>
+                                                            <option value="Cash">Cash</option>
+                                                            <option value="Card">Card</option>
+                                                            <option value="UPI">UPI</option>
+                                                            <option value="Bank Transfer">Bank Transfer</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="paymentamt">Payment Amount :</label>
+                                                        <input type="number" class="form-control" id="paymentamt" name="paymentamt" placeholder="Payment Amount" required>
+
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="paycustbillno">Customer Bill No :</label>
+                                                        <input type="text" class="form-control" id="paycustbillno" name="paycustbillno" placeholder="Customer Bill No" required>
+
+                                                    </div>
+
+
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
+                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addPayment()" style="color:white;cursor:pointer;">Add Payment Details</button>
+
+                                                    </div>
+                                                    <hr>
+                                                <div class="table-responsive">
+                                                    <style>
+                                                        .hidden-cell {
+                                                            display: none;
+                                                        }
+                                                    </style>
+                                                    <table class="table table-bordered mg-b-0" id="paydataTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Payment Type</th>
+                                                                <th>Transaction Mode</th>
+                                                                <th>Payment Amount</th>
+                                                                <th>Customer Bill No</th>
+																<th>Action</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxpaymentresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 						</div>
 					</div>
 				</div>
@@ -323,7 +543,298 @@ $mainorderid = "";
             </div>
         </div>
         <!-- End Main Content-->
-       
+             <!-- ===========================modals ======================================= -->
+        <!-- Basic modal -->
+        <div class="modal fade" id="suppliermodal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Edit Supplier Details - staff</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="text" class="form-control" id="modalrowid" name="modalrowid" required>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="orders">Orders :</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="modalorders" id="modalorders" required>
+                                    <option value="" disabled selected>Select Order Entry</option>
+
+                                    <?php
+
+                                    $query = "SELECT * FROM order_category WHERE order_id = ' $mainorderid'";
+                                    $result = mysqli_query($connection, $query);
+
+                                    // Build the options for the second select
+                                    $options = '<option value="" disabled selected>Select Option</option>';
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $querycat = "select * from category where id ='" . $row['category_id'] . "'";
+                                        $select_postscat  = mysqli_query($connection, $querycat);
+                                        while ($rowcat = mysqli_fetch_assoc($select_postscat)) {
+                                            $options .= '<option value="' . $rowcat['id'] . '"  data-brandName="' .  $roworder['brandName'] . '" data-quotedAmt="' . $roworder['quotedAmt'] . '">' . $rowcat['category'] . '</option>';
+                                        }
+                                    }
+
+
+
+
+
+                                    ?>
+
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="supplier">Supplier Name :</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="modalsupplier" id="modalsupplier" required>
+                                    <option value="" disabled selected>Select Supplier</option>
+                                    <?php
+                                    $query = "select * from suppliers order by id desc";
+                                    $select_posts = mysqli_query($connection, $query);
+                                    while ($row = mysqli_fetch_assoc($select_posts)) {
+                                    ?>
+                                        <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['supplier_name'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="donework">Work Done :</label>
+                                <input type="text" class="form-control" id="modaldonework" name="modaldonework" placeholder="Work Done" required>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="supbillno">Supplier Bill No :</label>
+                                <input type="text" class="form-control" id="modalsupbillno" name="modalsupbillno" placeholder="Supplier Bill No" required>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="payamt">Payment Amount :</label>
+                                <input type="number" class="form-control" id="modalpayamt" name="modalpayamt" placeholder="Payment Amount" required>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="transmode">Transaction Mode :</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="modaltransmode" id="modaltransmode" required>
+                                    <option value="" disabled selected>Select Transaction Mode</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="workper">Customer Bill No :</label>
+                                <input type="text" class="form-control" id="modalcustbillno" name="modalcustbillno" placeholder="Customer Bill No" required>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="saveChangesBtn" type="button">Save changes</button>
+                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Basic modal -->
+        <!-- Basic modal -->
+        <div class="modal fade" id="paymentmodal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Edit Payment Details -</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="text" class="form-control" id="modalpayrowid" name="modalpayrowid" required>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="paytype">Payment Type :</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="modalpaytype" id="modalpaytype" required>
+                                    <option value="" disabled selected>Select Payment Type</option>
+                                    <option value="Advance Payment">Advance Payment</option>
+                                    <option value="Intrim Payment">Intrim Payment</option>
+                                    <option value="Final Payment">Final Payment</option>
+
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="paymenttransmode">Transaction Mode :</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="modalpaymenttransmode" id="modalpaymenttransmode" required>
+                                    <option value="" disabled selected>Select Transaction Mode</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="UPI">UPI</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="paymentamt">Payment Amount :</label>
+                                <input type="number" class="form-control" id="modalpaymentamt" name="modalpaymentamt" placeholder="Payment Amount" required>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="paycustbillno">Customer Bill No :</label>
+                                <input type="text" class="form-control" id="modalpaycustbillno" name="modalpaycustbillno" placeholder="Customer Bill No" required>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="savepayChangesBtn" type="button">Save changes</button>
+                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Basic modal -->
+          <!-- Basic modal -->
+          <div class="modal fade" id="staffmodal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Edit Staff Allocation Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="text" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="modalstafforders">Orders :</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="modalstafforders" id="modalstafforders" required>
+                                    <option value="" disabled selected>Select Order Entry</option>
+
+                                    <?php
+
+
+                                    $query = "SELECT * FROM order_category WHERE order_id = ' $mainorderid'";
+                                    $result = mysqli_query($connection, $query);
+
+                                    // Build the options for the second select
+                                    $options = '<option value="" disabled selected>Select Option</option>';
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $querycat = "select * from category where id ='" . $row['category_id'] . "'";
+                                        $select_postscat  = mysqli_query($connection, $querycat);
+                                        while ($rowcat = mysqli_fetch_assoc($select_postscat)) {
+                                            $options .= '<option value="' . $rowcat['id'] . '"  data-brandName="' .  $roworder['brandName'] . '" data-quotedAmt="' . $roworder['quotedAmt'] . '">' . $rowcat['category'] . '</option>';
+                                        }
+                                    }
+                                    ?>
+
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="modalstaff">Staff Name :</label>
+                                <select class="form-select mb-3" aria-label="Default select example" name="modalstaff" id="modalstaff" required>
+                                                            <option value="" disabled selected>Select Employee</option>
+                                                            <?php
+                                                            $query = "select * from employee order by id desc";
+                                                            $select_posts = mysqli_query($connection, $query);
+                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
+                                                            ?>
+                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['empname'] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="modalassignwork">Work Assigned :</label>
+                                <input type="text" class="form-control" id="modalassignwork" name="modalassignwork" placeholder="" required>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="modaldeadline">Dead Line :</label>
+                                <input type="date" class="form-control" id="modaldeadline" name="modaldeadline" placeholder="" required>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="modalpercentage">Percentage of work :</label>
+                                <input type="number" class="form-control" id="modalpercentage" name="modalpercentage" placeholder="" required>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="modalassigndate">Assigned Date :</label>
+                                <input type="date" class="form-control" id="modalassigndate" name="modalassigndate" placeholder="" required>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="savestaffChangesBtn" type="button">Save changes</button>
+                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Basic modal -->
+
+        <div class="modal fade" id="modalquotesplitup">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Detailed Estimate</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="form-label" for="dept">Order ID :</label>
+                                <input class="form-control" type="text" id="quoteid" value="" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="dept">Customer Name :</label>
+                                <input class="form-control" type="text" id="custname" value="" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="dept">Brand Name :</label>
+                                <input class="form-control" type="text" id="brandname" value="" readonly>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="dept">Quoted Amount</label>
+                                <input class="form-control" type="text" id="quotedamt" value="" readonly>
+                            </div>
+
+
+
+                        </div><br>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered mg-b-0" id="orderTable">
+                                        <thead>
+                                            <tr style="background-color: lightblue;">
+                                                <th>#</th>
+                                                <th>Item ID</th>
+                                                <th>Item Name</th>
+                                                <th>Price</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Joan Powell</td>
+                                                <td>Associate Developer</td>
+                                                <td>$450,870</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn ripple btn-primary" id="saveChangesBtn" type="button">Save changes</button>
+                            <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ===========================modals ======================================= -->
         <!-- Main Footer-->
         <?php include 'includes/footer.php'; ?>
         <!--End Footer-->
@@ -387,7 +898,7 @@ $mainorderid = "";
 
     <!-- password-addon init -->
     <!-- <script src="../assets/js/password-addon.js"></script> -->
-    <script src="view-payment.js"></script>
+    <script src="add-payments.js"></script>
 
 	<!--- TABS JS -->
 	<script src="../assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>
