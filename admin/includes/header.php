@@ -170,6 +170,90 @@
 									<span class="side-menu__label">Dashboard</span>
 								</a>
 							</li>
+						
+							
+							<li class="side-item side-item-category">Order Execution</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="">
+									<span class="side-menu__icon"><i class="fe fe-layers side_menu_img"></i></span>
+									<span class="side-menu__label">Orders-pre</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side5" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
+													
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side5">
+													<ul class="sidemenu-list">
+																												
+														<li><a href="staffAllocation.php" class="slide-item">Staff Allocation</a></li>
+														<li><a href="quote_splitup.php" class="slide-item">Quotation Splitup</a></li>
+														<li><a href="add-payment.php" class="slide-item">Add Payment Details</a></li>
+														
+													</ul>
+													
+												</div>
+												
+											</div>
+										</div>
+									</li>
+
+								</ul>
+								
+							</li>
+							
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="">
+									<span class="side-menu__icon"><i class="fe fe-layers side_menu_img"></i></span>
+									<span class="side-menu__label">Orders Details</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side5" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
+													
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side5">
+													<ul class="sidemenu-list">
+																												
+														<li><a href="orderlist.php" class="slide-item">Add Order</a></li>
+														<li><a href="add-order-details.php" class="slide-item">Add Order Details</a></li>
+														<li><a href="close-order.php" class="slide-item">Close Order</a></li>
+														
+													</ul>
+													
+												</div>
+												
+											</div>
+										</div>
+									</li>
+
+								</ul>
+								
+							</li>
+							
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" >
+									<span class="side-menu__icon"><i class="fe fe-database side_menu_img"></i></span>
+									<span class="side-menu__label">Reports</span><i class="angle fa fa-angle-right"></i>
+								</a>
+							</li>
+							
+							
+
 							<li class="side-item side-item-category">Masters</li>
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
@@ -236,58 +320,10 @@
 
 								</ul>
 							</li>
+
+
+
 							
-							<li class="side-item side-item-category">Order Execution</li>
-							<li class="slide">
-								<a class="side-menu__item" data-bs-toggle="slide" href="orderlist.php">
-									<span class="side-menu__icon"><i class="fe fe-layers side_menu_img"></i></span>
-									<span class="side-menu__label">Orders</span>
-								</a>
-								
-							</li>
-							<li class="slide">
-								<a class="side-menu__item" data-bs-toggle="slide" href="staffAllocation.php">
-									<span class="side-menu__icon"><i class="fe fe-compass side_menu_img"></i></span>
-									<span class="side-menu__label">Staff Allocation</span>
-								</a>
-							
-							</li>
-						
-							<li class="slide">
-								<a class="side-menu__item" data-bs-toggle="slide" href="quote_splitup.php">
-									<span class="side-menu__icon"><i class="fe fe-package side_menu_img"></i></span>
-									<span class="side-menu__label">Quotation Splitup</span>
-								</a>
-								
-							</li>
-							<li class="slide">
-								<a class="side-menu__item" data-bs-toggle="slide" href="add-payment.php">
-								<span class="side-menu__icon">
-										<i class="fe fe-zap side_menu_img"></i>
-									</span>
-									<span class="side-menu__label">Add Payment Details</span>
-								</a>
-								
-							</li>
-							<li class="slide">
-								<a class="side-menu__item" data-bs-toggle="slide" href="add-order-details.php">
-								<span class="side-menu__icon">
-										<i class="fe fe-zap side_menu_img"></i>
-									</span>
-									<span class="side-menu__label">Add Order Details</span>
-								</a>
-								
-							</li>
-							<li class="slide">
-								<a class="side-menu__item" data-bs-toggle="slide" href="close-order.php">
-									<span class="side-menu__icon">
-										<i class="fe fe-book side_menu_img"></i>
-									</span>
-									<span class="side-menu__label">Close Order</span>
-									
-								</a>
-								
-							</li>
 							<li class="side-item side-item-category">Other Pages</li>
 							
 							<li class="slide">

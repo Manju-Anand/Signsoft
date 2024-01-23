@@ -74,9 +74,9 @@ include "includes/connection.php";
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Add Lead</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">Add Order</h2>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Lead Entry</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Order Entry</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Details</li>
                             </ol>
                         </div>
@@ -104,7 +104,7 @@ include "includes/connection.php";
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Add New Lead</div>
+                                    <div class="card-title">Add New Order</div>
                                 </div>
                                 <form id="adddesig" method="post" action="" enctype="multipart/form-data">
                                     <div class="row">
@@ -136,13 +136,13 @@ include "includes/connection.php";
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="poneno">Phone No :</label>
                                                     <div class="col-md-9">
-                                                        <input type="number" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
+                                                        <input type="number"  pattern="[6-9]\d{9}" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="emailid">Email ID :</label>
                                                     <div class="col-md-9">
-                                                        <input type="email" name="emailid" id="emailid" class="form-control" placeholder="">
+                                                        <input type="email"   pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" name="emailid" id="emailid" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">

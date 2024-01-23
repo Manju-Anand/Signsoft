@@ -14,7 +14,7 @@ if (isset($_GET['logout'])) {
 }
 
 include "includes/connection.php";
-
+$totemployees=0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +75,7 @@ include "includes/connection.php";
 						<div>
 							<h2 class="main-content-title tx-24 mg-b-5">Welcome To Dashboard</h2>
 
-                            <?php echo "id : " . $_SESSION['adminid'] . '\n' . $_SESSION['adminname']; ?>
+                            <?php echo "id : " . $_SESSION['adminid'] . ' , ' . $_SESSION['adminname']; ?>
 
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
@@ -423,16 +423,24 @@ include "includes/connection.php";
 							</div>
 						</div>
 						<div class="col-sm-6 col-xl-3 col-lg-6">
+							<?php
+								$sql = "SELECT * FROM employee";
+								$result = $connection->query($sql);
+
+								if ($result->num_rows > 0) {
+									$totemployees=$result->num_rows;
+								}
+							?>
 							<div class="card custom-card">
 								<div class="card-body dash1">
 									<div class="d-flex">
-										<p class="mb-1 tx-inverse">Profit By Sale</p>
+										<p class="mb-1 tx-inverse">Total Employees</p>
 										<div class="ms-auto">
 											<i class="fa fa-signal fs-20 text-info"></i>
 										</div>
 									</div>
 									<div>
-										<h3 class="dash-25">$789</h3>
+										<h3 class="dash-25"><?php echo $totemployees; ?> </h3>
 									</div>
 									<div class="progress mb-1">
 										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
@@ -440,9 +448,9 @@ include "includes/connection.php";
 										</div>
 									</div>
 									<div class="expansion-label d-flex text-muted">
-										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-up me-1 text-success"></i>0.9%</span>
+										<a href="employeelist.php"><span class="text-muted">Employees List</span></a>
+										<!-- <span class="ms-auto"><i
+												class="fa fa-caret-up me-1 text-success"></i>0.9%</span> -->
 									</div>
 								</div>
 							</div>

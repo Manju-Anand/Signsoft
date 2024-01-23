@@ -200,7 +200,7 @@ function deleteorderlist()
                             <div class="card custom-card overflow-hidden">
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
-                                        <h6 class="card-title mb-1">List of leads</h6>
+                                        <h6 class="card-title mb-1">List of Orders</h6>
                                         <!-- <p class="text-muted card-sub-title">Searching, ordering and paging goodness will be
 										immediately added to the table, as shown in this example.</p> -->
                                     </div>

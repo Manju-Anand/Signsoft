@@ -54,9 +54,9 @@ include "includes/connection.php";
 
 
     <!-- Loader -->
-    <div id="global-loader">
+    <!-- <div id="global-loader">
         <img src="../assets/img/loader.svg" class="loader-img" alt="Loader">
-    </div>
+    </div> -->
     <!-- End Loader -->
 
     <!-- Page -->
@@ -152,13 +152,13 @@ include "includes/connection.php";
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="poneno">Phone No :</label>
                                                     <div class="col-md-9">
-                                                        <input type="number" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
+                                                        <input type="tel" class="form-control" name="phoneno" id="phoneno" pattern="[6-9]\d{9}" placeholder="" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="emailid">Email ID :</label>
                                                     <div class="col-md-9">
-                                                        <input type="email" name="emailid" id="emailid" class="form-control" placeholder="">
+                                                        <input type="email" name="emailid" id="emailid"  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
 
@@ -184,7 +184,7 @@ include "includes/connection.php";
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label mb-4">Login E-mailid :</label>
                                                     <div class="col-md-9">
-                                                        <input type="email" name="loginemailid" id="loginemailid" class="form-control" placeholder="">
+                                                        <input type="email" name="loginemailid" id="loginemailid"  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4 ">
@@ -299,7 +299,7 @@ include "includes/connection.php";
                                             $last_emp_id = $connection->insert_id;
                                             $password = md5($pass1); //encrypt the password before saving in the database
                                             $queryuser = "INSERT INTO employee_user (username, email, password,designation,empid,cmded,department)
-                                                    VALUES('$empname', '$loginname', '$password','$desig','$last_emp_id','$pass1','$department)";
+                                                    VALUES('$empname', '$loginname', '$password','$desig','$last_emp_id','$pass1','$department')";
 
                                             if ($connection->query($queryuser) === TRUE) {
                                                 $last_user_id = $connection->insert_id;

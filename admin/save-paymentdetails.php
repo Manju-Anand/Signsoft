@@ -20,10 +20,17 @@ if ($connection->query($sql) === TRUE) {
 } else {
   echo "Error deleting record: " . $connection->error;
 }
+$sql = "DELETE FROM staff_allocation WHERE orderid='". $corderid ."'";
+
+if ($connection->query($sql) === TRUE) {
+  echo "Record deleted successfully";
+} else {
+  echo "Error deleting record: " . $connection->error;
+}
 
 // ====================== delete already entered datas =============
 // Iterate through the data and insert into the database
-foreach ($data['dataToSave'] as $row) {
+foreach ($data['supplierdataToSave'] as $row) {
     $orderid = $row['orderid'];
     $entry = $row['entry'];
     $entryid = $row['entryid'];
@@ -49,8 +56,8 @@ foreach ($data['dataToSave'] as $row) {
 }
 
 // If you have a second table (payment_data), handle its data
-if (isset($data['dataToSave1'])) {
-    foreach ($data['dataToSave1'] as $row) {
+if (isset($data['paymentdataToSave'])) {
+    foreach ($data['paymentdataToSave'] as $row) {
         $orderid = $row['orderid'];
         $paymentType = $row['PaymentType'];
         $transactionMode = $row['TransactionMode'];
@@ -65,6 +72,28 @@ if (isset($data['dataToSave1'])) {
             echo "Error: " . $sqlPayment . "<br>" . $connection->error;
         }
     }
+}
+
+if (isset($data['staffallocationdataToSave'])) {
+  foreach ($data as $row) {
+    $orderid = $row['orderid'];
+    $entry = $row['entry'];
+    $entryid = $row['entryid'];
+    $staffName = $row['staffName'];
+    $staffid = $row['staffid'];
+    $workAssigned = $row['workAssigned'];
+    $deadline = $row['deadline'];
+    $percentOfWork = $row['percentOfWork'];
+    $assignDate = $row['assignDate'];
+
+    // Perform the SQL query to insert data into the database
+    $sql = "INSERT INTO staff_allocation (orderid,entryid,entryname,empid, empname, work_assigned, deadline, per_of_work,assignedDate) VALUES
+     ('$orderid','$entryid','$entry','$staffid', '$staffName', '$workAssigned', '$deadline', '$percentOfWork', '$assignDate')";
+    
+    if ($connection->query($sql) !== TRUE) {
+        echo "Error: " . $sql . "<br>" . $connection->error;
+    }
+}
 }
 
 // Close the database connection

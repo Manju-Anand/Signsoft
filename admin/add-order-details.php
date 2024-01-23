@@ -104,8 +104,19 @@ $mainorderid = "";
 					<div class="col-md-12">
 						<div class="card custom-card mt-3" id="right">
 							<div class="card-header rounded-bottom-0">
-								<h5 class="mt-2">You can Add & Edit order details here.</h5>
-                                <input type="text" id="paystatus" name="paystatus" value="Payment Add" readonly>
+								
+                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <h5 class="mt-2">You can Add & Edit order details here.</h5>
+                                                        <input type="text" id="paystatus" name="paystatus" value="Payment Add" readonly>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
+                                                        <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
+                                                        <!-- float-end -->
+
+                                                    </div>
+                                                </div>
 							</div>
 							<div class="card-body">
                             <div class="panel panel-primary">
@@ -128,9 +139,10 @@ $mainorderid = "";
                                     </div>
                                 </div>
                                 <div class="panel-body tabs-menu-body">
+                                <form method="post">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab17">
-                                            <form method="post">
+                                            
                                                 <div class="row mb-4">
                                                     <div class="col-md-12">
                                                         <label class="form-label" for="ordersdisplay">Orders :</label>
@@ -155,112 +167,8 @@ $mainorderid = "";
 
                                                 </div>
 
-                                                <div class="row">
-                                                    <div class="col-md-3"></div>
-                                                    <div class="col-md-9">
-                                                        <button type="submit" name="submit" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Close Order</button>
-                                                        <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
-                                                        <!-- float-end -->
-
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                if (isset($_POST['submit'])) {
-                                                    $closestatus = "false";
-                                                    $orderstatus = $_POST["status"];
-                                                    if ($orderstatus = "Yes") {
-                                                        $orderclosed = "Closed";
-                                                        $cquality = $_POST['cquality'];
-                                                        $quoteamt1 =$_POST['quoteamt1'];
-                                                        $orderid = $_POST['ordersdisplay'];
-                                                        $statusreason = $_POST["notes"];
-
-                                                        date_default_timezone_set("Asia/Calcutta");
-                                                        $postdate = date("M d,Y h:i:s a");
-
-                                                        $sql = "SELECT * FROM payment_supplier where orderid='" . $orderid . "'";
-                                                        $result = $connection->query($sql);
-
-                                                        if ($result->num_rows > 0) {
-                                                            while ($row = $result->fetch_assoc()) {
-                                                                if ($row['transaction_mode'] !== 'CASH') {
-                                                                    if ($row['supplier_billno'] !== '' ) {
-                                                                        // echo "suppliertrue";
-                                                                        $closestatus = "true";
-                                                                    } else {
-                                                                        // echo "supplierfalse";
-                                                                        $closestatus = "false";
-                                                                        goto pc;
-                                                                    }
-                                                                    if ( $row['customer_billno'] !== '') {
-                                                                        // echo "suppliertrue";
-                                                                        $closestatus = "true";
-                                                                    } else {
-                                                                        // echo "supplierfalse";
-                                                                        $closestatus = "false";
-                                                                        goto pc;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        pc:
-                                                        $sql = "SELECT * FROM payment_customer where orderid='" . $orderid . "'";
-                                                        $result = $connection->query($sql);
-
-                                                        if ($result->num_rows > 0) {
-                                                            while ($row = $result->fetch_assoc()) {
-                                                                if ($row['transaction_mode'] !== 'CASH') {
-                                                                    if ($row['customer_billno'] !== '') {
-                                                                        // echo "custtrue";
-                                                                        $closestatus = "true";
-                                                                    } else {
-                                                                        // echo "custfalse";
-                                                                        $closestatus = "false";
-                                                                        goto ppc;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        ppc:
-
-                                                        if ($closestatus == "false") {
-                                                            echo "<script> alert('Order cannot be closed because there are missing billnos.'); </script>";
-                                                        } else {
-                                                            // *************** transaction entry ****** based on $cquality ****************
-                                                            if ($cquality=="Good"){
-
-                                                                $actid="1";
-                                                                $actname="Signefo";
-
-                                                            }elseif ($cquality=="Average") {
-                                                                $actid="2";
-                                                                $actname="Signefo Media";
-                                                            }else {
-                                                                $actid="";
-                                                                $actname="";
-                                                            }
-                                                            $querycategory = "INSERT INTO transactions (orderid, action, actid, amount, add_date, created)
-                                                            VALUES('$orderid','Credited','$actid', '$quoteamt','$postdate','$postdate')";
-
-                                                            if ($connection->query($querycategory) === TRUE) {
-                                                            }
-
-                                                            $querycategory = "UPDATE order_customers SET order_status='Closed', close_date='" . $postdate . "' where id='" . $orderid . "'";
-
-                                                            if ($connection->query($querycategory) === TRUE) {
-                                                            }
-
-
-                                                            $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
-                                                            VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";
-
-                                                            if ($connection->query($querycategory) === TRUE) {
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                ?>
-                                            </form>
+                                                
+                                           
                                         </div>
                                         <div class="tab-pane" id="tab20">
                                             <div class="row mb-4">
@@ -268,6 +176,10 @@ $mainorderid = "";
                                                 <a data-bs-target='#modalquotesplitup' data-bs-toggle='modal' data-effect='effect-slide-in-right'
                                                 href='javascript:void(0);' id='quotesplitupbtn' data-quoteid='' style='font-size:15px;color:white;'>
                                                 <button class='btn btn-indigo' >Quotation Splitup</button></a>
+
+                                                <a data-bs-target='#modaleditquotesplitup' data-bs-toggle='modal' data-effect='effect-slide-in-right'
+                                                href='javascript:void(0);' id='editquotesplitupbtn' data-quoteid='' style='font-size:15px;color:white;'>
+                                                <button class='btn btn-success' >Edit Quotation Splitup</button></a>
                                                 </div><br>
                                             
 
@@ -524,6 +436,7 @@ $mainorderid = "";
                                         </div>
                                       
                                     </div>
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -827,7 +740,74 @@ $mainorderid = "";
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn ripple btn-primary" id="saveChangesBtn" type="button">Save changes</button>
+                            <button class="btn ripple btn-primary" id="saveQuotesplitupBtn" type="button">Save changes</button>
+                            <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                  <!-- ************* edit modal ****************** -->
+        <div class="modal fade" id="modaleditquotesplitup">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Detailed Estimate</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                        <!-- <input class="form-control" type="text" id="editsplitid" value="" readonly> -->
+                            <div class="col-md-2">
+                                <label class="form-label" for="dept">Order ID :</label>
+                                <input class="form-control" type="text" id="editquoteid" value="" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="dept">Customer Name :</label>
+                                <input class="form-control" type="text" id="editcustname" value="" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="dept">Brand Name :</label>
+                                <input class="form-control" type="text" id="editbrandname" value="" readonly>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="dept">Quoted Amount</label>
+                                <input class="form-control" type="text" id="editquoteamt" value="" readonly>
+                            </div>
+
+
+
+                        </div><br>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered mg-b-0" id="editorderTable">
+                                        <thead>
+                                            <tr style="background-color: lightblue;">
+                                                <th>#</th>
+                                                <th>Splitup ID</th>
+                                                <th>Item Name</th>
+                                                <th>Price</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Joan Powell</td>
+                                                <td>Associate Developer</td>
+                                                <td>$450,870</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn ripple btn-primary" id="updateChangesBtn" type="button">Update changes</button>
                             <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
                         </div>
                     </div>

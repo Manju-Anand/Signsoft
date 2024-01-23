@@ -15,6 +15,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$sql = "DELETE FROM quote_splitup WHERE orderid='" . $quoteId ."'";
+
+if ($conn->query($sql) === TRUE) {
+  echo "Record deleted successfully";
+} else {
+  echo "Error deleting record: " . $conn->error;
+}
+
+
+
 foreach ($tableData as $rowData) {
 if ($rowData['price'] !== ""){
     $sql = "INSERT INTO quote_splitup (orderid, itemid, itemname, price,created,modified) VALUES ('$quoteId', '{$rowData['itemId']}', '{$rowData['itemName']}', '{$rowData['price']}','$postdate','$postdate')";

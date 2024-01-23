@@ -147,13 +147,13 @@ include "includes/connection.php";
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="emailid">Email ID :</label>
                                                     <div class="col-md-9">
-                                                        <input type="email" name="emailid" id="emailid" class="form-control" placeholder="">
+                                                        <input type="email"  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" name="emailid" id="emailid" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="poneno">Phone No :</label>
                                                     <div class="col-md-9">
-                                                        <input type="number" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
+                                                        <input type="tel" pattern="[6-9]\d{9}" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
                                                     </div>
                                                 </div>
                                                 <!--End Row-->
@@ -292,7 +292,7 @@ include "includes/connection.php";
     <script>
         $(document).ready(function(e) {
             $('#cancel').delegate('', 'click change', function() {
-                window.location = "employeelist.php";
+                window.location = "supplierslist.php";
                 return false;
             });
         });

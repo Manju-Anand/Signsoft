@@ -445,10 +445,11 @@ function addPayment() {
 // ============================================
 function saveDataToDatabase() {
     var correctorderid =  document.getElementById("orderiddisplay").value;
+    // *********** supplier details *************
     var table = document.getElementById("dataTable");
     var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-    console.log("hai   :" + rows)
-    var dataToSave = [];
+    console.log("hai suppliers   :" + rows)
+    var supplierdataToSave = [];
 
     // Iterate through each row
     for (var i = 0; i < rows.length; i++) {
@@ -470,15 +471,15 @@ function saveDataToDatabase() {
             // Add more fields as needed
         };
 
-        dataToSave.push(rowData);
+        supplierdataToSave.push(rowData);
     }
     console.log(rowData);
-    // ============= second table
+    // **********payment details *********************
 
     var table1 = document.getElementById("paydataTable");
     var rows1 = table1.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-    console.log("hai   :" + rows1)
-    var dataToSave1 = [];
+    console.log("hai  payments :" + rows1)
+    var paymentdataToSave = [];
 
     // Iterate through each row
     for (var i = 0; i < rows1.length; i++) {
@@ -495,15 +496,45 @@ function saveDataToDatabase() {
 
         };
 
-        dataToSave1.push(rowData1);
+        paymentdataToSave.push(rowData1);
     }
     console.log(rowData1);
+     // **********staff allocation details *********************
+
+     var table1 = document.getElementById("staffallocateTable");
+     var rows1 = table1.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+     console.log("hai staff  :" + rows1)
+     var staffallocationdataToSave = [];
+ 
+     // Iterate through each row
+     for (var i = 0; i < rows1.length; i++) {
+         console.log(i);
+         var row = rows1[i];
+         var cells = row.getElementsByTagName("td");
+ 
+         var rowData1 = {
+             orderid: document.getElementById("orderiddisplay").value,
+             entry: cells[1].innerHTML, // Adjust the index based on your table structure
+             entryid: cells[2].innerHTML, // Adjust the index based on your table structure
+             staffName: cells[3].innerHTML, // Adjust the index based on your table structure
+             staffid: cells[4].innerHTML, // Adjust the index based on your table structure
+             workAssigned: cells[5].innerHTML, // Adjust the index based on your table structure
+             deadline: cells[6].innerHTML, // Adjust the index based on your table structure
+             percentOfWork: cells[7].innerHTML, // Adjust the index based on your table structure
+             assignDate: cells[8].innerHTML // Adjust the index based on your table structure
+ 
+        };
+ 
+         staffallocationdataToSave.push(rowData1);
+     }
+     console.log(rowData1);
     // ==============================================
     // Combine the two arrays into a single object for the AJAX request
     var combinedData = {
         correctorderid:correctorderid,
-        dataToSave: dataToSave,
-        dataToSave1: dataToSave1
+        supplierdataToSave: supplierdataToSave,
+        paymentdataToSave: paymentdataToSave,
+        staffallocationdataToSave:staffallocationdataToSave
     };
 
     // Send data to the server using AJAX
@@ -517,7 +548,7 @@ function saveDataToDatabase() {
                 // Handle the response from the server if needed
                 console.log("res " + xhr.responseText);
                 alert("Succesfully Saved Data.");
-                window.location.href = 'add-payment.php';
+                window.location.href = 'add-order-details.php';
             } else {
                 // Handle errors if any
                 console.error("Error saving data: " + xhr.status);
@@ -543,6 +574,11 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
     $('#quotesplitupbtn').attr('data-custname', custname);
     $('#quotesplitupbtn').attr('data-brandname', brandname);
     $('#quotesplitupbtn').attr('data-quotedamt', quotedamt);
+
+    $('#editquotesplitupbtn').attr('data-quoteid', selectedOrderId);
+    $('#editquotesplitupbtn').attr('data-custname', custname);
+    $('#editquotesplitupbtn').attr('data-brandname', brandname);
+    $('#editquotesplitupbtn').attr('data-quotedamt', quotedamt);
 
     $.ajax({
         type: 'POST',
@@ -748,24 +784,209 @@ $('#quotesplitupbtn').on('click', function() {
     var quoteAmt = $(this).data('quotedamt');
     // alert (quoteAmt)
     $('#quotedamt').val(quoteAmt);
-    ale/rt("complete");
+    // alert("complete");
     // Your code to be executed when the element is clicked
     // alert('Element with id "quoteSplit" clicked! Data Quote ID: ' + quoteIdValue);
     // Fetch data from the server using AJAX (you may need to adjust the URL)
-    // $.ajax({
-    //     url: 'quotation_details.php',
-    //     method: 'POST',
-    //     data: {
-    //         order_id: quoteIdValue
-    //     },
-    //     success: function(data) {
+    $.ajax({
+        url: 'quotation_details.php',
+        method: 'POST',
+        data: {
+            order_id: quoteIdValue
+        },
+        success: function(data) {
             
-    //         $('#orderTable tbody').html(data);
-    //     },
-    //     error: function() {
-    //         alert('Error fetching data from the server.');
-    //     }
-    // });
+            $('#orderTable tbody').html(data);
+        },
+        error: function() {
+            alert('Error fetching data from the server.');
+        }
+    });
+});
+
+
+
+
+$('#saveQuotesplitupBtn').on('click', function() {
+    // Calculate the total amount entered in the numeric column
+    var totalAmount = 0;
+    $('.numeric-column').each(function() {
+        var numericValue = parseInt($(this).text()) || 0;
+        totalAmount += numericValue;
+    });
+
+    // Get the value from the quoteamt input
+    var quoteAmount = parseInt($('#quoteamt').val()) || 0;
+    var quoteId = $('#quoteid').val();
+    // Compare the total amount with quoteAmount
+    if (totalAmount > quoteAmount) {
+        alert('Total amount entered exceeds the Quoted Amount!');
+    } else {
+        // alert('Total amount is within the Quoted Amount.');
+
+        // Save data to the server (replace this with your actual AJAX call)
+        var tableData = [];
+        var tablechk=0;
+        $('#orderTable tbody tr').each(function() {
+            var priceValue = $(this).find('td:eq(3)').text().trim();
+            if (priceValue !== "") {
+                tablechk=1;
+            var rowData = {
+                itemId: $(this).find('td:nth-child(2)').text(),
+                itemName: $(this).find('td:nth-child(3)').text(),
+                price: $(this).find('td:nth-child(4)').text()
+            };
+            tableData.push(rowData);
+        }
+        });
+       if ( tablechk == 1 ){
+        // Send the data to the server using AJAX
+        $.ajax({
+            url: 'quote_splitup_save.php',
+            method: 'POST',
+            data: {
+                quoteId: quoteId,
+                tableData: JSON.stringify(tableData)
+            },
+            success: function(response) {
+                console.log('Data saved successfully:', response); +
+                alert('Data saved successfully:');
+                $('#modaldemo1').modal('hide');
+                // window.location.href="quote_splitup.php";
+                // *************************
+                $.ajax({
+                    type: 'POST',
+                    url: 'view_quote_splitup_details.php',
+                    data: {
+                        selectedOrderId: quoteId
+                    },
+                    success: function (data) {
+            
+                        $('#ajaxquotesplitupresults').html(data);
+                    }
+                });
+
+
+                // *******************************
+            },
+            error: function() {
+                console.error('Error saving data to the server.');
+                alert(response);
+            }
+        });
+     } else {
+        alert("Enter Itemwise Price ");
+    }
+
+
+
+    }
+});
+
+$('#editquotesplitupbtn').on('click', function() {
+
+    // Access the value of the data attribute 'data_quoteid'
+    var quoteIdValue = $(this).data('quoteid');
+    $('#editquoteid').val(quoteIdValue);
+    var custName = $(this).data('custname');
+    $('#editcustname').val(custName);
+    var brandName = $(this).data('brandname');
+   $('#editbrandname').val(brandName);
+    var quoteAmt = $(this).data('quotedamt');
+    $('#editquoteamt').val(quoteAmt);
+    // Your code to be executed when the element is clicked
+    // alert('Element with id "quoteSplit" clicked! Data Quote ID: ' + quoteIdValue);
+    // Fetch data from the server using AJAX (you may need to adjust the URL)
+    $.ajax({
+        url: 'quotation_details_edit.php',
+        method: 'POST',
+        data: {
+            order_id: quoteIdValue
+        },
+        success: function(data) {
+            // alert(data);
+            $('#editorderTable tbody').html(data);
+        },
+        error: function() {
+            alert('Error fetching data from the server.');
+        }
+    });
+});
+
+$('#updateChangesBtn').on('click', function() {
+    // Calculate the total amount entered in the numeric column
+    var totalAmount = 0;
+    $('.numeric-column').each(function() {
+        var numericValue = parseInt($(this).text()) || 0;
+        totalAmount += numericValue;
+    });
+
+    // Get the value from the quoteamt input
+    var quoteAmount = parseInt($('#editquoteamt').val()) || 0;
+    var quoteId = $('#editquoteid').val();
+    // Compare the total amount with quoteAmount
+    if (totalAmount > quoteAmount) {
+        alert('Total amount entered exceeds the Quoted Amount!');
+    } else {
+        // alert('Total amount is within the Quoted Amount.');
+
+        // Save data to the server (replace this with your actual AJAX call)
+        var tableData = [];
+        var tablechk=0;
+        $('#editorderTable tbody tr').each(function() {
+            var priceValue = $(this).find('td:eq(3)').text().trim();
+            if (priceValue !== "") {
+                tablechk=1;
+            var rowData = {
+                itemId: $(this).find('td:nth-child(2)').text(),
+                itemName: $(this).find('td:nth-child(3)').text(),
+                price: $(this).find('td:nth-child(4)').text()
+            };
+            tableData.push(rowData);
+        }
+        });
+       if ( tablechk == 1 ){
+        // Send the data to the server using AJAX
+        $.ajax({
+            url: 'quote_splitup_update.php',
+            method: 'POST',
+            data: {
+                quoteId: quoteId,
+                tableData: JSON.stringify(tableData)
+            },
+            success: function(response) {
+                console.log('Data updated successfully:', response); +
+                alert('Data updated successfully:');
+                $('#modaleditquotesplitup').modal('hide');
+                // window.location.href="quote_splitup.php";
+                   // *************************
+                   $.ajax({
+                    type: 'POST',
+                    url: 'view_quote_splitup_details.php',
+                    data: {
+                        selectedOrderId: quoteId
+                    },
+                    success: function (data) {
+            
+                        $('#ajaxquotesplitupresults').html(data);
+                    }
+                });
+
+
+                // *******************************
+            },
+            error: function() {
+                console.error('Error saving data to the server.');
+                alert(response);
+            }
+        });
+     } else {
+        alert("Enter Itemwise Price ");
+    }
+
+
+
+    }
 });
 
 
