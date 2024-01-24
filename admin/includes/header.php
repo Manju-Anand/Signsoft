@@ -229,7 +229,7 @@
 												<div class="tab-pane active" id="side5">
 													<ul class="sidemenu-list">
 																												
-														<li><a href="orderlist.php" class="slide-item">Add Order</a></li>
+														<li><a href="orderlist.php" class="slide-item">Order List</a></li>
 														<li><a href="add-order-details.php" class="slide-item">Add Order Details</a></li>
 														<li><a href="close-order.php" class="slide-item">Close Order</a></li>
 														

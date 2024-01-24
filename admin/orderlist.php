@@ -67,7 +67,7 @@ if ($post_order_status == 'Closed'){
     echo "<td><span class='badge bg-gray' style='font-size:15px;'>$post_order_status</span></td>";
 }
         echo "<td><a class='btn btn-sm btn-warning' href='view-leads.php?edit={$id}' title='View' style='color:white'>
-        <span class='fe fe-eye'> </span></a>&nbsp;<a class='btn btn-sm btn-primary' href='edit-leads.php?edit={$id}' title='Edit' style='color:white'>
+        <span class='fe fe-eye'> </span></a>&nbsp;<a class='btn btn-sm btn-primary' href='edit-order.php?edit={$id}' title='Edit' style='color:white'>
         <span class='fe fe-edit'> </span></a>&nbsp;<a class='btn btn-sm btn-danger' onclick='javascript:confirmationDelete($(this));return false;' href='orderlist.php?delete={$id}' class='text-inverse' id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>
         <span class='fe fe-trash-2'> </span></a>
         </td>";

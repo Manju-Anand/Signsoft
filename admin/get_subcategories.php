@@ -2,16 +2,16 @@
 
 
 // Create connection
-$conn = mysqli_connect('localhost', 'root', '', 'signsoft');
+include "includes/connection.php";
 
 // Check connection
-if ($conn->connect_error) {
+if ($connection->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 $category_id = $_GET['category_id'];
 $subcategoriesQuery = "SELECT * FROM subcategory WHERE category_id = $category_id";
-$subcategoriesResult = $conn->query($subcategoriesQuery);
+$subcategoriesResult = $connection->query($subcategoriesQuery);
 
 $subcategories = array();
 
@@ -26,5 +26,5 @@ header('Content-Type: application/json');
 echo json_encode($subcategories);
 
 // Close connection
-$conn->close();
+$connection->close();
 ?>
