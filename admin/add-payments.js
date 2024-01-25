@@ -230,7 +230,7 @@ $('body').on('click', '.edit-staff-btn', function () {
     var staffworkper = row.find('td:eq(7)').text(); // Replace 4 with the actual column index
     var staffassigndate = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
     var staffrowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
-alert(staffassigndate);
+// alert(staffassigndate);
     // Set values in the modal
     $('#modalstafforders').val(stafforderid).trigger('change');
     $('#modalstaff').val(staffempid).trigger('change');
@@ -444,7 +444,7 @@ function addPayment() {
 
 // ============================================
 function saveDataToDatabase() {
-    var correctorderid =  document.getElementById("orderiddisplay").value;
+    var correctorderid =  document.getElementById("ordersdisplay").value;
     // *********** supplier details *************
     var table = document.getElementById("dataTable");
     var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
@@ -458,7 +458,7 @@ function saveDataToDatabase() {
         var cells = row.getElementsByTagName("td");
 
         var rowData = {
-            orderid: document.getElementById("orderiddisplay").value,
+            orderid: document.getElementById("ordersdisplay").value,
             entry: cells[1].innerHTML, // Adjust the index based on your table structure
             entryid: cells[2].innerHTML, // Adjust the index based on your table structure
             SupplierName: cells[3].innerHTML, // Adjust the index based on your table structure
@@ -488,7 +488,7 @@ function saveDataToDatabase() {
         var cells = row.getElementsByTagName("td");
 
         var rowData1 = {
-            orderid: document.getElementById("orderiddisplay").value,
+            orderid: document.getElementById("ordersdisplay").value,
             PaymentType: cells[1].innerHTML, // Adjust the index based on your table structure
             TransactionMode: cells[2].innerHTML, // Adjust the index based on your table structure
             PaymentAmount: cells[3].innerHTML, // Adjust the index based on your table structure
@@ -513,7 +513,7 @@ function saveDataToDatabase() {
          var cells = row.getElementsByTagName("td");
  
          var rowData1 = {
-             orderid: document.getElementById("orderiddisplay").value,
+             orderid: document.getElementById("ordersdisplay").value,
              entry: cells[1].innerHTML, // Adjust the index based on your table structure
              entryid: cells[2].innerHTML, // Adjust the index based on your table structure
              staffName: cells[3].innerHTML, // Adjust the index based on your table structure
@@ -532,9 +532,10 @@ function saveDataToDatabase() {
     // Combine the two arrays into a single object for the AJAX request
     var combinedData = {
         correctorderid:correctorderid,
+        staffallocationdataToSave:staffallocationdataToSave,
         supplierdataToSave: supplierdataToSave,
         paymentdataToSave: paymentdataToSave,
-        staffallocationdataToSave:staffallocationdataToSave
+       
     };
 
     // Send data to the server using AJAX
@@ -546,9 +547,9 @@ function saveDataToDatabase() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 // Handle the response from the server if needed
-                console.log("res " + xhr.responseText);
+                console.log("result: " + xhr.responseText);
                 alert("Succesfully Saved Data.");
-                window.location.href = 'add-order-details.php';
+                // window.location.href = 'add-order-details.php';
             } else {
                 // Handle errors if any
                 console.error("Error saving data: " + xhr.status);
@@ -851,7 +852,7 @@ $('#saveQuotesplitupBtn').on('click', function() {
             success: function(response) {
                 console.log('Data saved successfully:', response); +
                 alert('Data saved successfully:');
-                $('#modaldemo1').modal('hide');
+                $('#modalquotesplitup').modal('hide');
                 // window.location.href="quote_splitup.php";
                 // *************************
                 $.ajax({

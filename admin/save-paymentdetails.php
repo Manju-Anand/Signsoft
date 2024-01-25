@@ -75,7 +75,7 @@ if (isset($data['paymentdataToSave'])) {
 }
 
 if (isset($data['staffallocationdataToSave'])) {
-  foreach ($data as $row) {
+  foreach ($data['staffallocationdataToSave'] as $row) {
     $orderid = $row['orderid'];
     $entry = $row['entry'];
     $entryid = $row['entryid'];

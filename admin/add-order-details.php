@@ -256,7 +256,7 @@ $mainorderid = "";
                                                                 <th class="hidden-cell">order Id</th>
                                                                 <th>Employee Name</th>
                                                                 <th class="hidden-cell">Emp Id</th>
-                                                                <th>Work Descripton</th>
+                                                                <th>Work Description</th>
                                                                 <th>Dead Line</th>
                                                                 <th>Percentage of Work</th>
                                                                 <th>Assigned Date</th>
@@ -466,7 +466,7 @@ $mainorderid = "";
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="text" class="form-control" id="modalrowid" name="modalrowid" required>
+                            <input type="hidden" class="form-control" id="modalrowid" name="modalrowid" required>
 
                             <div class="col-md-6">
                                 <label class="form-label" for="orders">Orders :</label>
@@ -558,7 +558,7 @@ $mainorderid = "";
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="text" class="form-control" id="modalpayrowid" name="modalpayrowid" required>
+                            <input type="hidden" class="form-control" id="modalpayrowid" name="modalpayrowid" required>
 
                             <div class="col-md-6">
                                 <label class="form-label" for="paytype">Payment Type :</label>
@@ -612,7 +612,7 @@ $mainorderid = "";
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="text" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
+                            <input type="hidden" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
 
                             <div class="col-md-6">
                                 <label class="form-label" for="modalstafforders">Orders :</label>

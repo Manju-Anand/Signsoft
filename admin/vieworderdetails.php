@@ -27,7 +27,7 @@ $options = '
 
 
     <label class="form-label" for="orderiddisplay"><strong>Selected Categories & Subcategories : </strong></label>
-     <ul class="list-style2 ms-3">';
+     <ul class="list-style1 ms-3">';
 
 
                     $categoriesQuery = "SELECT * FROM category";
