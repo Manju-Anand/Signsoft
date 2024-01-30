@@ -28,6 +28,14 @@ if ($connection->query($sql) === TRUE) {
   echo "Error deleting record: " . $connection->error;
 }
 
+$sql = "DELETE FROM order_followup WHERE order_id='". $corderid ."'";
+
+if ($connection->query($sql) === TRUE) {
+  echo "Record deleted successfully";
+} else {
+  echo "Error deleting record: " . $connection->error;
+}
+
 // ====================== delete already entered datas =============
 // Iterate through the data and insert into the database
 foreach ($data['supplierdataToSave'] as $row) {
@@ -89,6 +97,25 @@ if (isset($data['staffallocationdataToSave'])) {
     // Perform the SQL query to insert data into the database
     $sql = "INSERT INTO staff_allocation (orderid,entryid,entryname,empid, empname, work_assigned, deadline, per_of_work,assignedDate) VALUES
      ('$orderid','$entryid','$entry','$staffid', '$staffName', '$workAssigned', '$deadline', '$percentOfWork', '$assignDate')";
+    
+    if ($connection->query($sql) !== TRUE) {
+        echo "Error: " . $sql . "<br>" . $connection->error;
+    }
+}
+}
+
+
+if (isset($data['followupdataToSave'])) {
+  foreach ($data['followupdataToSave'] as $row) {
+    $orderid = $row['orderid'];
+    $followdate = $row['followdate'];
+    $followmode = $row['followmode'];
+    $remarks = $row['remarks'];
+    
+
+    // Perform the SQL query to insert data into the database
+    $sql = "INSERT INTO order_followup (order_id,orderDate,mode_of_contact,remarks) VALUES
+     ('$orderid','$followdate','$followmode','$remarks')";
     
     if ($connection->query($sql) !== TRUE) {
         echo "Error: " . $sql . "<br>" . $connection->error;

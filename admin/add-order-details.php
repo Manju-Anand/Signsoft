@@ -124,15 +124,17 @@ $mainorderid = "";
                                     <div class="tabs-menu">
                                         <!-- Tabs -->
                                         <ul class="nav panel-tabs panel-secondary">
-                                            <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-user mx-1"></i></span>Order Details</a>
+                                            <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-book-open mx-1"></i></span>Order Details</a>
                                             </li>
-											<li><a href="#tab20" data-bs-toggle="tab"><span><i class="fe fe-bell mx-1"></i></span>Quotation Splitup</a>
+                                            <li><a href="#tab22" data-bs-toggle="tab"><span><i class="fe fe-phone-call mx-1"></i></span>Follow-Up History</a>
                                             </li>
-                                            <li><a href="#tab21" data-bs-toggle="tab"><span><i class="fe fe-command mx-1"></i></span>Staff Allocation</a>
+											<li><a href="#tab20" data-bs-toggle="tab"><span><i class="fe fe-server mx-1"></i></span>Quotation Splitup</a>
+                                            </li>
+                                            <li><a href="#tab21" data-bs-toggle="tab"><span><i class="fe fe-user mx-1"></i></span>Staff Allocation</a>
                                             </li>
                                             <li><a href="#tab18" data-bs-toggle="tab"><span><i class="fe fe-calendar mx-1"></i></span>Supplier Details</a>
                                             </li>
-                                            <li><a href="#tab19" data-bs-toggle="tab"><span><i class="fe fe-settings mx-1"></i></span>Payment Details</a>
+                                            <li><a href="#tab19" data-bs-toggle="tab"><span><i class="fe fe-dollar-sign mx-1"></i></span>Payment Details</a>
                                             </li>
                                            
                                         </ul>
@@ -367,7 +369,7 @@ $mainorderid = "";
                                         </div>
                                         <div class="tab-pane" id="tab19">
                                             <div class="row mb-4">
-											<div class="col-md-3">
+											        <div class="col-md-3">
                                                         <label class="form-label" for="paytype">Payment Type :</label>
                                                         <select class="form-select mb-3" aria-label="Default select example" name="paytype" id="paytype" required>
                                                             <option value="" disabled selected>Select Payment Type</option>
@@ -427,6 +429,60 @@ $mainorderid = "";
                                                             </tr>
                                                         </thead>
                                                         <tbody id="ajaxpaymentresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab22">
+                                            <div class="row mb-4">
+											        <div class="col-md-3">
+                                                        <label class="form-label" for="paytype">Date :</label>
+                                                        <input type="date" class="form-control" id="followupdate" name="followupdate" placeholder="Followup Date" required>
+
+                                                    </div>
+
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="paymenttransmode">Mode Of Contact :</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="followupmode" id="followupmode" required>
+                                                            <option value="" disabled selected>Select Mode Of Contact</option>
+                                                            <option value="Phone Call">Phone Call</option>
+                                                            <option value="Client Visit">Client Visit</option>
+                                                            <option value="Whatsapp">Whatsapp</option>
+                                                            <option value="Emailr">Email</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="paymentamt">Remarks :</label>
+                                                        <input type="text" class="form-control" id="followupremarks" name="followupremarks" placeholder="Remarks" required>
+
+                                                    </div>
+
+                                                    
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label" for="dept" style="color:transparent" >Transparent Label :</label>
+                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addfollowup()" style="color:white;cursor:pointer;">Add Followup Details</button>
+
+                                                    </div>
+                                                    <hr>
+                                                <div class="table-responsive">
+                                                    
+                                                    <table class="table table-bordered mg-b-0" id="followupdataTable">
+                                                        <thead>
+                                                            <tr style="background-color: #add8e6;">
+                                                                <th>#</th>
+                                                                <th>Followup Date</th>
+                                                                <th>Mode of Contact</th>
+                                                                <th>Remarks</th>
+                                                                <th>Action</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxfollowupresults">
 
                                                         </tbody>
                                                     </table>
@@ -815,6 +871,53 @@ $mainorderid = "";
             </div>
         </div>
         <!-- ===========================modals ======================================= -->
+              <!-- Basic modal -->
+        <div class="modal fade" id="followupmodal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Edit FollowUp Details </h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" class="form-control" id="modalfollowuprowid" name="modalfollowuprowid" required>
+
+                            <div class="col-md-12">
+                                    <label class="form-label" for="modalfollowupdate">Date :</label>
+                                    <input type="date" class="form-control" id="modalfollowupdate" name="modalfollowupdate" placeholder="Followup Date" required>
+
+                               
+                            </div>
+
+
+                            <div class="col-md-12">
+                                    <label class="form-label" for="modalfollowupmode">Mode Of Contact :</label>
+                                    <select class="form-select mb-3" aria-label="Default select example" name="modalfollowupmode" id="modalfollowupmode" required>
+                                        <option value="" disabled selected>Select Mode Of Contact</option>
+                                        <option value="Phone Call">Phone Call</option>
+                                        <option value="Client Visit">Client Visit</option>
+                                        <option value="Whatsapp">Whatsapp</option>
+                                        <option value="Emailr">Email</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-12">
+                                    <label class="form-label" for="modalfollowupremarks">Remarks :</label>
+                                    <input type="text" class="form-control" id="modalfollowupremarks" name="modalfollowupremarks" placeholder="Remarks" required>
+
+
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-primary" id="savefollowupChangesBtn" type="button">Save changes</button>
+                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Basic modal -->
         <!-- Main Footer-->
         <?php include 'includes/footer.php'; ?>
         <!--End Footer-->
