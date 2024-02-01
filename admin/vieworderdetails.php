@@ -16,52 +16,67 @@ $selectedOrderId = $_POST['selectedOrderId'];
 $query = "SELECT * FROM order_customers WHERE id = '$selectedOrderId'";
 $result = mysqli_query($connection, $query);
 while ($row = mysqli_fetch_assoc($result)) {
-$options = '
-    <label class="form-label" for="branddisplay"><strong>Customer Name : </strong>'. $row['custName']  . '</label>
+$options = '<div class="row"><div class="col-md-6">
+    <label class="form-label" ><strong>Customer Name : </strong>'. $row['custName']  . '</label>
 
-    <label class="form-label" for="branddisplay"><strong>Brand Name : </strong>'. $row['brandName']  . '</label>
+    <label class="form-label" ><strong>Brand Name : </strong>'. $row['brandName']  . '</label>
 
-    <label class="form-label" for="amountdisplay"><strong>Quoted Amount : </strong>'. $row['quotedAmt']  . '</label>
+    <label class="form-label" ><strong>Quoted Amount : </strong>'. $row['quotedAmt']  . '</label>
 <input type="hidden" id="quoteamt" name="quoteamt" value="'. $row['quotedAmt'] . '">
 
 
 
-    <label class="form-label" for="orderiddisplay"><strong>Selected Categories & Subcategories : </strong></label>
-     <ul class="list-style1 ms-3">';
+    </div><div class="col-md-6">
+
+    <label class="form-label" ><strong>Selected Categories : </strong></label>
+    <select class="form-control select2" multiple="multiple" id="mulselect[]" name="mulselect[]"  disabled>';
+
+    $presentchk = "false";
+    $sql = "SELECT * FROM category";
+    $result = $connection->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $presentchk = "false";
+            $sqlcatcheck = "SELECT * FROM order_category where order_id='" . $selectedOrderId . "' and category_id ='" . $row['id'] . "'";
+            $resultcatcheck = $connection->query($sqlcatcheck);
+            if ($resultcatcheck->num_rows > 0) {
+                while ($rowcatcheck = $resultcatcheck->fetch_assoc()) {
+                    $presentchk = "true";
+                }
+            }
+            if ($presentchk == "true") {
 
 
-                    $categoriesQuery = "SELECT * FROM category";
-                    $categoriesResult = $connection->query($categoriesQuery);
-                    if ($categoriesResult->num_rows > 0) {
-                        while ($categoryRow = $categoriesResult->fetch_assoc()) {
-                            $sql = "SELECT * FROM order_category where order_id = '$selectedOrderId' and category_id='" . $categoryRow['id'] . "'";
-                            $sqlResult = $connection->query($sql);
-                            if ($sqlResult->num_rows > 0) {
-                                while ($sqlRow = $sqlResult->fetch_assoc()) {
+                $options .= '<option selected value="' . htmlspecialchars($row['id'], ENT_QUOTES) . '"> ' . htmlspecialchars($row['category'], ENT_QUOTES) . '</option>';
 
-                                    $options .= '<li>'. $categoryRow['category'] . '</li>';
-                                    $subcategoriesQuery = "SELECT * FROM subcategory where category_id='" . $categoryRow['id'] . "'";
-                                    $subcategoriesResult = $connection->query($subcategoriesQuery);
-                                    if ($subcategoriesResult->num_rows > 0) {
-                                        while ($subcategoryRow = $subcategoriesResult->fetch_assoc()) {
-                                            $sql = "SELECT * FROM order_subcategory where order_id = '$selectedOrderId' and subcategory_id='" . $subcategoryRow['id'] . "'";
-                                            $sqlResult = $connection->query($sql);
-                                            if ($sqlResult->num_rows > 0) {
-                                                $options .= '<ul>';
-                                                while ($sqlRow = $sqlResult->fetch_assoc()) {
+            }
+        
+        }}
+    $options .= ' </select> <label class="form-label" ><strong>Selected Sub-Categories : </strong></label>
+    <select class="form-control select2" multiple="multiple" id="submulselect[]" name="submulselect[]" disabled>';
 
-                                                    $options .= '<li>'. $subcategoryRow['subcategory'] . '</li>';
-                                                }
-                                                $options .= '</ul>';
-                                            }
-                                        }
-                                    }
-                                    // *************************************
-                                }
-                            }
-                        }
-                    }
-                    $options .= '</ul>';
+    $presentchk = "false";
+    $sql = "SELECT * FROM subcategory";
+    $result = $connection->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $presentchk = "false";
+            $sqlcatcheck = "SELECT * FROM order_subcategory where order_id='" . $selectedOrderId . "' and subcategory_id ='" . $row['id'] . "'";
+            $resultcatcheck = $connection->query($sqlcatcheck);
+            if ($resultcatcheck->num_rows > 0) {
+                while ($rowcatcheck = $resultcatcheck->fetch_assoc()) {
+                    $presentchk = "true";
+                }
+            }
+            if ($presentchk == "true") {
+
+
+                $options .= '<option selected value="' . htmlspecialchars($row['id'], ENT_QUOTES) . '"> ' . htmlspecialchars($row['subcategory'], ENT_QUOTES) . '</option>';
+
+            }
+        
+        }}
+    $options .= ' </select></div></div>';
                     }
 
                     
@@ -72,3 +87,8 @@ mysqli_close($connection);
 
 // Return the options as HTML
 echo $options;
+?>
+
+
+<script src="../assets/plugins/select2/js/select2.full.min.js"></script>
+<script src="../assets/js/select2.js"></script>

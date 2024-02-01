@@ -127,7 +127,33 @@ include "includes/connection.php";
                                                 <input type="text" class="form-control" id="category" name="category" value="<?php if(isset($row1['category'])){echo $row1['category'];} ?>" placeholder="Category Name">
                                             </div>
                                         </div>
-
+                                        <div class="row mb-4">
+                                            <label for="dept" class="col-md-3 form-label">Department</label>
+                                            <div class="col-md-9">
+                                            <select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
+                                                    <?php
+                                                        $post_deptid= $row1['dept_id'];
+                                                        $post_deptname="";
+                                                        $querydept = "select * from department where id='" .   $post_deptid   . "'";
+                                                        $select_postsdept = mysqli_query($connection,$querydept);
+                                                        while($rowdept = mysqli_fetch_assoc($select_postsdept))
+                                                        {
+                                                            $post_deptname=$rowdept['department'];
+                                                        }
+                                                    ?>
+                                                    <option value="<?php echo $post_deptid ?>"><?php echo $post_deptname ?></option>
+                                                        <!-- <option value="" disabled selected>Select Department</option> -->
+                                                    <?php
+                                                        $query = "select * from department order by id desc";
+                                                        $select_posts = mysqli_query($connection,$query);
+                                                        while($row = mysqli_fetch_assoc($select_posts))
+                                                        {
+                                                    ?>
+                                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['department'] ?></option>
+                                                    <?php } ?>
+                                             </select>
+                                            </div>
+                                         </div>
                                         <div class="row mb-4">
                                             <label class="col-md-3 form-label" for="status">Status :</label>
                                             <div class="col-md-9">
@@ -163,11 +189,11 @@ include "includes/connection.php";
                                         $status = $_POST["status"];
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
-// echo $department;
-// echo $status;
+                                        $dept = $_POST["dept"];
+
                                         $sql = "update category set category='". mysqli_real_escape_string($connection,$category)."',
                                         status='". mysqli_real_escape_string($connection,$status)."',modified='" . mysqli_real_escape_string($connection,$postdate)."'
-                                         WHERE id = {$the_cat_id}";
+                                        ,dept_id='" . mysqli_real_escape_string($connection,$dept). "' WHERE id = {$the_cat_id}";
                                        
                                         if ($connection->query($sql) === TRUE) {
                                             header("Location: category.php");

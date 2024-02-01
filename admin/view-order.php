@@ -112,7 +112,7 @@ if ($resultorders->num_rows > 0) {
                             <!-- Page Header -->
                             <div class="page-header">
                                 <div>
-                                    <h2 class="main-content-title tx-24 mg-b-5">Edit Order</h2>
+                                    <h2 class="main-content-title tx-24 mg-b-5">View Order</h2>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="javascript:void(0);">Order Entry</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Details</li>
@@ -142,7 +142,7 @@ if ($resultorders->num_rows > 0) {
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <div class="card-title">Edit Order Details</div>
+                                            <div class="card-title">View Order Details</div>
                                         </div>
                                         
                                         <form id="adddesig" method="post" action="" enctype="multipart/form-data">
@@ -156,45 +156,45 @@ if ($resultorders->num_rows > 0) {
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="empname">Customer Name :</label>
                                                             <div class="col-md-9">
-                                                                <input type="text" class="form-control" id="cusname" name="cusname" value="<?php echo $roworders['custName'] ?>" placeholder="Customer Name" required>
+                                                                <input type="text" class="form-control" id="cusname" name="cusname" value="<?php echo $roworders['custName'] ?>" placeholder="Customer Name" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="empname">Brand Name :</label>
                                                             <div class="col-md-9">
-                                                                <input type="text" class="form-control" id="brandname" name="brandname" value="<?php echo $roworders['brandName'] ?>" placeholder="Brand Name" required>
+                                                                <input type="text" class="form-control" id="brandname" name="brandname" value="<?php echo $roworders['brandName'] ?>" placeholder="Brand Name" readonly>
                                                             </div>
                                                         </div>
 
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="addr">Address :</label>
                                                             <div class="col-md-9">
-                                                                <textarea class="form-control" name="addr" id="addr" palceholder="Here Address" rows="4"><?php echo $roworders['addr'] ?></textarea>
+                                                                <textarea class="form-control" name="addr" id="addr" palceholder="Here Address" rows="4" readonly><?php echo $roworders['addr'] ?></textarea>
                                                             </div>
                                                         </div>
 
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="poneno">Phone No :</label>
                                                             <div class="col-md-9">
-                                                                <input type="number" pattern="[6-9]\d{9}" class="form-control" value="<?php echo $roworders['custPhone'] ?>" name="phoneno" id="phoneno" placeholder="" required>
+                                                                <input type="number" pattern="[6-9]\d{9}" class="form-control" value="<?php echo $roworders['custPhone'] ?>" name="phoneno" id="phoneno" placeholder="" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="emailid">Email ID :</label>
                                                             <div class="col-md-9">
-                                                                <input type="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" value="<?php echo $roworders['custEmail'] ?>" name="emailid" id="emailid" class="form-control" placeholder="">
+                                                                <input type="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" value="<?php echo $roworders['custEmail'] ?>" name="emailid" id="emailid" class="form-control" placeholder="" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="contacteddate">Contacted Date :</label>
                                                             <div class="col-md-9">
-                                                                <input type="date" name="contacteddate" id="contacteddate" value="<?php echo $roworders['contactDate'] ?>" class="form-control" placeholder="">
+                                                                <input type="date" name="contacteddate" id="contacteddate" value="<?php echo $roworders['contactDate'] ?>" class="form-control" placeholder="" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="contactedtime">Contacted Time :</label>
                                                             <div class="col-md-9">
-                                                                <input type="time" name="contactedtime" id="contactedtime" value="<?php echo $roworders['contactTime'] ?>" class="form-control" placeholder="">
+                                                                <input type="time" name="contactedtime" id="contactedtime" value="<?php echo $roworders['contactTime'] ?>" class="form-control" placeholder="" readonly>
                                                             </div>
                                                         </div>
                                                     
@@ -212,7 +212,7 @@ if ($resultorders->num_rows > 0) {
                                                             <label class="col-md-3 form-label" for="contacteddate">Categories :</label>
                                                             <div class="col-md-9">
                                                                 
-                                                                <select class="form-control select2" multiple="multiple" id="mulselect[]" name="mulselect[]">
+                                                                <select class="form-control select2" multiple="multiple" id="mulselect[]" name="mulselect[]" disabled>
                                                                     <?php
                                                                     $presentchk = "false";
                                                                     $sql = "SELECT * FROM category";
@@ -245,7 +245,7 @@ if ($resultorders->num_rows > 0) {
                                                     
                                                             <label class="col-md-3 form-label" for="contacteddate">Sub-Categories :</label>
                                                             <div class="col-md-9">
-                                                                <select class="form-control select2" multiple="multiple" id="submulselectsub[]" name="submulselectsub[]">
+                                                                <select class="form-control select2" multiple="multiple" id="submulselectsub[]" name="submulselectsub[]" disabled>
                                                                     <?php
                                                                 
                                                                     $presentchk = "false";
@@ -282,19 +282,19 @@ if ($resultorders->num_rows > 0) {
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="qutamt">Quoted Amount :</label>
                                                             <div class="col-md-9">
-                                                                <input type="text" class="form-control" id="qutamt" name="qutamt" value="<?php echo $roworders['quotedAmt'] ?>" placeholder="Quoted Amount" required>
+                                                                <input type="text" class="form-control" id="qutamt" name="qutamt" value="<?php echo $roworders['quotedAmt'] ?>" placeholder="Quoted Amount" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="leadsource">Lead Source :</label>
                                                             <div class="col-md-9">
-                                                                <input type="text" class="form-control" id="leadsource" value="<?php echo $roworders['leadSource'] ?>" name="leadsource" placeholder="Lead Source" required>
+                                                                <input type="text" class="form-control" id="leadsource" value="<?php echo $roworders['leadSource'] ?>" name="leadsource" placeholder="Lead Source" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="status">Order Status :</label>
                                                             <div class="col-md-9">
-                                                                <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status">
+                                                                <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status" disabled>
                                                                     <option value="<?php echo $roworders['order_status'] ?>"><?php echo $roworders['order_status'] ?></option>
                                                                     <option value="Active">Active</option>
                                                                     <option value="Processing">Processing</option>
@@ -308,7 +308,7 @@ if ($resultorders->num_rows > 0) {
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="statusreason">Status Reason<br>[If any] :</label>
                                                             <div class="col-md-9">
-                                                                <textarea class="form-control" name="statusreason" id="statusreason" placeholder="Here statusreason" rows="4"><?php echo $roworders['status_reason'] ?></textarea>
+                                                                <textarea class="form-control" name="statusreason" id="statusreason" placeholder="Here statusreason" rows="4" readonly><?php echo $roworders['status_reason'] ?></textarea>
 
                                                             </div>
                                                         </div>
@@ -322,101 +322,14 @@ if ($resultorders->num_rows > 0) {
                                                 <div class="row">
                                                     <div class="col-md-3"></div>
                                                     <div class="col-md-9">
-                                                        <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Update Order</button>
+                                                        <!-- <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Update Order</button> -->
                                                         <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
 
                                                     </div>
                                                 </div>
                                                 <!--End Row-->
                                             </div>
-                                            <?php
-                                            if (isset($_POST['submit'])) {
-                                                $cusname = $_POST["cusname"];
-                                                $brandname = $_POST["brandname"];
-                                                $orgorderid= $_POST["orgorderid"];
-                                                echo   $orgorderid;
-                                                $addr = $_POST["addr"];
-                                                $phoneno = $_POST["phoneno"];
-                                                $emailid = $_POST["emailid"];
-                                                $contacteddate = $_POST["contacteddate"];
-                                                $contactedtime = $_POST["contactedtime"];
-
-                                                $qutamt = $_POST["qutamt"];
-                                                $leadsource = $_POST["leadsource"];
-                                                $orderstatus = $_POST["status"];
-                                                $statusreason = $_POST["statusreason"];
-
-                                                date_default_timezone_set("Asia/Calcutta");
-                                                $postdate = date("M d,Y h:i:s a");
-                                                $sql = "UPDATE order_customers SET custName='". mysqli_real_escape_string($connection, $cusname) . "',
-                                                brandName='". mysqli_real_escape_string($connection, $brandname) . "', addr='". mysqli_real_escape_string($connection, $addr) . "',
-                                                custPhone='". mysqli_real_escape_string($connection, $phoneno) . "',custEmail='". mysqli_real_escape_string($connection, $emailid) . "',
-                                                contactDate='". mysqli_real_escape_string($connection, $contacteddate) . "',contactTime='". mysqli_real_escape_string($connection, $contactedtime) . "',
-                                                quotedAmt='". mysqli_real_escape_string($connection, $qutamt) . "',leadSource='". mysqli_real_escape_string($connection, $leadsource) . "',
-                                                modified='". mysqli_real_escape_string($connection, $postdate) . "',order_status='". mysqli_real_escape_string($connection, $orderstatus) . "',
-                                                status_reason='". mysqli_real_escape_string($connection, $statusreason) . "'  WHERE id='". $orgorderid ."'";
-
-
-
-                                  
-                                                if ($connection->query($sql) === TRUE) {
-
-                                                    //  ======================= userid creation =========================  
-                                                    $sql = "DELETE FROM order_category WHERE order_id='" . $orgorderid . "'";
-
-                                                    if ($connection->query($sql) === TRUE) {
-                                                      echo "Record deleted successfully";
-                                                    } else {
-                                                      echo "Error deleting record: " . $connection->error;
-                                                    }
-                                                    $sql = "DELETE FROM order_subcategory WHERE order_id='" . $orgorderid . "'";
-
-                                                    if ($connection->query($sql) === TRUE) {
-                                                    echo "Record deleted successfully";
-                                                    } else {
-                                                    echo "Error deleting record: " . $connection->error;
-                                                    }
-
-                                                    if (isset($_POST['mulselect'])) {
-                                                        $selectedOptions = $_POST['mulselect'];
-                                                    
-                                                        // Loop through selected options and insert into the database
-                                                        foreach ($selectedOptions as $categoryId) {
-                                                            $querycategory = "INSERT INTO order_category (order_id, category_id)
-                                                            VALUES('$orgorderid', '$categoryId')";
-                                                    
-                                                            if ($connection->query($querycategory) === TRUE) {
-                                                                // Successfully inserted into the database
-                                                            } else {
-                                                                // Handle the error if the insertion fails
-                                                                echo "Error: " . $querycategory . "<br>" . $connection->error;
-                                                            }
-                                                        }
-                                                    }
-                                                    if (isset($_POST['mulselectsub'])) {
-                                                        $selectedOptions = $_POST['mulselectsub'];
-                                                    
-                                                        // Loop through selected options and insert into the database
-                                                        foreach ($selectedOptions as $subcategoryId) {
-                                                            $querysubcategory = "INSERT INTO order_subcategory (order_id,  subcategory_id)
-                                                            VALUES ('$orgorderid',  '$subcategoryId')";
-                                                    
-                                                            if ($connection->query($querysubcategory) === TRUE) {
-                                                                // Successfully inserted into the database
-                                                            } else {
-                                                                // Handle the error if the insertion fails
-                                                                echo "Error: " . $querysubcategory . "<br>" . $connection->error;
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    header("Location: orderlist.php");
-                                                } else {
-                                                    echo "Error:ans1 " . $sql . "<br>" . $connection->error;
-                                                }
-                                            }
-                                            ?>
+                                           
 
                                         </form>
                                     </div>

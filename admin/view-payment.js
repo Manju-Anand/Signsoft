@@ -35,6 +35,18 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
 
     $.ajax({
         type: 'POST',
+        url: 'view_followup_details.php',
+        data: {
+            selectedOrderId: selectedOrderId
+        },
+        success: function (data) {
+
+            $('#ajaxfollowupresults').html(data);
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
         url: 'view_added_supplier_payment_details.php',
         data: {
             selectedOrderId: selectedOrderId
@@ -75,15 +87,8 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
 
 $(document).ready(function (e) {
     $('#cancel').on('click change', function () {
-        var paystatus = $('#paystatus').val();
-        if (paystatus == 'Payment edited') {
-            var confirmClose = confirm("You have edited the details and not saved yet. Do you want to continue with form cancel?");
-            if (confirmClose) {
-                window.location = "staffAllocation.php";
-            }
-        } else {
-            window.location = "staffAllocation.php";
-        }
-        return false;
+        
+            window.location = "orderlist.php";
+       
     });
 });

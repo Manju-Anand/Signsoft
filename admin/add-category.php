@@ -114,6 +114,22 @@ include "includes/connection.php";
                                                 <input type="text" class="form-control" name="category" id="category" placeholder="Category Name">
                                             </div>
                                         </div>
+                                        <div class="row mb-4">
+                                            <label for="dept" class="col-md-3 form-label">Department</label>
+                                            <div class="col-md-9">
+                                            <select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
+                                                        <option value="" disabled selected>Select Department</option>
+                                                    <?php
+                                                        $query = "select * from department order by id desc";
+                                                        $select_posts = mysqli_query($connection,$query);
+                                                        while($row = mysqli_fetch_assoc($select_posts))
+                                                        {
+                                                    ?>
+                                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['department'] ?></option>
+                                                    <?php } ?>
+                                             </select>
+                                            </div>
+                                         </div>
 
                                         <div class="row mb-4">
                                             <label class="col-md-3 form-label" for="status">Status :</label>
@@ -146,12 +162,14 @@ include "includes/connection.php";
                                     if (isset($_POST['submit'])) {
                                         $category = $_POST["category"];
                                         $status = $_POST["status"];
+                                        $dept = $_POST["dept"];
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
 
-                                        $sql = "INSERT INTO category (category,status,created,modified) values('" . mysqli_real_escape_string($connection, $category) . "',
+                                        $sql = "INSERT INTO category (category,status,created,modified,dept_id) values('" . mysqli_real_escape_string($connection, $category) . "',
                                                         '" . mysqli_real_escape_string($connection, $status) . "',
-                                                        '" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $postdate) . "')";
+                                                        '" . mysqli_real_escape_string($connection, $postdate) . "'
+                                                        ,'" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $dept) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
                                             header("Location: category.php");

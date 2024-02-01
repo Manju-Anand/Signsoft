@@ -173,7 +173,7 @@
 						
 							
 							<li class="side-item side-item-category">Order Execution</li>
-							<li class="slide">
+							<!-- <li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="">
 									<span class="side-menu__icon"><i class="fe fe-layers side_menu_img"></i></span>
 									<span class="side-menu__label">Orders-pre</span><i class="angle fa fa-angle-right"></i>
@@ -207,7 +207,7 @@
 
 								</ul>
 								
-							</li>
+							</li> -->
 							
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="">

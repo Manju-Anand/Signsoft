@@ -110,15 +110,17 @@ $mainorderid = "";
                                     <div class="tabs-menu">
                                         <!-- Tabs -->
                                         <ul class="nav panel-tabs panel-success">
-                                            <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-user mx-1"></i></span>Order Details</a>
+                                            <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-book-open mx-1"></i></span>Order Details</a>
                                             </li>
                                             <li><a href="#tab18" data-bs-toggle="tab"><span><i class="fe fe-calendar mx-1"></i></span>Supplier Details</a>
                                             </li>
-                                            <li><a href="#tab19" data-bs-toggle="tab"><span><i class="fe fe-settings mx-1"></i></span>Payment Details</a>
+                                            <li><a href="#tab19" data-bs-toggle="tab"><span><i class="fe fe-dollar-sign mx-1"></i></span>Payment Details</a>
                                             </li>
-                                            <li><a href="#tab20" data-bs-toggle="tab"><span><i class="fe fe-bell mx-1"></i></span>Quotation Splitup</a>
+                                            <li><a href="#tab20" data-bs-toggle="tab"><span><i class="fe fe-serverl mx-1"></i></span>Quotation Splitup</a>
                                             </li>
-                                            <li><a href="#tab21" data-bs-toggle="tab"><span><i class="fe fe-command mx-1"></i></span>Staff Allocation</a>
+                                            <li><a href="#tab21" data-bs-toggle="tab"><span><i class="fe fe-user mx-1"></i></span>Staff Allocation</a>
+                                            </li>
+                                            <li><a href="#tab22" data-bs-toggle="tab"><span><i class="fe fe-phone-call mx-1"></i></span>Follow-Up History</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -146,7 +148,7 @@ $mainorderid = "";
                                                 </div>
                                                 <div class="row mb-4">
 
-                                                    <div class="col-md-6" style="margin: bottom 10px;">
+                                                    <div class="col-md-4" style="margin: bottom 10px;">
                                                         <label class="form-label" for="status">Close Order :</label>
                                                         <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
                                                             <option value="" disabled selected>Select Option</option>
@@ -165,7 +167,7 @@ $mainorderid = "";
                                                         <textarea class="form-control" name="notes" id="notes" palceholder="Here notes" rows="4"></textarea>
 
                                                     </div>
-                                                    <div class="col-md-6" style="margin: bottom 10px;" id="orderdetails"></div>
+                                                    <div class="col-md-8" style="margin: bottom 10px;" id="orderdetails"></div>
 
                                                 </div>
 
@@ -379,6 +381,30 @@ $mainorderid = "";
                                                             </tr>
                                                         </thead>
                                                         <tbody id="ajaxstaffallocateresults">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab22">
+                                            <div class="row mb-4">
+											       
+                                                <div class="table-responsive">
+                                                    
+                                                    <table class="table table-bordered mg-b-0" id="followupdataTable">
+                                                        <thead>
+                                                            <tr style="background-color:#add8e6;">
+                                                                <th>#</th>
+                                                                <th>Followup Date</th>
+                                                                <th>Mode of Contact</th>
+                                                                <th>Remarks</th>
+                                                                
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxfollowupresults">
 
                                                         </tbody>
                                                     </table>

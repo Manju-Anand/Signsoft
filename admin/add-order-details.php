@@ -50,6 +50,8 @@ $mainorderid = "";
     <link href="../assets/switcher/css/switcher.css" rel="stylesheet">
     <link href="../assets/switcher/demo.css" rel="stylesheet">
 
+    
+
 </head>
 
 <body class="app sidebar-mini">
@@ -108,7 +110,7 @@ $mainorderid = "";
                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <h5 class="mt-2">You can Add & Edit order details here.</h5>
-                                                        <input type="text" id="paystatus" name="paystatus" value="Payment Add" readonly>
+                                                        <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
                                                     </div>
                                                     <div class="col-md-9">
                                                         <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
@@ -935,9 +937,12 @@ $mainorderid = "";
     <script src="../assets/plugins/bootstrap/popper.min.js"></script>
     <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- INTERNAL SELECT2 JS -->
-    <script src="../assets/plugins/select2/js/select2.full.min.js"></script>
-    <script src="../assets/js/select2.js"></script>
+
+    
+
+       <!-- INTERNAL SELECT2 JS -->
+       <script src="../assets/plugins/select2/js/select2.full.min.js"></script>
+            <script src="../assets/js/select2.js"></script>
 
     <!-- Chart.Bundle js-->
     <script src="../assets/plugins/chart.js/Chart.bundle.min.js"></script>
@@ -986,7 +991,16 @@ $mainorderid = "";
 	<!--- TABS JS -->
 	<script src="../assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>
 	<script src="../assets/plugins/tabs/tab-content.js"></script>
+<script>
+     $(document).ready(function(e) {
+                   
 
+                    $('#mulselect').delegate('', 'click change', function() {
+                        var ordersValueid = $('#mulselect').val();
+                        console.log(ordersValueid);
+                    });
+                });
+</script>
 
 </body>
 

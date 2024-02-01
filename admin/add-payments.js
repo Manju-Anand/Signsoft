@@ -969,10 +969,10 @@ $(document).ready(function (e) {
         if (paystatus == 'Payment edited') {
             var confirmClose = confirm("You have edited the details and not saved yet. Do you want to continue with form cancel?");
             if (confirmClose) {
-                window.location = "staffAllocation.php";
+                window.location = "orderlist.php";
             }
         } else {
-            window.location = "staffAllocation.php";
+            window.location = "orderlist.php";
         }
         return false;
     });
