@@ -49,18 +49,21 @@ foreach ($data['supplierdataToSave'] as $row) {
     $PaymentAmount = $row['PaymentAmount'];
     $TransactionMode = $row['TransactionMode'];
     $CustomerBillNo = $row['CustomerBillNo'];
+    $payDate = $row['payDate'];
+    $payStatus = $row['payStatus'];
     date_default_timezone_set("Asia/Calcutta");
     $postdate = date("M d,Y h:i:s a");
+    // if ($payStatus !== "Saved") {
+        // Perform the SQL query to insert data into the first table (payment_supplier)
+        $sql = "INSERT INTO payment_supplier (orderid, category_id, categoryName, supplier_id, supplierName, work_description, 
+        supplier_billno, payment_amount,transaction_mode,customer_billno,created,modified,payDate)
+                VALUES ('$orderid','$entryid','$entry','$Supplierid', '$SupplierName', '$workDone', '$SupplierBillNo', '$PaymentAmount', 
+                '$TransactionMode','$CustomerBillNo','$postdate','$postdate','$payDate')";
 
-    // Perform the SQL query to insert data into the first table (payment_supplier)
-    $sql = "INSERT INTO payment_supplier (orderid, category_id, categoryName, supplier_id, supplierName, work_description, 
-    supplier_billno, payment_amount,transaction_mode,customer_billno,created,modified)
-            VALUES ('$orderid','$entryid','$entry','$Supplierid', '$SupplierName', '$workDone', '$SupplierBillNo', '$PaymentAmount', 
-            '$TransactionMode','$CustomerBillNo','$postdate','$postdate')";
-
-    if ($connection->query($sql) !== TRUE) {
-        echo "Error: " . $sql . "<br>" . $connection->error;
-    }
+        if ($connection->query($sql) !== TRUE) {
+            echo "Error: " . $sql . "<br>" . $connection->error;
+        }
+    // }
 }
 
 // If you have a second table (payment_data), handle its data
@@ -71,14 +74,17 @@ if (isset($data['paymentdataToSave'])) {
         $transactionMode = $row['TransactionMode'];
         $paymentAmount = $row['PaymentAmount'];
         $customerBillNo = $row['CustomerBillNo'];
-
+        $cuspayDate = $row['cuspayDate'];
+        $payStatus = $row['payStatus'];
+        // if ($payStatus !== "Saved") {
         // Perform the SQL query to insert data into the second table (payment_customer)
-        $sqlPayment = "INSERT INTO payment_customer (orderid, payment_type, transaction_mode,payment_amount, customer_billno, created,modified)
-                       VALUES ('$orderid', '$paymentType', '$transactionMode', '$paymentAmount', '$customerBillNo','$postdate','$postdate')";
+        $sqlPayment = "INSERT INTO payment_customer (orderid, payment_type, transaction_mode,payment_amount, customer_billno, created,modified,payDate)
+                       VALUES ('$orderid', '$paymentType', '$transactionMode', '$paymentAmount', '$customerBillNo','$postdate','$postdate'.'$cuspayDate')";
 
         if ($connection->query($sqlPayment) !== TRUE) {
             echo "Error: " . $sqlPayment . "<br>" . $connection->error;
         }
+      // }
     }
 }
 
@@ -93,7 +99,8 @@ if (isset($data['staffallocationdataToSave'])) {
     $deadline = $row['deadline'];
     $percentOfWork = $row['percentOfWork'];
     $assignDate = $row['assignDate'];
-
+    $payStatus = $row['payStatus'];
+    // if ($payStatus !== "Saved") {
     // Perform the SQL query to insert data into the database
     $sql = "INSERT INTO staff_allocation (orderid,entryid,entryname,empid, empname, work_assigned, deadline, per_of_work,assignedDate) VALUES
      ('$orderid','$entryid','$entry','$staffid', '$staffName', '$workAssigned', '$deadline', '$percentOfWork', '$assignDate')";
@@ -101,6 +108,7 @@ if (isset($data['staffallocationdataToSave'])) {
     if ($connection->query($sql) !== TRUE) {
         echo "Error: " . $sql . "<br>" . $connection->error;
     }
+  // }
 }
 }
 
@@ -111,8 +119,8 @@ if (isset($data['followupdataToSave'])) {
     $followdate = $row['followdate'];
     $followmode = $row['followmode'];
     $remarks = $row['remarks'];
-    
-
+    $payStatus = $row['payStatus'];
+    // if ($payStatus !== "Saved") {
     // Perform the SQL query to insert data into the database
     $sql = "INSERT INTO order_followup (order_id,orderDate,mode_of_contact,remarks) VALUES
      ('$orderid','$followdate','$followmode','$remarks')";
@@ -120,6 +128,7 @@ if (isset($data['followupdataToSave'])) {
     if ($connection->query($sql) !== TRUE) {
         echo "Error: " . $sql . "<br>" . $connection->error;
     }
+  // }
 }
 }
 

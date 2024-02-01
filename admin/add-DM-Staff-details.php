@@ -50,7 +50,11 @@ $mainorderid = "";
     <link href="../assets/switcher/css/switcher.css" rel="stylesheet">
     <link href="../assets/switcher/demo.css" rel="stylesheet">
 
-    
+    <style>
+                                                        .hidden-cell {
+                                                            display: none;
+                                                        }
+                                                    </style>
 
 </head>
 
@@ -78,7 +82,7 @@ $mainorderid = "";
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5" style="color:brown;text-transform:uppercase; text-decoration: underline;">Add & Edit Order Details</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5";">Assign Digital Marketing Staff</h2>
                             <!-- <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Payment Details</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Closing Order Form</li>
@@ -108,11 +112,11 @@ $mainorderid = "";
 							<div class="card-header rounded-bottom-0">
 								
                                 <div class="row">
-                                                    <div class="col-md-3">
-                                                        <h5 class="mt-2">You can Add & Edit order details here.</h5>
+                                                    <div class="col-md-5">
+                                                        <h5 class="mt-2">You can Add & Edit Digital Marketing staff Assiging here.</h5>
                                                         <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
                                                     </div>
-                                                    <div class="col-md-9">
+                                                    <div class="col-md-7">
                                                         <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
                                                         <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
                                                         <!-- float-end -->
@@ -125,19 +129,12 @@ $mainorderid = "";
                                 <div class="tab-menu-heading">
                                     <div class="tabs-menu">
                                         <!-- Tabs -->
-                                        <ul class="nav panel-tabs panel-secondary">
+                                        <ul class="nav panel-tabs panel-info">
                                             <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-book-open mx-1"></i></span>Order Details</a>
                                             </li>
-                                            <li><a href="#tab22" data-bs-toggle="tab"><span><i class="fe fe-phone-call mx-1"></i></span>Follow-Up History</a>
-                                            </li>
-											<li><a href="#tab20" data-bs-toggle="tab"><span><i class="fe fe-server mx-1"></i></span>Quotation Splitup</a>
-                                            </li>
-                                            <li><a href="#tab21" data-bs-toggle="tab"><span><i class="fe fe-user mx-1"></i></span>Staff Allocation</a>
-                                            </li>
-                                            <li><a href="#tab18" data-bs-toggle="tab"><span><i class="fe fe-calendar mx-1"></i></span>Supplier Details</a>
-                                            </li>
-                                            <li><a href="#tab19" data-bs-toggle="tab"><span><i class="fe fe-dollar-sign mx-1"></i></span>Payment Details</a>
-                                            </li>
+                                            
+                                            
+                                         
                                            
                                         </ul>
                                     </div>
@@ -148,7 +145,7 @@ $mainorderid = "";
                                         <div class="tab-pane active" id="tab17">
                                             
                                                 <div class="row mb-4">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-4">
                                                         <label class="form-label" for="ordersdisplay">Orders :</label>
                                                         <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
                                                             <option value="" disabled selected>Select Order Entry</option>
@@ -156,357 +153,135 @@ $mainorderid = "";
                                                             $queryorder = "select * from order_customers where order_status='Active' order by id desc";
                                                             $select_postsorder = mysqli_query($connection, $queryorder);
                                                             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+
                                                                 $mainorderid = $roworder['id'];
+
+                                                               
+                                                                $querydigital = "select * from category where category='Social Media'";
+                                                                $select_postsdigital = mysqli_query($connection, $querydigital);
+                                                                while ($rowdigital = mysqli_fetch_assoc($select_postsdigital)) {
+                                                                    $catId = $rowdigital['id'];
+   
+                                                                }
+                                                                $dmorder="false";
+
+                                                                $queryordercat = "select * from order_category where order_id='" . $roworder['id'] . "' and category_id='" . $catId . "'";
+                                                                $select_postsordercat = mysqli_query($connection, $queryordercat);
+                                                                while ($rowordercat = mysqli_fetch_assoc($select_postsordercat)) {
+                                                                    $categoryId = $rowordercat['category_id'];
+                                                                    $dmorder = "true";
+                                                                   
+                                                                }
+
+                                                                if ($dmorder == "true"){
                                                             ?>
+                                                           
                                                                 <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
-                                                            <?php }
-                                                            ?>
+                                                            <?php }}    ?>
                                                         </select>
                                                     </div>
+                                                    <div class="col-md-8" style="margin: bottom 10px; border: 1px double  rgb(210, 180, 140);padding:15px;
+                                                    border-top-style: dotted;  border-right-style: solid;  border-bottom-style: dotted;
+                                                      border-left-style: solid; border-left: 6px solid red;" id="orderdetails"></div>
                                                 </div>
                                                 <div class="row mb-4">
 
                                                  
-                                                    <div class="col-md-12" style="margin: bottom 10px;" id="orderdetails"></div>
+                                                    
 
                                                 </div>
 
+                                                <div class="row mb-4">
+                                          
+                                          <div class="col-md-3">
+                                              <label class="form-label" for="dmpayment">Payment :</label>
+                                              <input type="number" class="form-control" id="dmpayment" name="dmpayment" placeholder="Advance Payment" required>
+
+                                              
+                                          </div>
                                                 
+                                          <div class="col-md-3">
+                                          <label class="form-label" for="postings">Postings :</label>
+                                              <select  class="form-control select2" multiple="multiple" name="postings[]" id="postings" required>
+                                                  <option value="" disabled >Select Postings</option>
+                                                  <option value="poster">Poster</option>
+                                                  <option value="Video">Video</option>
+                                                  <option value="GIF">GIF</option>
+                                              </select>
+
+                                          </div>
+                                          <div class="col-md-3">
+                                              <label class="form-label" for="staff">Staff Name :</label>
+                                              <select class="form-select mb-3" aria-label="Default select example" name="staff" id="staff" required>
+                                                  <option value="" disabled selected>Select Employee</option>
+                                                  <?php
+                                                  $query = "SELECT * FROM employee WHERE department_id IN (SELECT id FROM department WHERE dname='Digital')";
+                                                  $select_posts = mysqli_query($connection, $query);
+                                                  while ($row = mysqli_fetch_assoc($select_posts)) {
+                                                  ?>
+                                                      <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['empname'] ?></option>
+                                                  <?php } ?>
+                                              </select>
+                                          </div>
+                                          <div class="col-md-3">
+                                              <label class="form-label" for="frequency">Frequency :</label>
+                                              <input type="text" class="form-control" id="frequency" name="frequency" placeholder="Like 2 posters per week ETC." required>
+
+                                          </div>
+                                          <div class="col-md-3">
+                                              <label class="form-label" for="startdate">Calender Start Date :</label>
+                                              <input type="date" class="form-control" id="startdate" name="startdate" placeholder="startdate" required>
+
+                                          </div>
+                                          <div class="col-md-3">
+                                              <label class="form-label" for="enddate">Calender End Date :</label>
+                                              <input type="date" class="form-control" id="enddate" name="enddate" placeholder="enddate" readonly>
+
+                                          </div>
+                                          <div class="col-md-3">
+                                              <label class="form-label" for="paidpromotion">Paid Promotion Amount :</label>
+                                              <input type="number" class="form-control" id="paidpromotion" name="paidpromotion" placeholder="Paid Promotion Amount" required>
+
+                                          </div>
+                                          <div class="col-md-3">
+                                              <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
+                                              <button type="button" name="submit" class="btn btn-primary" onclick="addstaffRow()" style="color:white;cursor:pointer;">Assign</button>
+
+                                          </div>
+                                          <hr>
+
+                                      <div class="table-responsive">
+
+                                          <table class="table table-bordered mg-b-0" id="staffallocateTable">
+                                              <thead>
+                                                  <tr style="background-color: #add8e6;">
+                                                      <th>#</th>
+                                                      <th>Payment</th>
+                                                      <th>Postings</th>
+                                                      <th>Employee Name</th>
+                                                      <th class="hidden-cell">Emp Id</th>
+                                                      <th>Frequency</th>
+                                                      <th>Start Date</th>
+                                                      <th>End Date</th>
+                                                      <th>Paid Promotion Amount</th>
+                                                      <th>Action</th>
+                                                      <th class="hidden-cell">status</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody id="ajaxstaffallocateresults">
+
+                                              </tbody>
+                                          </table>
+                                      </div>
+
+                                  </div>
                                            
                                         </div>
-                                        <div class="tab-pane" id="tab20">
-                                            <div class="row mb-4">
-                                                <div class="col" style="text-align: right;">
-                                                <a data-bs-target='#modalquotesplitup' data-bs-toggle='modal' data-effect='effect-slide-in-right'
-                                                href='javascript:void(0);' id='quotesplitupbtn' data-quoteid='' style='font-size:15px;color:white;'>
-                                                <button class='btn btn-indigo' >Quotation Splitup</button></a>
-
-                                                <a data-bs-target='#modaleditquotesplitup' data-bs-toggle='modal' data-effect='effect-slide-in-right'
-                                                href='javascript:void(0);' id='editquotesplitupbtn' data-quoteid='' style='font-size:15px;color:white;'>
-                                                <button class='btn btn-success' >Edit Quotation Splitup</button></a>
-                                                </div><br>
-                                            
-
-                                                <div class="table-responsive">
-
-                                                    <table class="table table-bordered mg-b-0" id="quotesplitupTable">
-                                                        <thead>
-                                                            <tr style="background-color: #add8e6;">
-                                                                <th>#</th>
-                                                                <th>Item Name</th>
-                                                                <th>Price</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="ajaxquotesplitupresults">
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="tab21">
-                                            <div class="row mb-4">
-                                          
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="dept">Orders :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
-                                                            <option value="" disabled selected>Select Order Entry</option>
-                                                         
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="staff">Staff Name :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="staff" id="staff" required>
-                                                            <option value="" disabled selected>Select Employee</option>
-                                                            <?php
-                                                            $query = "select * from employee order by id desc";
-                                                            $select_posts = mysqli_query($connection, $query);
-                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                            ?>
-                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['empname'] ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="assignwork">Work Assigned :</label>
-                                                        <input type="text" class="form-control" id="assignwork" name="assignwork" placeholder="Work Assigned" required>
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="deadline">Deadline :</label>
-                                                        <input type="date" class="form-control" id="deadline" name="deadline" placeholder="Deadline" required>
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="workper">Percentage of work :</label>
-                                                        <input type="number" class="form-control" id="workper" name="workper" max="100" placeholder="Percentage of work" required>
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
-                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addstaffRow()" style="color:white;cursor:pointer;">Allocate Staff</button>
-
-                                                    </div>
-                                                    <hr>
-
-                                                <div class="table-responsive">
-
-                                                    <table class="table table-bordered mg-b-0" id="staffallocateTable">
-                                                        <thead>
-                                                            <tr style="background-color: #add8e6;">
-                                                                <th>#</th>
-                                                                <th>Category Assigned</th>
-                                                                <th class="hidden-cell">order Id</th>
-                                                                <th>Employee Name</th>
-                                                                <th class="hidden-cell">Emp Id</th>
-                                                                <th>Work Description</th>
-                                                                <th>Dead Line</th>
-                                                                <th>Percentage of Work</th>
-                                                                <th>Assigned Date</th>
-                                                                <th>Action</th>
-                                                                <th class="hidden-cell">status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="ajaxstaffallocateresults">
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="tab18">
-                                            <div class="row mb-4">
-
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="orders">Orders :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="orders" id="orders" required>
-                                                            <option value="" disabled selected>Select Order Entry</option>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="supplier">Supplier Name :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="supplier" id="supplier" required>
-                                                            <option value="" disabled selected>Select Supplier</option>
-                                                            <?php
-                                                            $query = "select * from suppliers order by id desc";
-                                                            $select_posts = mysqli_query($connection, $query);
-                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                            ?>
-                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['supplier_name'] ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="donework">Work Done :</label>
-                                                        <input type="text" class="form-control" id="donework" name="donework" placeholder="Work Done" required>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="supbillno">Supplier Bill No :</label>
-                                                        <input type="text" class="form-control" id="supbillno" name="supbillno" placeholder="Supplier Bill No" required>
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="payamt">Payment Amount :</label>
-                                                        <input type="number" class="form-control" id="payamt" name="payamt" placeholder="Payment Amount" required>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="transmode">Transaction Mode :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="transmode" id="transmode" required>
-                                                            <option value="" disabled selected>Select Transaction Mode</option>
-                                                            <option value="Cash">Cash</option>
-                                                            <option value="Card">Card</option>
-                                                            <option value="UPI">UPI</option>
-                                                            <option value="Bank Transfer">Bank Transfer</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="workper">Customer Bill No :</label>
-                                                        <input type="text" class="form-control" id="custbillno" name="custbillno" placeholder="Customer Bill No" required>
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                    <label class="form-label" for="deadline">Date of Pay :</label>
-                                                        <input type="date" class="form-control" id="suppaydate" name="suppaydate" placeholder="Deadline" required>
-
-                                                    </div>
-
-
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
-                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addRow()" style="color:white;cursor:pointer;">Add Supplier Details</button>
-
-                                                    </div>
-													<hr>
-
-                                                <div class="table-responsive">
-                                                    <style>
-                                                        .hidden-cell {
-                                                            display: none;
-                                                        }
-                                                    </style>
-                                                    <table class="table table-bordered mg-b-0" id="dataTable">
-                                                        <thead>
-                                                            <tr style="background-color: #add8e6;">
-                                                                <th>#</th>
-                                                                <th>Order</th>
-                                                                <th class="hidden-cell">order Id</th>
-                                                                <th>Supplier Name</th>
-                                                                <th class="hidden-cell">Sup Id</th>
-                                                                <th>Work Done</th>
-                                                                <th>Supplier Bill No</th>
-                                                                <th style="text-align: right;">Payment Amount</th>
-                                                                <th>Transaction Mode</th>
-                                                                <th>Customer Bill No</th>
-                                                                <th>Date of Pay</th>
-																<th>Action</th>
-                                                                <th class="hidden-cell">status</th>
-
-
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="ajaxsupplierresults">
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="tab19">
-                                            <div class="row mb-4">
-											        <div class="col-md-2">
-                                                        <label class="form-label" for="paytype">Payment Type :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="paytype" id="paytype" required>
-                                                            <option value="" disabled selected>Select Payment Type</option>
-                                                            <option value="Advance Payment">Advance Payment</option>
-                                                            <option value="Intrim Payment">Intrim Payment</option>
-                                                            <option value="Final Payment">Final Payment</option>
-
-                                                        </select>
-                                                    </div>
-
-
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="paymenttransmode">Transaction Mode :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="paymenttransmode" id="paymenttransmode" required>
-                                                            <option value="" disabled selected>Select Transaction Mode</option>
-                                                            <option value="Cash">Cash</option>
-                                                            <option value="Card">Card</option>
-                                                            <option value="UPI">UPI</option>
-                                                            <option value="Bank Transfer">Bank Transfer</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="paymentamt">Payment Amount :</label>
-                                                        <input type="number" class="form-control" id="paymentamt" name="paymentamt" placeholder="Payment Amount" required>
-
-                                                    </div>
-
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="paycustbillno">Customer Bill No :</label>
-                                                        <input type="text" class="form-control" id="paycustbillno" name="paycustbillno" placeholder="Customer Bill No" required>
-
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                    <label class="form-label" for="deadline">Date of Pay :</label>
-                                                        <input type="date" class="form-control" id="cuspaydate" name="cuspaydate" placeholder="customer paydate" required>
-
-                                                    </div>
-
-                                                    <div class="col-md-2">
-                                                        <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
-                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addPayment()" style="color:white;cursor:pointer;">Add Payment Details</button>
-
-                                                    </div>
-                                                    <hr>
-                                                <div class="table-responsive">
-                                                    <style>
-                                                        .hidden-cell {
-                                                            display: none;
-                                                        }
-                                                    </style>
-                                                    <table class="table table-bordered mg-b-0" id="paydataTable">
-                                                        <thead>
-                                                            <tr style="background-color: #add8e6;">
-                                                                <th>#</th>
-                                                                <th>Payment Type</th>
-                                                                <th>Transaction Mode</th>
-                                                                <th>Payment Amount</th>
-                                                                <th>Customer Bill No</th>
-                                                                <th>Date of Pay</th>
-																<th>Action</th>
-                                                                <th class="hidden-cell">status</th>
-
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="ajaxpaymentresults">
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="tab22">
-                                            <div class="row mb-4">
-											        <div class="col-md-3">
-                                                        <label class="form-label" for="paytype">Date :</label>
-                                                        <input type="date" class="form-control" id="followupdate" name="followupdate" placeholder="Followup Date" required>
-
-                                                    </div>
-
-
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="paymenttransmode">Mode Of Contact :</label>
-                                                        <select class="form-select mb-3" aria-label="Default select example" name="followupmode" id="followupmode" required>
-                                                            <option value="" disabled selected>Select Mode Of Contact</option>
-                                                            <option value="Phone Call">Phone Call</option>
-                                                            <option value="Client Visit">Client Visit</option>
-                                                            <option value="Whatsapp">Whatsapp</option>
-                                                            <option value="Emailr">Email</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="paymentamt">Remarks :</label>
-                                                        <input type="text" class="form-control" id="followupremarks" name="followupremarks" placeholder="Remarks" required>
-
-                                                    </div>
-
-                                                    
-
-                                                    <div class="col-md-3">
-                                                        <label class="form-label" for="dept" style="color:transparent" >Transparent Label :</label>
-                                                        <button type="button" name="submit" class="btn btn-primary" onclick="addfollowup()" style="color:white;cursor:pointer;">Add Followup Details</button>
-
-                                                    </div>
-                                                    <hr>
-                                                <div class="table-responsive">
-                                                    
-                                                    <table class="table table-bordered mg-b-0" id="followupdataTable">
-                                                        <thead>
-                                                            <tr style="background-color: #add8e6;">
-                                                                <th>#</th>
-                                                                <th>Followup Date</th>
-                                                                <th>Mode of Contact</th>
-                                                                <th>Remarks</th>
-                                                                <th>Action</th>
-                                                                <th class="hidden-cell">status</th>
-
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="ajaxfollowupresults">
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                       
+                                        
+                                       
+                                      
+                                    
                                       
                                     </div>
                                 </form>
@@ -1011,7 +786,7 @@ $mainorderid = "";
 
     <!-- password-addon init -->
     <!-- <script src="../assets/js/password-addon.js"></script> -->
-    <script src="add-payments.js"></script>
+    <script src="add-DM-details.js"></script>
 
 	<!--- TABS JS -->
 	<script src="../assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>

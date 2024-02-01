@@ -31,7 +31,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <a class='btn btn-sm btn-danger delete-follow-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'> 
         <span class='fe fe-trash-2'> </span></a></td>
     
-
+        <td class="hidden-cell">Saved</td>
 </tr>
 <?php
 }

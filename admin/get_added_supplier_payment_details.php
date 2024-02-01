@@ -32,11 +32,12 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td style="text-align: right;"><?php echo $row['payment_amount'];?></td>
     <td><?php echo $row['transaction_mode'];?></td>
     <td><?php echo $row['customer_billno'];?></td>
+    <td><?php echo $row['payDate'];?></td>
     <td><a class='btn btn-sm btn-primary  edit-btn'  data-bs-target='#suppliermodal' data-bs-toggle='modal' title='Edit' style='color:white'>
         <span class='fe fe-edit'> </span></a>&nbsp;&nbsp;
         <a class='btn btn-sm btn-danger delete-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'> 
         <span class='fe fe-trash-2'> </span></a></td>
-    
+        <td class="hidden-cell">Saved</td>
 
 </tr>
 <?php

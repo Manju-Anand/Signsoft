@@ -26,7 +26,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td><?php echo $row['transaction_mode'];?></td>
     <td style="text-align: right;"><?php echo $row['payment_amount'];?></td>
     <td><?php echo $row['customer_billno'];?></td>
-   
+    <td><?php echo $row['payDate'];?></td>
     
 
 </tr>

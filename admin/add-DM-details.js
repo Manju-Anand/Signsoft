@@ -462,14 +462,31 @@ function addstaffRow() {
     newRow.setAttribute('data-rowid', rowId);
     // Select Box 1
     var cell2 = newRow.insertCell(1);
-    var selectBox1 = document.getElementById("dept");
-    cell2.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
+    var selectBox1 = document.getElementById("dmpayment");
+    cell2.innerHTML = selectBox1.value;
 
-    // Select Box 2
+
     var cell3 = newRow.insertCell(2);
-    var selectBox2 = document.getElementById("dept");
-    cell3.innerHTML = selectBox2.options[selectBox2.selectedIndex].value;
-    cell3.classList.add('hidden-cell');
+    var selectBox2 = document.getElementById("postings");
+    
+    var selectedTextArray = [];
+    for (var i = 0; i < selectBox2.options.length; i++) {
+        if (selectBox2.options[i].selected) {
+            selectedTextArray.push(selectBox2.options[i].text);
+        }
+    }
+    
+    var selectedText = selectedTextArray.join(', ');
+    
+    // Display the result in the cell
+    cell3.innerHTML = selectedText;
+   
+
+//     var cell3 = newRow.insertCell(2);
+// var selectBox2 = document.getElementById("postings");
+// var selectedValues = selectBox2.value; // Assuming "postings" is a single-select dropdown
+// var selectedString = selectedValues ? selectedValues : '';
+// cell3.innerHTML = selectedString;
 
     // Select Box 1
     var cell4 = newRow.insertCell(3);
@@ -483,28 +500,33 @@ function addstaffRow() {
     cell5.classList.add('hidden-cell');
     // Text Box 1
     var cell6 = newRow.insertCell(5);
-    var textBox1 = document.getElementById("assignwork");
+    var textBox1 = document.getElementById("frequency");
     cell6.innerHTML = textBox1.value;
 
     // Text Box 2
     var cell7 = newRow.insertCell(6);
-    var textBox2 = document.getElementById("deadline");
+    var textBox2 = document.getElementById("startdate");
     cell7.innerHTML = textBox2.value;
 
     // Text Box 3
     var cell8 = newRow.insertCell(7);
-    var textBox3 = document.getElementById("workper");
+    var textBox3 = document.getElementById("enddate");
     cell8.innerHTML = textBox3.value;
 
-// Add another column for today's date
-var cell9 = newRow.insertCell(8);
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-var yyyy = today.getFullYear();
+    // Text Box 3
+    var cell9 = newRow.insertCell(8);
+    var textBox3 = document.getElementById("paidpromotion");
+    cell9.innerHTML = textBox3.value;
 
-today =  yyyy + '-' + mm + '-' + dd;
-cell9.innerHTML = today;
+// Add another column for today's date
+// var cell9 = newRow.insertCell(8);
+// var today = new Date();
+// var dd = String(today.getDate()).padStart(2, '0');
+// var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+// var yyyy = today.getFullYear();
+
+// today =  yyyy + '-' + mm + '-' + dd;
+// cell9.innerHTML = today;
 
 
 // New cell with Edit and Delete buttons  ===========href='edit-supplier.php?edit=" + ++rowCounter + "'---onclick='javascript:confirmationDelete($(this));return false;
@@ -516,7 +538,7 @@ cell10.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-ta
  // Text Box 3
  var cell11 = newRow.insertCell(10);
  cell11.innerHTML = "New";
-
+ cell11.classList.add('hidden-cell');
     // Clear input values after adding to the table
     textBox1.value = "";
     textBox2.value = "";
@@ -728,89 +750,9 @@ $('#savefollowupChangesBtn').on('click', function () {
 // ============start data saving code================================
 function saveDataToDatabase() {
     var correctorderid =  document.getElementById("ordersdisplay").value;
-    // *********** supplier details *************
-    var table = document.getElementById("dataTable");
-    var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-    console.log("hai suppliers   :" + rows)
-    var supplierdataToSave = [];
-
-    // Iterate through each row
-    for (var i = 0; i < rows.length; i++) {
-        console.log(i);
-        var row = rows[i];
-        var cells = row.getElementsByTagName("td");
-
-        var rowData = {
-            orderid: document.getElementById("ordersdisplay").value,
-            entry: cells[1].innerHTML, // Adjust the index based on your table structure
-            entryid: cells[2].innerHTML, // Adjust the index based on your table structure
-            SupplierName: cells[3].innerHTML, // Adjust the index based on your table structure
-            Supplierid: cells[4].innerHTML, // Adjust the index based on your table structure
-            workDone: cells[5].innerHTML, // Adjust the index based on your table structure
-            SupplierBillNo: cells[6].innerHTML, // Adjust the index based on your table structure
-            PaymentAmount: cells[7].innerHTML, // Adjust the index based on your table structure
-            TransactionMode: cells[8].innerHTML, // Adjust the index based on your table structure
-            CustomerBillNo: cells[9].innerHTML, // Adjust the index based on your table structure
-            payDate: cells[10].innerHTML, // Adjust the index based on your table structure
-            payStatus: cells[12].innerHTML // Adjust the index based on your table structure
-            // Add more fields as needed
-        };
-
-        supplierdataToSave.push(rowData);
-    }
-    console.log(rowData);
-    // **********payment details *********************
-
-    var table1 = document.getElementById("paydataTable");
-    var rows1 = table1.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-    console.log("hai  payments :" + rows1)
-    var paymentdataToSave = [];
-
-    // Iterate through each row
-    for (var i = 0; i < rows1.length; i++) {
-        console.log(i);
-        var row = rows1[i];
-        var cells = row.getElementsByTagName("td");
-
-        var rowData1 = {
-            orderid: document.getElementById("ordersdisplay").value,
-            PaymentType: cells[1].innerHTML, // Adjust the index based on your table structure
-            TransactionMode: cells[2].innerHTML, // Adjust the index based on your table structure
-            PaymentAmount: cells[3].innerHTML, // Adjust the index based on your table structure
-            CustomerBillNo: cells[4].innerHTML, // Adjust the index based on your table structure
-            cuspayDate: cells[5].innerHTML, // Adjust the index based on your table structure
-            payStatus: cells[7].innerHTML
-        };
-
-        paymentdataToSave.push(rowData1);
-    }
-    console.log(rowData1);
-      // **********folllowup details *********************
-
-      var table1 = document.getElementById("followupdataTable");
-      var rows1 = table1.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-      console.log("hai  followups :" + rows1)
-      var followupdataToSave = [];
-  
-      // Iterate through each row
-      for (var i = 0; i < rows1.length; i++) {
-          console.log(i);
-          var row = rows1[i];
-          var cells = row.getElementsByTagName("td");
-  
-          var rowData1 = {
-              orderid: document.getElementById("ordersdisplay").value,
-              followdate: cells[1].innerHTML, // Adjust the index based on your table structure
-              followmode: cells[2].innerHTML, // Adjust the index based on your table structure
-              remarks: cells[3].innerHTML, // Adjust the index based on your table structure
-              payStatus: cells[5].innerHTML
-            
-  
-          };
-  
-          followupdataToSave.push(rowData1);
-      }
-      console.log(rowData1);
+   
+    
+     
      // **********staff allocation details *********************
 
      var table1 = document.getElementById("staffallocateTable");
@@ -826,15 +768,15 @@ function saveDataToDatabase() {
  
          var rowData1 = {
              orderid: document.getElementById("ordersdisplay").value,
-             entry: cells[1].innerHTML, // Adjust the index based on your table structure
-             entryid: cells[2].innerHTML, // Adjust the index based on your table structure
+             Payment: cells[1].innerHTML, // Adjust the index based on your table structure
+             Postings: cells[2].innerHTML, // Adjust the index based on your table structure
              staffName: cells[3].innerHTML, // Adjust the index based on your table structure
              staffid: cells[4].innerHTML, // Adjust the index based on your table structure
-             workAssigned: cells[5].innerHTML, // Adjust the index based on your table structure
-             deadline: cells[6].innerHTML, // Adjust the index based on your table structure
-             percentOfWork: cells[7].innerHTML, // Adjust the index based on your table structure
-             assignDate: cells[8].innerHTML, // Adjust the index based on your table structure
-             payStatus: cells[10].innerHTML
+             Frequency: cells[5].innerHTML, // Adjust the index based on your table structure
+             StartDate: cells[6].innerHTML, // Adjust the index based on your table structure
+             EndDate: cells[7].innerHTML, // Adjust the index based on your table structure
+             promoamt: cells[8].innerHTML, // Adjust the index based on your table structure
+            //  payStatus: cells[10].innerHTML
  
         };
  
@@ -846,14 +788,12 @@ function saveDataToDatabase() {
     var combinedData = {
         correctorderid:correctorderid,
         staffallocationdataToSave:staffallocationdataToSave,
-        supplierdataToSave: supplierdataToSave,
-        paymentdataToSave: paymentdataToSave,
-        followupdataToSave: followupdataToSave,
+        
     };
 
     // Send data to the server using AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save-paymentdetails.php", true);
+    xhr.open("POST", "save-digital-marketing-staff.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onreadystatechange = function () {
@@ -926,53 +866,7 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
         }
     });
 
-    $.ajax({
-        type: 'POST',
-        url: 'get_followup_details.php',
-        data: {
-            selectedOrderId: selectedOrderId
-        },
-        success: function (data) {
-
-            $('#ajaxfollowupresults').html(data);
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: 'get_added_payment_details.php',
-        data: {
-            selectedOrderId: selectedOrderId
-        },
-        success: function (data) {
-
-            $('#ajaxpaymentresults').html(data);
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: 'get_added_supplier_payment_details.php',
-        data: {
-            selectedOrderId: selectedOrderId
-        },
-        success: function (data) {
-
-            $('#ajaxsupplierresults').html(data);
-        }
-    });
-    $.ajax({
-        type: 'POST',
-        url: 'view_quote_splitup_details.php',
-        data: {
-            selectedOrderId: selectedOrderId
-        },
-        success: function (data) {
-
-            $('#ajaxquotesplitupresults').html(data);
-        }
-    });
-    
+   
     $.ajax({
         type: 'POST',
         url: 'add_staff_allocation_details.php',
@@ -1002,227 +896,28 @@ $(document).ready(function (e) {
         }
         return false;
     });
-});
 
 
-
-
-// ******************* start quotation splitup ****************
-$('#quotesplitupbtn').on('click', function() {
-    // alert("op");
-    // Access the value of the data attribute 'data_quoteid'
-    var quoteIdValue = $(this).data('quoteid');
-    $('#quoteid').val(quoteIdValue);
-    // alert(quoteIdValue);
-    var custName = $(this).data('custname');
-    $('#custname').val(custName);
-    var brandName = $(this).data('brandname');
-   $('#brandname').val(brandName);
-    var quoteAmt = $(this).data('quotedamt');
-    // alert (quoteAmt)
-    $('#quotedamt').val(quoteAmt);
-    // alert("complete");
-    // Your code to be executed when the element is clicked
-    // alert('Element with id "quoteSplit" clicked! Data Quote ID: ' + quoteIdValue);
-    // Fetch data from the server using AJAX (you may need to adjust the URL)
-    $.ajax({
-        url: 'quotation_details.php',
-        method: 'POST',
-        data: {
-            order_id: quoteIdValue
-        },
-        success: function(data) {
-            
-            $('#orderTable tbody').html(data);
-        },
-        error: function() {
-            alert('Error fetching data from the server.');
-        }
-    });
-});
-
-$('#saveQuotesplitupBtn').on('click', function() {
-    // Calculate the total amount entered in the numeric column
-    var totalAmount = 0;
-    $('.numeric-column').each(function() {
-        var numericValue = parseInt($(this).text()) || 0;
-        totalAmount += numericValue;
-    });
-
-    // Get the value from the quoteamt input
-    var quoteAmount = parseInt($('#quoteamt').val()) || 0;
-    var quoteId = $('#quoteid').val();
-    // Compare the total amount with quoteAmount
-    if (totalAmount > quoteAmount) {
-        alert('Total amount entered exceeds the Quoted Amount!');
-    } else {
-        // alert('Total amount is within the Quoted Amount.');
-
-        // Save data to the server (replace this with your actual AJAX call)
-        var tableData = [];
-        var tablechk=0;
-        $('#orderTable tbody tr').each(function() {
-            var priceValue = $(this).find('td:eq(3)').text().trim();
-            if (priceValue !== "") {
-                tablechk=1;
-            var rowData = {
-                itemId: $(this).find('td:nth-child(2)').text(),
-                itemName: $(this).find('td:nth-child(3)').text(),
-                price: $(this).find('td:nth-child(4)').text()
-            };
-            tableData.push(rowData);
-        }
+   
+        // Attach a change event listener to the start date input
+        $("#startdate").change(function() {
+          // Get the selected start date
+          var startDate = new Date($(this).val());
+  
+          // Calculate the end date as one month later
+          var endDate = new Date(startDate);
+          endDate.setMonth(endDate.getMonth() + 1);
+  
+          // Format the end date as YYYY-MM-DD (same format as input type=date)
+          var endDateFormatted = endDate.toISOString().split('T')[0];
+  
+          // Set the calculated end date to the end date input
+          $("#enddate").val(endDateFormatted);
         });
-       if ( tablechk == 1 ){
-        // Send the data to the server using AJAX
-        $.ajax({
-            url: 'quote_splitup_save.php',
-            method: 'POST',
-            data: {
-                quoteId: quoteId,
-                tableData: JSON.stringify(tableData)
-            },
-            success: function(response) {
-                console.log('Data saved successfully:', response); +
-                alert('Data saved successfully:');
-                $('#modalquotesplitup').modal('hide');
-                // window.location.href="quote_splitup.php";
-                // *************************
-                $.ajax({
-                    type: 'POST',
-                    url: 'view_quote_splitup_details.php',
-                    data: {
-                        selectedOrderId: quoteId
-                    },
-                    success: function (data) {
-            
-                        $('#ajaxquotesplitupresults').html(data);
-                    }
-                });
-
-
-                // *******************************
-            },
-            error: function() {
-                console.error('Error saving data to the server.');
-                alert(response);
-            }
-        });
-     } else {
-        alert("Enter Itemwise Price ");
-    }
-
-
-
-    }
-});
-
-$('#editquotesplitupbtn').on('click', function() {
-
-    // Access the value of the data attribute 'data_quoteid'
-    var quoteIdValue = $(this).data('quoteid');
-    $('#editquoteid').val(quoteIdValue);
-    var custName = $(this).data('custname');
-    $('#editcustname').val(custName);
-    var brandName = $(this).data('brandname');
-   $('#editbrandname').val(brandName);
-    var quoteAmt = $(this).data('quotedamt');
-    $('#editquoteamt').val(quoteAmt);
-    // Your code to be executed when the element is clicked
-    // alert('Element with id "quoteSplit" clicked! Data Quote ID: ' + quoteIdValue);
-    // Fetch data from the server using AJAX (you may need to adjust the URL)
-    $.ajax({
-        url: 'quotation_details_edit.php',
-        method: 'POST',
-        data: {
-            order_id: quoteIdValue
-        },
-        success: function(data) {
-            // alert(data);
-            $('#editorderTable tbody').html(data);
-        },
-        error: function() {
-            alert('Error fetching data from the server.');
-        }
-    });
-});
-
-$('#updateChangesBtn').on('click', function() {
-    // Calculate the total amount entered in the numeric column
-    var totalAmount = 0;
-    $('.numeric-column').each(function() {
-        var numericValue = parseInt($(this).text()) || 0;
-        totalAmount += numericValue;
-    });
-
-    // Get the value from the quoteamt input
-    var quoteAmount = parseInt($('#editquoteamt').val()) || 0;
-    var quoteId = $('#editquoteid').val();
-    // Compare the total amount with quoteAmount
-    if (totalAmount > quoteAmount) {
-        alert('Total amount entered exceeds the Quoted Amount!');
-    } else {
-        // alert('Total amount is within the Quoted Amount.');
-
-        // Save data to the server (replace this with your actual AJAX call)
-        var tableData = [];
-        var tablechk=0;
-        $('#editorderTable tbody tr').each(function() {
-            var priceValue = $(this).find('td:eq(3)').text().trim();
-            if (priceValue !== "") {
-                tablechk=1;
-            var rowData = {
-                itemId: $(this).find('td:nth-child(2)').text(),
-                itemName: $(this).find('td:nth-child(3)').text(),
-                price: $(this).find('td:nth-child(4)').text()
-            };
-            tableData.push(rowData);
-        }
-        });
-       if ( tablechk == 1 ){
-        // Send the data to the server using AJAX
-        $.ajax({
-            url: 'quote_splitup_update.php',
-            method: 'POST',
-            data: {
-                quoteId: quoteId,
-                tableData: JSON.stringify(tableData)
-            },
-            success: function(response) {
-                console.log('Data updated successfully:', response); +
-                alert('Data updated successfully:');
-                $('#modaleditquotesplitup').modal('hide');
-                // window.location.href="quote_splitup.php";
-                   // *************************
-                   $.ajax({
-                    type: 'POST',
-                    url: 'view_quote_splitup_details.php',
-                    data: {
-                        selectedOrderId: quoteId
-                    },
-                    success: function (data) {
-            
-                        $('#ajaxquotesplitupresults').html(data);
-                    }
-                });
-
-
-                // *******************************
-            },
-            error: function() {
-                console.error('Error saving data to the server.');
-                alert(response);
-            }
-        });
-     } else {
-        alert("Enter Itemwise Price ");
-    }
-
-
-
-    }
+    
 });
 
 
-// ************* end quotation splitup ******************
+
+
 

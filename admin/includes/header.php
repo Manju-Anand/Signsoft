@@ -252,6 +252,14 @@
 								</a>
 							</li>
 							
+							<li class="side-item side-item-category">Digital Marketing</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="add-DM-Staff-details.php">
+									<span class="side-menu__icon"><i class="fe fe-users side_menu_img"></i></span>
+									<span class="side-menu__label">Staff Allocation</span>
+								</a>
+								
+							</li>
 							
 
 							<li class="side-item side-item-category">Masters</li>
@@ -324,7 +332,7 @@
 
 
 							
-							<li class="side-item side-item-category">Other Pages</li>
+							<!-- <li class="side-item side-item-category">Other Pages</li>
 							
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="widgets.html">
@@ -684,7 +692,7 @@
 									</li>
 
 								</ul>
-							</li>
+							</li> -->
 						</ul>
 						<div class="slide-right" id="slide-right">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">

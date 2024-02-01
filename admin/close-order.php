@@ -301,6 +301,7 @@ $mainorderid = "";
                                                                 <th style="text-align: right;">Payment Amount</th>
                                                                 <th>Transaction Mode</th>
                                                                 <th>Customer Bill No</th>
+                                                                <th>Date of Pay</th>
 
 
                                                             </tr>
@@ -329,7 +330,7 @@ $mainorderid = "";
                                                                 <th>Transaction Mode</th>
                                                                 <th>Payment Amount</th>
                                                                 <th>Customer Bill No</th>
-
+                                                                <th>Date of Pay</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="ajaxpaymentresults">
