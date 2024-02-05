@@ -54,7 +54,7 @@
 						</li>
 						<li class="dropdown main-profile-menu">
 							<?php
-							$query = "select * from employee where id = '" . $_SESSION['salesempid'] . "'";
+							$query = "select * from employee where id = '" . $_SESSION['empid'] . "'";
 							$select_posts = mysqli_query($connection, $query);
 
 							while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -63,9 +63,18 @@
 									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/staff/<?php echo $row['emppic']; ?>"></a>
 
 								<?php	} else {
-								?>
-									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/users/avatar.png"></a>
 
+									$colors = array('bg-pink', 'bg-blue', 'bg-green', 'bg-purple', 'bg-orange', 'bg-primary', 'bg-cyan', 'bg-success');
+
+									// Choose a random color from the array
+									$randomColor = $colors[array_rand($colors)];
+								?>
+									<!-- <a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/users/avatar.png"></a> -->
+									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown">
+										<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
+											<?php echo strtoupper(substr($_SESSION['adminname'], 0, 1)); ?>
+										</div>
+									</a>
 							<?php  }
 							} ?>
 							<div class="dropdown-menu">
@@ -326,7 +335,7 @@
 						<span class="side-menu__icon"><i class="fe fe-zap side_menu_img"></i></span>
 						<span class="side-menu__label">Add Lead Follow-up</span>
 					</a>
-					
+
 				</li>
 				<li class="slide">
 					<a class="side-menu__item" data-bs-toggle="slide" href="leadlist.php">
@@ -505,7 +514,7 @@
 
 					</ul> -->
 				</li>
-				
+
 			</ul>
 			<div class="slide-right" id="slide-right">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">

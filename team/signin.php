@@ -68,11 +68,21 @@
 								</div>
 								<div class="form-group text-start">
 									<label>Department</label>
-									<input class="form-control" value="Sales" name="dept" id="dept" type="text" readonly>
+									<select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
+											<option value="" disabled selected>Select Department</option>
+											<?php
+											$querydept = "select * from department";
+											$select_postsdept = mysqli_query($connection, $querydept);
+											while ($rowdept = mysqli_fetch_assoc($select_postsdept)) {
+																						?>
+												<option value="<?php echo $rowdept['id'] ?>" data-questions="<?php echo $rowdept['id'] ?>"><?php echo $rowdept['department'] ?></option>
+											<?php } ?>
+										</select>
+									<!-- <input class="form-control" value="Sales" name="dept" id="dept" type="text" readonly> -->
 								</div>
 								<div class="form-group text-start">
 									<label>Designation</label>
-										<select class="form-select mb-3" aria-label="Default select example" name="dept" id="dept" required>
+										<select class="form-select mb-3" aria-label="Default select example" name="desig" id="desig" required>
 											<option value="" disabled selected>Select Designation</option>
 											<?php
 											$querydept = "select * from department where department='Sales'";
