@@ -115,6 +115,7 @@ $mainorderid = "";
                                         <div class="col-md-5">
                                             <h5 class="mt-2">You can Add & Edit Digital Marketing staff Assiging here.</h5>
                                             <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
+                                            <input type="text" id="datastatus" name="datastatus" value="" readonly>
                                         </div>
                                         <div class="col-md-7">
                                             <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
@@ -265,6 +266,7 @@ $mainorderid = "";
                                                                             <th>Paid Promotion Amount</th>
                                                                             <th>Action</th>
                                                                             <th class="hidden-cell">status</th>
+                                                                            <th class="hidden-cell">editid</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody id="ajaxstaffallocateresults">

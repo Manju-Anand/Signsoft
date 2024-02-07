@@ -29,7 +29,19 @@
 		<!-- Switcher css -->
 		<link href="../assets/switcher/css/switcher.css" rel="stylesheet">
 		<link href="../assets/switcher/demo.css" rel="stylesheet">
+		<style>
+                                                .password-container {
+                                                    position: relative;
+                                                }
 
+                                                .password-toggle {
+                                                    position: absolute;
+                                                    top: 70%;
+                                                    right: 20px;
+                                                    transform: translateY(-50%);
+                                                    cursor: pointer;
+                                                }
+                                            </style>
 	</head>
 
 	<body class="main-body ltr login-img">
@@ -46,7 +58,7 @@
 
 			<!-- Row -->
 			<div class="row text-center ps-0 pe-0 ms-0 me-0">
-				<div class=" col-xl-6 col-lg-5 col-md-5 d-block mx-auto">
+				<div class=" col-xl-4 col-lg-5 col-md-5 d-block mx-auto">
 					<div class="text-center mb-2">
                         <a  href="index.php">
                             <img src="../assets/img/SLogoBlue.png" class="header-brand-img" alt="logo">
@@ -54,7 +66,7 @@
                         </a>
 					</div>
 					<div class="card custom-card">
-						<div class="card-body pd-45">
+						<div class="card-body pd-30">
 							<h4 class="text-center">Signin to SignSoft</h4>
 							<form method="post" action="signin.php">
                             <?php include('errors.php'); ?> 
@@ -62,9 +74,10 @@
 									<label>Email</label>
 									<input class="form-control" placeholder="Enter your email" name="email" id="email" type="text">
 								</div>
-								<div class="form-group text-start">
+								<div class="form-group text-start   password-container">
 									<label>Password</label>
 									<input class="form-control" placeholder="Enter your password"  name="password" id="password" type="password">
+									<span id="togglePassword" class="password-toggle" data-toggle="loginpassword" onclick="togglePasswordVisibility('password')">👁️</span>
 								</div>
 								<div class="form-group text-start">
 									<label>Department</label>
@@ -80,20 +93,11 @@
 										</select>
 									<!-- <input class="form-control" value="Sales" name="dept" id="dept" type="text" readonly> -->
 								</div>
-								<div class="form-group text-start">
+								<div class="form-group text-start" id="ajaxresult">
 									<label>Designation</label>
 										<select class="form-select mb-3" aria-label="Default select example" name="desig" id="desig" required>
 											<option value="" disabled selected>Select Designation</option>
-											<?php
-											$querydept = "select * from department where department='Sales'";
-											$select_postsdept = mysqli_query($connection, $querydept);
-											while ($rowdept = mysqli_fetch_assoc($select_postsdept)) {
-											$query = "select * from designation where department_id = '" . $rowdept['id'] . "'";
-											$select_posts = mysqli_query($connection, $query);
-											while ($row = mysqli_fetch_assoc($select_posts)) {
-											?>
-												<option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['designation'] ?></option>
-											<?php }} ?>
+											
 										</select>
 								</div>
 
@@ -134,6 +138,38 @@
 
 		<!-- Switcher js -->
 		<script src="../assets/switcher/js/switcher.js"></script>
+		<script>
+        $(document).ready(function(e) {
+            $('#cancel').delegate('', 'click change', function() {
+                window.location = "employeelist.php";
+                return false;
+            });
+        });
 
+        $("#dept").on("change", function() {
+            var fname = $(this).find(":selected").attr("data-questions");
+            $.ajax({
+                type: "POST",
+                url: "ajaxdesignation.php",
+                data: "fname=" + fname,
+                success: function(data) {
+                    $('#ajaxresult').html(data);
+                }
+            });
+        });
+
+        function togglePasswordVisibility(inputId) {
+            const passwordField = document.getElementById(inputId);
+            const togglePassword = document.querySelector(`[data-toggle="${inputId}"]`);
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                togglePassword.textContent = "👁️";
+            } else {
+                passwordField.type = "password";
+                togglePassword.textContent = "👁️";
+            }
+        }
+    </script>
 	</body>
 </html>

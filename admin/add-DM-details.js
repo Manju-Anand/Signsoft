@@ -218,8 +218,8 @@ $('#savestaffChangesBtn').on('click', function () {
 // ============start data saving code================================
 function saveDataToDatabase() {
     var correctorderid =  document.getElementById("ordersdisplay").value;
-   
-    
+    var paystatus =  document.getElementById("paystatus").value;
+    var datastatus =  document.getElementById("datastatus").value;
      
      // **********staff allocation details *********************
 
@@ -244,7 +244,7 @@ function saveDataToDatabase() {
              StartDate: cells[6].innerHTML, // Adjust the index based on your table structure
              EndDate: cells[7].innerHTML, // Adjust the index based on your table structure
              promoamt: cells[8].innerHTML, // Adjust the index based on your table structure
-            //  payStatus: cells[10].innerHTML
+             editid: cells[11].innerHTML,
  
         };
  
@@ -255,6 +255,8 @@ function saveDataToDatabase() {
     // Combine the two arrays into a single object for the AJAX request
     var combinedData = {
         correctorderid:correctorderid,
+        paystatus:paystatus,
+        datastatus:datastatus,
         staffallocationdataToSave:staffallocationdataToSave,
         
     };
@@ -325,8 +327,10 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
             selectedOrderId: selectedOrderId
         },
         success: function (data) {
+           
 
             $('#ajaxstaffallocateresults').html(data);
+            $('#datastatus').val('<?php echo $_SESSION["dmsaveddata"]; ?>');
         }
     });
 

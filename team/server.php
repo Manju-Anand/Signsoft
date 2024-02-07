@@ -64,6 +64,7 @@ $sqldept = "SELECT * FROM department WHERE id='". $deptid ."'";
 $resultdept = $db->query($sqldept);
 if ($resultdept->num_rows > 0) {
 	while ($rowuserdept = $resultdept->fetch_assoc()) {
+		echo "dept";
 		$modulename=$rowuserdept['dname'];
 		$deptid = $rowuserdept['id'];
 		$_SESSION['deptid'] = $deptid;
@@ -75,13 +76,14 @@ if ($resultdept->num_rows > 0) {
 			$userid = "";
 			$uname = "";
 			while ($rowuser = $result->fetch_assoc()) {
+				echo "emp";
 				$userid = $rowuser['id'];
 				$uname = $rowuser['username'];
 
 				$_SESSION['empname'] = $uname;
 				$_SESSION['empemail'] = $email;
 				$_SESSION['empid'] = $rowuser['empid'];
-				$_SESSION['empid'] = $rowuser['id'];
+		
 
 				header('location: index.php');
 			}

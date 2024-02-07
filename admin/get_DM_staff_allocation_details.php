@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include your database connection file or establish a connection here
 // Include the necessary database connection details
 include "includes/connection.php";
@@ -17,6 +18,8 @@ $result = mysqli_query($connection, $query);
 $r=0;
 
 while ($row = mysqli_fetch_assoc($result)) {
+    $_SESSION['dmsaveddata'] = "SavedData";
+    echo  $_SESSION['dmsaveddata'];
     $r = $r + 1;
     $rowid = "row_" . mt_rand(20000, 200000) . "_" . time();
     ?>
@@ -36,7 +39,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <span class='fe fe-trash-2'> </span></a></td>
 
         <td class="hidden-cell">Saved</td>
-    
+        <td><?php echo $row['id'];?></td>
 
 </tr>
 <?php

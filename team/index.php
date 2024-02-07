@@ -2,14 +2,14 @@
 ob_start();
 session_start(); 
 
-if (!isset($_SESSION['salesname'])) {
+if (!isset($_SESSION['empname'])) {
   $_SESSION['msg'] = "You must log in first";
    header('location: signin.php');
 }
 
 if (isset($_GET['logout'])) {
   session_destroy();
-  unset($_SESSION['salesname']);
+  unset($_SESSION['empname']);
   header("location: signin.php");
 }
 
@@ -74,11 +74,10 @@ include "includes/connection.php";
 						<div>
 							<h2 class="main-content-title tx-24 mg-b-5">Welcome To Dashboard</h2>
 
-                            <!-- <?php echo "id : " . $_SESSION['salesempid'] . "<br>" . $_SESSION['salesname']; ?> -->
-
+                           
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Sales Dashboard</li>
+								<li class="breadcrumb-item active" aria-current="page">Crew Dashboard</li>
 							</ol>
 						</div>
 						<div class="d-flex">

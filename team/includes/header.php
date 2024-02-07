@@ -48,7 +48,7 @@
 
 								</div>
 								<div class="dropdown-footer">
-									<a class="btn ripple btn-success btn-sm btn-block" href="mail-inbox.html">View All Notifications</a>
+									<a class="btn ripple btn-success btn-sm btn-block" href="">View All Notifications</a>
 								</div>
 							</div>
 						</li>
@@ -58,7 +58,9 @@
 							$select_posts = mysqli_query($connection, $query);
 
 							while ($row = mysqli_fetch_assoc($select_posts)) {
-								if (isset($row['emppic'])) {
+				
+								if (isset($row['emppic']) && $row['emppic'] !== "") {
+		
 							?>
 									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/staff/<?php echo $row['emppic']; ?>"></a>
 
@@ -72,15 +74,15 @@
 									<!-- <a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/users/avatar.png"></a> -->
 									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown">
 										<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
-											<?php echo strtoupper(substr($_SESSION['adminname'], 0, 1)); ?>
+											<?php echo strtoupper(substr($_SESSION['empname'], 0, 1)); ?>
 										</div>
 									</a>
 							<?php  }
 							} ?>
 							<div class="dropdown-menu">
 								<div class="header-navheading">
-									<h6 class="main-notification-title"><?php echo strtoupper($_SESSION['salesname']); ?></h6>
-									<p class="main-notification-text"><?php echo "Emp Id : " . $_SESSION['salesempid']; ?></p>
+									<h6 class="main-notification-title"><?php echo strtoupper($_SESSION['empname']); ?></h6>
+									<p class="main-notification-text"><?php echo "Emp Id : " . $_SESSION['empid']; ?></p>
 									<p class="main-notification-text"><?php echo "Dept Id : " . $_SESSION['deptid']; ?></p>
 									<p class="main-notification-text"><?php echo "Module name : " . $_SESSION['modulename']; ?></p>
 								</div>
@@ -127,7 +129,7 @@
 				</svg>
 			</div>
 			<ul class="side-menu">
-				<li class="side-item side-item-category">Sales Dashboard</li>
+				<li class="side-item side-item-category">Crew Dashboard</li>
 				<li class="slide">
 					<a class="side-menu__item" data-bs-toggle="slide" href="index.php">
 						<span class="side-menu__icon">
@@ -136,199 +138,14 @@
 						<span class="side-menu__label">Dashboard</span>
 					</a>
 				</li>
+				<?php if ($_SESSION['modulename'] == "Sales"){?>
 				<li class="side-item side-item-category">Leads</li>
 				<li class="slide">
 					<a class="side-menu__item" data-bs-toggle="slide" href="add-lead.php">
 						<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
 						<span class="side-menu__label">Add Lead</span>
 					</a>
-					<!-- <ul class="slide-menu">
-						<li class="panel sidetab-menu">
-							<div class="tab-menu-heading p-0 pb-2 border-0">
-								<div class="tabs-menu ">
-									<ul class="nav panel-tabs">
-										<li><a href="#side5" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i>
-												<p>Home</p>
-											</a></li>
-									
-									</ul>
-								</div>
-							</div>
-							<div class="panel-body tabs-menu-body p-0 border-0">
-								<div class="tab-content">
-									<div class="tab-pane active" id="side5">
-										<ul class="sidemenu-list">
-											<li class="side-menu__label1"><a href="javascript:void(0)">Apps</a></li>
-											<li class="sub-slide">
-												<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="javascript:void(0)">
-													<span class="sub-side-menu__label">Mail</span>
-													<i class="sub-angle fe fe-chevron-down"></i>
-												</a>
-												<ul class="sub-slide-menu">
-													<li><a class="sub-side-menu__item" href="mail-inbox.html">Mail Inbox</a></li>
-													<li><a class="sub-side-menu__item" href="mail-compose.html">Mail compose</a></li>
-													<li><a class="sub-side-menu__item" href="view-mail.html">Mail View</a></li>
-												</ul>
-											</li>
-											<li><a href="chat.html" class="slide-item">Chat</a></li>
-											<li><a href="cards.html" class="slide-item">Cards</a></li>
-											<li><a href="treeview.html" class="slide-item">Treeview</a></li>
-											<li><a href="contacts.html" class="slide-item">Contacts</a></li>
-											<li><a href="default-calendar.html" class="slide-item">Default Calendar</a></li>
-											<li><a href="full-calendar.html" class="slide-item">Full Calendar</a></li>
-											<li><a href="notifications.html" class="slide-item">Notifications</a></li>
-											<li><a href="range-slider.html" class="slide-item">Range Sliders</a></li>
-											<li><a href="footer.html" class="slide-item">Footers</a></li>
-											<li><a href="crypto-currencies.html" class="slide-item">Crypto Currencies</a></li>
-											<li><a href="colors.html" class="slide-item">Colors</a></li>
-											<li><a href="offcanvas.html" class="slide-item">Offcanvas</a></li>
-											<li><a href="gallery.html" class="slide-item">Gallery</a></li>
-											<li><a href="services.html" class="slide-item">Services</a></li>
-											<li><a href="settings.html" class="slide-item">Settings</a></li>
-											<li><a href="switcher.html" class="slide-item">Switcher</a></li>
-										</ul>
-										<div class="menutabs-content">
-											<h5 class="my-4 px-1 text-default">Activites</h5>
-											<div class="">
-												<div class="card">
-													<div class="card-body p-3">
-														<div class="d-flex">
-															<div class="pe-3">
-																<span class="avatar avatar-md rounded-circle bg-secondary-transparent text-secondary fs-18">
-																	<i class="fa fa-dollar"></i>
-																</span>
-															</div>
-															<div class="text-default">
-																<span>Revenue</span>
-																<h3 class="mb-0 fs-20">$459.2</h3>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-3">
-												<div class="card">
-													<div class="card-body p-3">
-														<div class="d-flex">
-															<div class="pe-3">
-																<span class="avatar avatar-md rounded-circle bg-info-transparent text-info fs-18">
-																	<i class="fa fa-files-o"></i>
-																</span>
-															</div>
-															<div class="text-default">
-																<span>Sales</span>
-																<h3 class="mb-0 fs-20">487</h3>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-3">
-												<div class="card">
-													<div class="card-body p-3">
-														<div class="d-flex">
-															<div class="pe-3">
-																<span class="avatar avatar-md rounded-circle bg-success-transparent text-success fs-18">
-																	<i class="fa fa-handshake-o"></i>
-																</span>
-															</div>
-															<div class="text-default">
-																<span>Deals</span>
-																<h3 class="mb-0 fs-20">158</h3>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<h5 class="my-4 px-1 text-default">Contacts</h5>
-											<div class="card-body p-0">
-												<div class="list-group list-group-flush">
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/12.jpg">
-																<span class="avatar-status bg-green"></span>
-															</span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">Mozelle</div>
-														</div>
-														<div class="ms-auto"> <a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/11.jpg"></span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">Florinda</div>
-														</div>
-														<div class="ms-auto">
-															<a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/5.jpg">
-																<span class="avatar-status bg-green"></span>
-															</span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">lina Bernie</div>
-														</div>
-														<div class="ms-auto">
-															<a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/2.jpg">
-																<span class="avatar-status bg-green"></span>
-															</span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">Mclaughin</div>
-														</div>
-														<div class="ms-auto">
-															<a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<h5 class="my-4 px-1 text-default">Followers</h5>
-											<div class="">
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/3.jpg">
-													<span class="avatar-status bg-green"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/6.jpg">
-													<span class="avatar-status bg-green"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/3.jpg">
-													<span class="avatar-status bg-warning"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/4.jpg">
-													<span class="avatar-status bg-green"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/9.jpg">
-													<span class="avatar-status bg-warning"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1 bg-success text-white">+34</span>
-											</div>
-										</div>
-									</div>
-								
-								</div>
-							</div>
-						</li>
-
-					</ul> -->
+					
 				</li>
 				<li class="slide">
 					<a class="side-menu__item" data-bs-toggle="slide" href="add-followup.php">
@@ -342,179 +159,19 @@
 						<span class="side-menu__icon"><i class="fe fe-award side_menu_img"></i></span>
 						<span class="side-menu__label">Leads List</span>
 					</a>
-					<!-- <ul class="slide-menu">
-						<li class="panel sidetab-menu">
-							<div class="tab-menu-heading p-0 pb-2 border-0">
-								<div class="tabs-menu ">
-									<ul class="nav panel-tabs">
-										<li><a href="#side8" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i>
-												<p>Home</p>
-											</a></li>
-										
-									</ul>
-								</div>
-							</div>
-							<div class="panel-body tabs-menu-body p-0 border-0">
-								<div class="tab-content">
-									<div class="tab-pane active" id="side8">
-										<ul class="sidemenu-list">
-											<li class="side-menu__label1"><a href="javascript:void(0)">Icons</a></li>
-											<li><a href="icons.html" class="slide-item">Fontawesome Icons</a></li>
-											<li><a href="icons-2.html" class="slide-item">Ionicons Icons</a></li>
-											<li><a href="typ-icons.html" class="slide-item">Typicon Icons</a></li>
-											<li><a href="feather-icons.html" class="slide-item">Feather Icons</a></li>
-											<li><a href="material-icons.html" class="slide-item">MaterialDesign Icons</a></li>
-											<li><a href="simple-icons.html" class="slide-item">Simpleline Icons</a></li>
-											<li><a href="pe7-icons.html" class="slide-item">Pe7 Icons</a></li>
-											<li><a href="themify-icons.html" class="slide-item">Themify Icons</a></li>
-											<li><a href="weather-icons.html" class="slide-item">Weather Icons</a></li>
-											<li><a href="bootstrap-icons.html" class="slide-item">Bootstrap Icons</a></li>
-											<li><a href="flags-icons.html" class="slide-item">Flag Icons</a></li>
-										</ul>
-										<div class="menutabs-content">
-											<h5 class="my-4 px-1 text-default">Activites</h5>
-											<div class="">
-												<div class="card">
-													<div class="card-body p-3">
-														<div class="d-flex">
-															<div class="pe-3">
-																<span class="avatar avatar-md rounded-circle bg-secondary-transparent text-secondary fs-18">
-																	<i class="fa fa-dollar"></i>
-																</span>
-															</div>
-															<div class="text-default">
-																<span>Revenue</span>
-																<h3 class="mb-0 fs-20">$459.2</h3>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-3">
-												<div class="card">
-													<div class="card-body p-3">
-														<div class="d-flex">
-															<div class="pe-3">
-																<span class="avatar avatar-md rounded-circle bg-info-transparent text-info fs-18">
-																	<i class="fa fa-files-o"></i>
-																</span>
-															</div>
-															<div class="text-default">
-																<span>Sales</span>
-																<h3 class="mb-0 fs-20">487</h3>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-3">
-												<div class="card">
-													<div class="card-body p-3">
-														<div class="d-flex">
-															<div class="pe-3">
-																<span class="avatar avatar-md rounded-circle bg-success-transparent text-success fs-18">
-																	<i class="fa fa-handshake-o"></i>
-																</span>
-															</div>
-															<div class="text-default">
-																<span>Deals</span>
-																<h3 class="mb-0 fs-20">158</h3>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<h5 class="my-4 px-1 text-default">Contacts</h5>
-											<div class="card-body p-0">
-												<div class="list-group list-group-flush">
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/12.jpg">
-																<span class="avatar-status bg-green"></span>
-															</span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">Mozelle</div>
-														</div>
-														<div class="ms-auto"> <a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/11.jpg"></span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">Florinda</div>
-														</div>
-														<div class="ms-auto">
-															<a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/5.jpg">
-																<span class="avatar-status bg-green"></span>
-															</span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">lina Bernie</div>
-														</div>
-														<div class="ms-auto">
-															<a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-													<div class="d-flex px-0 py-2 align-items-center border-bottom-0">
-														<div class="me-2">
-															<span class="avatar rounded-circle cover-image" data-image-src="../assets/img/users/2.jpg">
-																<span class="avatar-status bg-green"></span>
-															</span>
-														</div>
-														<div class="">
-															<div class="font-weight-semibold fs-15">Mclaughin</div>
-														</div>
-														<div class="ms-auto">
-															<a href="javascript:void(0);" class="btn btn-sm btn-light box-shadow-0">
-																<i class="fa fa-phone fs-10"></i>
-															</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<h5 class="my-4 px-1 text-default">Followers</h5>
-											<div class="">
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/3.jpg">
-													<span class="avatar-status bg-green"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/6.jpg">
-													<span class="avatar-status bg-green"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/3.jpg">
-													<span class="avatar-status bg-warning"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/4.jpg">
-													<span class="avatar-status bg-green"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1" data-image-src="../assets/img/users/9.jpg">
-													<span class="avatar-status bg-warning"></span>
-												</span>
-												<span class="avatar rounded-circle avatar-md cover-image m-1 bg-success text-white">+34</span>
-											</div>
-										</div>
-									</div>
-									
-								</div>
-							</div>
-						</li>
-
-					</ul> -->
+				
 				</li>
-
+				<?php } ?>
+				<?php if ($_SESSION['modulename'] == "Digital"){?>
+					<li class="side-item side-item-category">Work Shedules</li>
+					<li class="slide">
+					<a class="side-menu__item" data-bs-toggle="slide" href="add-lead.php">
+						<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+						<span class="side-menu__label">Works Assigned</span>
+					</a>
+					
+				</li>
+					<?php } ?>
 			</ul>
 			<div class="slide-right" id="slide-right">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
