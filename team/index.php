@@ -942,7 +942,7 @@ include "includes/connection.php";
 
 	<!-- Switcher js -->
 	<script src="../assets/switcher/js/switcher.js"></script>
-
+	<script src="notification.js"></script>
 </body>
 
 </html>

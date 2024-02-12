@@ -34,12 +34,26 @@
 							</a>
 						</li>
 						<!-- FULL SCREEN -->
-						<li class="dropdown main-header-notification">
-							<a class="nav-link icon" href="javascript:void(0);" data-bs-toggle="dropdown">
+						<style>
+							.notify-click .header-badge {
+								position: absolute;
+								top: -2px;
+								right: 2px;
+								display: block !important;
+								padding: 3px 5px !important;
+								font-size: 10px;
+								border-radius: 50px;
+								line-height: 1.1;
+							}
+						</style>
+						<li class="dropdown main-header-notification ">
+							
+							<a class="nav-link icon notify-click" data-bs-toggle="dropdown">
 								<i class="fe fe-bell"></i>
-								<span class="pulse bg-danger"></span>
+								<span class="badge bg-secondary header-badge count">0</span>
+										<!-- <span class="pulse bg-danger"></span> -->
 							</a>
-							<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+							<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifymenu">
 								<div class="header-navheading d-flex border-bottom mb-0">
 									<h5 class="fw-semibold mb-0 mt-1">Notifications(3)</h5>
 									<a class="btn ripple btn-primary btn-sm ms-auto" href="javascript:void(0);">Mark all as Read</a>
@@ -51,6 +65,7 @@
 									<a class="btn ripple btn-success btn-sm btn-block" href="">View All Notifications</a>
 								</div>
 							</div>
+						
 						</li>
 						<li class="dropdown main-profile-menu">
 							<?php
@@ -165,7 +180,7 @@
 				<?php if ($_SESSION['modulename'] == "Digital"){?>
 					<li class="side-item side-item-category">Work Shedules</li>
 					<li class="slide">
-					<a class="side-menu__item" data-bs-toggle="slide" href="add-lead.php">
+					<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
 						<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
 						<span class="side-menu__label">Works Assigned</span>
 					</a>
