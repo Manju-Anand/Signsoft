@@ -1,8 +1,8 @@
 <?php 
 
-include "config.php";
-$sql = "SELECT * FROM events";
-$eventsList = mysqli_query($con,$sql);
+include "includes/connection.php";
+$sql = "SELECT * FROM dmevents";
+$eventsList = mysqli_query($connection,$sql);
 	
 $response = array();
 while($row = mysqli_fetch_assoc($eventsList)){

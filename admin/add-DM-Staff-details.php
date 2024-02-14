@@ -49,7 +49,6 @@ $mainorderid = "";
     <!-- Switcher css -->
     <link href="../assets/switcher/css/switcher.css" rel="stylesheet">
     <link href="../assets/switcher/demo.css" rel="stylesheet">
-
     <style>
         .hidden-cell {
             display: none;
@@ -115,7 +114,7 @@ $mainorderid = "";
                                         <div class="col-md-5">
                                             <h5 class="mt-2">You can Add & Edit Digital Marketing staff Assiging here.</h5>
                                             <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
-                                            <input type="text" id="datastatus" name="datastatus" value="" readonly>
+                                            <input type="hidden" id="datastatus" name="datastatus" value="" readonly>
                                         </div>
                                         <div class="col-md-7">
                                             <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
@@ -229,12 +228,12 @@ $mainorderid = "";
 
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <label class="form-label" for="startdate">Calender Start Date :</label>
+                                                                <label class="form-label" for="startdate">Calendar Start Date :</label>
                                                                 <input type="date" class="form-control" id="startdate" name="startdate" placeholder="startdate" required>
 
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <label class="form-label" for="enddate">Calender End Date :</label>
+                                                                <label class="form-label" for="enddate">Calendar End Date :</label>
                                                                 <input type="date" class="form-control" id="enddate" name="enddate" placeholder="enddate" readonly>
 
                                                             </div>
@@ -264,7 +263,9 @@ $mainorderid = "";
                                                                             <th>Start Date</th>
                                                                             <th>End Date</th>
                                                                             <th>Paid Promotion Amount</th>
+                                                                            <th>Assign Date</th>
                                                                             <th>Action</th>
+                                                                            <!-- class="hidden-cell" -->
                                                                             <th class="hidden-cell">status</th>
                                                                             <th class="hidden-cell">editid</th>
                                                                         </tr>
@@ -317,25 +318,37 @@ $mainorderid = "";
                     <div class="modal-body">
                         <div class="row">
                             <input type="hidden" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
+                            <input type="hidden" class="form-control" id="modaleditid" name="modaleditid" required>
                             <div class="col-md-6">
                                 <label class="form-label" for="modaldmpayment">Payment :</label>
                                 <input type="number" class="form-control" id="modaldmpayment" name="modaldmpayment" placeholder="Advance Payment" required>
 
 
                             </div>
-
-                            <div class="col-md-6">Postings :</label>
-                                <!-- <select class="form-control select2" multiple="multiple" id="submulselect[]" name="submulselect[]" disabled>'; -->
-                                <select class="form-control select2" multiple="multiple" name="modalpostings[]" id="modalpostings" >
-                                    <option value="" disabled>Select Postings</option>
-                                    <option value="poster">Poster</option>
-                                    <option value="Video">Video</option>
-                                    <option value="GIF">GIF</option>
-                                </select>
-
-                            </div>
-
-                           
+ 
+                                    <div class="col-md-6">
+										<div class="form-group m-0">
+											<div class="form-label mb-3 font-weight-normal">Postings</div>
+											<div class="custom-controls-stacked">
+												<label class="custom-control custom-checkbox custom-control-lg">
+													<input type="checkbox" class="custom-control-input"
+														name="example-checkbox1" value="Poster" checked="">
+													<span class="custom-control-label custom-control-label-lg">Poster</span>
+												</label>
+												<label class="custom-control custom-checkbox custom-control-lg">
+													<input type="checkbox" class="custom-control-input"
+														name="example-checkbox2" value="Video">
+													<span class="custom-control-label custom-control-label-lg">Video</span>
+												</label>
+                                                <label class="custom-control custom-checkbox custom-control-lg">
+													<input type="checkbox" class="custom-control-input"
+														name="example-checkbox2" value="GIF">
+													<span class="custom-control-label custom-control-label-lg">GIF</span>
+												</label>
+											
+											</div>
+										</div>
+									</div>
 
                             <div class="col-md-6">
                                 <label class="form-label" for="modalstaff">Staff Name :</label>
@@ -356,12 +369,12 @@ $mainorderid = "";
 
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="modalstartdate">Calender Start Date :</label>
+                                <label class="form-label" for="modalstartdate">Calendar Start Date :</label>
                                 <input type="date" class="form-control" id="modalstartdate" name="modalstartdate" placeholder="startdate" required>
 
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="modalenddate">Calender End Date :</label>
+                                <label class="form-label" for="modalenddate">Calendar End Date :</label>
                                 <input type="date" class="form-control" id="modalenddate" name="modalenddate" placeholder="enddate" readonly>
 
                             </div>
@@ -370,7 +383,11 @@ $mainorderid = "";
                                 <input type="number" class="form-control" id="modalpaidpromotion" name="modalpaidpromotion" placeholder="Paid Promotion Amount" required>
 
                             </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="modalenddate">Assigned Date :</label>
+                                <input type="date" class="form-control" id="modalassigndate" name="modalassigndate" placeholder="Assigndate">
 
+                            </div>
 
                         </div>
                     </div>
@@ -380,8 +397,7 @@ $mainorderid = "";
                     </div>
                 </div>
             </div>
-            <!-- <script src="../assets/plugins/select2/js/select2.full.min.js"></script>
-            <script src="../assets/js/select2.js"></script> -->
+
         </div>
         <!-- End Basic modal -->
 
@@ -458,12 +474,13 @@ $mainorderid = "";
     <script src="../assets/plugins/tabs/tab-content.js"></script>
     <script>
         $(document).ready(function(e) {
-
-
-            $('#mulselect').delegate('', 'click change', function() {
-                var ordersValueid = $('#mulselect').val();
-                console.log(ordersValueid);
-            });
+            $('#modalpostings').select2();
+   $('#modalpostings123').select2();
+       
+            // $('#mulselect').delegate('', 'click change', function() {
+            //     var ordersValueid = $('#mulselect').val();
+            //     console.log(ordersValueid);
+            // });
         });
     </script>
 

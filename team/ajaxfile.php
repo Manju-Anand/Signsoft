@@ -1,6 +1,6 @@
 <?php 
 
-include "config.php";
+include "includes/connection.php";
 
 $request = "";
 
@@ -39,9 +39,9 @@ if($request == 'addEvent'){
 	if(!empty($title) && !empty($description) && !empty($start_date) && !empty($end_date) ){
 
 		// Insert record
-		$sql = "INSERT INTO events(title,description,start_date,end_date,orderid) VALUES('".$title."','".$description."','".$start_date."','".$end_date."','".$orderid."')";
-		if(mysqli_query($con,$sql)){
-			$eventid = mysqli_insert_id($con);
+		$sql = "INSERT INTO dmevents(title,description,start_date,end_date,orderid) VALUES('".$title."','".$description."','".$start_date."','".$end_date."','".$orderid."')";
+		if(mysqli_query($connection,$sql)){
+			$eventid = mysqli_insert_id($connection);
 
 			$status = 1;
 
@@ -83,12 +83,12 @@ if($request == 'moveEvent'){
 	if($eventid > 0 && !empty($start_date) && !empty($end_date) ){
 
 		// Check event id
-		$sql = "SELECT id FROM events WHERE id=".$eventid;
-		$result = mysqli_query($con,$sql);
+		$sql = "SELECT id FROM dmevents WHERE id=".$eventid;
+		$result = mysqli_query($connection,$sql);
 		if(mysqli_num_rows($result)){
 			// Update record
-			$sql = "UPDATE events SET start_date='".$start_date."',end_date='".$end_date."' WHERE id=".$eventid;
-			if(mysqli_query($con,$sql)){
+			$sql = "UPDATE dmevents SET start_date='".$start_date."',end_date='".$end_date."' WHERE id=".$eventid;
+			if(mysqli_query($connection,$sql)){
 				$status = 1;
 
 				$response['status'] = 1;
@@ -127,13 +127,13 @@ if($request == 'editEvent'){
 	if($eventid > 0 && !empty($title) && !empty($description)){
 
 		// Check event id
-		$sql = "SELECT id FROM events WHERE id=".$eventid;
-		$result = mysqli_query($con,$sql);
+		$sql = "SELECT id FROM dmevents WHERE id=".$eventid;
+		$result = mysqli_query($connection,$sql);
 		if(mysqli_num_rows($result)){
 
 			// Update record
-			$sql = "UPDATE events SET title='".$title."', description='".$description."' WHERE id=".$eventid;
-			if(mysqli_query($con,$sql)){
+			$sql = "UPDATE dmevents SET title='".$title."', description='".$description."' WHERE id=".$eventid;
+			if(mysqli_query($connection,$sql)){
 
 				$status = 1; 
 
@@ -168,13 +168,13 @@ if($request == 'deleteEvent'){
 	if($eventid > 0){
 
 		// Check event id
-		$sql = "SELECT id FROM events WHERE id=".$eventid;
-		$result = mysqli_query($con,$sql);
+		$sql = "SELECT id FROM dmevents WHERE id=".$eventid;
+		$result = mysqli_query($connection,$sql);
 		if(mysqli_num_rows($result)){
 
 			// Delete record
-			$sql = "DELETE FROM events WHERE id=".$eventid;
-			if(mysqli_query($con,$sql)){
+			$sql = "DELETE FROM dmevents WHERE id=".$eventid;
+			if(mysqli_query($connection,$sql)){
 				$status = 1;
 
 				$response['status'] = 1;

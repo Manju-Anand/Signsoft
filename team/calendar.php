@@ -213,7 +213,7 @@ include "includes/connection.php";
                         });
 
                     // Create an array of options for the second select box
-                    var selectOptions2 = '<option value="yes">Yes</option><option value="no">No</option>';
+                    var selectOptions2 = '<option value="no">No</option><option value="yes">Yes</option>';
 	        	// ===================alert box start======================
 	        	// Alert box to add event
 		        Swal.fire({
@@ -222,9 +222,10 @@ include "includes/connection.php";
 					confirmButtonText: 'Create',
 				  	html:
 
-				    '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;margin-bottom:50px;"  ><br>' +
-				    '<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;"></textarea>'+
+				    '<input id="eventtitle" class="swal2-input" placeholder="Posting name" style="width: 84%;margin-bottom:20px;"  ><br>' +
+				    '<textarea id="eventdescription" class="swal2-input" placeholder="description" style="width: 84%; height: 100px;"></textarea>'+
                     '<select id="eventSelect" class="swal2-input" style="width: 84%;">' + selectOptions.join('') + '</select>'+
+					'<label>Paid or not</label>'+
                     '<select id="eventSelect2" class="swal2-input" style="width: 84%;">' + selectOptions2 + '</select>',
 
                     focusConfirm: false,
