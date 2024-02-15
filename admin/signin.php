@@ -29,7 +29,20 @@
 		<!-- Switcher css -->
 		<link href="../assets/switcher/css/switcher.css" rel="stylesheet">
 		<link href="../assets/switcher/demo.css" rel="stylesheet">
-    
+		<style>
+                                                .password-container {
+                                                    position: relative;
+                                                }
+
+                                                .password-toggle {
+                                                    position: absolute;
+                                                    top: 70%;
+                                                    right: 20px;
+                                                    transform: translateY(-50%);
+                                                    cursor: pointer;
+                                                }
+                                            </style>
+	</head>
 	</head>
 
 	<body class="main-body ltr login-img" style="background: url('../assets/img/login/adminlogin.jpg') no-repeat center center fixed; background-size: cover; margin: 0; padding: 0; font-family: 'Arial', sans-serif; color: #333;">
@@ -62,9 +75,11 @@
 									<label>Email</label>
 									<input class="form-control" placeholder="Enter your email" name="email" id="email" type="text">
 								</div>
-								<div class="form-group text-start">
+								<div class="form-group text-start password-container">
 									<label>Password</label>
 									<input class="form-control" placeholder="Enter your password"  name="password" id="password" type="password">
+									<span id="togglePassword" class="password-toggle" data-toggle="loginpassword" onclick="togglePasswordVisibility('password')">👁️</span>
+
 								</div>
 							    <button type="submit" class="btn ripple btn-main-primary btn-block" name="login_user">Sign In</button>
 											
@@ -101,6 +116,19 @@
 
 		<!-- Switcher js -->
 		<script src="../assets/switcher/js/switcher.js"></script>
+<script>
+	 function togglePasswordVisibility(inputId) {
+            const passwordField = document.getElementById(inputId);
+            const togglePassword = document.querySelector(`[data-toggle="${inputId}"]`);
 
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                togglePassword.textContent = "👁️";
+            } else {
+                passwordField.type = "password";
+                togglePassword.textContent = "👁️";
+            }
+        }
+</script>
 	</body>
 </html>

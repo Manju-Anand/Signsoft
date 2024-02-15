@@ -17,9 +17,9 @@ if ($result->num_rows > 0) {
         while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
             // Create an associative array with multiple fields
             $orderData = array(
-                'brandName' => $roworder['brandName'],
-                'id' => $roworder['id']
-               
+                'brandName' => $roworder['brandName'] . '  -  ' . $row['postings'],
+                'id' => $row['id'],
+                'orderid' => $row['orderid'],
             );
         }
 // Append the associative array to the $response['values'] array

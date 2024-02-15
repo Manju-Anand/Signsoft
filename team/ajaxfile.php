@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 include "includes/connection.php";
 
 $request = "";
@@ -33,13 +33,16 @@ if($request == 'addEvent'){
 	if(isset($_POST['orderid'])){
 		$orderid  = $_POST['orderid'];
 	}
-
+	if(isset($_POST['dmallotid'])){
+		$dmallotid  = $_POST['dmallotid'];
+	}
 	$response = array();
 	$status = 0;
 	if(!empty($title) && !empty($description) && !empty($start_date) && !empty($end_date) ){
 
 		// Insert record
-		$sql = "INSERT INTO dmevents(title,description,start_date,end_date,orderid) VALUES('".$title."','".$description."','".$start_date."','".$end_date."','".$orderid."')";
+		$sql = "INSERT INTO dmevents(title,description,start_date,end_date,orderid,empid,dm_allotid) VALUES(
+			'".$title."','".$description."','".$start_date."','".$end_date."','".$orderid."','" . $_SESSION['empid'] . "','" . $dmallotid . "')";
 		if(mysqli_query($connection,$sql)){
 			$eventid = mysqli_insert_id($connection);
 

@@ -1,7 +1,7 @@
 <?php 
-
+session_start();
 include "includes/connection.php";
-$sql = "SELECT * FROM dmevents";
+$sql = "SELECT * FROM dmevents where empid='" . $_SESSION['empid'] . "'";
 $eventsList = mysqli_query($connection,$sql);
 	
 $response = array();
@@ -12,6 +12,8 @@ while($row = mysqli_fetch_assoc($eventsList)){
 		"description" => $row['description'],
 		"start" => $row['start_date'],
 		"end" => $row['end_date'],
+		"orderid" => $row['orderid'],
+		"empid" => $row['empid'],
 	);
 }
 

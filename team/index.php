@@ -1,16 +1,16 @@
 <?php
 ob_start();
-session_start(); 
+session_start();
 
 if (!isset($_SESSION['empname'])) {
-  $_SESSION['msg'] = "You must log in first";
-   header('location: signin.php');
+	$_SESSION['msg'] = "You must log in first";
+	header('location: signin.php');
 }
 
 if (isset($_GET['logout'])) {
-  session_destroy();
-  unset($_SESSION['empname']);
-  header("location: signin.php");
+	session_destroy();
+	unset($_SESSION['empname']);
+	header("location: signin.php");
 }
 
 include "includes/connection.php";
@@ -74,7 +74,7 @@ include "includes/connection.php";
 						<div>
 							<h2 class="main-content-title tx-24 mg-b-5">Welcome To Dashboard</h2>
 
-                           
+
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Crew Dashboard</li>
@@ -82,29 +82,20 @@ include "includes/connection.php";
 						</div>
 						<div class="d-flex">
 							<div class="me-2">
-								<a class="btn ripple btn-primary dropdown-toggle mb-0"
-									href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="true">
+								<a class="btn ripple btn-primary dropdown-toggle mb-0" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 									<i class="fe fe-external-link"></i> Export <i class="fa fa-caret-down ms-1"></i>
 								</a>
 								<div class="dropdown-menu tx-13">
-									<a class="dropdown-item" href="javascript:void(0);"><i
-											class="fa fa-file-pdf-o me-2"></i>Export as
+									<a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-file-pdf-o me-2"></i>Export as
 										Pdf</a>
-									<a class="dropdown-item" href="javascript:void(0);"><i
-											class="fa fa-image me-2"></i>Export as
+									<a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-image me-2"></i>Export as
 										Image</a>
-									<a class="dropdown-item" href="javascript:void(0);"><i
-											class="fa fa-file-excel-o me-2"></i>Export as
+									<a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-file-excel-o me-2"></i>Export as
 										Excel</a>
 								</div>
 							</div>
 							<div>
-								<a href="javascript:void(0);"
-									class="btn ripple btn-secondary navresponsive-toggler mb-0"
-									data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-									aria-controls="navbarSupportedContent" aria-expanded="false"
-									aria-label="Toggle navigation">
+								<a href="javascript:void(0);" class="btn ripple btn-secondary navresponsive-toggler mb-0" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 									<i class="fe fe-filter me-1"></i> Filter <i class="fa fa-caret-down ms-1"></i>
 								</a>
 							</div>
@@ -125,8 +116,7 @@ include "includes/connection.php";
 													<div class="input-group">
 														<div class="input-group-text">
 															<i class="fe fe-calendar lh--9 op-6"></i>
-														</div><input class="form-control fc-datepicker"
-															placeholder="11/01/2019" type="text">
+														</div><input class="form-control fc-datepicker" placeholder="11/01/2019" type="text">
 													</div>
 												</div>
 											</div>
@@ -136,8 +126,7 @@ include "includes/connection.php";
 													<div class="input-group">
 														<div class="input-group-text">
 															<i class="fe fe-calendar lh--9 op-6"></i>
-														</div><input class="form-control fc-datepicker"
-															placeholder="11/08/2019" type="text">
+														</div><input class="form-control fc-datepicker" placeholder="11/08/2019" type="text">
 													</div>
 												</div>
 											</div>
@@ -146,8 +135,7 @@ include "includes/connection.php";
 									<div class="col-md-6 col-xl-3">
 										<div class="form-group mb-lg-0">
 											<label>Sales By Country :</label>
-											<select class="form-control select2-flag-search select2"
-												data-placeholder="Select Contry">
+											<select class="form-control select2-flag-search select2" data-placeholder="Select Contry">
 												<option value="AF">Afghanistan</option>
 												<option value="AL">Albania</option>
 												<option value="AD">Andorra</option>
@@ -332,12 +320,8 @@ include "includes/connection.php";
 								</div>
 								<hr>
 								<div class="text-end">
-									<a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="collapse"
-										data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">Apply</a>
-									<a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="collapse"
-										data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">Reset</a>
+									<a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Apply</a>
+									<a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Reset</a>
 								</div>
 							</div>
 						</div>
@@ -359,13 +343,11 @@ include "includes/connection.php";
 										<h3 class="dash-25">$568</h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-70p" role="progressbar"></div>
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-70p" role="progressbar"></div>
 									</div>
 									<div class="expansion-label d-flex">
 										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-up me-1 text-success"></i>0.7%</span>
+										<span class="ms-auto"><i class="fa fa-caret-up me-1 text-success"></i>0.7%</span>
 									</div>
 								</div>
 							</div>
@@ -383,14 +365,12 @@ include "includes/connection.php";
 										<h3 class="dash-25">$12,897</h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-60p bg-secondary" role="progressbar">
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-60p bg-secondary" role="progressbar">
 										</div>
 									</div>
 									<div class="expansion-label d-flex">
 										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-down me-1 text-danger"></i>0.43%</span>
+										<span class="ms-auto"><i class="fa fa-caret-down me-1 text-danger"></i>0.43%</span>
 									</div>
 								</div>
 							</div>
@@ -408,14 +388,12 @@ include "includes/connection.php";
 										<h3 class="dash-25">$11,234</h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-50p bg-success" role="progressbar">
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-50p bg-success" role="progressbar">
 										</div>
 									</div>
 									<div class="expansion-label d-flex text-muted">
 										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-down me-1 text-danger"></i>1.44%</span>
+										<span class="ms-auto"><i class="fa fa-caret-down me-1 text-danger"></i>1.44%</span>
 									</div>
 								</div>
 							</div>
@@ -433,14 +411,12 @@ include "includes/connection.php";
 										<h3 class="dash-25">$789</h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-40p bg-info" role="progressbar">
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-40p bg-info" role="progressbar">
 										</div>
 									</div>
 									<div class="expansion-label d-flex text-muted">
 										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-up me-1 text-success"></i>0.9%</span>
+										<span class="ms-auto"><i class="fa fa-caret-up me-1 text-success"></i>0.9%</span>
 									</div>
 								</div>
 							</div>
@@ -450,6 +426,22 @@ include "includes/connection.php";
 
 					<!-- Row -->
 					<div class="row row-sm">
+						<div class="col-sm-12 col-xl-12 col-lg-12">
+							<div class="card custom-card overflow-hidden">
+								<div class="card-body">
+									<!-- <div class="container"> -->
+									<?php
+									$currentData = date('Y-m-d');
+									?>
+
+									<!-- Calendar Container -->
+									<div id='calendar-container'>
+										<div id='calendar'></div>
+									</div>
+									<!-- </div> -->
+								</div>
+							</div>
+						</div>
 						<div class="col-sm-12 col-xl-8 col-lg-8">
 							<div class="card custom-card overflow-hidden">
 								<div class="card-body">
@@ -483,23 +475,19 @@ include "includes/connection.php";
 									<div class="row">
 										<div class="col-6 col-md-6 text-center">
 											<div class="mb-2">
-												<span class="peity-donut"
-													data-peity='{ "fill": ["#eb6f33", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>4/7</span>
+												<span class="peity-donut" data-peity='{ "fill": ["#eb6f33", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>4/7</span>
 											</div>
 											<p class="mb-1 tx-inverse">Marketing</p>
 											<h4 class="mb-1"><span>$</span>67,927</h4>
-											<span class="text-muted fs-12"><i
-													class="fa fa-caret-up me-1 text-success"></i>54% last month</span>
+											<span class="text-muted fs-12"><i class="fa fa-caret-up me-1 text-success"></i>54% last month</span>
 										</div>
 										<div class="col-6 col-md-6 text-center">
 											<div class="mb-2">
-												<span class="peity-donut"
-													data-peity='{ "fill": ["#01b8ff", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>2/7</span>
+												<span class="peity-donut" data-peity='{ "fill": ["#01b8ff", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>2/7</span>
 											</div>
 											<p class="mb-1 tx-inverse">Sales</p>
 											<h4 class="mb-1"><span>$</span>24,789</h4>
-											<span class="text-muted fs-12"><i
-													class="fa fa-caret-down me-1 text-danger"></i>33% last month</span>
+											<span class="text-muted fs-12"><i class="fa fa-caret-down me-1 text-danger"></i>33% last month</span>
 										</div>
 									</div>
 								</div>
@@ -519,9 +507,7 @@ include "includes/connection.php";
 											<span class="float-end">75%</span>
 										</div>
 										<div class="progress mt-1">
-											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-												class="progress-bar progress-bar-xs wd-70p bg-primary"
-												role="progressbar">
+											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-70p bg-primary" role="progressbar">
 											</div>
 										</div>
 									</div>
@@ -531,9 +517,7 @@ include "includes/connection.php";
 											<span class="float-end">50%</span>
 										</div>
 										<div class="progress mt-1">
-											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50"
-												class="progress-bar progress-bar-xs wd-50p bg-success"
-												role="progressbar">
+											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar progress-bar-xs wd-50p bg-success" role="progressbar">
 											</div>
 										</div>
 									</div>
@@ -613,100 +597,79 @@ include "includes/connection.php";
 									<div>
 										<div class="d-flex pt-2 pb-2 border-bottom">
 											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/2.jpg"></span>
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/2.jpg"></span>
 												<div class="ms-3">
-													<h6 class="mg-b-0">Socrates Itumay</h6><small
-														class="tx-11 tx-gray-500">Sales Manager1</small>
+													<h6 class="mg-b-0">Socrates Itumay</h6><small class="tx-11 tx-gray-500">Sales Manager1</small>
 												</div>
 											</div>
 											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">34%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
+												<h6 class="mg-b-0 font-weight-bold">34%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
 										</div>
 										<div class="d-flex pt-2 pb-2 border-bottom">
 											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/3.jpg"></span>
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/3.jpg"></span>
 												<div class="ms-3">
-													<h6 class="mg-b-0">Reynante Labares</h6><small
-														class="tx-11 tx-gray-500">Sales Manager2</small>
+													<h6 class="mg-b-0">Reynante Labares</h6><small class="tx-11 tx-gray-500">Sales Manager2</small>
 												</div>
 											</div>
 											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">22%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
+												<h6 class="mg-b-0 font-weight-bold">22%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
 										</div>
 										<div class="d-flex pt-2 pb-2 border-bottom">
 											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/4.jpg"></span>
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/4.jpg"></span>
 												<div class="ms-3">
-													<h6 class="mg-b-0">Owen Bongcaras</h6><small
-														class="tx-11 tx-gray-500">Sales Manager3</small>
+													<h6 class="mg-b-0">Owen Bongcaras</h6><small class="tx-11 tx-gray-500">Sales Manager3</small>
 												</div>
 											</div>
 											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">18%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
+												<h6 class="mg-b-0 font-weight-bold">18%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
 										</div>
 										<div class="d-flex pt-2 pb-2 border-bottom">
 											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/5.jpg"></span>
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/5.jpg"></span>
 												<div class="ms-3">
-													<h6 class="mg-b-0">Mariane Galeon</h6><small
-														class="tx-11 tx-gray-500">Sales Manager4</small>
+													<h6 class="mg-b-0">Mariane Galeon</h6><small class="tx-11 tx-gray-500">Sales Manager4</small>
 												</div>
 											</div>
 											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">15%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
+												<h6 class="mg-b-0 font-weight-bold">15%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
 										</div>
 										<div class="d-flex pt-2 pb-2 border-bottom">
 											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/6.jpg"></span>
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/6.jpg"></span>
 												<div class="ms-3">
-													<h6 class="mg-b-0">Joyce Chua</h6><small
-														class="tx-11 tx-gray-500">Sales Manager5</small>
+													<h6 class="mg-b-0">Joyce Chua</h6><small class="tx-11 tx-gray-500">Sales Manager5</small>
 												</div>
 											</div>
 											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">12%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
+												<h6 class="mg-b-0 font-weight-bold">12%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
 										</div>
 										<div class="d-flex pt-2 pb-2 border-bottom">
 											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/7.jpg"></span>
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/7.jpg"></span>
 												<div class="ms-3">
-													<h6 class="mg-b-0">Sonia Fraser</h6><small
-														class="tx-11 tx-gray-500">Sales Manager5</small>
+													<h6 class="mg-b-0">Sonia Fraser</h6><small class="tx-11 tx-gray-500">Sales Manager5</small>
 												</div>
 											</div>
 											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">11%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
+												<h6 class="mg-b-0 font-weight-bold">11%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
 										</div>
 										<div class="d-flex pt-2 pb-2">
 											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/4.jpg"></span>
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/4.jpg"></span>
 												<div class="ms-3">
-													<h6 class="mg-b-0">Owen Bongcaras</h6><small
-														class="tx-11 tx-gray-500">Sales Manager3</small>
+													<h6 class="mg-b-0">Owen Bongcaras</h6><small class="tx-11 tx-gray-500">Sales Manager3</small>
 												</div>
 											</div>
 											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">18%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
+												<h6 class="mg-b-0 font-weight-bold">18%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
 										</div>
 									</div>
@@ -881,7 +844,7 @@ include "includes/connection.php";
 		</div>
 		<!-- End Main Content-->
 
-		<?php include 'includes/footer.php';?>
+		<?php include 'includes/footer.php'; ?>
 
 
 	</div>
@@ -943,6 +906,125 @@ include "includes/connection.php";
 	<!-- Switcher js -->
 	<script src="../assets/switcher/js/switcher.js"></script>
 	<script src="notification.js"></script>
+	<!-- Fullcalendar  -->
+	<script type="text/javascript" src="fullcalendar/dist/index.global.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Function to generate a random color in hexadecimal format
+			function getRandomColor() {
+				return '#' + Math.floor(Math.random() * 16777215).toString(16);
+			}
+
+			// Set random colors to CSS variables
+			document.documentElement.style.setProperty('--random-event-bg-color', getRandomColor());
+			document.documentElement.style.setProperty('--random-event-border-color', getRandomColor());
+
+			var calendarEl = document.getElementById('calendar');
+
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialDate: '<?= $currentData ?>',
+				height: '600px',
+				selectable: true,
+				editable: true,
+				dayMaxEvents: true, // allow "more" link when too many events
+				events: 'fetchevents.php', // Fetch all events
+				select: function(arg) { // Create Event
+
+					// Fetch values from the database using AJAX
+					$.ajax({
+						url: 'getValues.php',
+						type: 'get',
+						dataType: 'json',
+						success: function(response) {
+							if (response.status == 1) {
+								calendar.addEvent({
+									eventid: response.eventid,
+									title: title,
+									description: description,
+									start: arg.start,
+									end: arg.end,
+									allDay: arg.allDay
+								})
+
+
+
+							} else {
+								// Handle error fetching values from the database
+								Swal.fire('Error fetching values from the database', '', 'error');
+							}
+						},
+						error: function() {
+							// Handle AJAX error
+							Swal.fire('Error fetching values from the database', '', 'error');
+						}
+					});
+
+
+
+
+					calendar.unselect()
+				},
+				eventDrop: function(event, delta) { // Move event
+
+					// Event details
+					var eventid = event.event.extendedProps.eventid;
+					var newStart_date = event.event.startStr;
+					var newEnd_date = event.event.endStr;
+
+					// AJAX request
+					$.ajax({
+						url: 'ajaxfile.php',
+						type: 'post',
+						data: {
+							request: 'moveEvent',
+							eventid: eventid,
+							start_date: newStart_date,
+							end_date: newEnd_date
+						},
+						dataType: 'json',
+						async: false,
+						success: function(response) {
+
+							console.log(response);
+
+						}
+					});
+
+				},
+				eventClick: function(arg) { // Edit/Delete event
+
+					// Event details
+					var eventid = arg.event._def.extendedProps.eventid;
+					var description = arg.event._def.extendedProps.description;
+					var title = arg.event._def.title;
+
+					// Alert box to edit and delete event
+					Swal.fire({
+						title: 'View Event',
+						showCancelButton: true,
+		
+						html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '" readonly>' +
+							'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;font-size:15px;">' + description + '</textarea>',
+						focusConfirm: false,
+						preConfirm: () => {
+							return [
+								document.getElementById('eventtitle').value,
+								document.getElementById('eventdescription').value
+							]
+						}
+					}).then((result) => {
+
+					
+					})
+
+				}
+
+			});
+
+			calendar.render();
+		});
+	</script>
 </body>
 
 </html>

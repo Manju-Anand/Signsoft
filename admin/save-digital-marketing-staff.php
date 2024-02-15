@@ -85,14 +85,14 @@ if ($connection->query($sql) === TRUE) {
         echo "Error: " . $sql . "<br>" . $connection->error;
       }
 // dm_reports adding
-$sql = "INSERT INTO dm_reports (orderid,dm_allot_id,dmreport_date,status,created) VALUES
-('$orderid','$editid', '$EndDate', 'Not Done','$postdate')";
+$sql = "INSERT INTO dm_reports (orderid,dm_allot_id,dmreport_date,status,created,empid) VALUES
+('$orderid','$editid', '$EndDate', 'Not Done','$postdate','$staffid')";
 if ($connection->query($sql) !== TRUE) {
   echo "Error: " . $sql . "<br>" . $connection->error;
 }
 // dmevents adding
-$sql = "INSERT INTO dmevents (orderid,title,start_date,end_date) VALUES
-('$orderid','$title', '$estartDate', '$eendDate')";
+$sql = "INSERT INTO dmevents (orderid,title,start_date,end_date,empid) VALUES
+('$orderid','$title', '$estartDate', '$eendDate','$staffid')";
 
   if ($connection->query($sql) !== TRUE) {
     echo "Error: " . $sql . "<br>" . $connection->error;
@@ -111,14 +111,14 @@ $sql = "INSERT INTO dmevents (orderid,title,start_date,end_date) VALUES
       }
 
 // dm_reports adding
-      $sql = "INSERT INTO dm_reports (orderid,dm_allot_id,dmreport_date,status,created) VALUES
-      ('$orderid','$last_id', '$EndDate', 'Not Done','$postdate')";
+      $sql = "INSERT INTO dm_reports (orderid,dm_allot_id,dmreport_date,status,created,empid) VALUES
+      ('$orderid','$last_id', '$EndDate', 'Not Done','$postdate','$staffid')";
       if ($connection->query($sql) !== TRUE) {
         echo "Error: " . $sql . "<br>" . $connection->error;
       }
   // dmevents adding
-      $sql = "INSERT INTO dmevents (orderid,title,start_date,end_date) VALUES
-      ('$orderid','$title', '$estartDate', '$eendDate')";
+      $sql = "INSERT INTO dmevents (orderid,title,start_date,end_date,empid) VALUES
+      ('$orderid','$title', '$estartDate', '$eendDate','$staffid')";
   
         if ($connection->query($sql) !== TRUE) {
           echo "Error: " . $sql . "<br>" . $connection->error;
