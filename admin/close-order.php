@@ -148,27 +148,74 @@ $mainorderid = "";
                                                 </div>
                                                 <div class="row mb-4">
 
-                                                    <div class="col-md-4" style="margin: bottom 10px;">
-                                                        <label class="form-label" for="status">Close Order :</label>
-                                                        <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
-                                                            <option value="" disabled selected>Select Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <label class="form-label" for="cquality">Client Quality :</label>
-                                                        <select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
-                                                            <option value="" disabled selected>Select Option</option>
-                                                            <option value="Good">Good</option>
-                                                            <option value="Average">Average</option>
-                                                            <option value="Poor">Poor</option>
-                                                        </select>
-                                                        <label class="col-md-3 form-label" for="notes">Notes if Any :</label>
+                                                
+                                                   
+                                                    <div class="col-lg-6">
+                                                        <div class="expanel expanel-secondary">
+                                                            <div class="expanel-heading">
+                                                                <h3 class="expanel-title">Order Closing Details</h3>
+                                                            </div>
+                                                            <div class="expanel-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-3"> <label class="form-label" for="status">Close Order :</label></div>
+                                                                    <div class="col-md-9">
+                                                                        <select name="status" id="status" class="form-control form-select select2" style="margin: bottom 20px;" data-bs-placeholder="Select Status" required>
+                                                                            <option value="" disabled selected>Select Option</option>
+                                                                            <option value="Close">Close</option>
+                                                                            <option value="Renew-Order">Renew Order</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div><br>
+                                                                <div class="row">
+                                                                    <div class="col-md-5"><label class="form-label" for="greview">Received Google Reviews? </label></div>
+                                                                    <div class="col-md-7"><input type="checkbox" id="greview" name="greview"></div>
+                                                                </div><br>
+                                                                <div class="row">
+                                                                    <div class="col-md-3"><label class="form-label" for="cquality">Client Quality :</label></div>
+                                                                    <div class="col-md-9"><select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
+                                                                            <option value="" disabled selected>Select Option</option>
+                                                                            <option value="Good">Good</option>
+                                                                            <option value="Average">Average</option>
+                                                                            <option value="Poor">Poor</option>
+                                                                        </select>
+                                                                    </div>
 
-                                                        <textarea class="form-control" name="notes" id="notes" palceholder="Here notes" rows="4"></textarea>
+                                                                </div><br>
+                                                                <div class="row">
+                                                                    <div class="col-md-3"> <label class="form-label" for="notes">Notes if Any :</label></div>
 
+                                                                    <div class="col-md-9">  
+                                                                        <textarea class="form-control" name="notes" id="notes" palceholder="Here notes" rows="4"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                               
+
+                                                              
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-8" style="margin: bottom 10px;" id="orderdetails"></div>
 
+                                                    <div class="col-md-6">
+                                                        <div class="expanel expanel-primary">
+                                                            <div class="expanel-heading">
+                                                                <h3 class="expanel-title">Order Details</h3>
+                                                            </div>
+                                                            <div class="expanel-body"  id="orderdetails">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                               
+
+                                                    
+                                                  
                                                 </div>
 
                                                 <div class="row">
@@ -180,102 +227,240 @@ $mainorderid = "";
 
                                                     </div>
                                                 </div>
-                                                <?php
-                                                if (isset($_POST['submit'])) {
-                                                    $closestatus = "false";
-                                                    $orderstatus = $_POST["status"];
-                                                    if ($orderstatus = "Yes") {
-                                                        $orderclosed = "Closed";
-                                                        $cquality = $_POST['cquality'];
-                                                        $quoteamt =$_POST['quoteamt'];
-                                                        $orderid = $_POST['ordersdisplay'];
-                                                        $statusreason = $_POST["notes"];
+<?php
+if (isset($_POST['submit'])) {
+    $closestatus = "false";
+    $orderstatus = $_POST["status"];
+    if ($orderstatus !== null) {
+        $orderclosed = "Closed";
+        $cquality = $_POST['cquality'];
+        $quoteamt =$_POST['quoteamt'];
+        $orderid = $_POST['ordersdisplay'];
+        $statusreason = $_POST["notes"];
 
-                                                        date_default_timezone_set("Asia/Calcutta");
-                                                        $postdate = date("M d,Y h:i:s a");
+        date_default_timezone_set("Asia/Calcutta");
+        $postdate = date("M d,Y h:i:s a");
 
-                                                        $sql = "SELECT * FROM payment_supplier where orderid='" . $orderid . "'";
-                                                        $result = $connection->query($sql);
+        $sql = "SELECT * FROM payment_supplier where orderid='" . $orderid . "'";
+        $result = $connection->query($sql);
 
-                                                        if ($result->num_rows > 0) {
-                                                            while ($row = $result->fetch_assoc()) {
-                                                                if ($row['transaction_mode'] !== 'CASH') {
-                                                                    if ($row['supplier_billno'] !== '' ) {
-                                                                        // echo "suppliertrue";
-                                                                        $closestatus = "true";
-                                                                    } else {
-                                                                        // echo "supplierfalse";
-                                                                        $closestatus = "false";
-                                                                        goto pc;
-                                                                    }
-                                                                    if ( $row['customer_billno'] !== '') {
-                                                                        // echo "suppliertrue";
-                                                                        $closestatus = "true";
-                                                                    } else {
-                                                                        // echo "supplierfalse";
-                                                                        $closestatus = "false";
-                                                                        goto pc;
-                                                                    }
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if ($row['transaction_mode'] !== 'CASH') {
+                    if ($row['supplier_billno'] !== '' ) {
+                        // echo "suppliertrue";
+                        $closestatus = "true";
+                    } else {
+                        // echo "supplierfalse";
+                        $closestatus = "false";
+                        goto pc;
+                    }
+                    if ( $row['customer_billno'] !== '') {
+                        // echo "suppliertrue";
+                        $closestatus = "true";
+                    } else {
+                        // echo "supplierfalse";
+                        $closestatus = "false";
+                        goto pc;
+                    }
+                }
+            }
+        }
+        pc:
+        $sql = "SELECT * FROM payment_customer where orderid='" . $orderid . "'";
+        $result = $connection->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if ($row['transaction_mode'] !== 'CASH') {
+                    if ($row['customer_billno'] !== '') {
+                        // echo "custtrue";
+                        $closestatus = "true";
+                    } else {
+                        // echo "custfalse";
+                        $closestatus = "false";
+                        goto ppc;
+                    }
+                }
+            }
+        }
+        ppc:
+
+        if ($closestatus == "false") {
+            echo "<script> alert('Order cannot be closed because there are missing billnos.'); </script>";
+        } else {
+            // *************** transaction entry ****** based on $cquality ****************
+            if ($cquality=="Good"){
+
+                $actid="1";
+                $actname="Signefo";
+
+            }elseif ($cquality=="Average") {
+                $actid="2";
+                $actname="Signefo Media";
+            }else {
+                $actid="";
+                $actname="";
+            }
+            $querycategory = "INSERT INTO transactions (orderid, action, actid, amount, add_date, created)
+            VALUES('$orderid','Credited','$actid', '$quoteamt','$postdate','$postdate')";
+
+            if ($connection->query($querycategory) === TRUE) {
+            }
+
+            $querycategory = "UPDATE order_customers SET order_status='Closed', close_date='" . $postdate . "' where id='" . $orderid . "'";
+
+            if ($connection->query($querycategory) === TRUE) {
+            }
+
+
+            $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
+            VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";
+
+            if ($connection->query($querycategory) === TRUE) {
+            }
+            if ($orderstatus = "Renew-Order") {
+                $sqlneworder = "SELECT * FROM order_customers where id='" . $orderid . "'";
+                $resultneworder = $connection->query($sqlneworder);
+
+                if ($resultneworder->num_rows > 0) {
+                    while ($rowneworder = $resultneworder->fetch_assoc()) {
+                        $cusname = $rowneworder["cusname"];
+                        $brandname = $rowneworder["brandname"];
+
+                        $addr = $rowneworder["addr"];
+                        $phoneno = $rowneworder["phoneno"];
+                        $emailid = $rowneworder["emailid"];
+                        $contacteddate = $rowneworder["contacteddate"];
+                        $contactedtime = $rowneworder["contactedtime"];
+
+                        $qutamt = $rowneworder["qutamt"];
+                        $leadsource = $rowneworder["leadsource"];
+                        $orderstatus = $rowneworder["status"];
+                        $statusreason = $rowneworder["statusreason"];
+
+                        date_default_timezone_set("Asia/Calcutta");
+                        $postdate = date("M d,Y h:i:s a");
+                        $sql = "INSERT INTO order_customers (custName,brandName,addr,custPhone,custEmail,contactDate,contactTime,quotedAmt,leadSource,created,modified,lead_entered,
+                        empid,order_status,status_reason) 
+                        values('" . mysqli_real_escape_string($connection, $cusname) . "','" . mysqli_real_escape_string($connection, $brandname) . "',
+                                '" . mysqli_real_escape_string($connection, $addr) . "','" . mysqli_real_escape_string($connection, $phoneno) . "',
+                                                '" . mysqli_real_escape_string($connection, $emailid) . "','" . mysqli_real_escape_string($connection, $contacteddate) . "',
+                                                '" . mysqli_real_escape_string($connection, $contactedtime) . "',
+                                                '" . mysqli_real_escape_string($connection, $qutamt) . "','" . mysqli_real_escape_string($connection, $leadsource) . "',
+                                                '" . mysqli_real_escape_string($connection, $postdate) . "',
+                                                '" . mysqli_real_escape_string($connection, $postdate) . "','Administrator',
+                                                '" . mysqli_real_escape_string($connection, $_SESSION['adminempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
+                                                '" . mysqli_real_escape_string($connection, $statusreason) . "')";
+                                                if ($connection->query($sql) === TRUE) {
+                                                    $last_lead_id = $connection->insert_id;
+                                                    $sqlnewcat = "SELECT * FROM order_category where order_id='" . $orderid . "'";
+                                                    $resultnewcat = $connection->query($sqlnewcat);
+                                    
+                                                    if ($resultnewcat->num_rows > 0) {
+                                                        while ($rownewcat = $resultnewcat->fetch_assoc()) {
+                                                            $catid = $rowneworder["category_id"];
+                                                            $querycategory = "INSERT INTO order_category (order_id, category_id)
+                                                            VALUES('$last_lead_id', '$catid')";
+        
+                                                            if ($connection->query($querycategory) === TRUE) {
+                                                            }
+                                                        }}
+                                                        $sqlnewsubcat = "SELECT * FROM order_subcategory where order_id='" . $orderid . "'";
+                                                        $resultnewsubcat = $connection->query($sqlnewsubcat);
+                                        
+                                                        if ($resultnewsubcat->num_rows > 0) {
+                                                            while ($rownewsubcat = $resultnewsubcat->fetch_assoc()) {
+                                                                $subcatid = $rowneworder["subcategory_id"];
+                                                                $querycategory = "INSERT INTO order_subcategory (order_id, category_id)
+                                                                VALUES('$last_lead_id', '$subcatid')";
+            
+                                                                if ($connection->query($querycategory) === TRUE) {
                                                                 }
-                                                            }
-                                                        }
-                                                        pc:
-                                                        $sql = "SELECT * FROM payment_customer where orderid='" . $orderid . "'";
-                                                        $result = $connection->query($sql);
+                                                            }}
+                                                            $sqlnewsubcat = "SELECT * FROM staff_dm_allocation where orderid='" . $orderid . "'";
+                                                            $resultnewsubcat = $connection->query($sqlnewsubcat);
+                                            
+                                                            if ($resultnewsubcat->num_rows > 0) {
+                                                                while ($rownewsubcat = $resultnewsubcat->fetch_assoc()) {
 
-                                                        if ($result->num_rows > 0) {
-                                                            while ($row = $result->fetch_assoc()) {
-                                                                if ($row['transaction_mode'] !== 'CASH') {
-                                                                    if ($row['customer_billno'] !== '') {
-                                                                        // echo "custtrue";
-                                                                        $closestatus = "true";
-                                                                    } else {
-                                                                        // echo "custfalse";
-                                                                        $closestatus = "false";
-                                                                        goto ppc;
+                                                                    $Payment = $rownewsubcat['Payment'];
+                                                                    $Postings = $rownewsubcat['Postings'];
+                                                                    $staffName = $rownewsubcat['staffName'];
+                                                                    $staffid = $rownewsubcat['staffid'];
+                                                                    $Frequency = $rownewsubcat['Frequency'];
+                                                                    // $StartDate = $rownewsubcat['StartDate'];
+                                                                    $EndDate = $rownewsubcat['EndDate'];
+
+                                                                    $newDate = date("Y-m-d", strtotime($startDate . " +1 month"));
+                                                                    $promoamt = $rownewsubcat['promoamt'];
+                                                                    $assigndate = $rownewsubcat['assigndate'];
+                                                                    $recordstatus= $rownewsubcat['status'];
+                                                                    date_default_timezone_set("Asia/Calcutta");
+                                                                    $postdate = date("M d,Y h:i:s a");
+                                                                    $today = date("Y-m-d");
+                                                                    $sql = "INSERT INTO staff_dm_allocation (orderid,payment,postings,staffname, staffid, frequency, startdate, enddate,promoamt,status,assigndate,created) VALUES
+                                                                    ('$last_lead_id','$Payment','$Postings','$staffName', '$staffid', '$Frequency', '$EndDate', '$newDate', '$promoamt','$recordstatus','$today','$postdate')";
+                                                                    if ($connection->query($sql) !== TRUE) {
+                                                                        
+                                                                        echo "Error: " . $sql . "<br>" . $connection->error;
+                                                                    }else {
+                                                                        $last_id = $connection->insert_id;
                                                                     }
-                                                                }
-                                                            }
-                                                        }
-                                                        ppc:
+                                                                    // dm_reports adding
+                                                                    $sql = "INSERT INTO dm_reports (orderid,dm_allot_id,dmreport_date,status,created,empid) VALUES
+                                                                    ('$last_lead_id','$last_id', '$newDate', 'Not Done','$postdate','$staffid')";
+                                                                    if ($connection->query($sql) !== TRUE) {
+                                                                        echo "Error: " . $sql . "<br>" . $connection->error;
+                                                                    }
+                                                                    // dmevents adding
+                                                                    $cDate =    $newDate;
+                                                                    $estartDate = formatnewDate($cDate);
+                                                                    $eendDate = addOneDay($cDate);
+                                                                    $sql = "INSERT INTO dmevents (orderid,title,start_date,end_date,empid) VALUES
+                                                                    ('$last_lead_id','$title', '$estartDate', '$eendDate','$staffid')";
 
-                                                        if ($closestatus == "false") {
-                                                            echo "<script> alert('Order cannot be closed because there are missing billnos.'); </script>";
-                                                        } else {
-                                                            // *************** transaction entry ****** based on $cquality ****************
-                                                            if ($cquality=="Good"){
+                                                                        if ($connection->query($sql) !== TRUE) {
+                                                                        echo "Error: " . $sql . "<br>" . $connection->error;
+                                                                        }
 
-                                                                $actid="1";
-                                                                $actname="Signefo";
-
-                                                            }elseif ($cquality=="Average") {
-                                                                $actid="2";
-                                                                $actname="Signefo Media";
-                                                            }else {
-                                                                $actid="";
-                                                                $actname="";
-                                                            }
-                                                            $querycategory = "INSERT INTO transactions (orderid, action, actid, amount, add_date, created)
-                                                            VALUES('$orderid','Credited','$actid', '$quoteamt','$postdate','$postdate')";
-
-                                                            if ($connection->query($querycategory) === TRUE) {
-                                                            }
-
-                                                            $querycategory = "UPDATE order_customers SET order_status='Closed', close_date='" . $postdate . "' where id='" . $orderid . "'";
-
-                                                            if ($connection->query($querycategory) === TRUE) {
-                                                            }
+                                                        }}
 
 
-                                                            $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
-                                                            VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";
 
-                                                            if ($connection->query($querycategory) === TRUE) {
-                                                            }
-                                                        }
-                                                    }
+
+
+
+                                                      
+
                                                 }
-                                                ?>
+
+        
+
+                    }
+
+                }
+
+            }
+
+
+
+        }
+    }
+}
+function formatnewDate($dateString)
+{
+  $date = new DateTime($dateString);
+  return $date->format('Y-m-d');
+}
+
+function addOneDay($dateString)
+{
+  $date = new DateTime($dateString);
+  $date->add(new DateInterval('P1D'));
+  return $date->format('Y-m-d');
+}
+?>
                                             </form>
                                         </div>
                                         <div class="tab-pane" id="tab18">

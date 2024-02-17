@@ -14,6 +14,10 @@ while($row = mysqli_fetch_assoc($eventsList)){
 		"end" => $row['end_date'],
 		"orderid" => $row['orderid'],
 		"empid" => $row['empid'],
+		"beforeinfo" => $row['beforeinfo'],
+		"executed" => $row['executed'],
+		"afterinfo" => $row['afterinfo'],
+
 	);
 }
 

@@ -336,7 +336,7 @@ include "includes/connection.php";
                                                                 '" . mysqli_real_escape_string($connection, $qutamt) . "','" . mysqli_real_escape_string($connection, $leadsource) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','Administrator',
-                                                                '" . mysqli_real_escape_string($connection, $_SESSION['salesempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
+                                                                '" . mysqli_real_escape_string($connection, $_SESSION['adminempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
                                                                 '" . mysqli_real_escape_string($connection, $statusreason) . "')";
 
                                         if ($connection->query($sql) === TRUE) {

@@ -10,7 +10,7 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
     // Fetch data for the second select using AJAX
     $.ajax({
         type: 'POST',
-        url: 'vieworderdetails.php', // Replace with the actual URL that fetches data based on selectedOrderId
+        url: 'viewcloseorderdetails.php', // Replace with the actual URL that fetches data based on selectedOrderId
         data: {
             selectedOrderId: selectedOrderId
         },

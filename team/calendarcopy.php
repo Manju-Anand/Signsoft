@@ -47,6 +47,10 @@ include "includes/connection.php";
 	<!-- Switcher css -->
 	<!-- <link href="../assets/switcher/css/switcher.css" rel="stylesheet">
 	<link href="../assets/switcher/demo.css" rel="stylesheet"> -->
+<!-- Include the necessary scripts (Bootstrap, jQuery, FullCalendar) -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.0/dist/fullcalendar.min.js"></script>
 
 </head>
 
@@ -114,6 +118,8 @@ include "includes/connection.php";
 										<div id='calendar-container'>
 											<div id='calendar'></div>
 										</div>
+
+
 									</div>
 								</div>
 							</div>
@@ -125,7 +131,27 @@ include "includes/connection.php";
 			</div>
 		</div>
 		<!-- End Main Content-->
-
+										<!-- Add this HTML for the modal window -->
+										<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel">Add New Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input id="eventtitle" class="form-control" placeholder="Event name">
+        <textarea id="eventdescription" class="form-control" placeholder="Event description" style="height: 100px;"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="createEventBtn">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
 		<!-- Sidebar -->
 		<?php include 'includes/footer.php'; ?>
 		<!--End Footer-->
@@ -169,7 +195,7 @@ include "includes/connection.php";
 
 
 	<!-- jQuery -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 	<!-- Fullcalendar  -->
 	<script type="text/javascript" src="fullcalendar/dist/index.global.min.js"></script>
@@ -196,123 +222,48 @@ include "includes/connection.php";
 				editable: true,
 				dayMaxEvents: true, // allow "more" link when too many events
 				events: 'fetchevents.php', // Fetch all events
-
+			
 				select: function(arg) { // Create Event
 
-					// Fetch values from the database using AJAX
-					$.ajax({
-						url: 'getValues.php',
-						type: 'get',
-						dataType: 'json',
-						success: function(response) {
-							if (response.status == 1) {
-								// ===================alert box start======================
-								// Alert box to add event
-								// Create an array of options for the select box
-								var selectOptions = response.values.map(function(item) {
-									return '<option value="' + item.id + '" data-orderid="' + item.orderid + '">' + item.brandName + '</option>';
-								});
+					$('#eventModal').modal('show');
 
-								// Create an array of options for the second select box
-								var selectOptions2 = '<option value="" disabled selected>Select Paid/Not</option><option value="no">No</option><option value="yes">Yes</option>';
+// Handle Create button click inside the modal
+$('#createEventBtn').on('click', function () {
+	var title = $('#eventtitle').val().trim();
+	var description = $('#eventdescription').val().trim();
+	var start_date = arg.startStr;
+	var end_date = arg.endStr;
 
-								Swal.fire({
-									title: 'Add New Work',
-									showCancelButton: true,
-									confirmButtonText: 'Create',
-									html:
-
-										'<input id="eventtitle" class="swal2-input" placeholder="Posting name" style="width: 84%;font-size:15px"  ><br>' +
-										'<textarea id="eventdescription" class="swal2-input" placeholder="description" style="width: 84%; height: 60px;"></textarea>' +
-										'<select id="eventSelect" class="swal2-input" style="width: 84%;">' + selectOptions.join('') + '</select>' +
-										'<select id="eventSelect2" class="swal2-input" style="width: 84%;">' + selectOptions2 + '</select>',
-
-									focusConfirm: false,
-									preConfirm: () => {
-										var selectedOption = document.getElementById('eventSelect');
-										var orderId = selectedOption.options[selectedOption.selectedIndex].getAttribute('data-orderid');
-
-										return [
-											document.getElementById('eventtitle').value,
-											document.getElementById('eventdescription').value,
-											document.getElementById('eventSelect').value,
-											document.getElementById('eventSelect2').value,
-											orderId
-										]
-									}
-								}).then((result) => {
-
-									if (result.isConfirmed) {
-
-										var title = result.value[0].trim();
-										var description = result.value[1].trim();
-										var dmallotid = result.value[2].trim();
-										var paidornot = result.value[3].trim();
-										var orderid = result.value[4].trim();
-										var start_date = arg.startStr;
-										var end_date = arg.endStr;
-
-
-										if (title != '' && description != '') {
-
-											// AJAX - Add event
-											$.ajax({
-												url: 'ajaxfile.php',
-												type: 'post',
-												data: {
-													request: 'addEvent',
-													title: title,
-													description: description,
-													start_date: start_date,
-													end_date: end_date,
-													orderid: orderid,
-													dmallotid: dmallotid,
-													paidornot: paidornot
-												},
-												dataType: 'json',
-												success: function(response) {
-
-													if (response.status == 1) {
-
-														// Add event
-														calendar.addEvent({
-															eventid: response.eventid,
-															title: title,
-															description: description,
-															orderid: orderid,
-															dmallotid: dmallotid,
-															paidornot: paidornot,
-															start: arg.start,
-															end: arg.end,
-															allDay: arg.allDay
-														})
-
-														// Alert message
-														Swal.fire(response.message, '', 'success');
-
-													} else {
-														// Alert message
-														Swal.fire(response.message, '', 'error');
-													}
-
-												}
-											});
-										}
-
-									}
-								})
-								// ===============alert box end =======================
-
-							} else {
-								// Handle error fetching values from the database
-								Swal.fire('Error fetching values from the database', '', 'error');
-							}
-						},
-						error: function() {
-							// Handle AJAX error
-							Swal.fire('Error fetching values from the database', '', 'error');
-						}
+	if (title !== '' && description !== '') {
+		// AJAX - Add event
+		$.ajax({
+			url: 'ajaxfile.php',
+			type: 'post',
+			data: { request: 'addEvent', title: title, description: description, start_date: start_date, end_date: end_date },
+			dataType: 'json',
+			success: function (response) {
+				if (response.status == 1) {
+					// Add event
+					calendar.addEvent({
+						eventid: response.eventid,
+						title: title,
+						description: description,
+						start: arg.start,
+						end: arg.end,
+						allDay: arg.allDay
 					});
+
+					// Alert message
+					$('#eventModal').modal('hide');
+					Swal.fire(response.message, '', 'success');
+				} else {
+					// Alert message
+					Swal.fire(response.message, '', 'error');
+				}
+			}
+		});
+	}
+});
 
 
 
@@ -348,90 +299,62 @@ include "includes/connection.php";
 				},
 				eventClick: function(arg) { // Edit/Delete event
 
-
+					
 					var eventid = arg.event._def.extendedProps.eventid;
 					var description = arg.event._def.extendedProps.description;
 					var orderid = arg.event._def.extendedProps.orderid;
 					var dmallotid = arg.event._def.extendedProps.dmallotid;
-					var beforeinfo = arg.event._def.extendedProps.beforeinfo;
-					var executed = arg.event._def.extendedProps.executed;
-					var afterinfo = arg.event._def.extendedProps.afterinfo;
 					var title = arg.event._def.title;
 
-
+					
 					Swal.fire({
-						title: 'View & Edit Event',
+						title: 'View Event',
 						showDenyButton: true,
 						showCancelButton: true,
-						confirmButtonText: 'Update',
+						// confirmButtonText: 'Update',
 						denyButtonText: 'Delete',
-						html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '">' +
-							'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 60px;">' + description + '</textarea>' +
-							'<label><input type="checkbox" id="checkbox1" value="Informed-Before" ' + (beforeinfo ? 'checked' : '') + '> Informed Customer Before</label><br>' +
-							'<label><input type="checkbox" id="checkbox2" value="Executed" ' + (executed ? 'checked' : '') + '> Executed</label><br>' +
-							'<label><input type="checkbox" id="checkbox3" value="Informed-After" ' + (afterinfo ? 'checked' : '') + '> Informed Customer After</label><br>',
-
+						html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '" readonly >' +
+													'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;"  readonly>' + description + '</textarea>',
 						focusConfirm: false,
 						preConfirm: () => {
-							const eventTitle = document.getElementById('eventtitle').value;
-							const eventDescription = document.getElementById('eventdescription').value;
-
-							const checkbox1 = document.getElementById('checkbox1').checked;
-							const checkbox2 = document.getElementById('checkbox2').checked;
-							const checkbox3 = document.getElementById('checkbox3').checked;
-
 							return [
-								eventTitle,
-								eventDescription,
-								checkbox1 ? 'Informed-Before' : null,
-								checkbox2 ? 'Executed' : null,
-								checkbox3 ? 'Informed-After' : null
+								document.getElementById('eventtitle').value,
+								document.getElementById('eventdescription').value
 							]
-
-							// return [
-							// 	document.getElementById('eventtitle').value,
-							// 	document.getElementById('eventdescription').value
-							// ]
 						}
 					}).then((result) => {
 
-						if (result.isConfirmed) {
+						if (result.isConfirmed) { 
 
-							var newTitle = result.value[0].trim();
-							var newDescription = result.value[1].trim();
-							var beforeinfo = result.value[2];
-							var executed = result.value[3];
-							var afterinfo = result.value[4];
+							// var newTitle = result.value[0].trim();
+							// var newDescription = result.value[1].trim();
 
-							if (newTitle != '' && newDescription != '') {
+							// if (newTitle != '' && newDescription != '') {
 
-								$.ajax({
-									url: 'ajaxfile.php',
-									type: 'post',
-									data: {
-										request: 'editEvent',
-										eventid: eventid,
-										title: newTitle,
-										description: newDescription,
-										beforeinfo: beforeinfo,
-										executed: executed,
-										afterinfo: afterinfo
-									},
-									dataType: 'json',
-									async: false,
-									success: function(response) {
+							// 	$.ajax({
+							// 		url: 'ajaxfile.php',
+							// 		type: 'post',
+							// 		data: {
+							// 			request: 'editEvent',
+							// 			eventid: eventid,
+							// 			title: newTitle,
+							// 			description: newDescription
+							// 		},
+							// 		dataType: 'json',
+							// 		async: false,
+							// 		success: function(response) {
 
-										if (response.status == 1) {
+							// 			if (response.status == 1) {
 
-											calendar.refetchEvents();
-											Swal.fire(response.message, '', 'success');
-										} else {
-											Swal.fire(response.message, '', 'error');
-										}
+							// 				calendar.refetchEvents();
+							// 				Swal.fire(response.message, '', 'success');
+							// 			} else {
+							// 				Swal.fire(response.message, '', 'error');
+							// 			}
 
-									}
-								});
-							}
+							// 		}
+							// 	});
+							// }
 
 						} else if (result.isDenied) { // Delete
 

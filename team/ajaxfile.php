@@ -36,13 +36,17 @@ if($request == 'addEvent'){
 	if(isset($_POST['dmallotid'])){
 		$dmallotid  = $_POST['dmallotid'];
 	}
+	if(isset($_POST['paidornot'])){
+		$paidornot  = $_POST['paidornot'];
+	}
 	$response = array();
 	$status = 0;
 	if(!empty($title) && !empty($description) && !empty($start_date) && !empty($end_date) ){
 
 		// Insert record
-		$sql = "INSERT INTO dmevents(title,description,start_date,end_date,orderid,empid,dm_allotid) VALUES(
-			'".$title."','".$description."','".$start_date."','".$end_date."','".$orderid."','" . $_SESSION['empid'] . "','" . $dmallotid . "')";
+		$sql = "INSERT INTO dmevents(title,description,start_date,end_date,orderid,empid,dm_allotid,paidpromo) VALUES(
+			'".$title."','".$description."','".$start_date."','".$end_date."','".$orderid."','" . $_SESSION['empid'] . "','" . $dmallotid . "','" . $paidornot . "')";
+			
 		if(mysqli_query($connection,$sql)){
 			$eventid = mysqli_insert_id($connection);
 
@@ -50,13 +54,13 @@ if($request == 'addEvent'){
 
 			$response['eventid'] = $eventid;
 			$response['status'] = 1;
-			$response['message'] = 'Event created successfully.';
+			$response['message'] = 'Work created successfully.';
 		}
 	}	
 
 	if($status == 0){
 		$response['status'] = 0;
-		$response['message'] = 'Event not created.';
+		$response['message'] = 'Work not created.';
 	}
 	
 	echo json_encode($response);
@@ -103,7 +107,7 @@ if($request == 'moveEvent'){
 
 	if($status == 0){
 		$response['status'] = 0;
-		$response['message'] = 'Event date not updated.';
+		$response['message'] = 'Work date not updated.';
 	}	
 
 	echo json_encode($response);
@@ -124,7 +128,16 @@ if($request == 'editEvent'){
 	if(isset($_POST['description'])){
 		$description = $_POST['description'];
 	}
-	
+	if(isset($_POST['beforeinfo'])){
+		$beforeinfo = $_POST['beforeinfo'];
+	}
+	if(isset($_POST['executed'])){
+		$executed = $_POST['executed'];
+	}
+	if(isset($_POST['afterinfo'])){
+		$afterinfo = $_POST['afterinfo'];
+	}
+
 	$response = array();
 
 	if($eventid > 0 && !empty($title) && !empty($description)){
@@ -135,13 +148,14 @@ if($request == 'editEvent'){
 		if(mysqli_num_rows($result)){
 
 			// Update record
-			$sql = "UPDATE dmevents SET title='".$title."', description='".$description."' WHERE id=".$eventid;
+			$sql = "UPDATE dmevents SET title='".$title."', description='".$description."',afterinfo='".$afterinfo."',
+			beforeinfo='".$beforeinfo."', executed='".$executed."' WHERE id=".$eventid;
 			if(mysqli_query($connection,$sql)){
 
 				$status = 1; 
 
 				$response['status'] = 1;
-				$response['message'] = 'Event updated successfully.';
+				$response['message'] = 'Work updated successfully.';
 			}
 		}
 		
@@ -149,7 +163,7 @@ if($request == 'editEvent'){
 
 	if($status == 0){
 		$response['status'] = 0;
-		$response['message'] = 'Event not updated.';
+		$response['message'] = 'Work not updated.';
 	}
 
 	echo json_encode($response);
@@ -181,7 +195,7 @@ if($request == 'deleteEvent'){
 				$status = 1;
 
 				$response['status'] = 1;
-				$response['message'] = 'Event deleted successfully.';
+				$response['message'] = 'Work deleted successfully.';
 			}
 		}
 		
@@ -189,7 +203,7 @@ if($request == 'deleteEvent'){
 	
 	if($status == 0){
 		$response['status'] = 0;
-		$response['message'] = 'Event not deleted.';
+		$response['message'] = 'Work not deleted.';
 	}
 
 	echo json_encode($response);

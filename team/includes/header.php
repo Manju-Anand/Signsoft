@@ -184,6 +184,10 @@
 						<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
 						<span class="side-menu__label">Works Assigned</span>
 					</a>
+					<a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
+						<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
+						<span class="side-menu__label">Calendar Assigning</span>
+					</a>
 					
 				</li>
 					<?php } ?>

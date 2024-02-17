@@ -49,7 +49,7 @@ function showworklist()
         echo "<td>$post_enddate</td>";
         echo "<td>$post_promoamt</td>";
         echo "<td>$post_assigndate</td>";
-        echo "<td><a class='btn btn-sm btn-blue' href='calendar.php?edit={$id}' title='Calendar Assiging' style='color:white'>
+        echo "<td><a class='btn btn-sm btn-blue' href='calendar.php' title='Calendar Assiging' style='color:white'>
         <span class='fe fe-calendar'> </span></a>
         </td>";
 
@@ -122,7 +122,7 @@ function showworklist()
                             <h2 class="main-content-title tx-24 mg-b-5">Work List</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Assined Works</li>
+                                <li class="breadcrumb-item active" aria-current="page">Assigned Works</li>
                             </ol>
                         </div>
                         <div class="btn-list">
