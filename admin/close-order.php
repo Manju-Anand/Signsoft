@@ -313,6 +313,11 @@ if (isset($_POST['submit'])) {
             if ($connection->query($querycategory) === TRUE) {
             }
 
+            $querystaffdm = "UPDATE staff_dm_allocation SET work_status='Closed' where orderid='" . $orderid . "'";
+
+            if ($connection->query($querystaffdm) === TRUE) {
+            }
+
 
             $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
             VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";
@@ -325,19 +330,19 @@ if (isset($_POST['submit'])) {
 
                 if ($resultneworder->num_rows > 0) {
                     while ($rowneworder = $resultneworder->fetch_assoc()) {
-                        $cusname = $rowneworder["cusname"];
-                        $brandname = $rowneworder["brandname"];
+                        $cusname = $rowneworder["custName"];
+                        $brandname = $rowneworder["brandName"];
 
                         $addr = $rowneworder["addr"];
-                        $phoneno = $rowneworder["phoneno"];
-                        $emailid = $rowneworder["emailid"];
-                        $contacteddate = $rowneworder["contacteddate"];
-                        $contactedtime = $rowneworder["contactedtime"];
+                        $phoneno = $rowneworder["custPhone"];
+                        $emailid = $rowneworder["custEmail"];
+                        $contacteddate = $rowneworder["contactDate"];
+                        $contactedtime = $rowneworder["contactTime"];
 
-                        $qutamt = $rowneworder["qutamt"];
-                        $leadsource = $rowneworder["leadsource"];
-                        $orderstatus = $rowneworder["status"];
-                        $statusreason = $rowneworder["statusreason"];
+                        $qutamt = $rowneworder["quotedAmt"];
+                        $leadsource = $rowneworder["leadSource"];
+                        $orderstatus = "Active";
+                        $statusreason = $rowneworder["status_reason"];
 
                         date_default_timezone_set("Asia/Calcutta");
                         $postdate = date("M d,Y h:i:s a");
@@ -359,7 +364,7 @@ if (isset($_POST['submit'])) {
                                     
                                                     if ($resultnewcat->num_rows > 0) {
                                                         while ($rownewcat = $resultnewcat->fetch_assoc()) {
-                                                            $catid = $rowneworder["category_id"];
+                                                            $catid = $rownewcat["category_id"];
                                                             $querycategory = "INSERT INTO order_category (order_id, category_id)
                                                             VALUES('$last_lead_id', '$catid')";
         
@@ -371,8 +376,8 @@ if (isset($_POST['submit'])) {
                                         
                                                         if ($resultnewsubcat->num_rows > 0) {
                                                             while ($rownewsubcat = $resultnewsubcat->fetch_assoc()) {
-                                                                $subcatid = $rowneworder["subcategory_id"];
-                                                                $querycategory = "INSERT INTO order_subcategory (order_id, category_id)
+                                                                $subcatid = $rownewsubcat["subcategory_id"];
+                                                                $querycategory = "INSERT INTO order_subcategory (order_id, subcategory_id)
                                                                 VALUES('$last_lead_id', '$subcatid')";
             
                                                                 if ($connection->query($querycategory) === TRUE) {
@@ -384,23 +389,23 @@ if (isset($_POST['submit'])) {
                                                             if ($resultnewsubcat->num_rows > 0) {
                                                                 while ($rownewsubcat = $resultnewsubcat->fetch_assoc()) {
 
-                                                                    $Payment = $rownewsubcat['Payment'];
-                                                                    $Postings = $rownewsubcat['Postings'];
-                                                                    $staffName = $rownewsubcat['staffName'];
+                                                                    $Payment = $rownewsubcat['payment'];
+                                                                    $Postings = $rownewsubcat['postings'];
+                                                                    $staffName = $rownewsubcat['staffname'];
                                                                     $staffid = $rownewsubcat['staffid'];
-                                                                    $Frequency = $rownewsubcat['Frequency'];
+                                                                    $Frequency = $rownewsubcat['frequency'];
                                                                     // $StartDate = $rownewsubcat['StartDate'];
-                                                                    $EndDate = $rownewsubcat['EndDate'];
+                                                                    $EndDate = $rownewsubcat['enddate'];
 
-                                                                    $newDate = date("Y-m-d", strtotime($startDate . " +1 month"));
+                                                                    $newDate = date("Y-m-d", strtotime($EndDate . " +1 month"));
                                                                     $promoamt = $rownewsubcat['promoamt'];
                                                                     $assigndate = $rownewsubcat['assigndate'];
-                                                                    $recordstatus= $rownewsubcat['status'];
+                                                                    $recordstatus= "New";
                                                                     date_default_timezone_set("Asia/Calcutta");
                                                                     $postdate = date("M d,Y h:i:s a");
                                                                     $today = date("Y-m-d");
-                                                                    $sql = "INSERT INTO staff_dm_allocation (orderid,payment,postings,staffname, staffid, frequency, startdate, enddate,promoamt,status,assigndate,created) VALUES
-                                                                    ('$last_lead_id','$Payment','$Postings','$staffName', '$staffid', '$Frequency', '$EndDate', '$newDate', '$promoamt','$recordstatus','$today','$postdate')";
+                                                                    $sql = "INSERT INTO staff_dm_allocation (orderid,payment,postings,staffname, staffid, frequency, startdate, enddate,promoamt,status,assigndate,created,work_status) VALUES
+                                                                    ('$last_lead_id','$Payment','$Postings','$staffName', '$staffid', '$Frequency', '$EndDate', '$newDate', '$promoamt','$recordstatus','$today','$postdate','Active')";
                                                                     if ($connection->query($sql) !== TRUE) {
                                                                         
                                                                         echo "Error: " . $sql . "<br>" . $connection->error;
@@ -417,8 +422,9 @@ if (isset($_POST['submit'])) {
                                                                     $cDate =    $newDate;
                                                                     $estartDate = formatnewDate($cDate);
                                                                     $eendDate = addOneDay($cDate);
-                                                                    $sql = "INSERT INTO dmevents (orderid,title,start_date,end_date,empid) VALUES
-                                                                    ('$last_lead_id','$title', '$estartDate', '$eendDate','$staffid')";
+                                                                    $title=$brandname . " - Monthly report";
+                                                                    $sql = "INSERT INTO dmevents (orderid,title,start_date,end_date,empid,dm_allotid) VALUES
+                                                                    ('$last_lead_id','$title', '$estartDate', '$eendDate','$staffid','$last_id')";
 
                                                                         if ($connection->query($sql) !== TRUE) {
                                                                         echo "Error: " . $sql . "<br>" . $connection->error;

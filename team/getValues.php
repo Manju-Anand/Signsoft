@@ -3,7 +3,7 @@ session_start();
 include "includes/connection.php";
 
 // Fetch values from the database (replace 'your_table' and 'your_column' with actual table and column names)
-$sql = "SELECT * FROM staff_dm_allocation where staffid='" . $_SESSION['empid'] . "' order by id desc";
+$sql = "SELECT * FROM staff_dm_allocation where staffid='" . $_SESSION['empid'] . "' and work_status='Active' order by id desc";
 $result = $connection->query($sql);
 
 $response = array();

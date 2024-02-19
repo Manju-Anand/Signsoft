@@ -205,6 +205,7 @@ include "includes/connection.php";
 						type: 'get',
 						dataType: 'json',
 						success: function(response) {
+						
 							if (response.status == 1) {
 								// ===================alert box start======================
 								// Alert box to add event

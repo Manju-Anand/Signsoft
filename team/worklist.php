@@ -23,12 +23,12 @@ function showworklist()
     while ($row = mysqli_fetch_assoc($select_posts)) {
         $id = $row['id'];
         $post_orderid= $row['orderid'];
-        $queryorder = "select * from order_customers where id='" .  $post_orderid ."'";
+        $queryorder = "select * from order_customers where id='" .  $post_orderid ."' and order_status='Active'";
         $select_postsorder = mysqli_query($connection, $queryorder);
         while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
             $post_custName = $roworder['custName'];
             $post_brandName= $roworder['brandName'];
-        }
+       
 
 
         $post_postings = $row['postings'];
@@ -56,6 +56,8 @@ function showworklist()
    
 
         echo "</tr>";
+    }
+
     }
 }
 
