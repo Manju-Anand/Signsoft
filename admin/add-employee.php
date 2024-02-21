@@ -87,14 +87,14 @@ include "includes/connection.php";
                             <a class="btn ripple btn-danger dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <i class="fe fe-settings"></i> Settings <i class="fa fa-caret-down ms-1"></i>
                             </a>
-                            <div class="dropdown-menu tx-13">
+                            <!-- <div class="dropdown-menu tx-13">
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-eye me-2 float-start"></i>View</a>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-plus-circle me-2 float-start"></i>Add</a>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-mail me-2 float-start"></i>Email</a>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-folder-plus me-2 float-start"></i>Save</a>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-trash-2 me-2 float-start"></i>Remove</a>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-settings me-2 float-start"></i>More</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- End Page Header -->
@@ -262,7 +262,8 @@ include "includes/connection.php";
 
                                         $loginname = $_POST["loginemailid"];
                                         $pass1 = $_POST["loginpassword"];
-
+                                        $saveFileName ="";
+                                        if (!empty(array_filter($_FILES['files']['name']))) {
                                         $upload_dir = '../assets/img/staff/';
                                         $file_tmpname = $_FILES['files']['tmp_name'];
                                         $file_name = $_FILES['files']['name'];
@@ -279,7 +280,7 @@ include "includes/connection.php";
                                         } else {
                                             echo "{$file_name} not uploaded <br />";
                                         }
-
+                                    }
                                         $status = $_POST["status"];
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
@@ -297,9 +298,11 @@ include "includes/connection.php";
 
                                             //  ======================= userid creation =========================  
                                             $last_emp_id = $connection->insert_id;
-                                            $password = md5($pass1); //encrypt the password before saving in the database
+                                             // Use password_hash to securely hash the password
+                                            $hashed_password = password_hash($pass1, PASSWORD_DEFAULT);
+                                            // $password = md5($pass1); //encrypt the password before saving in the database
                                             $queryuser = "INSERT INTO employee_user (username, email, password,designation,empid,cmded,department)
-                                                    VALUES('$empname', '$loginname', '$password','$desig','$last_emp_id','$pass1','$department')";
+                                                    VALUES('$empname', '$loginname', '$hashed_password','$desig','$last_emp_id','$pass1','$department')";
 
                                             if ($connection->query($queryuser) === TRUE) {
                                                 $last_user_id = $connection->insert_id;

@@ -1,3 +1,16 @@
+<?php
+// session_start();
+
+// Check if the 'adminname' session variable is set before using it
+$empname = isset($_SESSION['empname']) ? $_SESSION['empname'] : '';
+$empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
+$deptid = isset($_SESSION['deptid']) ? $_SESSION['deptid'] : '';
+$modulename = isset($_SESSION['modulename']) ? $_SESSION['modulename'] : '';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+?>
 <!--Main Header -->
 <div class="main-header side-header sticky">
 	<div class="container-fluid main-container">
@@ -89,17 +102,17 @@
 									<!-- <a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/users/avatar.png"></a> -->
 									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown">
 										<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
-											<?php echo strtoupper(substr($_SESSION['empname'], 0, 1)); ?>
+											<?php echo strtoupper(substr($empname, 0, 1)); ?>
 										</div>
 									</a>
 							<?php  }
 							} ?>
 							<div class="dropdown-menu">
 								<div class="header-navheading">
-									<h6 class="main-notification-title"><?php echo strtoupper($_SESSION['empname']); ?></h6>
-									<p class="main-notification-text"><?php echo "Emp Id : " . $_SESSION['empid']; ?></p>
-									<p class="main-notification-text"><?php echo "Dept Id : " . $_SESSION['deptid']; ?></p>
-									<p class="main-notification-text"><?php echo "Module name : " . $_SESSION['modulename']; ?></p>
+									<h6 class="main-notification-title"><?php echo strtoupper($empname); ?></h6>
+									<p class="main-notification-text"><?php echo "Emp Id : " . $empid; ?></p>
+									<p class="main-notification-text"><?php echo "Dept Id : " . $deptid; ?></p>
+									<p class="main-notification-text"><?php echo "Module name : " . $modulename; ?></p>
 								</div>
 								<a class="dropdown-item border-top text-wrap" href="">
 									<i class="fe fe-user"></i> My Profile

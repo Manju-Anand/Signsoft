@@ -1,4 +1,10 @@
-<?php include('server.php') ?>
+<?php 
+ob_start();
+session_start();
+include "includes/connection.php";
+$errors = array();
+// include('server.php')
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -81,8 +87,67 @@
 									<span id="togglePassword" class="password-toggle" data-toggle="loginpassword" onclick="togglePasswordVisibility('password')">👁️</span>
 
 								</div>
-							    <button type="submit" class="btn ripple btn-main-primary btn-block" name="login_user">Sign In</button>
-											
+							    <button type="submit" name="submit" class="btn ripple btn-main-primary btn-block">Sign In</button>
+								<?php
+								
+								if (isset($_POST['submit'])) {
+
+					 
+										 $email = mysqli_real_escape_string($db, $_POST['email']);
+										 $password = mysqli_real_escape_string($db, $_POST['password']);
+									 
+										 if (empty($email)) {
+											 array_push($errors, "Email is required");
+										 }
+										 if (empty($password)) {
+											 array_push($errors, "Password is required");
+										 }
+									 
+										 if (count($errors) === 0) {
+											 $sql = "SELECT id, username, email, empid, password FROM users WHERE email='$email' AND designation='Admin' LIMIT 1";
+											 $result = mysqli_query($db, $sql);
+									 
+											 if ($result) {
+												 if (mysqli_num_rows($result) === 1) {
+										
+													 $rowuser = mysqli_fetch_assoc($result);
+													 $login_successful = false;
+													 // Verify the password using password_verify
+													 if (password_verify($password, $rowuser['password'])) {
+										  
+														 $_SESSION['adminname'] = $rowuser['username'];
+														 $_SESSION['adminemail'] = $email;
+														 $_SESSION['adminempid'] = $rowuser['empid'];
+														 $_SESSION['adminid'] = $rowuser['id'];
+														 $login_successful = true;
+													 } else {
+														 array_push($errors, "Wrong username/password combination");
+													 }
+									 
+									 
+									 
+									 
+													 if ($login_successful) {
+												   
+														 // sleep(10);
+													   
+														 header('Location: index.php');
+														 exit();
+													 } else {
+														 echo "<script>alert('Wrong username/password combination');</script>";
+													 }
+														
+													
+												 } else {
+													 array_push($errors, "Wrong username/password combination");
+												 }
+												 mysqli_free_result($result);
+											 } else {
+												 array_push($errors, "Query error: " . mysqli_error($db));
+											 }
+										 }
+									 }
+							 ?>			
 							</form>
 							<div class="mt-3 text-center">
 								<!-- <p class="mb-1"><a href="javascript:void(0);">Forgot password?</a></p>

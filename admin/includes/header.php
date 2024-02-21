@@ -1,3 +1,12 @@
+<?php
+// session_start();
+
+// Check if the 'adminname' session variable is set before using it
+$adminname = isset($_SESSION['adminname']) ? $_SESSION['adminname'] : '';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+?>
 <!--Main Header -->
 <div class="main-header side-header sticky">
 				<div class="container-fluid main-container">
@@ -41,7 +50,7 @@
 											<i class="fe fe-bell"></i>
 											<span class="pulse bg-danger"></span>
 										</a>
-										<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+										<!-- <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 											<div
 												class="header-navheading d-flex border-bottom mb-0">
 												<h5 class="fw-semibold mb-0 mt-1">Notifications(3)</h5>
@@ -97,7 +106,7 @@
 											<div class="dropdown-footer">
 												<a class="btn ripple btn-success btn-sm btn-block" href="mail-inbox.html">View All Notifications</a>
 											</div>
-										</div>
+										</div> -->
 									</li>
 									<li class="dropdown main-profile-menu">
 									<?php
@@ -110,11 +119,11 @@
 										<!-- <a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar"
 												src="../assets/img/users/avatar.png"></a> -->
 												<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
-														<?php echo strtoupper(substr($_SESSION['adminname'], 0, 1)); ?>
+														<?php echo strtoupper(substr($adminname, 0, 1)); ?>
 													</div></a>
 										<div class="dropdown-menu">
 											<div class="header-navheading">
-												<h6 class="main-notification-title"><?php echo strtoupper($_SESSION['adminname']); ?></h6>
+												<h6 class="main-notification-title"><?php echo strtoupper($adminname); ?></h6>
 												<p class="main-notification-text">Administrator</p>
 											</div>
 											<a class="dropdown-item border-top text-wrap" href="">
@@ -130,10 +139,10 @@
 										</div>
 									</li>
 									<li class="dropdown header-settings">
-										<a href="javascript:void(0);" class="nav-link icon" data-bs-toggle="sidebar-right"
+										<!-- <a href="javascript:void(0);" class="nav-link icon" data-bs-toggle="sidebar-right"
 											data-bs-target=".sidebar-right">
 											<i class="fe fe-align-right"></i>
-										</a>
+										</a> -->
 									</li>
 								</ul>
 							</div>

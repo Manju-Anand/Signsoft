@@ -1,4 +1,10 @@
-<?php include('server.php') ?>
+<?php 
+ob_start();
+session_start();
+include "includes/connection.php";
+$errors = array();
+// include('server.php')
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -72,8 +78,54 @@
 									<input class="form-control" name="password" placeholder="Enter your password" type="password">
 								</div>
 							
-                                <button type="submit" class="btn ripple btn-main-primary btn-block"  name="reg_user">Create Account</button>
-
+                                <button type="submit" name="submit" class="btn ripple btn-main-primary btn-block" >Create Account</button>
+								<?php
+                                       if (isset($_POST['submit'])) {
+                                        // receive all input values from the form
+                                        $username = mysqli_real_escape_string($db, $_POST['username']);
+                                        $email = mysqli_real_escape_string($db, $_POST['email']);
+                                        $password = mysqli_real_escape_string($db, $_POST['password']);
+                                    
+                                        // form validation: ensure that the form is correctly filled
+                                        if (empty($username)) {
+                                            array_push($errors, "Username is required");
+                                        }
+                                        if (empty($email)) {
+                                            array_push($errors, "Email is required");
+                                        }
+                                        if (empty($password)) {
+                                            array_push($errors, "Password is required");
+                                        }
+                                    
+                                        // register user if there are no errors in the form
+                                        if (count($errors) === 0) {
+                                            date_default_timezone_set("Asia/Calcutta");
+                                            $postdate = date("M d,Y h:i:s a");
+                                    
+                                            // Use password_hash to securely hash the password
+                                            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                                    
+                                            $query = "INSERT INTO users (username, email, password, designation, empid, cmded) 
+                                                      VALUES ('$username', '$email', '$hashed_password', 'Admin', '1', '$password')";
+                                            
+                                            if (mysqli_query($db, $query)) {
+                                                $last_id = mysqli_insert_id($db);
+                                                $_SESSION['adminname'] = $username;
+                                                $_SESSION['adminemail'] = $email;
+                                                $_SESSION['adminempid'] = "in";
+                                                $_SESSION['adminid'] = $last_id;
+                                    
+                                                header('location: index.php');
+                                                exit();
+                                            } else {
+                                                array_push($errors, "Error registering user: " . mysqli_error($db));
+                                            }
+                                        }
+                                    }
+                                    
+                                    
+                                    
+                                    ?>
 							</form>
 							<div class="mt-3 text-center">
 								<p class="mb-0">Already have an account? <a href="signin.php" class="text-primary d-inline-block">Sign In</a></p>

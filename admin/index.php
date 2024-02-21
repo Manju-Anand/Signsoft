@@ -75,11 +75,13 @@ $totemployees=0;
 						<div>
 							<h2 class="main-content-title tx-24 mg-b-5">Welcome To Dashboard</h2>
 
-                            <?php echo "id : " . $_SESSION['adminid'] . ' , ' . $_SESSION['adminname']; ?>
+                            <?php
+							//  echo "id : " . $_SESSION['adminid'] . ' , ' . $_SESSION['adminname'];
+							  ?>
 
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Sales Dashboard</li>
+								<li class="breadcrumb-item active" aria-current="page">Admin Dashboard</li>
 							</ol>
 						</div>
 						<div class="d-flex">
@@ -89,7 +91,7 @@ $totemployees=0;
 									aria-expanded="true">
 									<i class="fe fe-external-link"></i> Export <i class="fa fa-caret-down ms-1"></i>
 								</a>
-								<div class="dropdown-menu tx-13">
+								<!-- <div class="dropdown-menu tx-13">
 									<a class="dropdown-item" href="javascript:void(0);"><i
 											class="fa fa-file-pdf-o me-2"></i>Export as
 										Pdf</a>
@@ -99,16 +101,16 @@ $totemployees=0;
 									<a class="dropdown-item" href="javascript:void(0);"><i
 											class="fa fa-file-excel-o me-2"></i>Export as
 										Excel</a>
-								</div>
+								</div> -->
 							</div>
 							<div>
-								<a href="javascript:void(0);"
+								<!-- <a href="javascript:void(0);"
 									class="btn ripple btn-secondary navresponsive-toggler mb-0"
 									data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 									aria-controls="navbarSupportedContent" aria-expanded="false"
 									aria-label="Toggle navigation">
 									<i class="fe fe-filter me-1"></i> Filter <i class="fa fa-caret-down ms-1"></i>
-								</a>
+								</a> -->
 							</div>
 						</div>
 					</div>

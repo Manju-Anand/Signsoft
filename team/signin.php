@@ -1,4 +1,9 @@
-<?php include('server.php') ?>
+<?php 
+ob_start();
+session_start();
+include "includes/connection.php";
+$errors = array();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -103,7 +108,70 @@
 
 
 
-							    <button type="submit" class="btn ripple btn-main-primary btn-block" name="login_user">Sign In</button>
+								<button type="submit" name="submit" class="btn ripple btn-main-primary btn-block">Sign In</button>
+
+<?php
+if (isset($_POST['submit'])) {
+    $email = mysqli_real_escape_string($db, $_POST['email']);
+    $password = mysqli_real_escape_string($db, $_POST['password']);
+    $deptid = mysqli_real_escape_string($db, $_POST['dept']);
+    $desigid = mysqli_real_escape_string($db, $_POST['desig']);
+
+    if (empty($email)) {
+        array_push($errors, "Email is required");
+    }
+
+    if (empty($password)) {
+        array_push($errors, "Password is required");
+    }
+
+    if (count($errors) === 0) {
+        $sqldept = "SELECT * FROM department WHERE id='" . $deptid . "'";
+        $resultdept = $db->query($sqldept);
+
+        if ($resultdept->num_rows > 0) {
+            while ($rowuserdept = $resultdept->fetch_assoc()) {
+                $modulename = $rowuserdept['dname'];
+                $deptid = $rowuserdept['id'];
+                $_SESSION['deptid'] = $deptid;
+                $_SESSION['modulename'] = $modulename;
+
+                $sql = "SELECT * FROM employee_user WHERE email='$email' and department='$deptid'";
+                $result = mysqli_query($db, $sql);
+
+                if ($result) {
+                    if (mysqli_num_rows($result) === 1) {
+                        $rowuser = mysqli_fetch_assoc($result);
+                        $login_successful = false;
+
+                        // Verify the password using password_verify
+                        if (password_verify($password, $rowuser['password'])) {
+                            $_SESSION['empname'] = $rowuser['username'];
+                            $_SESSION['empemail'] = $email;
+                            $_SESSION['empid'] = $rowuser['empid'];
+                            $login_successful = true;
+                        } else {
+                            array_push($errors, "Wrong username/password combination");
+                        }
+
+                        if ($login_successful) {
+                            header('Location: index.php');
+                            exit(); // Ensure that the script stops execution after redirect
+                        } else {
+                            echo "<script>alert('Wrong username/password combination');</script>";
+                        }
+                    } else {
+                        array_push($errors, "Wrong username/password combination");
+                    }
+                    mysqli_free_result($result);
+                } else {
+                    array_push($errors, "Query error: " . mysqli_error($db));
+                }
+            }
+        }
+    }
+}
+?>
 											
 							</form>
 							<div class="mt-3 text-center">
