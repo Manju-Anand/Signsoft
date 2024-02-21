@@ -17,7 +17,7 @@ include "includes/connection.php";
 function showworklist()
 {
     global $connection;
-    $query = "select * from staff_allocation where empid='" . $_SESSION['empid'] ."' order by id desc";
+    $query = "select * from staff_dm_allocation where staffid='" . $_SESSION['empid'] ."' order by id desc";
     $select_posts = mysqli_query($connection, $query);
     $i = 0;
     while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -31,27 +31,26 @@ function showworklist()
        
 
 
-        $post_workassigned = $row['work_assigned'];
-        $post_deadline = $row['deadline'];
-         $post_assigndate = $row['assignedDate'];
-         $post_workstatus = $row['work_status'];
+        $post_postings = $row['postings'];
+        $post_frequency = $row['frequency'];
+        $post_startdate = $row['startdate'];
+        $post_enddate = $row['enddate'];
+        $post_promoamt = $row['promoamt'];
+        $post_assigndate = $row['assigndate'];
+
         $i = $i + 1;
         echo "<tr>";
         echo "<td>$i</td>";
         echo "<td>$post_custName</td>";
         echo "<td>$post_brandName</td>";
-        echo "<td>$post_workassigned</td>";
-        echo "<td>$post_deadline</td>";
-         echo "<td>$post_assigndate</td>";
-         if ($post_workstatus ==='Active'){
-         echo "<td><span class='badge bg-success' style='font-size:15px'>$post_workstatus</span></td>";}
-         if ($post_workstatus ==='Closed'){
-            echo "<td><span class='badge bg-danger' style='font-size:15px'>$post_workstatus</span></td>";}
-
-        echo "<td><a class='btn btn-sm btn-blue' href='' title='Enter Work Details' style='color:white'>
-        <span class='fe fe-edit'> </span></a>
-        <a class='btn btn-sm btn-yellow' href='' title='View Work Details' style='color:white'>
-        <span class='fe fe-eye'> </span></a>
+        echo "<td>$post_postings</td>";
+        echo "<td>$post_frequency</td>";
+        echo "<td>$post_startdate</td>";
+        echo "<td>$post_enddate</td>";
+        echo "<td>$post_promoamt</td>";
+        echo "<td>$post_assigndate</td>";
+        echo "<td><a class='btn btn-sm btn-blue' href='calendar.php' title='Calendar Assiging' style='color:white'>
+        <span class='fe fe-calendar'> </span></a>
         </td>";
 
    
@@ -122,7 +121,7 @@ function showworklist()
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Work List</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">DM Work List</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Assigned Works</li>
@@ -142,7 +141,7 @@ function showworklist()
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
                                         <h6 class="card-title mb-1">List of Works</h6>
-                                        <p class="text-muted card-sub-title"><?php echo $_SESSION['empname'] ?> , These are the List of works assigned by Admin.</p>
+                                        <p class="text-muted card-sub-title"><?php echo $_SESSION['empname'] ?> , These are the List of works assigned by Admin. Use calender for work assigning.</p>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table" id="example1">
@@ -152,11 +151,13 @@ function showworklist()
                                                     <th>#</th>
                                                     <th >Customer Name</th>
                                                     <th>Brand Name</th>
-                                                    <th>Work Assigned</th>
-                                                    <th>Deadline</th>
-                                                    <th>Assigned Date</th>
-                                                    <th>Work Status</th>
-                                                    <th>Action</th>
+                                                    <th>Postings</th>
+                                                    <th>Frequency</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Promo Amt</th>
+                                                    <th>Assign Date</th>
+                                                    <th>Calender</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

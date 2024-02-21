@@ -20,17 +20,17 @@ include "includes/connection.php";
 
 <head>
 
-	<meta charset="utf-8">
+<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-	<meta name="description" content="Dashlead - Admin Panel HTML Dashboard Template">
-	<meta name="author" content="Spruko Technologies Private Limited">
-	<meta name="keywords" content="sales dashboard, admin dashboard, bootstrap 5 admin template, html admin template, admin panel design, admin panel design, bootstrap 5 dashboard, admin panel template, html dashboard template, bootstrap admin panel, sales dashboard design, best sales dashboards, sales performance dashboard, html5 template, dashboard template">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
 
 	<!-- Favicon -->
-	<link rel="icon" href="../assets/img/brand/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
 
 	<!-- Title -->
-	<title>Dashlead - Admin Panel HTML Dashboard Template</title>
+	<title>Signsoft - Empowering Efficiency, Unleashing Possibilities</title>
 
 	<!---bootstrap css-->
 	<link id="style" href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">

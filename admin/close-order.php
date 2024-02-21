@@ -318,6 +318,11 @@ if (isset($_POST['submit'])) {
             if ($connection->query($querystaffdm) === TRUE) {
             }
 
+            $querystaffdm = "UPDATE staff_allocation SET work_status='Closed' where orderid='" . $orderid . "'";
+
+            if ($connection->query($querystaffdm) === TRUE) {
+            }
+
 
             $querycategory = "INSERT INTO order_tracking (order_id, status, status_date, notes)
             VALUES('$orderid', '$orderclosed','$postdate','$statusreason')";

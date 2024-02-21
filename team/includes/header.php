@@ -60,25 +60,16 @@ ini_set('display_errors', 1);
 							}
 						</style>
 						<li class="dropdown main-header-notification ">
-							
+
 							<a class="nav-link icon notify-click" data-bs-toggle="dropdown">
 								<i class="fe fe-bell"></i>
 								<span class="badge bg-secondary header-badge count">0</span>
-										<!-- <span class="pulse bg-danger"></span> -->
+								<!-- <span class="pulse bg-danger"></span> -->
 							</a>
 							<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifymenu">
-								<div class="header-navheading d-flex border-bottom mb-0">
-									<h5 class="fw-semibold mb-0 mt-1">Notifications(3)</h5>
-									<a class="btn ripple btn-primary btn-sm ms-auto" href="javascript:void(0);">Mark all as Read</a>
-								</div>
-								<div class="header-dropdown-list notification-list">
-
-								</div>
-								<div class="dropdown-footer">
-									<a class="btn ripple btn-success btn-sm btn-block" href="">View All Notifications</a>
-								</div>
+							
 							</div>
-						
+
 						</li>
 						<li class="dropdown main-profile-menu">
 							<?php
@@ -86,9 +77,9 @@ ini_set('display_errors', 1);
 							$select_posts = mysqli_query($connection, $query);
 
 							while ($row = mysqli_fetch_assoc($select_posts)) {
-				
+
 								if (isset($row['emppic']) && $row['emppic'] !== "") {
-		
+
 							?>
 									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/staff/<?php echo $row['emppic']; ?>"></a>
 
@@ -146,8 +137,7 @@ ini_set('display_errors', 1);
 			<a class="main-logo" href="index.php">
 				<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
 				<img src="../assets/img/SLogoBlue.png" class="desktop-logo" alt="dashleadlogo">
-				<!-- <img src="../assets/img/brand/favicon.png" class="mobile-logo mobile-logo-dark" alt="dashleadlogo">
-							<img src="../assets/img/brand/favicon1.png" class="mobile-logo" alt="dashleadlogo"> -->
+				
 			</a>
 		</div>
 		<div class="main-sidemenu">
@@ -166,44 +156,73 @@ ini_set('display_errors', 1);
 						<span class="side-menu__label">Dashboard</span>
 					</a>
 				</li>
-				<?php if ($_SESSION['modulename'] == "Sales"){?>
-				<li class="side-item side-item-category">Leads</li>
-				<li class="slide">
-					<a class="side-menu__item" data-bs-toggle="slide" href="add-lead.php">
-						<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
-						<span class="side-menu__label">Add Lead</span>
-					</a>
-					
-				</li>
-				<li class="slide">
-					<a class="side-menu__item" data-bs-toggle="slide" href="add-followup.php">
-						<span class="side-menu__icon"><i class="fe fe-zap side_menu_img"></i></span>
-						<span class="side-menu__label">Add Lead Follow-up</span>
-					</a>
+				<?php if ($_SESSION['modulename'] == "Sales") { ?>
+					<li class="side-item side-item-category">Leads</li>
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="add-lead.php">
+							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__label">Add Lead</span>
+						</a>
 
-				</li>
-				<li class="slide">
-					<a class="side-menu__item" data-bs-toggle="slide" href="leadlist.php">
-						<span class="side-menu__icon"><i class="fe fe-award side_menu_img"></i></span>
-						<span class="side-menu__label">Leads List</span>
-					</a>
-				
-				</li>
+					</li>
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="add-followup.php">
+							<span class="side-menu__icon"><i class="fe fe-zap side_menu_img"></i></span>
+							<span class="side-menu__label">Add Lead Follow-up</span>
+						</a>
+
+					</li>
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="leadlist.php">
+							<span class="side-menu__icon"><i class="fe fe-award side_menu_img"></i></span>
+							<span class="side-menu__label">Leads List</span>
+						</a>
+
+					</li>
 				<?php } ?>
-				<?php if ($_SESSION['modulename'] == "Digital"){?>
+				<?php if ($_SESSION['modulename'] == "Digital") { ?>
 					<li class="side-item side-item-category">Work Shedules</li>
 					<li class="slide">
-					<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
-						<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
-						<span class="side-menu__label">Works Assigned</span>
-					</a>
-					<a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
+						<a class="side-menu__item" data-bs-toggle="slide" href="dmworklist.php">
+							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__label">Works Assigned</span>
+						</a>
+						<a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
+							<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
+							<span class="side-menu__label">Calendar Assigning</span>
+						</a>
+
+					</li>
+				<?php } ?>
+
+				<?php if ($_SESSION['modulename'] == "Web") { ?>
+					<li class="side-item side-item-category">Work Shedules</li>
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
+							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__label">Works Assigned</span>
+						</a>
+						<!-- <a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
 						<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
 						<span class="side-menu__label">Calendar Assigning</span>
-					</a>
-					
-				</li>
-					<?php } ?>
+					</a> -->
+
+					</li>
+				<?php } ?>
+				<?php if ($_SESSION['modulename'] == "Graphics") { ?>
+					<li class="side-item side-item-category">Work Shedules</li>
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
+							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__label">Works Assigned</span>
+						</a>
+						<!-- <a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
+						<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
+						<span class="side-menu__label">Calendar Assigning</span>
+					</a> -->
+
+					</li>
+				<?php } ?>
 			</ul>
 			<div class="slide-right" id="slide-right">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">

@@ -157,6 +157,7 @@ function addRow() {
 
     var cell13 = newRow.insertCell(12);
     cell13.innerHTML = "New";
+    cell13.classList.add('hidden-cell');
     // Clear input values after adding to the table
     textBox1.value = "";
     textBox2.value = "";
@@ -335,6 +336,7 @@ function addPayment() {
 
         var cell8 = newRow.insertCell(7);
         cell8.innerHTML = "New";
+        cell8.classList.add('hidden-cell');
     // Clear input values after adding to the table
     textBox1.value = "";
     textBox2.value = "";
@@ -516,7 +518,7 @@ cell10.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-ta
  // Text Box 3
  var cell11 = newRow.insertCell(10);
  cell11.innerHTML = "New";
-
+ cell11.classList.add('hidden-cell');
     // Clear input values after adding to the table
     textBox1.value = "";
     textBox2.value = "";
@@ -681,7 +683,7 @@ function addfollowup() {
 
         var cell6 = newRow.insertCell(5);
         cell6.innerHTML = "New";
-
+        cell6.classList.add('hidden-cell');
     // Clear input values after adding to the table
     textBox1.value = "";
     textBox2.value = "";
@@ -862,7 +864,7 @@ function saveDataToDatabase() {
                 // Handle the response from the server if needed
                 console.log("result: " + xhr.responseText);
                 alert("Succesfully Saved Data.");
-                // window.location.href = 'add-order-details.php';
+                window.location.href = 'add-order-details.php';
             } else {
                 // Handle errors if any
                 console.error("Error saving data: " + xhr.status);

@@ -76,10 +76,11 @@ if (isset($data['paymentdataToSave'])) {
         $customerBillNo = $row['CustomerBillNo'];
         $cuspayDate = $row['cuspayDate'];
         $payStatus = $row['payStatus'];
+        $postdate = date("M d,Y h:i:s a");
         // if ($payStatus !== "Saved") {
         // Perform the SQL query to insert data into the second table (payment_customer)
         $sqlPayment = "INSERT INTO payment_customer (orderid, payment_type, transaction_mode,payment_amount, customer_billno, created,modified,payDate)
-                       VALUES ('$orderid', '$paymentType', '$transactionMode', '$paymentAmount', '$customerBillNo','$postdate','$postdate'.'$cuspayDate')";
+                       VALUES ('$orderid', '$paymentType', '$transactionMode', '$paymentAmount', '$customerBillNo','$postdate','$postdate','$cuspayDate')";
 
         if ($connection->query($sqlPayment) !== TRUE) {
             echo "Error: " . $sqlPayment . "<br>" . $connection->error;
@@ -100,10 +101,11 @@ if (isset($data['staffallocationdataToSave'])) {
     $percentOfWork = $row['percentOfWork'];
     $assignDate = $row['assignDate'];
     $payStatus = $row['payStatus'];
+    $postdate = date("M d,Y h:i:s a");
     // if ($payStatus !== "Saved") {
     // Perform the SQL query to insert data into the database
-    $sql = "INSERT INTO staff_allocation (orderid,entryid,entryname,empid, empname, work_assigned, deadline, per_of_work,assignedDate) VALUES
-     ('$orderid','$entryid','$entry','$staffid', '$staffName', '$workAssigned', '$deadline', '$percentOfWork', '$assignDate')";
+    $sql = "INSERT INTO staff_allocation (orderid,entryid,entryname,empid, empname, work_assigned, deadline, per_of_work,assignedDate,created) VALUES
+     ('$orderid','$entryid','$entry','$staffid', '$staffName', '$workAssigned', '$deadline', '$percentOfWork', '$assignDate','$postdate')";
     
     if ($connection->query($sql) !== TRUE) {
         echo "Error: " . $sql . "<br>" . $connection->error;
