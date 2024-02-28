@@ -136,7 +136,7 @@ ini_set('display_errors', 1);
 		<div class="app-sidebar__header">
 			<a class="main-logo" href="index.php">
 				<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
-				<img src="../assets/img/SLogoBlue.png" class="desktop-logo" alt="dashleadlogo">
+				<img src="../assets/img/SLogoWhite.png" class="desktop-logo" alt="dashleadlogo">
 				
 			</a>
 		</div>
@@ -191,6 +191,10 @@ ini_set('display_errors', 1);
 							<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
 							<span class="side-menu__label">Calendar Assigning</span>
 						</a>
+						<a class="side-menu__item" data-bs-toggle="slide" href="add-Graphics-Staff-details.php">
+							<span class="side-menu__icon"><i class="fe fe-award side_menu_img"></i></span>
+							<span class="side-menu__label">Assign Graphics Work</span>
+						</a>
 
 					</li>
 				<?php } ?>
@@ -223,6 +227,15 @@ ini_set('display_errors', 1);
 
 					</li>
 				<?php } ?>
+				<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="usermanuel.php">
+							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__label">User Manuel</span>
+						</a>
+					
+
+					</li>
+
 			</ul>
 			<div class="slide-right" id="slide-right">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">

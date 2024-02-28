@@ -138,8 +138,15 @@ include "includes/connection.php";
                                                         <select name="desig" id="desig" class="form-control form-select select2" data-bs-placeholder="Select Designation" required>
 
                                                         </select>
+
                                                     </div>
-                                                </div>
+                                                 </div>
+                                                 <div class="row mb-4">
+                                                 <label class="col-md-3 form-label" for="desig">HOD :</label>
+                                                 <div class="col-md-9">
+                                                 <label class="ckbox"><input type="checkbox" name="hod" id="hod"><span class="tx-13">Select if he/she is HOD</span></label>
+                                                 </div>
+                                                 </div>
 
                                                 <!-- Row -->
                                                 <div class="row">
@@ -262,6 +269,11 @@ include "includes/connection.php";
 
                                         $loginname = $_POST["loginemailid"];
                                         $pass1 = $_POST["loginpassword"];
+                                        if (isset($_POST["hod"])) {
+                                            $hodvar = "Yes";
+                                        } else {
+                                            $hodvar ="No";
+                                        }
                                         $saveFileName ="";
                                         if (!empty(array_filter($_FILES['files']['name']))) {
                                         $upload_dir = '../assets/img/staff/';
@@ -286,13 +298,14 @@ include "includes/connection.php";
                                         $postdate = date("M d,Y h:i:s a");
 
                                         $sql = "INSERT INTO employee (empname,department_id,desig_id,status,created,modified,addres,phoneno,emailid,
-                                                joindate,emppic,bloodgrp) values('" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $department) . "',
+                                                joindate,emppic,bloodgrp,hod) values('" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $department) . "',
                                                 '" . mysqli_real_escape_string($connection, $desig) . "','" . mysqli_real_escape_string($connection, $status) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $postdate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $addr) . "',
                                                                 '" . mysqli_real_escape_string($connection, $phoneno) . "','" . mysqli_real_escape_string($connection, $emailid) . "',
                                                                 '" . mysqli_real_escape_string($connection, $joindate) . "',
-                                                                '" . mysqli_real_escape_string($connection, $saveFileName) . "','" . mysqli_real_escape_string($connection, $bloodgroup) . "')";
+                                                                '" . mysqli_real_escape_string($connection, $saveFileName) . "','" . mysqli_real_escape_string($connection, $bloodgroup) . "'
+                                                                ,'" . mysqli_real_escape_string($connection, $hodvar) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
 

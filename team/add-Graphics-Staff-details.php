@@ -2,14 +2,14 @@
 ob_start();
 session_start();
 
-if (!isset($_SESSION['adminname'])) {
+if (!isset($_SESSION['empname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
 }
 
 if (isset($_GET['logout'])) {
     session_destroy();
-    unset($_SESSION['adminname']);
+    unset($_SESSION['empname']);
     header("location: signin.php");
 }
 
@@ -81,7 +81,7 @@ $mainorderid = "";
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5" ;">Assign Digital Marketing Staff</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5" ;">Assign Graphics Designers</h2>
                             <!-- <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Payment Details</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Closing Order Form</li>
@@ -112,9 +112,9 @@ $mainorderid = "";
 
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <h5 class="mt-2">You can Add & Edit Digital Marketing staff Assiging here.</h5>
-                                            <input type="text" id="paystatus" name="paystatus" value="Payment Add" readonly>
-                                            <input type="text" id="datastatus" name="datastatus" value="" readonly>
+                                            <h5 class="mt-2">You can Add & Edit Graphics Designers here.</h5>
+                                            <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
+                                            <input type="hidden" id="datastatus" name="datastatus" value="" readonly>
                                         </div>
                                         <div class="col-md-7">
                                             <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
@@ -130,7 +130,7 @@ $mainorderid = "";
                                             <div class="tabs-menu">
                                                 <!-- Tabs -->
                                                 <ul class="nav panel-tabs panel-info">
-                                                    <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-book-open mx-1"></i></span>Order Details</a>
+                                                    <li><a href="#tab17" class="active" data-bs-toggle="tab"><span><i class="fe fe-book-open mx-1"></i></span>Work Details</a>
                                                     </li>
 
 
@@ -146,9 +146,9 @@ $mainorderid = "";
 
                                                         <div class="row mb-4">
                                                             <div class="col-md-4">
-                                                                <label class="form-label" for="ordersdisplay">Orders :</label>
+                                                                <label class="form-label" for="ordersdisplay">Clients :</label>
                                                                 <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
-                                                                    <option value="" disabled selected>Select Order Entry</option>
+                                                                    <option value="" disabled selected>Select Clients</option>
                                                                     <?php
                                                                     $queryorder = "select * from order_customers where order_status='Active' order by id desc";
                                                                     $select_postsorder = mysqli_query($connection, $queryorder);
@@ -174,7 +174,7 @@ $mainorderid = "";
                                                                         if ($dmorder == "true") {
                                                                     ?>
 
-                                                                            <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
+                                                                            <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['brandName'] ?></option>
                                                                     <?php }
                                                                     }    ?>
                                                                 </select>
@@ -192,61 +192,32 @@ $mainorderid = "";
 
                                                         <div class="row mb-4">
 
-                                                            <div class="col-md-3">
-                                                                <label class="form-label" for="dmpayment">Payment :</label>
-                                                                <input type="number" class="form-control" id="dmpayment" name="dmpayment" placeholder="Advance Payment" required>
+                                                            
 
-
-                                                            </div>
-
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-2">
                                                                 <label class="form-label" for="postings">Postings :</label>
-                                                                <select class="form-control select2" multiple="multiple" name="postings[]" id="postings" required>
-                                                                    <option value="" disabled>Select Postings</option>
-                                                                    <option value="poster">Poster</option>
+                                                                <select class="form-select mb-3" name="postings" id="postings" required>
+                                                                    <option value="" disabled selected>Select Postings</option>
+                                                                    <option value="Poster">Poster</option>
                                                                     <option value="Video">Video</option>
                                                                     <option value="GIF">GIF</option>
                                                                 </select>
 
                                                             </div>
-                                                            <div class="col-md-3">
-                                                                <label class="form-label" for="staff">Staff Name :</label>
-                                                                <select class="form-select mb-3" aria-label="Default select example" name="staff" id="staff" required>
-                                                                    <option value="" disabled selected>Select Employee</option>
-                                                                    <?php
-                                                                    $query = "SELECT * FROM employee WHERE department_id IN (SELECT id FROM department WHERE dname='Digital')";
-                                                                    $select_posts = mysqli_query($connection, $query);
-                                                                    while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                                    ?>
-                                                                        <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['empname'] ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <label class="form-label" for="frequency">Frequency :</label>
-                                                                <input type="text" class="form-control" id="frequency" name="frequency" placeholder="Like 2 posters per week ETC." required>
+
+                                                            <div class="col-md-8">
+                                                                <label class="form-label" for="dmpayment">Content :</label>
+                                                               <textarea class="form-control" name="content" id="content" rows="4" style="margin-bottom: 10px;"></textarea>
 
                                                             </div>
-                                                            <div class="col-md-3">
-                                                                <label class="form-label" for="startdate">Calendar Start Date :</label>
-                                                                <input type="date" class="form-control" id="startdate" name="startdate" placeholder="startdate" required>
-
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <label class="form-label" for="enddate">Calendar End Date :</label>
-                                                                <input type="date" class="form-control" id="enddate" name="enddate" placeholder="enddate" readonly>
-
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <label class="form-label" for="paidpromotion">Paid Promotion Amount :</label>
-                                                                <input type="number" class="form-control" id="paidpromotion" name="paidpromotion" placeholder="Paid Promotion Amount" required>
-
-                                                            </div>
-                                                            <div class="col-md-3">
+                                                            
+                                                          
+                                                           
+                                                            <div class="col-md-2">
                                                                 <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
                                                                 <button type="button" name="submit" class="btn btn-primary" onclick="addstaffRow()" style="color:white;cursor:pointer;">Assign</button>
 
-                                                            </div>
+                                                            </div><br>
                                                             <hr>
 
                                                             <div class="table-responsive">
@@ -255,15 +226,11 @@ $mainorderid = "";
                                                                     <thead>
                                                                         <tr style="background-color: #add8e6;">
                                                                             <th>#</th>
-                                                                            <th>Payment</th>
-                                                                            <th>Postings</th>
-                                                                            <th>Employee Name</th>
-                                                                            <th class="hidden-cell">Emp Id</th>
-                                                                            <th>Frequency</th>
-                                                                            <th>Start Date</th>
-                                                                            <th>End Date</th>
-                                                                            <th>Paid Promotion Amount</th>
                                                                             <th>Assign Date</th>
+                                                                            <th>Posting</th>
+                                                                            <th>Content</th>
+                                                                
+                                                                            
                                                                             <th>Action</th>
                                                                             <!-- class="hidden-cell" -->
                                                                             <th class="hidden-cell">status</th>
@@ -313,81 +280,38 @@ $mainorderid = "";
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Edit Staff Allocation Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">Edit Graphics Work Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="hidden" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
-                            <input type="hidden" class="form-control" id="modaleditid" name="modaleditid" required>
+                            <input type="text" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
+                            <input type="text" class="form-control" id="modaleditid" name="modaleditid" required>
                             <div class="col-md-6">
-                                <label class="form-label" for="modaldmpayment">Payment :</label>
-                                <input type="number" class="form-control" id="modaldmpayment" name="modaldmpayment" placeholder="Advance Payment" required>
-
-
-                            </div>
- 
-                                    <div class="col-md-6">
-										<div class="form-group m-0">
-											<div class="form-label mb-3 font-weight-normal">Postings</div>
-											<div class="custom-controls-stacked">
-												<label class="custom-control custom-checkbox custom-control-lg">
-													<input type="checkbox" class="custom-control-input"
-														name="example-checkbox1" value="Poster" checked="">
-													<span class="custom-control-label custom-control-label-lg">Poster</span>
-												</label>
-												<label class="custom-control custom-checkbox custom-control-lg">
-													<input type="checkbox" class="custom-control-input"
-														name="example-checkbox2" value="Video">
-													<span class="custom-control-label custom-control-label-lg">Video</span>
-												</label>
-                                                <label class="custom-control custom-checkbox custom-control-lg">
-													<input type="checkbox" class="custom-control-input"
-														name="example-checkbox2" value="GIF">
-													<span class="custom-control-label custom-control-label-lg">GIF</span>
-												</label>
-											
-											</div>
-										</div>
-									</div>
-
-                            <div class="col-md-6">
-                                <label class="form-label" for="modalstaff">Staff Name :</label>
-                                <select class="form-select mb-3" aria-label="Default select example" name="modalstaff" id="modalstaff" required>
-                                    <option value="" disabled selected>Select Employee</option>
-                                    <?php
-                                    $query = "SELECT * FROM employee WHERE department_id IN (SELECT id FROM department WHERE dname='Digital')";
-                                    $select_posts = mysqli_query($connection, $query);
-                                    while ($row = mysqli_fetch_assoc($select_posts)) {
-                                    ?>
-                                        <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id'] ?>"><?php echo $row['empname'] ?></option>
-                                    <?php } ?>
+                                <label class="form-label" for="modalpost">Postings :</label>
+                               
+                                <select class="form-select"  name="modalpost" id="modalpost" required>
+                                    <option value="Poster">Poster</option>
+                                    <option value="Video">Video</option>
+                                    <option value="GIF">GIF</option>
                                 </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="modalfrequency">Frequency :</label>
-                                <input type="text" class="form-control" id="modalfrequency" name="modalfrequency" placeholder="Like 2 posters per week ETC." required>
+
 
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="modalstartdate">Calendar Start Date :</label>
-                                <input type="date" class="form-control" id="modalstartdate" name="modalstartdate" placeholder="startdate" required>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="modalenddate">Calendar End Date :</label>
-                                <input type="date" class="form-control" id="modalenddate" name="modalenddate" placeholder="enddate" readonly>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="modalpaidpromotion">Paid Promotion Amount :</label>
-                                <input type="number" class="form-control" id="modalpaidpromotion" name="modalpaidpromotion" placeholder="Paid Promotion Amount" required>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="modalenddate">Assigned Date :</label>
+                                <label class="form-label" for="modalassigndate">Assigned Date :</label>
                                 <input type="date" class="form-control" id="modalassigndate" name="modalassigndate" placeholder="Assigndate">
 
                             </div>
+                                    
+
+                            
+                            <div class="col-md-12">
+                                <label class="form-label" for="modalcontent">Content :</label>
+                                <textarea class="form-control" name="modalcontent" id="modalcontent" rows="4" style="margin-bottom: 10px;"></textarea>
+
+                            </div>
+                            
+                            
 
                         </div>
                     </div>
@@ -467,11 +391,12 @@ $mainorderid = "";
 
     <!-- password-addon init -->
     <!-- <script src="../assets/js/password-addon.js"></script> -->
-    <script src="add-DM-details.js"></script>
-
+    <script src="add-graphics-details.js"></script>
+    <script src="notification.js"></script>
     <!--- TABS JS -->
     <script src="../assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>
     <script src="../assets/plugins/tabs/tab-content.js"></script>
+
     <script>
         $(document).ready(function(e) {
             $('#modalpostings').select2();

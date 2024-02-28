@@ -49,7 +49,7 @@ $('body').on('click', '.edit-staff-btn', function () {
     // Set values in the modal
     $('#modaldmpayment').val(dmpayment);
 
-    $('#modalstaff').val(staffempid).trigger('change');;
+    $('#modalstaff').val(staffempid).trigger('change');
     $('#modalfrequency').val(frequency);
     $('#modalstartdate').val(startdate);
     $('#modalenddate').val(enddate);

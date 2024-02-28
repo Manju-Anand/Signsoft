@@ -3,7 +3,7 @@ session_start();
 include "includes/connection.php";
 $sql = "SELECT * FROM dmevents where empid='" . $_SESSION['empid'] . "'";
 $eventsList = mysqli_query($connection,$sql);
-	
+if ($eventsList->num_rows > 0) {
 $response = array();
 while($row = mysqli_fetch_assoc($eventsList)){
 	$response[] = array(
@@ -21,5 +21,6 @@ while($row = mysqli_fetch_assoc($eventsList)){
 	);
 }
 
+}
 echo json_encode($response);
 exit;

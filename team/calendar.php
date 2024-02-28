@@ -306,7 +306,8 @@ include "includes/connection.php";
 
 							} else {
 								// Handle error fetching values from the database
-								Swal.fire('Error fetching values from the database', '', 'error');
+								// Swal.fire('Error fetching values from the database', '', 'error');
+								Swal.fire('No Work Assigned for you.', '', 'error');
 							}
 						},
 						error: function() {
@@ -361,13 +362,13 @@ include "includes/connection.php";
 
 
 					Swal.fire({
-						title: 'View & Edit Event',
+						title: 'View & Edit Work',
 						showDenyButton: true,
 						showCancelButton: true,
 						confirmButtonText: 'Update',
 						denyButtonText: 'Delete',
 						html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '">' +
-							'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 60px;">' + description + '</textarea>' +
+							'<textarea id="eventdescription" class="swal2-input" placeholder="Work description" style="width: 84%; height: 60px;">' + description + '</textarea>' +
 							'<label><input type="checkbox" id="checkbox1" value="Informed-Before" ' + (beforeinfo ? 'checked' : '') + '> Informed Customer Before</label><br>' +
 							'<label><input type="checkbox" id="checkbox2" value="Executed" ' + (executed ? 'checked' : '') + '> Executed</label><br>' +
 							'<label><input type="checkbox" id="checkbox3" value="Informed-After" ' + (afterinfo ? 'checked' : '') + '> Informed Customer After</label><br>',

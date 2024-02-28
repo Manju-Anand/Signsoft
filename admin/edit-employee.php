@@ -177,12 +177,18 @@ if ($resultuser->num_rows > 0) {
                                                         </select>
                                                     </div>
                                                 </div>
-
+                                                <div class="row mb-4">
+                                                 <label class="col-md-3 form-label" for="desig">HOD :</label>
+                                                 <div class="col-md-9">
+                                                 <label class="ckbox"><input <?php echo ($rowemployee['hod'] == "Yes") ? 'checked' : ''; ?>  type="checkbox" name="hod" id="hod"><span class="tx-13">Select if he/she is HOD</span></label>
+                                                  
+                                                                                                </div>
+                                                 </div>
                                                 <!-- Row -->
                                                 <div class="row">
                                                     <label class="col-md-3 form-label mb-4" for="addr">Address :</label>
                                                     <div class="col-md-9 mb-4">
-                                                        <textarea class="form-control" name="addr" id="addr" palceholder="Here Address"><?php echo $rowemployee['addres'] ?></textarea>
+                                                        <textarea class="form-control" name="addr" id="addr" placeholder="Here Address"><?php echo $rowemployee['addres'] ?></textarea>
                                                     </div>
                                                 </div>
                                                 <!--End Rowcontent-->
@@ -304,7 +310,11 @@ if ($resultuser->num_rows > 0) {
 
                                         $loginname = $_POST["loginemailid"];
                                         $pass1 = $_POST["loginpassword"];
-
+                                        if (isset($_POST["hod"])) {
+                                            $hodvar = "Yes";
+                                        } else {
+                                            $hodvar ="No";
+                                        }
                                       
 
                                         $status = $_POST["status"];
@@ -338,7 +348,7 @@ if ($resultuser->num_rows > 0) {
                                             phoneno='" . mysqli_real_escape_string($connection, $phoneno) . "',emailid='" . mysqli_real_escape_string($connection, $emailid) . "',
                                             joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
                                             emppic='" . mysqli_real_escape_string($connection, $saveFileName) . "',bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
-                                            empname='" . mysqli_real_escape_string($connection, $empname) . "' WHERE id = {$empid}";
+                                            empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "' WHERE id = {$empid}";
                                         } else {
                                             $sql = "UPDATE employee set desig_id ='" . mysqli_real_escape_string($connection, $desig) . "',
                                             status='" . mysqli_real_escape_string($connection, $status) . "',modified='" . mysqli_real_escape_string($connection, $postdate) . "'
@@ -346,7 +356,7 @@ if ($resultuser->num_rows > 0) {
                                             phoneno='" . mysqli_real_escape_string($connection, $phoneno) . "',emailid='" . mysqli_real_escape_string($connection, $emailid) . "',
                                             joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
                                             bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
-                                            empname='" . mysqli_real_escape_string($connection, $empname) . "' WHERE id = {$empid}";
+                                            empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "' WHERE id = {$empid}";
                                             
                                         }
 

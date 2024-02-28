@@ -16,7 +16,7 @@ ini_set('display_errors', 1);
 					<div class="main-header-left horizontal">
 						<a class="main-logo" href="index.html">
 							<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
-							<img src="../assets/img/SLogoBlue.png" class="desktop-logo theme-logo" alt="dashleadlogo">
+							<img src="../assets/img/SLogoWhite.png" class="desktop-logo theme-logo" alt="dashleadlogo">
 						</a>
 					</div>
 					<div class="main-header-right">

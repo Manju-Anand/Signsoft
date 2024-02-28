@@ -48,7 +48,7 @@ function showworklist()
          if ($post_workstatus ==='Closed'){
             echo "<td><span class='badge bg-danger' style='font-size:15px'>$post_workstatus</span></td>";}
 
-        echo "<td><a class='btn btn-sm btn-blue' href='' title='Enter Work Details' style='color:white'>
+        echo "<td><a class='btn btn-sm btn-blue' href='add-work-details.php?workid={$id}' title='Enter Work Details' style='color:white'>
         <span class='fe fe-edit'> </span></a>
         <a class='btn btn-sm btn-yellow' href='' title='View Work Details' style='color:white'>
         <span class='fe fe-eye'> </span></a>

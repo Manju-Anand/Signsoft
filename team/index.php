@@ -429,16 +429,27 @@ include "includes/connection.php";
 						<div class="col-sm-12 col-xl-12 col-lg-12">
 							<div class="card custom-card overflow-hidden">
 								<div class="card-body">
-									<!-- <div class="container"> -->
+								<?php if ($_SESSION['modulename'] == "Digital") { ?>
+									
 									<?php
 									$currentData = date('Y-m-d');
 									?>
 
 									<!-- Calendar Container -->
 									<div id='calendar-container'>
-										<div id='calendar'></div>
+										<div id='dmcalendar'></div>
 									</div>
-									<!-- </div> -->
+									
+									<?php }else { ?>
+										<?php
+									$currentData = date('Y-m-d');
+									?>
+
+									<!-- Calendar Container -->
+									<div id='calendar-container'>
+										<div id='othercalendar'></div>
+									</div>
+									<?php }?>
 								</div>
 							</div>
 						</div>
@@ -920,7 +931,7 @@ include "includes/connection.php";
 			document.documentElement.style.setProperty('--random-event-bg-color', getRandomColor());
 			document.documentElement.style.setProperty('--random-event-border-color', getRandomColor());
 
-			var calendarEl = document.getElementById('calendar');
+			var calendarEl = document.getElementById('dmcalendar');
 
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				initialDate: '<?= $currentData ?>',
@@ -951,7 +962,7 @@ include "includes/connection.php";
 
 							} else {
 								// Handle error fetching values from the database
-								Swal.fire('Error fetching values from the database', '', 'error');
+								// Swal.fire('Error fetching values from the database', '', 'error');
 							}
 						},
 						error: function() {
