@@ -67,7 +67,7 @@ ini_set('display_errors', 1);
 								<!-- <span class="pulse bg-danger"></span> -->
 							</a>
 							<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifymenu">
-							
+
 							</div>
 
 						</li>
@@ -103,24 +103,24 @@ ini_set('display_errors', 1);
 									<h6 class="main-notification-title"><?php echo strtoupper($empname); ?></h6>
 									<p class="main-notification-text"><?php echo "Emp Id : " . $empid; ?></p>
 									<p class="main-notification-text"><?php echo "Dept Id : " . $deptid; ?></p>
-									<p class="main-notification-text"><?php echo "Module name : " . $modulename; ?></p>
+									<!-- <p class="main-notification-text"><?php echo "Module name : " . $modulename; ?></p> -->
 								</div>
-								<a class="dropdown-item border-top text-wrap" href="">
+								<!-- <a class="dropdown-item border-top text-wrap" href="">
 									<i class="fe fe-user"></i> My Profile
 								</a>
 								<a class="dropdown-item text-wrap" href="">
 									<i class="fe fe-edit"></i> Edit Profile
-								</a>
+								</a> -->
 
-								<a class="dropdown-item text-wrap" href="./index.php?logout=1">
+								<a class="dropdown-item border-top text-wrap" href="./index.php?logout=1">
 									<i class="fe fe-power"></i> Sign Out
 								</a>
 							</div>
 						</li>
 						<li class="dropdown header-settings">
-							<a href="javascript:void(0);" class="nav-link icon" data-bs-toggle="sidebar-right" data-bs-target=".sidebar-right">
+							<!-- <a href="javascript:void(0);" class="nav-link icon" data-bs-toggle="sidebar-right" data-bs-target=".sidebar-right">
 								<i class="fe fe-align-right"></i>
-							</a>
+							</a> -->
 						</li>
 					</ul>
 				</div>
@@ -137,7 +137,7 @@ ini_set('display_errors', 1);
 			<a class="main-logo" href="index.php">
 				<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
 				<img src="../assets/img/SLogoWhite.png" class="desktop-logo" alt="dashleadlogo">
-				
+
 			</a>
 		</div>
 		<div class="main-sidemenu">
@@ -218,23 +218,56 @@ ini_set('display_errors', 1);
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
 							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
-							<span class="side-menu__label">Works Assigned</span>
+							<span class="side-menu__label">Admin Assigned Works</span>
 						</a>
-						<!-- <a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
-						<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
-						<span class="side-menu__label">Calendar Assigning</span>
-					</a> -->
+						<?php
+						$sql = "SELECT * FROM department where dname='Graphics'";
+						$result = $connection->query($sql);
+						if ($result->num_rows > 0) {
+							while ($rowdept = $result->fetch_assoc()) {
+								$sqlemp = "SELECT * FROM employee where department_id='" . $rowdept['id']  . "'  and id='" . $empid . "'";
+								$resultemp = $connection->query($sqlemp);
+								if ($resultemp->num_rows > 0) {
+									while ($rowemp = $resultemp->fetch_assoc()) {
+										$hod = $rowemp['hod'];
+										if ($hod === "Yes") {
+						?>
+											<a class="side-menu__item" data-bs-toggle="slide" href="gdworklist.php">
+												<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
+												<span class="side-menu__label">DM Assigned Works</span>
+											</a>
+
+										<?php
+										} elseif ($hod === "") {
+										?>
+											<a class="side-menu__item" data-bs-toggle="slide" href="gdsubworklist.php">
+												<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>
+												<span class="side-menu__label">DM Assigned Works</span>
+											</a>
+						<?php
+
+
+										}
+									}
+								}
+							}
+						}
+
+
+						?>
+
+
 
 					</li>
 				<?php } ?>
-				<li class="slide">
+				<!-- <li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="usermanuel.php">
 							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
 							<span class="side-menu__label">User Manuel</span>
 						</a>
 					
 
-					</li>
+					</li> -->
 
 			</ul>
 			<div class="slide-right" id="slide-right">

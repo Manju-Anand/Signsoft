@@ -245,7 +245,7 @@ if ($resultorders->num_rows > 0) {
                                                     
                                                             <label class="col-md-3 form-label" for="contacteddate">Sub-Categories :</label>
                                                             <div class="col-md-9">
-                                                                <select class="form-control select2" multiple="multiple" id="submulselectsub[]" name="submulselectsub[]">
+                                                                <select class="form-control select2" multiple="multiple" id="mulselectsub[]" name="mulselectsub[]">
                                                                     <?php
                                                                 
                                                                     $presentchk = "false";
@@ -386,6 +386,7 @@ if ($resultorders->num_rows > 0) {
                                                             VALUES('$orgorderid', '$categoryId')";
                                                     
                                                             if ($connection->query($querycategory) === TRUE) {
+                                                                echo "new inserted";
                                                                 // Successfully inserted into the database
                                                             } else {
                                                                 // Handle the error if the insertion fails
@@ -395,13 +396,15 @@ if ($resultorders->num_rows > 0) {
                                                     }
                                                     if (isset($_POST['mulselectsub'])) {
                                                         $selectedOptions = $_POST['mulselectsub'];
-                                                    
+                                                    echo $selectedOptions ;
+
                                                         // Loop through selected options and insert into the database
                                                         foreach ($selectedOptions as $subcategoryId) {
                                                             $querysubcategory = "INSERT INTO order_subcategory (order_id,  subcategory_id)
                                                             VALUES ('$orgorderid',  '$subcategoryId')";
                                                     
                                                             if ($connection->query($querysubcategory) === TRUE) {
+                                                                echo "new sub inserted";
                                                                 // Successfully inserted into the database
                                                             } else {
                                                                 // Handle the error if the insertion fails
@@ -411,7 +414,7 @@ if ($resultorders->num_rows > 0) {
                                                     }
 
 
-                                                    header("Location: orderlist.php");
+                                                    // header("Location: orderlist.php");
                                                 } else {
                                                     echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                                 }

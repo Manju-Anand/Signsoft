@@ -20,7 +20,7 @@ include "includes/connection.php";
 
 <head>
 
-<meta charset="utf-8">
+	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -178,14 +178,6 @@ include "includes/connection.php";
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-			// Function to generate a random color in hexadecimal format
-			function getRandomColor() {
-				return '#' + Math.floor(Math.random() * 16777215).toString(16);
-			}
-
-			// Set random colors to CSS variables
-			document.documentElement.style.setProperty('--random-event-bg-color', getRandomColor());
-			document.documentElement.style.setProperty('--random-event-border-color', getRandomColor());
 
 			var calendarEl = document.getElementById('calendar');
 
@@ -205,7 +197,7 @@ include "includes/connection.php";
 						type: 'get',
 						dataType: 'json',
 						success: function(response) {
-						
+
 							if (response.status == 1) {
 								// ===================alert box start======================
 								// Alert box to add event
@@ -221,12 +213,35 @@ include "includes/connection.php";
 									title: 'Add New Work',
 									showCancelButton: true,
 									confirmButtonText: 'Create',
-									html:
+									html: '<div class="row">' +
+										'<div class="col-md-4">' +
+										'<label for="eventtitle" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Posting Name:</label></div><div class="col-md-8">' +
+										'<input id="eventtitle" class="form-control" placeholder="Enter Posting name">' +
+										'</div></div><div class="row">' +
+										'<div class="col-md-4">' +
+										'<label for="eventdescription" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Description:</label></div><div class="col-md-8">' +
+										'<textarea id="eventdescription" class="form-control" placeholder="Enter Description" rows="3" ></textarea>' +
+										'</div>' +
+										'</div><br>' +
+										'<div class="row">' +
+										'<div class="col-md-4">' +
+										'<label for="eventSelect" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Select Client:</label></div><div class="col-md-8">' +
+										'<select id="eventSelect" class="form-select">' + selectOptions.join('') + '</select>' +
+										'</div></div><div class="row">' +
+										'<div class="col-md-4">' +
+										'<label for="eventSelect2" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Select Paid/Not:</label></div><div class="col-md-8">' +
+										'<select id="eventSelect2" class="form-select">' + selectOptions2 + '</select>' +
+										'</div>' +
+										'</div>',
 
-										'<input id="eventtitle" class="swal2-input" placeholder="Posting name" style="width: 84%;font-size:15px"  ><br>' +
-										'<textarea id="eventdescription" class="swal2-input" placeholder="description" style="width: 84%; height: 60px;"></textarea>' +
-										'<select id="eventSelect" class="swal2-input" style="width: 84%;">' + selectOptions.join('') + '</select>' +
-										'<select id="eventSelect2" class="swal2-input" style="width: 84%;">' + selectOptions2 + '</select>',
+
+
+									// html:
+
+									// 	'<input id="eventtitle" class="swal2-input" placeholder="Posting name" style="width: 84%;font-size:15px"  ><br>' +
+									// 	'<textarea id="eventdescription" class="swal2-input" placeholder="description" style="width: 84%; height: 60px;"></textarea>' +
+									// 	'<select id="eventSelect" class="swal2-input" style="width: 84%;">' + selectOptions.join('') + '</select>' +
+									// 	'<select id="eventSelect2" class="swal2-input" style="width: 84%;">' + selectOptions2 + '</select>',
 
 									focusConfirm: false,
 									preConfirm: () => {
@@ -367,11 +382,51 @@ include "includes/connection.php";
 						showCancelButton: true,
 						confirmButtonText: 'Update',
 						denyButtonText: 'Delete',
-						html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '">' +
-							'<textarea id="eventdescription" class="swal2-input" placeholder="Work description" style="width: 84%; height: 60px;">' + description + '</textarea>' +
-							'<label><input type="checkbox" id="checkbox1" value="Informed-Before" ' + (beforeinfo ? 'checked' : '') + '> Informed Customer Before</label><br>' +
-							'<label><input type="checkbox" id="checkbox2" value="Executed" ' + (executed ? 'checked' : '') + '> Executed</label><br>' +
-							'<label><input type="checkbox" id="checkbox3" value="Informed-After" ' + (afterinfo ? 'checked' : '') + '> Informed Customer After</label><br>',
+						// 					
+
+						html: '<div class="row">' +
+							'<div class="col-md-4">' +
+							'<label for="eventtitle" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Name:</label></div><div class="col-md-8">' +
+							'<input id="eventtitle" class="form-control" placeholder="Enter Event name" value="' + title + '">' +
+							'</div>' +
+							'</div>' +
+							'<div class="row ">' +
+							'<div class="col-md-4">' +
+							'<label for="eventdescription" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Description:</label></div><div class="col-md-8">' +
+							'<textarea id="eventdescription" class="form-control" placeholder="Enter Work description" rows="2">' + description + '</textarea>' +
+							'</div>' +
+							'</div><br>' +
+							'<div class="row">' +
+							'<div class="col-md-12">' +
+							'<div class="form-check">' +
+							'<input type="checkbox" id="checkbox1" class="form-check-input" value="Informed-Before" ' + (beforeinfo ? 'checked' : '') + '> ' +
+							'<label for="checkbox1" class="form-check-label" style="font-size: 15px;font-weight:bold; text-align: left; display: block; padding-bottom: 10px;">Informed Customer Before</label>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'<div class="row">' +
+							'<div class="col-md-12">' +
+							'<div class="form-check">' +
+							'<input type="checkbox" id="checkbox2" class="form-check-input" value="Executed" ' + (executed ? 'checked' : '') + '> ' +
+							'<label for="checkbox2" class="form-check-label" style="font-size: 15px;font-weight:bold; text-align: left; display: block; padding-bottom: 10px;">Executed</label>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'<div class="row">' +
+							'<div class="col-md-12">' +
+							'<div class="form-check">' +
+							'<input type="checkbox" id="checkbox3" class="form-check-input" value="Informed-After" ' + (afterinfo ? 'checked' : '') + '> ' +
+							'<label for="checkbox3" class="form-check-label" style="font-size: 15px;font-weight:bold; text-align: left; display: block; padding-bottom: 10px;">Informed Customer After</label>' +
+							'</div>' +
+							'</div>' +
+							'</div>',
+
+
+						// 					html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '">' +
+						// '<textarea id="eventdescription" class="swal2-input" placeholder="Work description" style="width: 84%; height: 60px;">' + description + '</textarea>' +
+						// '<label class="swal2-input" style="text-align: left; display: block;"><input type="checkbox" id="checkbox1" value="Informed-Before" ' + (beforeinfo ? 'checked' : '') + '> Informed Customer Before</label>' +
+						// '<label class="swal2-input" style="text-align: left; display: block;"><input type="checkbox" id="checkbox2" value="Executed" ' + (executed ? 'checked' : '') + '> Executed</label>' +
+						// '<label class="swal2-input" style="text-align: left; display: block;"><input type="checkbox" id="checkbox3" value="Informed-After" ' + (afterinfo ? 'checked' : '') + '> Informed Customer After</label><br>',
 
 						focusConfirm: false,
 						preConfirm: () => {
@@ -422,11 +477,13 @@ include "includes/connection.php";
 									dataType: 'json',
 									async: false,
 									success: function(response) {
-
+										// alert(JSON.stringify(response));
 										if (response.status == 1) {
 
 											calendar.refetchEvents();
-											Swal.fire(response.message, '', 'success');
+
+											Swal.fire(response.message, '', 'success');sleep(10);
+											window.location.href = "calendar.php"
 										} else {
 											Swal.fire(response.message, '', 'error');
 										}

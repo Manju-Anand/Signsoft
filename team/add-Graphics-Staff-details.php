@@ -115,6 +115,7 @@ $mainorderid = "";
                                             <h5 class="mt-2">You can Add & Edit Graphics Designers here.</h5>
                                             <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
                                             <input type="hidden" id="datastatus" name="datastatus" value="" readonly>
+                                            <input type="hidden" id="empid" name="empid" value="<?php echo $_SESSION['empid']; ?>" readonly>
                                         </div>
                                         <div class="col-md-7">
                                             <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
@@ -155,21 +156,29 @@ $mainorderid = "";
                                                                     while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
 
                                                                         $mainorderid = $roworder['id'];
-
-
-                                                                        $querydigital = "select * from category where category='Social Media'";
+                                                                        $dmorder = "false";
+                                                                        $querydigital = "select * from category where dept_id=(select id from department where dname='Digital')";
+                                                                        // $querydigital = "select * from category where category='Social Media'";
                                                                         $select_postsdigital = mysqli_query($connection, $querydigital);
                                                                         while ($rowdigital = mysqli_fetch_assoc($select_postsdigital)) {
                                                                             $catId = $rowdigital['id'];
-                                                                        }
-                                                                        $dmorder = "false";
+                                                                        
+                                                                       
 
                                                                         $queryordercat = "select * from order_category where order_id='" . $roworder['id'] . "' and category_id='" . $catId . "'";
                                                                         $select_postsordercat = mysqli_query($connection, $queryordercat);
                                                                         while ($rowordercat = mysqli_fetch_assoc($select_postsordercat)) {
                                                                             $categoryId = $rowordercat['category_id'];
-                                                                            $dmorder = "true";
+                                                                            $querydmallot = "select * from staff_dm_allocation where orderid='" . $roworder['id'] . "' and staffid='" .  $_SESSION['empid'] . "'";
+                                                                            $select_postsdmallot = mysqli_query($connection, $querydmallot);
+                                                                            while ($rowdmallot = mysqli_fetch_assoc($select_postsdmallot)) {
+                                                                                $dmorder = "true";
+                                                                            }    
+
+
+                                                                            
                                                                         }
+                                                                    }
 
                                                                         if ($dmorder == "true") {
                                                                     ?>
@@ -205,13 +214,23 @@ $mainorderid = "";
 
                                                             </div>
 
-                                                            <div class="col-md-8">
-                                                                <label class="form-label" for="dmpayment">Content :</label>
+                                                            <div class="col-md-3">
+                                                                <label class="form-label" for="content">Content :</label>
                                                                <textarea class="form-control" name="content" id="content" rows="4" style="margin-bottom: 10px;"></textarea>
 
                                                             </div>
-                                                            
+                                                            <div class="col-md-3">
+                                                                <label class="form-label" for="idea">Idea :</label>
+                                                               <textarea class="form-control" name="idea" id="idea" rows="4" style="margin-bottom: 10px;"></textarea>
+
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <label class="form-label" for="dmpayment">Deadline :</label>
+                                                                <input type="date" class="form-control" id="deadline" name="deadline"  placeholder="" required>
+
+                                                                </div>
                                                           
+                                                            
                                                            
                                                             <div class="col-md-2">
                                                                 <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
@@ -229,8 +248,8 @@ $mainorderid = "";
                                                                             <th>Assign Date</th>
                                                                             <th>Posting</th>
                                                                             <th>Content</th>
-                                                                
-                                                                            
+                                                                            <th>Idea</th>
+                                                                            <th>Deadline</th>
                                                                             <th>Action</th>
                                                                             <!-- class="hidden-cell" -->
                                                                             <th class="hidden-cell">status</th>
@@ -284,9 +303,9 @@ $mainorderid = "";
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <input type="text" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
-                            <input type="text" class="form-control" id="modaleditid" name="modaleditid" required>
-                            <div class="col-md-6">
+                            <input type="hidden" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
+                            <input type="hidden" class="form-control" id="modaleditid" name="modaleditid" required>
+                            <div class="col-md-4">
                                 <label class="form-label" for="modalpost">Postings :</label>
                                
                                 <select class="form-select"  name="modalpost" id="modalpost" required>
@@ -297,12 +316,22 @@ $mainorderid = "";
 
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label" for="modalassigndate">Assigned Date :</label>
                                 <input type="date" class="form-control" id="modalassigndate" name="modalassigndate" placeholder="Assigndate">
 
                             </div>
-                                    
+                            <div class="col-md-4">
+                                <label class="form-label" for="modaldeadline">Deadline :</label>
+                                <input type="date" class="form-control" id="modaldeadline" name="modaldeadline" placeholder="">
+
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="modalidea">Idea :</label>
+                                <textarea class="form-control" name="modalidea" id="modalidea" rows="4" style="margin-bottom: 10px;"></textarea>
+
+                            </div>
+                                 
 
                             
                             <div class="col-md-12">

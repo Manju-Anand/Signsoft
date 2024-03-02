@@ -146,7 +146,6 @@ $mainorderid = "";
                                                                     <option value="Work In Progress">Work In Progress</option>
                                                                     <option value="Internal Edits">Internal Edits</option>
                                                                     <option value="External Edits">External Edits</option>
-                                                                    <option value="Closed">Closed</option>
                                                                 </select>
                                                             </div>
 
@@ -250,7 +249,7 @@ $mainorderid = "";
                                     <option value="Work In Progress">Work In Progress</option>
                                     <option value="Internal Edits">Internal Edits</option>
                                     <option value="External Edits">External Edits</option>
-                                    <option value="Closed">Closed</option>
+                                   
                                 </select>
                             </div>
                            
@@ -333,7 +332,8 @@ $mainorderid = "";
 
     <!-- password-addon init -->
     <!-- <script src="../assets/js/password-addon.js"></script> -->
-    <script src="add-work-details.js"></script>
+    <script src="add-gd-work-details.js"></script>
+    <script src="notification.js"></script>
 
     <!--- TABS JS -->
     <script src="../assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>
@@ -376,7 +376,7 @@ $mainorderid = "";
 
             $.ajax({
                 type: 'POST',
-                url: 'viewworkdetails.php',
+                url: 'viewgdworkdetails.php',
                 data: {
                     selectedOrderId: orderIdFromURL
                 },
@@ -389,7 +389,7 @@ $mainorderid = "";
             $.ajax({
 
             type: 'POST',
-            url: 'get_staff_work_allocation_details.php',
+            url: 'get_gd_staff_work_allocation_details.php',
             data: {
                 selectedOrderId: orderIdFromURL
             },

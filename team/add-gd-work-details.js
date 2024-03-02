@@ -1,50 +1,36 @@
 
 // **************************start edit & delete table rows for staff table**********************************
 // Add a click event listener for the "Edit" buttons
-// Function to pad a number with leading zeros
-function padWithZeros(number, length) {
-    var str = String(number);
-    while (str.length < length) {
-        str = '0' + str;
-    }
-    return str;
-}
+
 $('body').on('click', '.edit-staff-btn', function () {
 
+    //    $('#modalpostings').select2();
+    //    $('#modalpostings123').select2();
 
     // Get the corresponding row
     var row = $(this).closest('tr');
 
     // Extract values from the row
-    var postings = row.find('td:eq(2)').text(); // Replace 2 with the actual column index
-    // alert (postings);
-    var content = row.find('td:eq(3)').text(); // Replace 2 with the actual column 
-    var idea = row.find('td:eq(4)').text(); // Replace 2 with the actual column index
-    // Replace 2 with the actual column index
-    // alert(content);
-    
+    var workdate = row.find('td:eq(1)').text(); // Replace 1 with the actual column index
+    var worktime = row.find('td:eq(2)').text(); // Replace 2 with the actual column index
+    var workstatus = row.find('td:eq(3)').text(); // Replace 2 with the actual column index
+    // var recordstatus = row.find('td:eq(5)').text(); // Replace 2 with the actual column index
+    var allotid = row.find('td:eq(6)').text(); // Replace 3 with the actual column index
+    var orderid = row.find('td:eq(7)').text(); // Replace 4 with the actual column index
     var editid = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
     var staffrowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
     // alert (workdate);
-    // var assigndate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
-    // var dateParts = assigndate.split('-');
-    // var formattedDate = dateParts[2] + '-' + dateParts[1].padStart(2, '0') + '-' + dateParts[0].padStart(2, '0');
-    var assigndate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
-    var dateParts = assigndate.split('-');
-    var formattedDate = dateParts[2] + '-' + padWithZeros(dateParts[1], 2) + '-' + padWithZeros(dateParts[0], 2);
+    var workdate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
+    var dateParts = workdate.split('-');
+    var formattedDate = dateParts[2] + '-' + dateParts[1].padStart(2, '0') + '-' + dateParts[0].padStart(2, '0');
 
-    var deadline = row.find('td:eq(5)').text(); // Assuming the format is 'dd-mm-YYYY'
-    var dateParts = deadline.split('-');
-    // var deadlineDate = dateParts[2] + '-' + dateParts[1].padStart(2, '0') + '-' + dateParts[0].padStart(2, '0');
-    var deadlineDate = dateParts[2] + '-' + padWithZeros(dateParts[1], 2) + '-' + padWithZeros(dateParts[0], 2);
-
-    $('#modaldeadline').val(deadlineDate);
-    $('#modalassigndate').val(formattedDate);
+    $('#modalworkdate').val(formattedDate);
     // Set values in the modal
 
-    $('#modalpost').val(postings);
-    $('#modalcontent').val(content);
-    $('#modalidea').val(idea);
+    $('#modalworkstatus').val(workstatus);
+    $('#modalworktime').val(worktime);
+    $('#modalallotid').val(allotid);
+    $('#modalorderid').val(orderid);
     // Set the value of the new textbox
     $('#modalstaffrowid').val(staffrowId);
     $('#modaleditid').val(editid);
@@ -96,10 +82,10 @@ function addstaffRow() {
     var tbody = table.getElementsByTagName("tbody")[0]; // Get the tbody element
 
     // Get the values from the dropdowns
-    var postingsValue = document.getElementById("postings").value;
-    var contentValue = document.getElementById("content").value;
+    var timetakenValue = document.getElementById("timetaken").value;
+    var workstatusValue = document.getElementById("workstatus").value;
     // Check if both timetaken and workstatus are selected
-    if (postingsValue && contentValue) {
+    if (timetakenValue && workstatusValue) {
 
         var newRow = tbody.insertRow(tbody.rows.length); // Insert row into tbody
 
@@ -126,54 +112,38 @@ function addstaffRow() {
 
 
         var cell3 = newRow.insertCell(2);
-        var selectBox1 = document.getElementById("postings");
+        var selectBox1 = document.getElementById("timetaken");
         cell3.innerHTML = selectBox1.value;
 
         // Select Box 1
         var cell4 = newRow.insertCell(3);
-        var textBox1 = document.getElementById("content");
-        cell4.innerHTML = textBox1.value
-
-        var cell5 = newRow.insertCell(4);
-        var textBox2 = document.getElementById("idea");
-        cell5.innerHTML = textBox2.value
-
-        var cell6 = newRow.insertCell(5);
-        var textBox3 = document.getElementById("deadline");
-        // cell6.innerHTML = textBox3.value
-       // Get the value from the deadline textbox
-        var originalDateValue = textBox3.value;
-
-        // Create a Date object from the original date value
-        var originalDate = new Date(originalDateValue);
-
-        // Check if the originalDate is a valid date
-        if (!isNaN(originalDate.getTime())) {
-            // Format the date as "dd-mm-yyyy"
-            var day = ('0' + originalDate.getDate()).slice(-2);
-            var month = ('0' + (originalDate.getMonth() + 1)).slice(-2);
-            var year = originalDate.getFullYear();
-
-            var formattedDate = day + '-' + month + '-' + year;
-
-            // Set the formatted date to the cell's innerHTML
-            cell6.innerHTML = formattedDate;
-        }
-
+        var selectBox1 = document.getElementById("workstatus");
+        cell4.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
 
         // New cell with Edit and Delete buttons  ===========href='edit-supplier.php?edit=" + ++rowCounter + "'---onclick='javascript:confirmationDelete($(this));return false;
-        var cell7 = newRow.insertCell(6);
-        cell7.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
+        var cell5 = newRow.insertCell(4);
+        cell5.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
             "<span class='fe fe-edit'> </span></a>&nbsp;&nbsp;" +
             "<a class='btn btn-sm btn-danger delete-staff-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>" +
             "<span class='fe fe-trash-2'> </span></a>";
         // Text Box 3
+        var cell6 = newRow.insertCell(5);
+        cell6.innerHTML = "New";
+         cell6.classList.add('hidden-cell');
+
+        // Text Box 3
+        var cell7 = newRow.insertCell(6);
+        var textBox1 = document.getElementById("allotid");
+        cell7.innerHTML = textBox1.value;  // Set the content of the cell to be empty
+        cell7.classList.add('hidden-cell');
+
         var cell8 = newRow.insertCell(7);
-        cell8.innerHTML = "New";
-         cell8.classList.add('hidden-cell');
+        var textBox1 = document.getElementById("orderid");
+        cell8.innerHTML = textBox1.value;  // Set the content of the cell to be empty
+        cell8.classList.add('hidden-cell');
 
         var cell9 = newRow.insertCell(8);
-        cell9.innerHTML = "";  // Set the content of the cell to be empty
+               cell9.innerHTML = "";  // Set the content of the cell to be empty
         cell9.classList.add('hidden-cell');
 
 
@@ -182,12 +152,9 @@ function addstaffRow() {
 
        
         selectBox1.selectedIndex = -1;
-        textBox1.value="";
-        textBox2.value="";
-        textBox3.value="";
     } else {
         // If either timetaken or workstatus is not selected, show an alert or handle it accordingly
-        alert('Please select both contents and postings.');
+        alert('Please select both timetaken and workstatus.');
     }
 }
 
@@ -196,24 +163,21 @@ $('#savestaffChangesBtn').on('click', function () {
     // Get the values from the modal fields
     // var modalworkdate = $('#modalworkdate').val();
   
-    // var modalpost = $('#modalpost').val();
-    var modalpost = $('#modalpost option:selected').text();
-    var modalcontent = $('#modalcontent').val();
-    var modalarea = $('#modalidea').val();
+    var modalworktime = $('#modalworktime').val();
+    var modalworkstatus = $('#modalworkstatus option:selected').text();
+    var modalallotid = $('#modalallotid').val();
+    var modalorderid = $('#modalorderid').val();
     var modaleditid = $('#modaleditid').val();
 
-    var modalassigndate = $('#modalassigndate').val();
-    var modaldeadline = $('#modaldeadline').val();
-    // Convert the date to a JavaScript Date object
-    var dateObject = new Date(modalassigndate);
-    // Format the date to "dd-mm-yyyy"
-    var formattedDate = ("0" + dateObject.getDate()).slice(-2) + "-" + ("0" + (dateObject.getMonth() + 1)).slice(-2) + "-" + dateObject.getFullYear();
-   // Convert the date to a JavaScript Date object
-   var dateObject1 = new Date(modaldeadline);
-   // Format the date to "dd-mm-yyyy"
-   var formatteddeadlineDate = ("0" + dateObject1.getDate()).slice(-2) + "-" + ("0" + (dateObject1.getMonth() + 1)).slice(-2) + "-" + dateObject1.getFullYear();
+    var modalworkdate = $('#modalworkdate').val();
 
-   
+// Convert the date to a JavaScript Date object
+var dateObject = new Date(modalworkdate);
+
+// Format the date to "dd-mm-yyyy"
+var formattedDate = ("0" + dateObject.getDate()).slice(-2) + "-" + ("0" + (dateObject.getMonth() + 1)).slice(-2) + "-" + dateObject.getFullYear();
+
+    var pstatus = "Edited";
     $('#paystatus').val('Payment edited');
     // Get the selected row in the table (assuming it has an id, adjust as needed)
     var selectedRowId = $('#modalstaffrowid').val(); // Update this to the actual input or method to get the row ID
@@ -221,16 +185,13 @@ $('#savestaffChangesBtn').on('click', function () {
     // Update the corresponding row in the table
     var selectedRow = $('#staffallocateTable tbody tr[data-rowid="' + selectedRowId + '"]');
     selectedRow.find('td:eq(1)').text(formattedDate); // Update with the correct column indices.
-    selectedRow.find('td:eq(2)').text(modalpost); // Update with the correct column indices.
-    selectedRow.find('td:eq(3)').text(modalcontent); // Update with the correct column indices
-    selectedRow.find('td:eq(4)').text(modalarea); // Update with the correct column indices
-    selectedRow.find('td:eq(5)').text(formatteddeadlineDate); // Update with the correct column indices
-    if (modaleditid !== "") {
-    var pstatus = "Edited";
-    selectedRow.find('td:eq(7)').text(pstatus); // Update with the correct column indices
-    }
+    selectedRow.find('td:eq(2)').text(modalworktime); // Update with the correct column indices.
+    selectedRow.find('td:eq(3)').text(modalworkstatus); // Update with the correct column indices
+    // selectedRow.find('td:eq(4)').text(staffValueid); // Update with the correct column indices
+    selectedRow.find('td:eq(5)').text(pstatus); // Update with the correct column indices
+    selectedRow.find('td:eq(6)').text(modalallotid); // Update with the correct column indices
+    selectedRow.find('td:eq(7)').text(modalorderid); // Update with the correct column indices
     selectedRow.find('td:eq(8)').text(modaleditid); // Update with the correct column indices
-   
    
     // Hide the modal
     $('#staffmodal').modal('hide');
@@ -238,57 +199,7 @@ $('#savestaffChangesBtn').on('click', function () {
 
 
 // ************* end staff details ****************
-// Add an event listener to the select element
-document.getElementById('ordersdisplay').addEventListener('change', function () {
-    // Get the selected option
-    var selectedOption = this.options[this.selectedIndex];
-    var custname = selectedOption.getAttribute('data-custName');
-    var brandname = selectedOption.getAttribute('data-brandName');
-    var quotedamt = selectedOption.getAttribute('data-quotedAmt');
-    // Get the values from the selected option
-    var selectedOrderId = selectedOption.value;
-    $('#quotesplitupbtn').attr('data-quoteid', selectedOrderId);
-    $('#quotesplitupbtn').attr('data-custname', custname);
-    $('#quotesplitupbtn').attr('data-brandname', brandname);
-    $('#quotesplitupbtn').attr('data-quotedamt', quotedamt);
 
-    $('#editquotesplitupbtn').attr('data-quoteid', selectedOrderId);
-    $('#editquotesplitupbtn').attr('data-custname', custname);
-    $('#editquotesplitupbtn').attr('data-brandname', brandname);
-    $('#editquotesplitupbtn').attr('data-quotedamt', quotedamt);
-
-    $.ajax({
-        type: 'POST',
-        url: 'vieworderdetails.php', // Replace with the actual URL that fetches data based on selectedOrderId
-        data: {
-            selectedOrderId: selectedOrderId
-        },
-        success: function (data) {
-            // Update options of the second select
-            $('#orderdetails').html(data);
-            
-        }
-    });
- 
-
-    $.ajax({
-       
-        type: 'POST',
-        url: 'get_graphics_content_details.php',
-        data: {
-            selectedOrderId: selectedOrderId
-        },
-        success: function (data) {
-           
-
-            $('#ajaxstaffallocateresults').html(data);
-           
-
-        }
-    });
-
-    
-});
 
 
 
@@ -296,7 +207,7 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
 // ============start data saving code================================
 function saveDataToDatabase() {
     var empid = document.getElementById("empid").value;
-    var orderid = document.getElementById("ordersdisplay").value;
+
 
     // **********staff allocation details *********************
 
@@ -312,22 +223,20 @@ function saveDataToDatabase() {
         var cells = row.getElementsByTagName("td");
 
         var rowData1 = {
-            assigndate: cells[1].innerHTML, // Adjust the index based on your table structure
-            posting: cells[2].innerHTML, // Adjust the index based on your table structure
-            content: cells[3].innerHTML, // Adjust the index based on your table structure
-            idea: cells[4].innerHTML, // Adjust the index based on your table structure
-            deadline: cells[5].innerHTML, // Adjust the index based on your table structure
-            recordstatus: cells[7].innerHTML, // Adjust the index based on your table structure
-            editid: cells[8].innerHTML, // Adjust the index based on your table structure
-            orderid: orderid, // Adjust the index based on your table structure
+            workdate: cells[1].innerHTML, // Adjust the index based on your table structure
+            worktime: cells[2].innerHTML, // Adjust the index based on your table structure
+            workstatus: cells[3].innerHTML, // Adjust the index based on your table structure
+            recordstatus: cells[5].innerHTML, // Adjust the index based on your table structure
+            allotid: cells[6].innerHTML, // Adjust the index based on your table structure
+            orderid: cells[7].innerHTML, // Adjust the index based on your table structure
             empid: empid,
-            
+            editid: cells[8].innerHTML,
 
         };
 
         staffallocationdataToSave.push(rowData1);
     }
-    console.log("check this :" +  staffallocationdataToSave);
+    console.log("check this :" + rowData1);
     // ==============================================
     // Combine the two arrays into a single object for the AJAX request
     var combinedData = {
@@ -337,7 +246,7 @@ function saveDataToDatabase() {
 
     // Send data to the server using AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save-graphics-content-details.php", true);
+    xhr.open("POST", "save-gd-work-details-staff.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onreadystatechange = function () {
@@ -346,7 +255,7 @@ function saveDataToDatabase() {
                 // Handle the response from the server if needed
                 console.log("result: " + xhr.responseText);
                 alert("Succesfully Saved Data.");
-                window.location.href = 'dmworklist.php';
+                window.location.href = 'gdworklist.php';
             } else {
                 // Handle errors if any
                 console.error("Error saving data: " + xhr.status);
@@ -369,10 +278,10 @@ $(document).ready(function (e) {
         if (paystatus == 'Payment edited') {
             var confirmClose = confirm("You have edited the details and not saved yet. Do you want to continue with form cancel?");
             if (confirmClose) {
-                window.location = "dmworklist.php";
+                window.location = "gdworklist.php";
             }
         } else {
-            window.location = "dmworklist.php";
+            window.location = "gdworklist.php";
         }
         return false;
     });

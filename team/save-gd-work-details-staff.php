@@ -9,10 +9,10 @@ $data = json_decode(file_get_contents("php://input"), true);
 // Iterate through the data and insert into the database
 
 if (isset($data['staffallocationdataToSave'])) {
-  // echo "1";
+  echo "1";
   foreach ($data['staffallocationdataToSave'] as $row) {
     $workdate = $row['workdate'];
-    // echo "2";
+    echo "2";
     $worktime = $row['worktime'];
     $workstatus = $row['workstatus'];
     $allotid = $row['allotid'];
@@ -25,29 +25,25 @@ if (isset($data['staffallocationdataToSave'])) {
  
  
     // Perform the SQL query to insert data into the database
-    // if ($recordstatus == "Edited") {
-      if (isset($row['editid']) && $row['editid'] !== "") {
+    if (isset($row['editid']) && $row['editid'] !== "") {
 
-      $sql = "UPDATE staff_allocation_details SET orderid='" . $orderid . "',empid='" . $empid . "',staff_allocation_id='" . $allotid . "',timetaken='" . $worktime . "',
+      $sql = "UPDATE staff_dm_graphics_allocation_details SET orderid='" . $orderid . "',empid='" . $empid . "',staff_dm_allocation_id='" . $allotid . "',timetaken='" . $worktime . "',
       work_status='" . $workstatus . "',workdate='" . $workdate . "',record_status='" . $recordstatus . "',modified='" . $postdate . "' WHERE id='" . $editid . "'";
       if ($connection->query($sql) !== TRUE) {
 
         echo "Error: " . $sql . "<br>" . $connection->error;
-      }else {
-        echo "<script>console.log('staff_allocation_details updated')</script>";
       }
 
-    } else {
-      
-    // } elseif ($recordstatus == "New") {
 
-      $sql = "INSERT INTO staff_allocation_details (orderid,empid,staff_allocation_id,timetaken, work_status, workdate, record_status,created) VALUES
+      
+    } else {
+
+      $sql = "INSERT INTO staff_dm_graphics_allocation_details (orderid,empid,staff_dm_allocation_id,timetaken, work_status, workdate, record_status,created) VALUES
       ('$orderid','$empid','$allotid','$worktime', '$workstatus', '$workdate', '$recordstatus','$postdate')";
       if ($connection->query($sql) !== TRUE) {
         
         echo "Error: " . $sql . "<br>" . $connection->error;
       }else {
-        echo "<script>console.log('staff_allocation_details saved')</script>";
         $last_id = $connection->insert_id;
       }
 

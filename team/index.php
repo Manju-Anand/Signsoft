@@ -14,7 +14,8 @@ if (isset($_GET['logout'])) {
 }
 
 include "includes/connection.php";
-
+$totalwork = "0";
+$activeworks = "0";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,20 +84,20 @@ include "includes/connection.php";
 						<div class="d-flex">
 							<div class="me-2">
 								<a class="btn ripple btn-primary dropdown-toggle mb-0" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-									<i class="fe fe-external-link"></i> Export <i class="fa fa-caret-down ms-1"></i>
+									<!-- <i class="fe fe-external-link"></i> Export <i class="fa fa-caret-down ms-1"></i> -->
 								</a>
-								<div class="dropdown-menu tx-13">
+								<!-- <div class="dropdown-menu tx-13">
 									<a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-file-pdf-o me-2"></i>Export as
 										Pdf</a>
 									<a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-image me-2"></i>Export as
 										Image</a>
 									<a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-file-excel-o me-2"></i>Export as
 										Excel</a>
-								</div>
+								</div> -->
 							</div>
 							<div>
-								<a href="javascript:void(0);" class="btn ripple btn-secondary navresponsive-toggler mb-0" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-									<i class="fe fe-filter me-1"></i> Filter <i class="fa fa-caret-down ms-1"></i>
+								<a href="javascript:void(0);" class="btn ripple btn-secondary navresponsive-toggler mb-0" data-bs-toggle="" data-bs-target="" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+									<!-- <i class="fe fe-filter me-1"></i> Filter <i class="fa fa-caret-down ms-1"></i> -->
 								</a>
 							</div>
 						</div>
@@ -104,7 +105,7 @@ include "includes/connection.php";
 					<!-- End Page Header -->
 
 					<!--Navbar-->
-					<div class="responsive-background">
+					<!-- <div class="responsive-background">
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<div class="advanced-search br-3">
 								<div class="row align-items-center">
@@ -325,57 +326,97 @@ include "includes/connection.php";
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!--End Navbar -->
 
 					<!-- Row -->
+					<?php
+					$query = "select * from staff_allocation where empid='" . $_SESSION['empid'] . "'";
+					$result = mysqli_query($connection, $query);
+					if ($result->num_rows > 0) {
+						$totalwork = $result->num_rows;
+					}
+					$query = "select * from staff_allocation where empid='" . $_SESSION['empid'] . "' and work_status='Active'";
+					$result = mysqli_query($connection, $query);
+					if ($result->num_rows > 0) {
+						$activeworks = $result->num_rows;
+					}
+
+					if ($_SESSION['modulename'] == "Digital") {
+						$query = "select * from staff_dm_allocation where staffid='" . $_SESSION['empid'] . "'";
+						$result = mysqli_query($connection, $query);
+						if ($result->num_rows > 0) {
+							$totalwork += $result->num_rows;
+						}
+						$query = "select * from staff_dm_allocation where staffid='" . $_SESSION['empid'] . "' and work_status='Active'";
+						$result = mysqli_query($connection, $query);
+						if ($result->num_rows > 0) {
+							$activeworks += $result->num_rows;
+						}
+					}
+					if ($_SESSION['modulename'] == "Graphics") {
+						$query = "select * from staff_dm_graphics_allocation where staffid='" . $_SESSION['empid'] . "'";
+						$result = mysqli_query($connection, $query);
+						if ($result->num_rows > 0) {
+							$totalwork += $result->num_rows;
+						}
+						$query = "select * from staff_dm_graphics_allocation where staffid='" . $_SESSION['empid'] . "' and work_status='Active'";
+						$result = mysqli_query($connection, $query);
+						if ($result->num_rows > 0) {
+							$activeworks += $result->num_rows;
+						}
+					}
+
+
+
+					?>
 					<div class="row row-sm">
-						<div class="col-sm-6 col-xl-3 col-lg-6">
+						<div class="col-sm-12 col-xl-6 col-lg-6">
 							<div class="card custom-card">
 								<div class="card-body dash1">
 									<div class="d-flex">
-										<p class="mb-1 tx-inverse">Number Of Sales</p>
+										<p class="mb-1 tx-inverse">Number Of Total Works</p>
 										<div class="ms-auto">
 											<i class="fa fa-line-chart fs-20 text-primary"></i>
 										</div>
 									</div>
 									<div>
-										<h3 class="dash-25">$568</h3>
+										<h3 class="dash-25"><?php echo $totalwork; ?></h3>
 									</div>
 									<div class="progress mb-1">
 										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-70p" role="progressbar"></div>
 									</div>
 									<div class="expansion-label d-flex">
-										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i class="fa fa-caret-up me-1 text-success"></i>0.7%</span>
+										<span class="text-muted">******</span>
+										<span class="ms-auto"><i class="fa fa-caret-up me-1 text-success"></i>***%</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6 col-xl-3 col-lg-6">
+						<div class="col-sm-6 col-xl-6 col-lg-6">
 							<div class="card custom-card">
 								<div class="card-body dash1">
 									<div class="d-flex">
-										<p class="mb-1 tx-inverse">New Revenue</p>
+										<p class="mb-1 tx-inverse">Number of Active Works</p>
 										<div class="ms-auto">
 											<i class="fa fa-money fs-20 text-secondary"></i>
 										</div>
 									</div>
 									<div>
-										<h3 class="dash-25">$12,897</h3>
+										<h3 class="dash-25"><?php echo $activeworks; ?></h3>
 									</div>
 									<div class="progress mb-1">
 										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-60p bg-secondary" role="progressbar">
 										</div>
 									</div>
 									<div class="expansion-label d-flex">
-										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i class="fa fa-caret-down me-1 text-danger"></i>0.43%</span>
+										<span class="text-muted">*****</span>
+										<span class="ms-auto"><i class="fa fa-caret-down me-1 text-danger"></i>*****%</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6 col-xl-3 col-lg-6">
+						<!-- <div class="col-sm-6 col-xl-3 col-lg-6">
 							<div class="card custom-card">
 								<div class="card-body dash1">
 									<div class="d-flex">
@@ -420,215 +461,100 @@ include "includes/connection.php";
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<!--End  Row -->
 
 					<!-- Row -->
 					<div class="row row-sm">
-						<div class="col-sm-12 col-xl-12 col-lg-12">
-							<div class="card custom-card overflow-hidden">
-								<div class="card-body">
-								<?php if ($_SESSION['modulename'] == "Digital") { ?>
-									
-									<?php
-									$currentData = date('Y-m-d');
-									?>
-
-									<!-- Calendar Container -->
-									<div id='calendar-container'>
-										<div id='dmcalendar'></div>
-									</div>
-									
-									<?php }else { ?>
-										<?php
-									$currentData = date('Y-m-d');
-									?>
-
-									<!-- Calendar Container -->
-									<div id='calendar-container'>
-										<div id='othercalendar'></div>
-									</div>
-									<?php }?>
-								</div>
-							</div>
-						</div>
 						<div class="col-sm-12 col-xl-8 col-lg-8">
 							<div class="card custom-card overflow-hidden">
 								<div class="card-body">
-									<div class="card-option d-flex">
-										<div>
-											<h6 class="card-title mb-1">Overview of Sales Win/Lost</h6>
-											<p class="text-muted mb-0 card-sub-title">Compared to last month sales.</p>
+									
+									<?php if ($_SESSION['modulename'] == "Digital") { ?>
+
+										<?php
+										$currentData = date('Y-m-d');
+										?>
+
+										<!-- Calendar Container -->
+										<div id='calendar-container'>
+											<div id='dmcalendar'></div>
 										</div>
-										<div class="card-option-title ms-auto">
-											<div class="btn-group p-0">
-												<button class="btn btn-light btn-sm" type="button">Month</button>
-												<button class="btn btn-outline-light btn-sm" type="button">Year</button>
-											</div>
-										</div>
+
+									<?php } else { ?>
+										<?php
+										$currentData = date('Y-m-d');
+										?>
+
+										<!-- Calendar Container -->
+										<div id='calendar-container'>
+										<div id='othercalendar'></div>
 									</div>
-									<div>
-										<canvas id="sales"></canvas>
-									</div>
+									<?php } ?>
 								</div>
 							</div>
 						</div>
 						<div class="col-sm-12 col-lg-4 col-xl-4">
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Cost BreakDown</h6>
-										<p class="text-muted card-sub-title">Excepteur sint occaecat cupidatat non
-											proident.
-										</p>
-									</div>
-									<div class="row">
-										<div class="col-6 col-md-6 text-center">
-											<div class="mb-2">
-												<span class="peity-donut" data-peity='{ "fill": ["#eb6f33", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>4/7</span>
-											</div>
-											<p class="mb-1 tx-inverse">Marketing</p>
-											<h4 class="mb-1"><span>$</span>67,927</h4>
-											<span class="text-muted fs-12"><i class="fa fa-caret-up me-1 text-success"></i>54% last month</span>
-										</div>
-										<div class="col-6 col-md-6 text-center">
-											<div class="mb-2">
-												<span class="peity-donut" data-peity='{ "fill": ["#01b8ff", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>2/7</span>
-											</div>
-											<p class="mb-1 tx-inverse">Sales</p>
-											<h4 class="mb-1"><span>$</span>24,789</h4>
-											<span class="text-muted fs-12"><i class="fa fa-caret-down me-1 text-danger"></i>33% last month</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Monthly Profits</h6>
-										<p class="text-muted mb-2 card-sub-title">Excepteur sint occaecat cupidatat non
-											proident.
-										</p>
-									</div>
-									<h3><span>$</span>22,534</h3>
-									<div class="clearfix mb-3">
-										<div class="clearfix">
-											<span class="float-start text-muted">This Month</span>
-											<span class="float-end">75%</span>
-										</div>
-										<div class="progress mt-1">
-											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-70p bg-primary" role="progressbar">
-											</div>
-										</div>
-									</div>
-									<div class="clearfix">
-										<div class="clearfix">
-											<span class="float-start text-muted">Last Month</span>
-											<span class="float-end">50%</span>
-										</div>
-										<div class="progress mt-1">
-											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar progress-bar-xs wd-50p bg-success" role="progressbar">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Row -->
-
-					<!-- Row -->
-					<div class="row row-sm">
-						<div class="col-sm-12 col-lg-12  col-xl-4">
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Activity</h6>
-										<p class="text-muted mb-0 card-sub-title">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="activity-block">
-										<ul class="task-list">
-											<li>
-												<i class="task-icon bg-success"></i>
-												<h6>Successful Purchase<small class="float-end text-muted tx-11">29 Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #4567</span>
-											</li>
-											<li>
-												<i class="task-icon bg-secondary"></i>
-												<h6>New Registered Seller<small class="float-end text-muted tx-11">25
-														Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">User ID: #8976</span>
-											</li>
-											<li>
-												<i class="task-icon bg-primary"></i>
-												<h6>Order Verification<small class="float-end text-muted tx-11">14 Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #6290</span>
-											</li>
-											<li>
-												<i class="task-icon bg-info"></i>
-												<h6>New Item Added<small class="float-end text-muted tx-11">02 Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">Item ID: #0235</span>
-											</li>
-											<li>
-												<i class="task-icon bg-danger"></i>
-												<h6>Purchase Cancellation<small class="float-end text-muted tx-11">28
-														Sep
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #1905</span>
-											</li>
-											<li class="mb-0">
-												<i class="task-icon bg-warning"></i>
-												<h6>Overdue Shipments<small class="float-end text-muted tx-11">25 Sep
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #8902</span>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-lg-12 col-xl-4">
 							<div class="card custom-card pb-2">
 								<div class="card-body">
 									<div>
-										<h6 class="card-title mb-1">Top Users Conversion Rate</h6>
-										<p class="text-muted mb-0 card-sub-title">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
+										<h6 class="card-title mb-1">Monthly Productivity</h6>
+										<p class="text-muted mb-0 card-sub-title">Your productivity Score.</p>
 									</div>
 								</div>
 								<div class="user-manager scroll-widget border-top">
 									<div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/2.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Socrates Itumay</h6><small class="tx-11 tx-gray-500">Sales Manager1</small>
+										<?php
+										$query = "select * from employee order by  RAND()";
+										$select_posts = mysqli_query($connection, $query);
+										while ($row = mysqli_fetch_assoc($select_posts)) {
+
+											$id = $row['id'];
+											$post_title = $row['empname'];
+											$post_deptid = $row['department_id'];
+											$post_desigid = $row['desig_id'];
+											$post_deptname = "";
+											$post_designame = "";
+											$querydept = "select * from department where id='" .   $post_deptid   . "'";
+											$select_postsdept = mysqli_query($connection, $querydept);
+											while ($rowdept = mysqli_fetch_assoc($select_postsdept)) {
+												$post_deptname = $rowdept['department'];
+											}
+											$querydesig = "select * from designation where id='" .   $post_desigid   . "'";
+											$select_postsdesig = mysqli_query($connection, $querydesig);
+											while ($rowdesig = mysqli_fetch_assoc($select_postsdesig)) {
+												$post_designame = $rowdesig['designation'];
+											}
+
+
+
+										?>
+											<div class="d-flex pt-2 pb-2 border-bottom">
+												<div class="d-flex ms-3">
+													<span class="main-img-user">
+														<?php if (isset($row['emppic']) && $row['emppic'] !== "") { ?>
+															<img alt="avatar" src="../assets/img/users/2.jpg">
+														<?php	} else {
+
+															$colors = array('bg-pink', 'bg-blue', 'bg-green', 'bg-purple', 'bg-orange', 'bg-primary', 'bg-cyan', 'bg-success');
+															$randomColor = $colors[array_rand($colors)];
+														?>
+															<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
+																<?php echo strtoupper(substr($post_title, 0, 1)); ?>
+															</div>
+														<?php } ?>
+													</span>
+													<div class="ms-3">
+														<h6 class="mg-b-0"><?php echo $post_title;  ?></h6><small class="tx-11 tx-gray-500"><?php echo $post_designame;  ?></small>
+													</div>
+												</div>
+												<div class="ms-auto me-3">
+													<h6 class="mg-b-0 font-weight-bold">*****</h6><small class="tx-11 tx-gray-500">Productivity Score</small>
 												</div>
 											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">34%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/3.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Reynante Labares</h6><small class="tx-11 tx-gray-500">Sales Manager2</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">22%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
+										<?php } ?>
+										<!-- <div class="d-flex pt-2 pb-2">
 											<div class="d-flex ms-3">
 												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/4.jpg"></span>
 												<div class="ms-3">
@@ -638,107 +564,7 @@ include "includes/connection.php";
 											<div class="ms-auto me-3">
 												<h6 class="mg-b-0 font-weight-bold">18%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
 											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/5.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Mariane Galeon</h6><small class="tx-11 tx-gray-500">Sales Manager4</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">15%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/6.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Joyce Chua</h6><small class="tx-11 tx-gray-500">Sales Manager5</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">12%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/7.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Sonia Fraser</h6><small class="tx-11 tx-gray-500">Sales Manager5</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">11%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/4.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Owen Bongcaras</h6><small class="tx-11 tx-gray-500">Sales Manager3</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">18%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-lg-12 col-xl-4 ">
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Countrywise Sales</h6>
-										<p class="text-muted mb-0 card-sub-title">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
-									</div>
-								</div>
-								<div class="country-sales scroll-widget bd-t">
-									<div class="list-group">
-										<div class="list-group-item  d-flex border-end-0 border-start-0 border-top-0">
-											<i class="flag-icon flag-us flag-icon-squared"></i>
-											<p class="ms-3 mb-0">United States</p>
-											<span class="ms-auto font-weight-bold">$12,897</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-nl flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Netherlands</p>
-											<span class="ms-auto font-weight-bold">$11,789</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-gb flag-icon-squared"></i>
-											<p class="ms-3 mb-0">United Kingdom</p>
-											<span class="ms-auto font-weight-bold">$10,234</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-ca flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Canada</p>
-											<span class="ms-auto font-weight-bold">$9,104</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-au flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Australia</p>
-											<span class="ms-auto font-weight-bold">$16,205</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-si flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Slovenia</p>
-											<span class="ms-auto font-weight-bold">$18,165</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0 rounded-0">
-											<i class="flag-icon flag-de flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Denmark</p>
-											<span class="ms-auto font-weight-bold">$19,765</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-si flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Slovenia</p>
-											<span class="ms-auto font-weight-bold">$18,165</span>
-										</div>
-
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -746,110 +572,7 @@ include "includes/connection.php";
 					</div>
 					<!-- End Row -->
 
-					<!-- Row-->
-					<div class="row">
-						<div class="col-sm-12 col-xl-12 col-lg-12">
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Product Summary</h6>
-										<p class="text-muted card-sub-title mb-2">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
-									</div>
-									<div class="table-responsive br-3">
-										<table class="table table-bordered text-nowrap mb-0">
-											<thead>
-												<tr>
-													<th>#No</th>
-													<th>Client Name</th>
-													<th>Product ID</th>
-													<th>Product</th>
-													<th>Product Cost</th>
-													<th>Payment Mode</th>
-													<th>Status</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>#01</td>
-													<td>Sean Black</td>
-													<td>PRO12345</td>
-													<td>Mi LED Smart TV 4A 80</td>
-													<td>$14,500</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-success">Delivered</span></td>
-												</tr>
-												<tr>
-													<td>#02</td>
-													<td>Evan Rees</td>
-													<td>PRO8765</td>
-													<td>Thomson R9 122cm (48 inch) Full HD LED TV </td>
-													<td>$30,000</td>
-													<td>Cash on delivered</td>
-													<td><span class="badge bg-primary">Add Cart</span></td>
-												</tr>
-												<tr>
-													<td>#03</td>
-													<td>David Wallace</td>
-													<td>PRO54321</td>
-													<td>Vu 80cm (32 inch) HD Ready LED TV</td>
-													<td>$13,200</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-secondary">Pending</span></td>
-												</tr>
-												<tr>
-													<td>#04</td>
-													<td>Julia Bower</td>
-													<td>PRO97654</td>
-													<td>Micromax 81cm (32 inch) HD Ready LED TV</td>
-													<td>$15,100</td>
-													<td>Cash on delivered</td>
-													<td><span class="badge bg-info">Delivering</span></td>
-												</tr>
-												<tr>
-													<td>#05</td>
-													<td>Kevin James</td>
-													<td>PRO4532</td>
-													<td>HP 200 Mouse &amp; Wireless Laptop Keyboard </td>
-													<td>$5,987</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-danger">Shipped</span></td>
-												</tr>
-												<tr>
-													<td>#06</td>
-													<td>Theresa Wright</td>
-													<td>PRO6789</td>
-													<td>Digisol DG-HR3400 Router </td>
-													<td>$11,987</td>
-													<td>Cash on delivered</td>
-													<td><span class="badge bg-secondary">Delivering</span></td>
-												</tr>
-												<tr>
-													<td>#07</td>
-													<td>Sebastian Black</td>
-													<td>PRO4567</td>
-													<td>Dell WM118 Wireless Optical Mouse</td>
-													<td>$4,700</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-info">Add to Cart</span></td>
-												</tr>
-												<tr>
-													<td>#08</td>
-													<td>Kevin Glover</td>
-													<td>PRO32156</td>
-													<td>Dell 16 inch Laptop Backpack </td>
-													<td>$678</td>
-													<td>Cash On delivered</td>
-													<td><span class="badge bg-success">Delivered</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Row -->
+
 				</div>
 			</div>
 		</div>
@@ -921,6 +644,7 @@ include "includes/connection.php";
 	<script type="text/javascript" src="fullcalendar/dist/index.global.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
+		// ************ dm calendar ****************
 		document.addEventListener('DOMContentLoaded', function() {
 			// Function to generate a random color in hexadecimal format
 			function getRandomColor() {
@@ -1014,9 +738,20 @@ include "includes/connection.php";
 					Swal.fire({
 						title: 'View Event',
 						showCancelButton: true,
-		
-						html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '" readonly>' +
-							'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;font-size:15px;">' + description + '</textarea>',
+						html: '<div class="row">' +
+							'<div class="col-md-4">' +
+							'<label for="eventtitle" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Name:</label></div><div class="col-md-8">' +
+							'<input id="eventtitle" class="form-control" placeholder="Enter Event name" value="' + title + '"  readonly>' +
+							'</div>' +
+							'</div>' +
+							'<div class="row ">' +
+							'<div class="col-md-4">' +
+							'<label for="eventdescription" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Description:</label></div><div class="col-md-8">' +
+							'<textarea id="eventdescription" class="form-control" placeholder="Enter Work description" rows="2"  readonly>' + description + '</textarea>' +
+							'</div>' +
+							'</div><br>',
+						// html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '" readonly>' +
+						// 	'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;font-size:15px;">' + description + '</textarea>',
 						focusConfirm: false,
 						preConfirm: () => {
 							return [
@@ -1026,7 +761,7 @@ include "includes/connection.php";
 						}
 					}).then((result) => {
 
-					
+
 					})
 
 				}
@@ -1035,6 +770,209 @@ include "includes/connection.php";
 
 			calendar.render();
 		});
+
+		// ********** others calendar ********************
+
+		document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('othercalendar');
+
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	      	initialDate: '<?= $currentData ?>',
+	      	height: '600px',
+	      	selectable: true,
+	      	editable: true,
+	      	dayMaxEvents: true, // allow "more" link when too many events
+	      	events: 'fetcheventsnormal.php', // Fetch all events
+	      	select: function(arg) { // Create Event
+	        	
+	        	// Alert box to add event
+		        Swal.fire({
+				  	title: 'Add New Work',
+					showCancelButton: true,
+					confirmButtonText: 'Create',
+				
+				  	html:'<div class="row"><div class="col-md-4">'+
+					  '<label for="eventtitle" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Name:</label></div><div class="col-md-8">'+
+					  '<input id="eventtitle" class="form-control" placeholder="Name" style="width: 84%;"  ></div></div>' +
+				    '<div class="row "><div class="col-md-4"><label for="eventdescription" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Description:</label>'+
+					'</div><div class="col-md-8"><textarea id="eventdescription" class="form-control" placeholder="Description" style="width: 84%; height: 100px;"></textarea></div></div>',
+				  	focusConfirm: false,
+				  	preConfirm: () => {
+					    return [
+					      	document.getElementById('eventtitle').value,
+					      	document.getElementById('eventdescription').value
+					    ]
+				  	}
+				}).then((result) => {
+				  
+				  	if (result.isConfirmed) {
+				    	
+				    	var title = result.value[0].trim();
+				    	var description = result.value[1].trim();
+				    	var start_date = arg.startStr;
+				    	var end_date = arg.endStr;
+
+				    	if(title != '' && description != ''){
+
+				    		// AJAX - Add event
+				    		$.ajax({
+						  		url: 'ajaxfilenormal.php',
+						  		type: 'post',
+						  		data: {request: 'addEvent',title: title,description: description,start_date: start_date,end_date: end_date},
+						  		dataType: 'json',
+						  		success: function(response){
+
+						  			if(response.status == 1){
+
+						  				// Add event
+						  				calendar.addEvent({
+								            eventid: response.eventid,
+								            title: title,
+								            description: description,
+								            start: arg.start,
+								            end: arg.end,
+								            allDay: arg.allDay
+							          	}) 
+
+							          	// Alert message
+						  				Swal.fire(response.message,'','success');
+
+						  			}else{
+						  				// Alert message
+						  				Swal.fire(response.message,'','error');
+						  			}
+						  			
+						  		}
+						  	});
+				    	}
+				    	
+				  	}
+				})
+
+	        	calendar.unselect()
+	      	},
+	      	eventDrop: function (event, delta) { // Move event
+
+	      		// Event details
+	      		var eventid = event.event.extendedProps.eventid;
+	      		var newStart_date = event.event.startStr;
+	      		var newEnd_date = event.event.endStr;
+	           	
+	           	// AJAX request
+	           	$.ajax({
+					url: 'ajaxfilenormal.php',
+					type: 'post',
+					data: {request: 'moveEvent',eventid: eventid,start_date: newStart_date, end_date: newEnd_date},
+					dataType: 'json',
+					async: false,
+					success: function(response){
+
+						console.log(response);
+									
+					}
+				}); 
+
+	        },
+	      	eventClick: function(arg) { // Edit/Delete event
+	      		
+	      		// Event details
+	      		var eventid = arg.event._def.extendedProps.eventid;
+	      		var description = arg.event._def.extendedProps.description;
+	      		var title = arg.event._def.title;
+
+	      		// Alert box to edit and delete event
+	      		Swal.fire({
+				  	title: 'Edit Work',
+				  	showDenyButton: true,
+					showCancelButton: true,
+					confirmButtonText: 'Update',
+					denyButtonText: 'Delete',
+
+					html:'<div class="row"><div class="col-md-4">'+
+					  '<label for="eventtitle" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Name:</label></div><div class="col-md-8">'+
+					  '<input id="eventtitle" class="form-control" placeholder="Event name" style="width: 84%;"  value="'+ title +'" ></div></div>' +
+				    '<div class="row "><div class="col-md-4"><label for="eventdescription" class="form-label" style="font-size:15px;text-align:left;padding-bottom:20px;">Work Description:</label>'+
+					'</div><div class="col-md-8"><textarea id="eventdescription" class="form-control" placeholder="Event description" style="width: 84%; height: 100px;">' + description + '</textarea></div></div>',
+
+				  	// html:
+				    // '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="'+ title +'" >' +
+				    // '<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;">' + description + '</textarea>',
+				  	focusConfirm: false,
+				  	preConfirm: () => {
+					    return [
+					      	document.getElementById('eventtitle').value,
+					      	document.getElementById('eventdescription').value
+					    ]
+				  	}
+				}).then((result) => {
+				  
+				  	if (result.isConfirmed) { // Update
+				    	
+				    	var newTitle = result.value[0].trim();
+				    	var newDescription = result.value[1].trim();
+
+				    	if(newTitle != '' && newDescription != ''){
+
+				    		// AJAX - Edit event
+				    		$.ajax({
+								url: 'ajaxfilenormal.php',
+								type: 'post',
+								data: {request: 'editEvent',eventid: eventid,title: newTitle, description: newDescription},
+								dataType: 'json',
+								async: false,
+								success: function(response){
+
+									if(response.status == 1){
+										
+										// Refetch all events
+										calendar.refetchEvents();
+
+										// Alert message
+										Swal.fire(response.message, '', 'success');
+									}else{
+
+										// Alert message
+										Swal.fire(response.message, '', 'error');
+									}
+										
+								}
+							}); 
+				    	}
+				    	
+				  	} else if (result.isDenied) { // Delete
+
+				  		// AJAX - Delete Event
+				    	$.ajax({
+							url: 'ajaxfilenormal.php',
+							type: 'post',
+							data: {request: 'deleteEvent',eventid: eventid},
+							dataType: 'json',
+							async: false,
+							success: function(response){
+
+								if(response.status == 1){
+
+									// Remove event from Calendar
+									arg.event.remove();
+
+									// Alert message
+									Swal.fire(response.message, '', 'success');
+								}else{
+
+									// Alert message
+									Swal.fire(response.message, '', 'error');
+								}
+									
+							}
+						}); 
+				  	}
+				})
+	      		
+	      	}
+	    });
+
+	    calendar.render();
+	});
 	</script>
 </body>
 

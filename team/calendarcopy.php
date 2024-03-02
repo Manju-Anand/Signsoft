@@ -47,10 +47,10 @@ include "includes/connection.php";
 	<!-- Switcher css -->
 	<!-- <link href="../assets/switcher/css/switcher.css" rel="stylesheet">
 	<link href="../assets/switcher/demo.css" rel="stylesheet"> -->
-<!-- Include the necessary scripts (Bootstrap, jQuery, FullCalendar) -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.0/dist/fullcalendar.min.js"></script>
+	<!-- Include the necessary scripts (Bootstrap, jQuery, FullCalendar) -->
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.0/dist/fullcalendar.min.js"></script>
 
 </head>
 
@@ -131,27 +131,27 @@ include "includes/connection.php";
 			</div>
 		</div>
 		<!-- End Main Content-->
-										<!-- Add this HTML for the modal window -->
-										<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel">Add New Event</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <input id="eventtitle" class="form-control" placeholder="Event name">
-        <textarea id="eventdescription" class="form-control" placeholder="Event description" style="height: 100px;"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="createEventBtn">Create</button>
-      </div>
-    </div>
-  </div>
-</div>
+		<!-- Add this HTML for the modal window -->
+		<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="eventModalLabel">Add New Event</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input id="eventtitle" class="form-control" placeholder="Event name">
+						<textarea id="eventdescription" class="form-control" placeholder="Event description" style="height: 100px;"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="createEventBtn">Create</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Sidebar -->
 		<?php include 'includes/footer.php'; ?>
 		<!--End Footer-->
@@ -222,48 +222,54 @@ include "includes/connection.php";
 				editable: true,
 				dayMaxEvents: true, // allow "more" link when too many events
 				events: 'fetchevents.php', // Fetch all events
-			
+
 				select: function(arg) { // Create Event
 
 					$('#eventModal').modal('show');
 
-// Handle Create button click inside the modal
-$('#createEventBtn').on('click', function () {
-	var title = $('#eventtitle').val().trim();
-	var description = $('#eventdescription').val().trim();
-	var start_date = arg.startStr;
-	var end_date = arg.endStr;
+					// Handle Create button click inside the modal
+					$('#createEventBtn').on('click', function() {
+						var title = $('#eventtitle').val().trim();
+						var description = $('#eventdescription').val().trim();
+						var start_date = arg.startStr;
+						var end_date = arg.endStr;
 
-	if (title !== '' && description !== '') {
-		// AJAX - Add event
-		$.ajax({
-			url: 'ajaxfile.php',
-			type: 'post',
-			data: { request: 'addEvent', title: title, description: description, start_date: start_date, end_date: end_date },
-			dataType: 'json',
-			success: function (response) {
-				if (response.status == 1) {
-					// Add event
-					calendar.addEvent({
-						eventid: response.eventid,
-						title: title,
-						description: description,
-						start: arg.start,
-						end: arg.end,
-						allDay: arg.allDay
+						if (title !== '' && description !== '') {
+							// AJAX - Add event
+							$.ajax({
+								url: 'ajaxfile.php',
+								type: 'post',
+								data: {
+									request: 'addEvent',
+									title: title,
+									description: description,
+									start_date: start_date,
+									end_date: end_date
+								},
+								dataType: 'json',
+								success: function(response) {
+									if (response.status == 1) {
+										// Add event
+										calendar.addEvent({
+											eventid: response.eventid,
+											title: title,
+											description: description,
+											start: arg.start,
+											end: arg.end,
+											allDay: arg.allDay
+										});
+
+										// Alert message
+										$('#eventModal').modal('hide');
+										Swal.fire(response.message, '', 'success');
+									} else {
+										// Alert message
+										Swal.fire(response.message, '', 'error');
+									}
+								}
+							});
+						}
 					});
-
-					// Alert message
-					$('#eventModal').modal('hide');
-					Swal.fire(response.message, '', 'success');
-				} else {
-					// Alert message
-					Swal.fire(response.message, '', 'error');
-				}
-			}
-		});
-	}
-});
 
 
 
@@ -299,14 +305,14 @@ $('#createEventBtn').on('click', function () {
 				},
 				eventClick: function(arg) { // Edit/Delete event
 
-					
+
 					var eventid = arg.event._def.extendedProps.eventid;
 					var description = arg.event._def.extendedProps.description;
 					var orderid = arg.event._def.extendedProps.orderid;
 					var dmallotid = arg.event._def.extendedProps.dmallotid;
 					var title = arg.event._def.title;
 
-					
+
 					Swal.fire({
 						title: 'View Event',
 						showDenyButton: true,
@@ -314,7 +320,7 @@ $('#createEventBtn').on('click', function () {
 						// confirmButtonText: 'Update',
 						denyButtonText: 'Delete',
 						html: '<input id="eventtitle" class="swal2-input" placeholder="Event name" style="width: 84%;" value="' + title + '" readonly >' +
-													'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;"  readonly>' + description + '</textarea>',
+							'<textarea id="eventdescription" class="swal2-input" placeholder="Event description" style="width: 84%; height: 100px;"  readonly>' + description + '</textarea>',
 						focusConfirm: false,
 						preConfirm: () => {
 							return [
@@ -324,7 +330,7 @@ $('#createEventBtn').on('click', function () {
 						}
 					}).then((result) => {
 
-						if (result.isConfirmed) { 
+						if (result.isConfirmed) {
 
 							// var newTitle = result.value[0].trim();
 							// var newDescription = result.value[1].trim();

@@ -129,22 +129,22 @@ function addstaffRow() {
         // Text Box 3
         var cell6 = newRow.insertCell(5);
         cell6.innerHTML = "New";
-        //  cell15.classList.add('hidden-cell');
+         cell6.classList.add('hidden-cell');
 
         // Text Box 3
         var cell7 = newRow.insertCell(6);
         var textBox1 = document.getElementById("allotid");
         cell7.innerHTML = textBox1.value;  // Set the content of the cell to be empty
-        // cell7.classList.add('hidden-cell');
+        cell7.classList.add('hidden-cell');
 
         var cell8 = newRow.insertCell(7);
         var textBox1 = document.getElementById("orderid");
         cell8.innerHTML = textBox1.value;  // Set the content of the cell to be empty
-        // cell8.classList.add('hidden-cell');
+        cell8.classList.add('hidden-cell');
 
         var cell9 = newRow.insertCell(8);
                cell9.innerHTML = "";  // Set the content of the cell to be empty
-        // cell9.classList.add('hidden-cell');
+        cell9.classList.add('hidden-cell');
 
 
         // Clear input values after adding to the table
@@ -278,10 +278,10 @@ $(document).ready(function (e) {
         if (paystatus == 'Payment edited') {
             var confirmClose = confirm("You have edited the details and not saved yet. Do you want to continue with form cancel?");
             if (confirmClose) {
-                window.location = "orderlist.php";
+                window.location = "worklist.php";
             }
         } else {
-            window.location = "orderlist.php";
+            window.location = "worklist.php";
         }
         return false;
     });

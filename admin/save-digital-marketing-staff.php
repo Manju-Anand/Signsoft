@@ -77,8 +77,9 @@ echo "editid" . $editid ."!";
 
 
     // Perform the SQL query to insert data into the database
-    // if ($recordstatus == "Edited") {
+    // 
       if (isset($row['editid']) && $row['editid'] !== "") {
+        // if ($recordstatus == "Edited") {
       $sql = "UPDATE staff_dm_allocation SET payment='" . $Payment . "',postings='" . $Postings . "',staffname='" . $staffName . "',staffid='" . $staffid . "',frequency='" . $Frequency . "',
       startdate='" . $StartDate . "',enddate='" . $EndDate . "',promoamt='" . $promoamt . "',modified='" . $postdate . "',orderid='" . $orderid . "',status='" . $recordstatus . "'
       ,assigndate='" . $assigndate . "' WHERE id='" . $editid . "'";
@@ -88,6 +89,7 @@ echo "editid" . $editid ."!";
       } else {
         echo "staff_dm_allocation updated successfully";
       }
+    // }
       // dm_reports adding
       $sql = "INSERT INTO dm_reports (orderid,dm_allot_id,dmreport_date,status,created,empid) VALUES
       ('$orderid','$editid', '$EndDate', 'Not Done','$postdate','$staffid')";

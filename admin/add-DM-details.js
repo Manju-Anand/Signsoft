@@ -308,7 +308,7 @@ function saveDataToDatabase() {
                 // Handle the response from the server if needed
                 console.log("result: " + xhr.responseText);
                 alert("Succesfully Saved Data.");
-                // window.location.href = 'add-DM-Staff-details.php';
+                window.location.href = 'add-DM-Staff-details.php';
             } else {
                 // Handle errors if any
                 console.error("Error saving data: " + xhr.status);
