@@ -156,6 +156,19 @@ ini_set('display_errors', 1);
 						<span class="side-menu__label">Dashboard</span>
 					</a>
 				</li>
+				<!-- ************************************** -->
+				<li class="side-item side-item-category">Work Status</li>
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="dailyworkstatus.php">
+							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__label">Daily Work entry</span>
+						</a>
+						</li>
+						
+
+
+				<!-- ******************************************************** -->
+
 				<?php if ($_SESSION['modulename'] == "Sales") { ?>
 					<li class="side-item side-item-category">Leads</li>
 					<li class="slide">
@@ -238,7 +251,7 @@ ini_set('display_errors', 1);
 											</a>
 
 										<?php
-										} elseif ($hod === "") {
+										} elseif ($hod === "No") {
 										?>
 											<a class="side-menu__item" data-bs-toggle="slide" href="gdsubworklist.php">
 												<span class="side-menu__icon"><i class="fe fe-calendar side_menu_img"></i></span>

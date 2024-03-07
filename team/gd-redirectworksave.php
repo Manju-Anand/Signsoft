@@ -30,7 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $work_status="";
     $redirect_status="";
     $posteridea="";
-
+// ***************************** delete if already redirected *********************
+$query = "DELETE FROM staff_dm_graphics_allocation WHERE redirect_recordid = '" . $recordId . "'";
+$delete_query = mysqli_query($connection, $query);
+if (!$delete_query) {
+    die('QUERY FAILED' . mysqli_error($connection));
+}
+// **********************************************
     $query = "select * from staff_dm_graphics_allocation where id='" . $recordId ."'";
     $select_posts = mysqli_query($connection, $query);
     while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -45,12 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
     }
     // Perform database insertion
-    $sql = "INSERT INTO staff_dm_graphics_allocation (orderid,staffid,postings,content, status, assigndate, work_status,created,assigned_staffid,redirect_status,posteridea,deadline)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO staff_dm_graphics_allocation (orderid,staffid,postings,content, status, assigndate, work_status,created,assigned_staffid,redirect_status,posteridea,deadline,redirect_recordid)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $connection->prepare($sql);
     
     // Bind parameters
-    $stmt->bind_param('iissssssisss', $orderid, $selectedEmployeeId,  $postings, $content,  $status, $assigndate, $work_status, $postdate, $assignedStaffid, $redirect_status, $posteridea, $deadline);
+    $stmt->bind_param('iissssssissss', $orderid, $selectedEmployeeId,  $postings, $content,  $status, $assigndate, $work_status, $postdate, $assignedStaffid, $redirect_status, $posteridea, $deadline,$recordId);
 
     // Execute the statement
     if ($stmt->execute()) {

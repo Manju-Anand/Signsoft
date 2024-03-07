@@ -212,7 +212,7 @@ if ($resultorders->num_rows > 0) {
                                                             <label class="col-md-3 form-label" for="contacteddate">Categories :</label>
                                                             <div class="col-md-9">
                                                                 
-                                                                <select class="form-control select2" multiple="multiple" id="mulselect[]" name="mulselect[]">
+                                                                <select class="form-control select2" multiple="multiple" id="mulselect" name="mulselect[]">
                                                                     <?php
                                                                     $presentchk = "false";
                                                                     $sql = "SELECT * FROM category";
@@ -229,7 +229,7 @@ if ($resultorders->num_rows > 0) {
                                                                             }
 
                                                                     ?>
-                                                                            <option <?php if ($presentchk == "true") { ?> selected <?php } ?> value="<?php echo $row['id'];  ?>">
+                                                                            <option <?php if ($presentchk == "true") { ?> selected <?php } ?> value="<?php echo $row['id'];  ?>" data-questions="<?php echo $row['id'] ?>">
                                                                                 <?php echo $row['category'];  ?>
                                                                             </option>
                                                                     <?php }
@@ -241,37 +241,12 @@ if ($resultorders->num_rows > 0) {
                                                         </div>
 
 
-                                                        <div class="row mb-4">
+                                                        <div class="row mb-4"  id="ajaxresult">
                                                     
                                                             <label class="col-md-3 form-label" for="contacteddate">Sub-Categories :</label>
                                                             <div class="col-md-9">
                                                                 <select class="form-control select2" multiple="multiple" id="mulselectsub[]" name="mulselectsub[]">
-                                                                    <?php
-                                                                
-                                                                    $presentchk = "false";
-                                                                    $sql = "SELECT * FROM subcategory";
-                                                                    $result = $connection->query($sql);
-                                                                    if ($result->num_rows > 0) {
-                                                                      
-                                                                        while ($row = $result->fetch_assoc()) {
-                                                                         
-                                                                            $presentchk = "false";
-                                                                            $sqlcatcheck = "SELECT * FROM order_subcategory where order_id='" . $orderid . "' and subcategory_id ='" . $row['id'] . "'";
-                                                                            $resultcatcheck = $connection->query($sqlcatcheck);
-                                                                            if ($resultcatcheck->num_rows > 0) {
-                                                                                while ($rowcatcheck = $resultcatcheck->fetch_assoc()) {
-                                                                              
-
-                                                                                    $presentchk = "true";
-                                                                                }
-                                                                            }
-
-                                                                    ?>
-                                                                            <option <?php if ($presentchk == "true") { ?>selected <?php } ?> value="<?php echo $row['id'];  ?>">
-                                                                                <?php echo $row['subcategory'];  ?>
-                                                                            </option>
-                                                                    <?php }
-                                                                    } ?>
+                                                               
 
                                                                 </select>
                                                             </div>
@@ -505,11 +480,27 @@ if ($resultorders->num_rows > 0) {
                         return false;
                     });
 
-                    $('#mulselect').delegate('', 'click change', function() {
-                        var ordersValueid = $('#mulselect').val();
-                        console.log(ordersValueid);
+                    // $('#mulselect').delegate('', 'click change', function() {
+                    //     var ordersValueid = $('#mulselect').val();
+                    //     console.log(ordersValueid);
+                    // });
+
+                    // $("#mulselect").on("change", function() {
+                        $('#mulselect').delegate('', 'click change', function() {
+                            alert("adada");
+                            var fname = $(this).find(":selected").attr("data-questions");
+                            $.ajax({
+                                type: "POST",
+                                url: "ajaxcombosubcategory.php",
+                                data: "fname=" + fname,
+                                success: function(data) {
+                                    $('#ajaxresult').html(data);
+                                }
+                            });
+                        });
                     });
-                });
+
+               
 
 
 
