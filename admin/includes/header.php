@@ -262,10 +262,17 @@ ini_set('display_errors', 1);
 							</li>
 							
 							<li class="side-item side-item-category">Digital Marketing</li>
-							<li class="slide">
+							<!-- <li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="add-DM-Staff-details.php">
 									<span class="side-menu__icon"><i class="fe fe-users side_menu_img"></i></span>
 									<span class="side-menu__label">Staff Allocation</span>
+								</a>
+								
+							</li> -->
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="staffallocationlist.php">
+									<span class="side-menu__icon"><i class="fe fe-users side_menu_img"></i></span>
+									<span class="side-menu__label">Staff Allocation List</span>
 								</a>
 								
 							</li>
@@ -283,7 +290,28 @@ ini_set('display_errors', 1);
 								</a>
 								
 							</li>
-
+							<li class="side-item side-item-category">Work Details</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="workdetailslist-graphics.php">
+									<span class="side-menu__icon"><i class="fe fe-users side_menu_img"></i></span>
+									<span class="side-menu__label">Graphics Work Details</span>
+								</a>
+								
+							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="workdetailslist-web.php">
+									<span class="side-menu__icon"><i class="fe fe-align-left side_menu_img"></i></span>
+									<span class="side-menu__label">Web work Details</span>
+								</a>
+								
+							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="dmstaffclienthandle.php">
+									<span class="side-menu__icon"><i class="fe fe-more-vertical side_menu_img"></i></span>
+									<span class="side-menu__label">DM work Details</span>
+								</a>
+								
+							</li>
 							<li class="side-item side-item-category">Masters</li>
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">

@@ -278,10 +278,10 @@ $(document).ready(function (e) {
         if (paystatus == 'Payment edited') {
             var confirmClose = confirm("You have edited the details and not saved yet. Do you want to continue with form cancel?");
             if (confirmClose) {
-                window.location = "orderlist.php";
+                window.location = "gdsubworklist.php";
             }
         } else {
-            window.location = "orderlist.php";
+            window.location = "gdsubworklist.php";
         }
         return false;
     });
