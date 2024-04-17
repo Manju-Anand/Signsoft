@@ -170,9 +170,9 @@ if(isset($_GET['delete']))
                                                 $sqlwsdate1 = "SELECT * FROM dailyworkstatus where work_date ='" . date('d-m-Y', $currentDate)  . "' and emp_id = '" . $_SESSION['empid'] . "'";
                                                 $resultwsdate1 = $connection->query($sqlwsdate1);
                                                 if ($resultwsdate1->num_rows > 0) {
-                                                    echo "1";
+                                                 
                                                     while ($rowwsdate1 = $resultwsdate1->fetch_assoc()) {
-                                                       echo "2"; 
+                                                     
                                                         $id= $rowwsdate1['id'];
                                                         $i = $i + 1;
                                             ?>

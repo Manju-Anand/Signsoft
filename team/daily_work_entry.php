@@ -298,6 +298,21 @@ include "includes/connection.php";
     <script src="../assets/switcher/js/switcher.js"></script>
     <script src="notification.js"></script>
     <script src="save_data.js"></script>
+    <script>
+        $(document).ready(function() {
+         
+
+            $('#cancel').delegate('','click change',function(){
+                window.location = "dailyworkstatus.php";
+                return false;
+            });
+
+
+
+
+        });
+
+    </script>
 </body>
 
 </html>

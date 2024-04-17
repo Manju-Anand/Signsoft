@@ -242,7 +242,7 @@ if ($result->num_rows > 0) {
                                         </div>
                                         <div style="width:100%;text-align:right;padding: right 700px;">
                                             <!-- margin-right:300px;my-4-->
-                                            <button class="btn ripple btn-primary confirm-cash success" type="button" id="save-button" style="width:200px">Save Details</button>
+                                            <button class="btn ripple btn-primary confirm-cash success" type="button" id="update-button" style="width:200px">Save Details</button>
                                             <button class="btn ripple btn-secondary" name="cancel" id="cancel" style="width:200px">Cancel</button>
                                         </div>
                                     </div>
@@ -312,7 +312,22 @@ if ($result->num_rows > 0) {
     <!-- Switcher js -->
     <script src="../assets/switcher/js/switcher.js"></script>
     <script src="notification.js"></script>
-    <script src="save_data.js"></script>
+    <script src="update_data.js"></script>
+    <script>
+        $(document).ready(function() {
+
+
+            $('#cancel').delegate('','click change',function(){
+                window.location = "dailyworkstatus.php";
+                return false;
+            });
+
+
+
+
+        });
+
+    </script>
 </body>
 
 </html>
