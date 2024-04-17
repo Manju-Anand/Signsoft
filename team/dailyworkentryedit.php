@@ -14,6 +14,18 @@ if (isset($_GET['logout'])) {
 }
 
 include "includes/connection.php";
+$getid=$_GET['edit'];
+$workdate="";
+
+$sql = "SELECT * FROM dailyworkstatus where id='" . $getid . "'";
+$result = $connection->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    $workdate=$row['work_date'];
+  }}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +65,7 @@ include "includes/connection.php";
         }
 
         /* Apply styles to the entire table */
-        #dynamic-table {
+        #example1 {
             width: 100%;
             border-collapse: collapse;
             border: 1px solid #ccc;
@@ -66,7 +78,7 @@ include "includes/connection.php";
         }
 
         /* Apply styles to table header cells */
-        #dynamic-table th {
+        #example1 th {
             background-color: #f2f2f2;
             border: 1px solid #ccc;
             padding: 10px;
@@ -79,96 +91,97 @@ include "includes/connection.php";
         }
 
         /* Apply styles to table data cells */
-        #dynamic-table td {
+        #example1 td {
             border: 1px solid #ccc;
             padding: 15px;
             /* text-align: center; Center-align header cells */
         }
 
         /* Apply alternating row colors for better readability */
-        #dynamic-table tr:nth-child(even) {
+        #example1 tr:nth-child(even) {
             background-color: #f9f9f9;
         }
 
         /* Apply hover effect on table rows */
-        #dynamic-table tr:hover {
+        #example1 tr:hover {
             background-color: #e0e0e0;
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
     <script>
         $(document).ready(function() {
 
-            const currentDate = new Date();
-            const currentMonthNumber = currentDate.getMonth() + 1; // Adding 1 to match regular month numbering
-            fetchData(currentMonthNumber);
+            var myDate = new Date(<?php echo $workdate; ?>);
+            // Get the month number (0-indexed, where January is 0 and December is 11)
+            var monthNumber = myDate.getMonth() + 1; // Adding 1 to get 1-indexed month number
+            fetchData(monthNumber);
 
             // Function to fetch data from the database
             function fetchData(month) {
-                const currentDate1 = new Date();
-                const inputDate = new Date(currentDate1);
 
-                const day = String(inputDate.getDate()).padStart(2, '0');
-                const monthname = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-                const year = inputDate.getFullYear();
-
-                const convertedDate = `${day}-${monthname}-${year}`;
-                // Assuming you have a server-side script (e.g., PHP) to handle the database query
                 $.ajax({
                     type: "POST",
-                    url: "fetch_data_daily.php",
+                    url: "fetch_data_daily_edit.php",
                     data: {
                         month: month,
-                        tdate: convertedDate
+                        tdate: "<?php echo $workdate; ?>",
+                        tid:"<?php echo $getid; ?>"
                     },
                     success: function(response) {
                         // Process the retrieved data
+
                         console.log(response);
                         var data = JSON.parse(response);
                         createTable(data);
                     }
                 });
-
+               
             }
 
             // Function to create the HTML table
             function createTable(data) {
                 // Clear any existing table
-                $('#dynamic-table').empty();
+                $('#example1').empty();
 
                 // Create table header
                 var headerRow = "<tr><th style='width:5%;'}>#</th><th>Questions</th>";
-                headerRow += "<th>" + data.daysInMonth + "</th>";
-                headerRow += "</tr>";
+                    headerRow += "<th>" + data.daysInMonth+ "</th>";
+                    headerRow += "</tr>";
 
 
                 // Append the table header row
-                $('#dynamic-table').append(headerRow);
+                $('#example1').append(headerRow);
 
                 // Create table rows with data, ist coulmn qustions and second one '0' 
                 for (var i = 0; i < data.questions.length; i++) {
-                    var k = i + 1;
+                    var k= i+1;
                     var rowData = "<tr><td >" + k + "</td><td>" + data.questions[i].question + "</td>";
-                    rowData += "<td class='hidden-cell'>" + data.questions[i].qid + "</td>";
-                    if (data.questions[i].qtype === 'Count') {
-
-                        rowData += "<td class='numeric-editable' contenteditable='true'></td>";
-                    } else {
-                        rowData += "<td contenteditable='true'></td>";
+                        rowData += "<td class='hidden-cell'>" + data.questions[i].qid + "</td>";
+                        rowData += "<td class='hidden-cell'>" + data.questions[i].workdate + "</td>";
+                        rowData += "<td class='hidden-cell'>" + data.questions[i].workstatusid + "</td>";
+                        rowData += "<td class='hidden-cell'>" + data.questions[i].id + "</td>";
+                           if (data.questions[i].qtype === 'Count'){
+                        rowData += "<td class='numeric-editable' contenteditable='true'>" + data.questions[i].ans + "</td>";
+                    }else{
+                        rowData += "<td contenteditable='true'>" + data.questions[i].ans + "</td>";
                     }
-                    rowData += "</tr>";
+
+                        rowData += "</tr>";
 
                     // Append each row to the table
-                    $('#dynamic-table').append(rowData);
+                    $('#example1').append(rowData);
                 }
-                // Attach input event listener to numeric-editable cells
-                $('.numeric-editable').on('input', function() {
-                    this.textContent = this.textContent.replace(/[^0-9.]/g, ''); // Allow only numeric and dot characters
-                });
+                  // Attach input event listener to numeric-editable cells
+                 $('.numeric-editable').on('input', function() {
+                        this.textContent = this.textContent.replace(/[^0-9.]/g, ''); // Allow only numeric and dot characters
+                    });
             }
 
 
         });
+      
+
     </script>
 </head>
 
@@ -212,7 +225,9 @@ include "includes/connection.php";
                         </div>
                     </div>
                     <!-- End Page Header -->
-
+                    <?php
+                    echo $workdate;
+                    ?>
                     <!-- Row -->
                     <div class="row sidemenu-height">
                         <div class="col-lg-12">
@@ -222,13 +237,13 @@ include "includes/connection.php";
 
                                         <div class="table-responsive">
 
-                                            <table id="dynamic-table"></table>
-
+                                            <!-- <table class="table" id="example1" ></table> -->
+                                            <table class="table"  id="example1" ></table>
                                         </div>
                                         <div style="width:100%;text-align:right;padding: right 700px;">
                                             <!-- margin-right:300px;my-4-->
-                                            <button class="btn btn-gradient-success  btn-rounded mb-4 mt-4 mr-2  confirm-cash success" type="button" id="save-button" style="width:200px">Save Details</button>
-                                            <button class="btn btn-gradient-dark  btn-rounded mb-4 mt-4 mr-2" name="cancel" id="cancel" style="width:200px">Cancel</button>
+                                            <button class="btn ripple btn-primary confirm-cash success" type="button" id="save-button" style="width:200px">Save Details</button>
+                                            <button class="btn ripple btn-secondary" name="cancel" id="cancel" style="width:200px">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
@@ -271,7 +286,20 @@ include "includes/connection.php";
 
     <!-- Sidebar js-->
     <script src="../assets/plugins/sidebar/sidebar.js"></script>
-
+<!-- DATA TABLE JS-->
+<script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+            <script src="../assets/plugins/datatable/js/dataTables.bootstrap5.js"></script>
+            <script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+            <script src="../assets/js/table-data.js"></script>
+            <script src="../assets/plugins/datatable/js/buttons.bootstrap5.min.js"></script>
+            <script src="../assets/plugins/datatable/js/jszip.min.js"></script>
+            <script src="../assets/plugins/datatable/pdfmake/pdfmake.min.js"></script>
+            <script src="../assets/plugins/datatable/pdfmake/vfs_fonts.js"></script>
+            <script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
+            <script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
+            <script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
+            <script src="../assets/plugins/datatable/dataTables.responsive.min.js"></script>
+            <script src="../assets/plugins/datatable/responsive.bootstrap5.min.js"></script>
     <!-- Sticky js-->
     <script src="../assets/js/sticky.js"></script>
 

@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const saveButton = document.getElementById("save-button");
 
     saveButton.addEventListener("click", function() {
-        const tableRows = document.querySelectorAll("#dynamic-table tr");
+        const tableRows = document.querySelectorAll("#example1 tr");
         const dataToSave = [];
 
         // Skip the first row (header)
