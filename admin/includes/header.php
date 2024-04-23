@@ -337,6 +337,7 @@ ini_set('display_errors', 1);
 														<li><a href="designation.php" class="slide-item">Designation</a></li>
 														<li><a href="employeelist.php" class="slide-item">Employees</a></li>
 														<li><a href="questions.php" class="slide-item">Questions</a></li>
+														<li><a href="worktracker.php" class="slide-item">Tracker Settings</a></li>
 													</ul>
 													
 												</div>
