@@ -153,7 +153,7 @@ $mainorderid = "";
                                                         <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
                                                             <option value="" disabled selected>Select Order Entry</option>
                                                             <?php
-                                                            $queryorder = "select * from order_customers where order_status='Active' order by id desc";
+                                                            $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' order by id desc";
                                                             $select_postsorder = mysqli_query($connection, $queryorder);
                                                             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
                                                                 $mainorderid = $roworder['id'];

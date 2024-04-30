@@ -17,18 +17,18 @@ include "includes/connection.php";
 function showorderlist()
 {
     global $connection;
-    $query = "select * from order_customers where ordertype='External' order by id desc";
+    $query = "select * from order_customers where ordertype='Internal' order by id desc";
     $select_posts = mysqli_query($connection, $query);
     $i = 0;
     while ($row = mysqli_fetch_assoc($select_posts)) {
         $id = $row['id'];
         $post_custName= $row['custName'];
-        $post_brandName = $row['brandName'];
+        $post_brandName = $row['projectname'];
         $post_order_status = $row['order_status'];
         // $post_created = $row['created'];
         // $post_modified = $row['modified'];
-        $post_custPhone = $row['custPhone'];
-        $post_custEmail = $row['custEmail'];
+        $post_custPhone = $row['projectdescription'];
+        $post_custEmail = $row['quotedAmt'];
 
 
         $i = $i + 1;
@@ -66,9 +66,10 @@ if ($post_order_status == 'Closed'){
                 
     echo "<td><span class='badge bg-gray' style='font-size:15px;'>$post_order_status</span></td>";
 }
-        echo "<td><a class='btn btn-sm btn-warning' href='view-order.php?edit={$id}' title='View' style='color:white'>
-        <span class='fe fe-eye'> </span></a>&nbsp;<a class='btn btn-sm btn-primary' href='edit-order.php?edit={$id}' title='Edit' style='color:white'>
-        <span class='fe fe-edit'> </span></a>&nbsp;<a class='btn btn-sm btn-danger' onclick='javascript:confirmationDelete($(this));return false;' href='orderlist.php?delete={$id}' class='text-inverse' id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>
+        echo "<td><a class='btn btn-sm btn-warning' href='view-inorder.php?edit={$id}' title='View' style='color:white'>
+        
+        <span class='fe fe-eye'> </span></a>&nbsp;<a class='btn btn-sm btn-primary' href='edit-inorder.php?edit={$id}' title='Edit' style='color:white'>
+        <span class='fe fe-edit'> </span></a>&nbsp;<a class='btn btn-sm btn-danger' onclick='javascript:confirmationDelete($(this));return false;' href='inorderlist.php?delete={$id}' class='text-inverse' id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>
         <span class='fe fe-trash-2'> </span></a>
         </td>";
         // echo "<td>$post_created</td>";
@@ -168,7 +169,7 @@ function deleteorderlist()
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Order List</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">Internal Order List</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Orders</li>
@@ -176,7 +177,7 @@ function deleteorderlist()
                         </div>
                         <div class="btn-list">
                             <!-- <a class="btn ripple btn-primary" href="javascript:void(0);"><i class="fe fe-external-link"></i> Export</a> -->
-                            <a class="btn ripple btn-success" href="add-order.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New Order</a>
+                            <a class="btn ripple btn-success" href="add-inorder.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New Order</a>
                             <!-- <a class="btn ripple btn-info" href="javascript:void(0);"><i class="fe fe-help-circle"></i> Help</a>
 						<a class="btn ripple btn-danger dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="true">
@@ -200,7 +201,7 @@ function deleteorderlist()
                             <div class="card custom-card overflow-hidden">
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
-                                        <h6 class="card-title mb-1">List of Orders</h6>
+                                        <h6 class="card-title mb-1">List of Internal Orders</h6>
                                         <!-- <p class="text-muted card-sub-title">Searching, ordering and paging goodness will be
 										immediately added to the table, as shown in this example.</p> -->
                                     </div>
@@ -208,13 +209,13 @@ function deleteorderlist()
                                         <table class="table" id="example3">
                                             <thead>
                                                 <tr>
-                                                    <th class="wd-1p">#</th>
-                                                    <th class="wd-20p">Customer Name</th>
-                                                    <th class="wd-20p">Brand Name</th>
-                                                    <th class="wd-10p">Phone no</th>
-                                                    <th class="wd-10p">Emailid</th>
-                                                    <th class="wd-20p">Order Status</th>
-                                                    <th class="wd-20p">Action</th>
+                                                    <th >#</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Project Name</th>
+                                                    <th>Description</th>
+                                                    <th>Quoted Amount</th>
+                                                    <th>Order Status</th>
+                                                    <th>Action</th>
                                                     <!-- <th class="wd-20p">Created</th>
                                                     <th class="wd-20p">Modified</th> -->
                                                     

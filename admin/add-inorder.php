@@ -74,7 +74,7 @@ include "includes/connection.php";
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Add Order</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">Add Internal Order</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Order Entry</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Details</li>
@@ -104,7 +104,7 @@ include "includes/connection.php";
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Add New Order</div>
+                                    <div class="card-title">Add New Internal Order</div>
                                 </div>
                                 <form id="adddesig" method="post" action="" enctype="multipart/form-data">
                                     <div class="row">
@@ -116,55 +116,30 @@ include "includes/connection.php";
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="empname">Customer Name :</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="form-control" id="cusname" name="cusname" placeholder="Customer Name" required>
+                                                        <input type="text" class="form-control" id="cusname" name="cusname" placeholder="Customer Name" value="Signefo" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="empname">Brand Name :</label>
+                                                    <label class="col-md-3 form-label" for="empname">Project Name :</label>
                                                     <div class="col-md-9">
-                                                        <input type="text" class="form-control" id="brandname" name="brandname" placeholder="Brand Name" required>
+                                                        <input type="text" class="form-control" id="brandname" name="brandname" placeholder="Project Name" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="addr">Address :</label>
+                                                    <label class="col-md-3 form-label" for="addr">Project Description :</label>
                                                     <div class="col-md-9">
                                                         <textarea class="form-control" name="addr" id="addr" palceholder="Here Address" rows="4"></textarea>
                                                     </div>
                                                 </div>
-
                                                 <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="poneno">Phone No :</label>
+                                                    <label class="col-md-3 form-label" for="qutamt">Quoted Amount :</label>
                                                     <div class="col-md-9">
-                                                        <input type="number"  pattern="[6-9]\d{9}" class="form-control" name="phoneno" id="phoneno" placeholder="" required>
+                                                        <input type="text" class="form-control" id="qutamt" name="qutamt" placeholder="Quoted Amount" required>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="emailid">Email ID :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="email"   pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" name="emailid" id="emailid" class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="contacteddate">Contacted Date :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="date" name="contacteddate" id="contacteddate" class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="contactedtime">Contacted Time :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="time" name="contactedtime" id="contactedtime" class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <!-- -->
-
-
-                                                <!-- Row -->
-
-                                                <!--End Rowcontent-->
-
-
+                                               
+                                              
 
                                             </div>
 
@@ -259,18 +234,8 @@ include "includes/connection.php";
                                                 </div>
                                                 <!-- ============================================================= -->
 
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="qutamt">Quoted Amount :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="text" class="form-control" id="qutamt" name="qutamt" placeholder="Quoted Amount" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="leadsource">Lead Source :</label>
-                                                    <div class="col-md-9">
-                                                        <input type="text" class="form-control" id="leadsource" name="leadsource" placeholder="Lead Source" required>
-                                                    </div>
-                                                </div>
+                                               
+                                              
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="status">Order Status :</label>
                                                     <div class="col-md-9">
@@ -284,13 +249,7 @@ include "includes/connection.php";
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-4">
-                                                    <label class="col-md-3 form-label" for="statusreason">Status Reason<br>[If any] :</label>
-                                                    <div class="col-md-9">
-                                                        <textarea class="form-control" name="statusreason" id="statusreason" palceholder="Here statusreason" rows="4"></textarea>
-
-                                                    </div>
-                                                </div>
+                                              
 
 
                                             </div>
@@ -311,33 +270,27 @@ include "includes/connection.php";
                                     <?php
                                     if (isset($_POST['submit'])) {
                                         $cusname = $_POST["cusname"];
-                                        $brandname = $_POST["brandname"];
+                                        $projectname = $_POST["brandname"];
 
-                                        $addr = $_POST["addr"];
-                                        $phoneno = $_POST["phoneno"];
-                                        $emailid = $_POST["emailid"];
-                                        $contacteddate = $_POST["contacteddate"];
-                                        $contactedtime = $_POST["contactedtime"];
+                                        $projectdescription = $_POST["addr"];
+                                     
 
                                         $qutamt = $_POST["qutamt"];
-                                        $leadsource = $_POST["leadsource"];
+                                       
                                         $orderstatus = $_POST["status"];
-                                        $statusreason = $_POST["statusreason"];
+                                      
 
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
 
-                                        $sql = "INSERT INTO order_customers (custName,brandName,addr,custPhone,custEmail,contactDate,contactTime,quotedAmt,leadSource,created,modified,lead_entered,
-                                        empid,order_status,status_reason,ordertype) 
-                                        values('" . mysqli_real_escape_string($connection, $cusname) . "','" . mysqli_real_escape_string($connection, $brandname) . "',
-                                                '" . mysqli_real_escape_string($connection, $addr) . "','" . mysqli_real_escape_string($connection, $phoneno) . "',
-                                                                '" . mysqli_real_escape_string($connection, $emailid) . "','" . mysqli_real_escape_string($connection, $contacteddate) . "',
-                                                                '" . mysqli_real_escape_string($connection, $contactedtime) . "',
-                                                                '" . mysqli_real_escape_string($connection, $qutamt) . "','" . mysqli_real_escape_string($connection, $leadsource) . "',
+                                        $sql = "INSERT INTO order_customers (custName,projectname,projectdescription,quotedAmt,created,modified,lead_entered,
+                                        empid,order_status,ordertype) 
+                                        values('" . mysqli_real_escape_string($connection, $cusname) . "','" . mysqli_real_escape_string($connection, $projectname) . "',
+                                                '" . mysqli_real_escape_string($connection, $projectdescription) . "','" . mysqli_real_escape_string($connection, $qutamt) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','Administrator',
                                                                 '" . mysqli_real_escape_string($connection, $_SESSION['adminempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
-                                                                '" . mysqli_real_escape_string($connection, $statusreason) . "','External')";
+                                                               'Internal')";
 
                                         if ($connection->query($sql) === TRUE) {
 
@@ -391,7 +344,7 @@ include "includes/connection.php";
 
 
 
-                                            header("Location: orderlist.php");
+                                            header("Location: inorderlist.php");
                                         } else {
                                             echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                         }
@@ -478,25 +431,14 @@ include "includes/connection.php";
     <script>
         $(document).ready(function(e) {
             $('#cancel').delegate('', 'click change', function() {
-                window.location = "orderlist.php";
+                window.location = "inorderlist.php";
                 return false;
             });
         });
 
      
 
-        function togglePasswordVisibility(inputId) {
-            const passwordField = document.getElementById(inputId);
-            const togglePassword = document.querySelector(`[data-toggle="${inputId}"]`);
-
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                togglePassword.textContent = "👁️";
-            } else {
-                passwordField.type = "password";
-                togglePassword.textContent = "👁️";
-            }
-        }
+      
     </script>
 </body>
 
