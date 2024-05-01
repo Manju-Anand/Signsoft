@@ -273,14 +273,14 @@ ini_set('display_errors', 1);
 
 					</li>
 				<?php } ?>
-				<!-- <li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="usermanuel.php">
+				<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="processjoblist.php">
 							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
-							<span class="side-menu__label">User Manuel</span>
+							<span class="side-menu__label">Process Jobs</span>
 						</a>
 					
 
-					</li> -->
+					</li>
 
 			</ul>
 			<div class="slide-right" id="slide-right">

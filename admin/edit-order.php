@@ -47,7 +47,7 @@ function isSubcategorySelected($orderId, $subcategoryId)
 
 $orderid = $_GET["edit"];
 
-$sqlorders = "SELECT * FROM order_customers where id='" . $orderid  . "'";
+$sqlorders = "SELECT * FROM order_customers where id='" . $orderid  . "' and ordertype='External'";
 $resultorders = $connection->query($sqlorders);
 
 if ($resultorders->num_rows > 0) {
@@ -329,7 +329,7 @@ if ($resultorders->num_rows > 0) {
                                                 contactDate='". mysqli_real_escape_string($connection, $contacteddate) . "',contactTime='". mysqli_real_escape_string($connection, $contactedtime) . "',
                                                 quotedAmt='". mysqli_real_escape_string($connection, $qutamt) . "',leadSource='". mysqli_real_escape_string($connection, $leadsource) . "',
                                                 modified='". mysqli_real_escape_string($connection, $postdate) . "',order_status='". mysqli_real_escape_string($connection, $orderstatus) . "',
-                                                status_reason='". mysqli_real_escape_string($connection, $statusreason) . "'  WHERE id='". $orgorderid ."'";
+                                                status_reason='". mysqli_real_escape_string($connection, $statusreason) . "',ordertype='External'  WHERE id='". $orgorderid ."'";
 
 
 

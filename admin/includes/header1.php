@@ -179,10 +179,45 @@ ini_set('display_errors', 1);
 									<span class="side-menu__label">Dashboard</span>
 								</a>
 							</li>
-
+						
 							
 							<li class="side-item side-item-category">Order Execution</li>
+							<!-- <li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="">
+									<span class="side-menu__icon"><i class="fe fe-layers side_menu_img"></i></span>
+									<span class="side-menu__label">Orders-pre</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side5" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
 													
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side5">
+													<ul class="sidemenu-list">
+																												
+														<li><a href="staffAllocation.php" class="slide-item">Staff Allocation</a></li>
+														<li><a href="quote_splitup.php" class="slide-item">Quotation Splitup</a></li>
+														<li><a href="add-payment.php" class="slide-item">Add Payment Details</a></li>
+														
+													</ul>
+													
+												</div>
+												
+											</div>
+										</div>
+									</li>
+
+								</ul>
+								
+							</li> -->
+							
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="">
 									<span class="side-menu__icon"><i class="fe fe-layers side_menu_img"></i></span>
@@ -213,7 +248,6 @@ ini_set('display_errors', 1);
 												
 											</div>
 										</div>
-										
 									</li>
 
 								</ul>
@@ -257,7 +291,13 @@ ini_set('display_errors', 1);
 
 							
 							<li class="side-item side-item-category">Digital Marketing</li>
-							
+							<!-- <li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="add-DM-Staff-details.php">
+									<span class="side-menu__icon"><i class="fe fe-users side_menu_img"></i></span>
+									<span class="side-menu__label">Staff Allocation</span>
+								</a>
+								
+							</li> -->
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="staffallocationlist.php">
 									<span class="side-menu__icon"><i class="fe fe-users side_menu_img"></i></span>
@@ -385,9 +425,9 @@ ini_set('display_errors', 1);
 							</li>
 
 
-<!-- ================================================== -->
+
 							
-						<li class="side-item side-item-category">Other Pages</li>
+							<!-- <li class="side-item side-item-category">Other Pages</li>
 							
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="widgets.html">
@@ -747,7 +787,7 @@ ini_set('display_errors', 1);
 									</li>
 
 								</ul>
-							</li>
+							</li> -->
 						</ul>
 						<div class="slide-right" id="slide-right">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">

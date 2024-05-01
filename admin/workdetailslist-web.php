@@ -17,32 +17,33 @@ include "includes/connection.php";
 function showorderlist()
 {
     global $connection;
-    $query = "select * from staff_dm_graphics_allocation where redirect_recordid = '' order by id desc";
+    $query = "select * from staff_allocation order by id desc";
     $select_posts = mysqli_query($connection, $query);
     $i = 0;
     while ($row = mysqli_fetch_assoc($select_posts)) {
         $id = $row['id'];
         $redirectid = "";
         $post_orderid = $row['orderid'];
+        $post_prdescription = "";
         $sql = "SELECT * FROM order_customers where id='" . $post_orderid . "'";
         $result = $connection->query($sql);
         if ($result->num_rows > 0) {
         while($row1 = $result->fetch_assoc()) {
             $post_brandName= $row1['brandName'];
+            $post_ordertype = $row1['ordertype'];
+            $post_projectname = $row1['projectname'];
+            $post_prdescription = $row1['projectdescription'];
         }}
-
-        $post_gdstaffid= $row['staffid'];
-        $post_redirect_status = $row['redirect_status'];
-        if ($post_redirect_status == "Self"){
-            $redirectid = $id;
-                $sql1 = "SELECT * FROM employee where id='" . $post_gdstaffid . "'";
+       
+        
+                $sql1 = "SELECT * FROM employee where id='" . $row['empid'] . "'";
                 $result1 = $connection->query($sql1);
                 if ($result1->num_rows > 0) {
                 while($row2 = $result1->fetch_assoc()) {
                     $post_gdstaffname= $row2['empname'];
                 }
                 $post_timetaken=0;
-                $sql1 = "SELECT * FROM staff_dm_graphics_allocation_details where staff_dm_allocation_id ='" . $id . "'";
+                $sql1 = "SELECT * FROM staff_allocation_details where staff_allocation_id ='" . $id . "'";
                 $result1 = $connection->query($sql1);
                 if ($result1->num_rows > 0) {
                 while($row2 = $result1->fetch_assoc()) {
@@ -51,57 +52,28 @@ function showorderlist()
             
             }
 
-        } else {
+        if ($post_ordertype == 'External'){
+            $post_postings = $row['work_assigned'];
+            $post_brandName1 =  $post_brandName;
 
-            $sql1 = "SELECT * FROM staff_dm_graphics_allocation where redirect_recordid='" . $id . "'";
-                $result1 = $connection->query($sql1);
-                if ($result1->num_rows > 0) {
-                while($row2 = $result1->fetch_assoc()) {
-                    $redirectid = $row2['id'];
-                    $post_rdgdstaffid= $row2['staffid'];
-
-                    $sql2 = "SELECT * FROM employee where id='" . $post_rdgdstaffid . "'";
-                    $result2 = $connection->query($sql2);
-                    if ($result2->num_rows > 0) {
-                    while($row3 = $result2->fetch_assoc()) {
-                        $post_gdstaffname= $row3['empname'];
-                    }}
-
-                    
-                }
-            
-                $post_timetaken=0;
-                $sql1 = "SELECT * FROM staff_dm_graphics_allocation_details where staff_dm_allocation_id in (SELECT id FROM staff_dm_graphics_allocation where redirect_recordid='" . $id . "')";
-                $result1 = $connection->query($sql1);
-                if ($result1->num_rows > 0) {
-                while($row2 = $result1->fetch_assoc()) {
-                    $post_timetaken += timeToDecimal($row2['timetaken']);
-                }}
-            
-            }
-
+        }else {
+            $post_postings = $post_prdescription;
+            $post_brandName1 =   $post_projectname ;
         }
-   
-
-
-
-       
         
-        $post_assigndate = $row['assigndate'];
-        $post_postings = $row['postings'];
+        $post_assigndate = $row['assignedDate'];
+        $post_workstatus = $row['work_status'];
         $i = $i + 1;
         echo "<tr>";
         echo "<td>$i</td>";
+        echo "<td>$post_ordertype</td>";
         echo "<td>$post_gdstaffname</td>";
-        echo "<td>$post_brandName</td>";
+        echo "<td>$post_brandName1</td>";
+      
         echo "<td>$post_postings</td>";
         echo "<td>$post_timetaken</td>";
         echo "<td>$post_assigndate</td>"; 
-        if($post_redirect_status == "Redirected"){
-            echo "<td>$post_redirect_status</td>"; 
-        }else {
-            echo "<td>Self</td>";
-        }
+        echo "<td>$post_workstatus</td>"; 
         
  
         echo "<td><a class='btn btn-sm btn-cyan  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id} data-redirectid={$redirectid} title='View DM Content &  Details' style='color:white'>
@@ -220,9 +192,11 @@ function timeToDecimal($time) {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Staff Name</th>
-                                                    <th>Brand Name</th>
-                                                    <th>Postings</th>
+                                                    <th>Order Type</th>
+                                                    <th>Staff</th>
+                                                    <th>Brand / Project</th>
+
+                                                    <th>Postings / Description</th>
                                                     <th>Total Work Hours</th>
                                                     <th>Assign Date</th>
                                                     <th>Work Status</th>
