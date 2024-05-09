@@ -151,7 +151,7 @@ function timeToDecimal($time) {
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Web Team Work List</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">Team Work List</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Work Details List</li>
@@ -183,7 +183,7 @@ function timeToDecimal($time) {
                             <div class="card custom-card overflow-hidden">
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
-                                        <h6 class="card-title mb-1">List of Web Details List</h6>
+                                        <h6 class="card-title mb-1">List of work Details</h6>
                                         <!-- <p class="text-muted card-sub-title">Searching, ordering and paging goodness will be
 										immediately added to the table, as shown in this example.</p> -->
                                     </div>
@@ -258,50 +258,13 @@ function timeToDecimal($time) {
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">View Graphics Work Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title">View Work Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <label class="form-label" for="postercontent">Poster Content :</label>
-                                <textarea class="form-control" name="postercontent" id="postercontent" rows="5" readonly> </textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="posteridea">Poster Idea :</label>
-                                <textarea class="form-control" name="posteridea" id="posteridea" rows="5" readonly> </textarea>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="pdeadline">DM Assigned Deadline</label>
-                                <input class="form-control" type="text" id="pdeadline" name="pdeadline" value="" readonly>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="redirectstaff">Redirected to</label>
-                                <select class="form-select" name="redirectstaff" id="redirectstaff" readonly>
-                                    <?php
-                                    $sql = "SELECT * FROM department where dname='Graphics'";
-                                    $result = $connection->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($rowdept = $result->fetch_assoc()) {
-                                            $sqlemp = "SELECT * FROM employee where department_id='" . $rowdept['id']  . "' and hod='No'";
-                                            $resultemp = $connection->query($sqlemp);
-                                            if ($resultemp->num_rows > 0) {
-                                                while ($rowemp = $resultemp->fetch_assoc()) {
-                                                    $staffid = $rowemp['id'];
-                                                    echo "<option value='" . $staffid . "'>" . $rowemp['empname'] . "</option>";
-                                                }
-                                            }
-                                        }
-                                    }
-
-
-                                    ?>
-
-                                </select>
-                            </div>
-                            <div class="col-md-4" style="margin-bottom: 20px;">
-                                <label class="form-label" for="redirectdeadline">Redirected Deadline</label>
-                                <input class="form-control" type="text" id="redirectdeadline" name="redirectdeadline" value="" readonly>
-                            </div>
+                            
+                           
+                         
                             <div class="col-md-12">
                             <div class="table-responsive mt-20">
                                         <table class="table table-bordered mg-b-0" id="workdetails">
@@ -396,7 +359,7 @@ function timeToDecimal($time) {
                 // Make AJAX request to fetch data based on recordId
                 $.ajax({
                     type: 'POST',
-                    url: 'gd-viewmoreworkdetails.php', // Replace with the actual path to your PHP script
+                    url: 'web-viewmoreworkdetails.php', // Replace with the actual path to your PHP script
                     data: {
                         recordId: recordId,
                         redirectId: redirectId
@@ -404,16 +367,9 @@ function timeToDecimal($time) {
                     dataType: 'json',
                     success: function(response) {
                         // Populate fields in viewmodal
-                        var isReadOnly = true; // Set this based on your condition
-                        document.getElementById('redirectstaff').disabled = isReadOnly;
-                        var newOptionValue = response.redirect_staffid;
-                        $('#redirectstaff').val(newOptionValue);
-                        $('#postercontent').val(response.content);
-                        $('#posteridea').val(response.posteridea);
-                        $('#pdeadline').val(response.deadline);
-                        // $('#redirectstaff').val(response.redirect_staffid);
-                        $('#redirectdeadline').val(response.redirect_deadline);
-                        // Add similar lines for other fields
+                     
+                       
+                 
 
 
                         // Clear existing rows in the workdetails table
@@ -446,63 +402,7 @@ function timeToDecimal($time) {
                 });
             });
 
-            $('.edit-details-btn').on('click', function() {
-                var recordId = $(this).data('recordid');
-
-                // Make AJAX request to fetch data based on recordId
-                $.ajax({
-                    type: 'POST',
-                    url: 'gd-viewworkdetails.php', // Replace with the actual path to your PHP script
-                    data: {
-                        recordId: recordId
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                                            
-                        $('#modaleditid').val(recordId);
-                        $('#editpostercontent').val(response.content);
-                        $('#editposteridea').val(response.posteridea);
-                       
-                    },
-                    error: function(error) {
-                        console.error('Error fetching data:', error);
-                    }
-                });
-            });
-
-            $('#updatecontent').on('click', function() {
-                // Get values from the modal inputs
-                var recordId = $('#modaleditid').val();
-                var editpostercontent = $('#editpostercontent').val();
-                var editposteridea = $('#editposteridea').val();
-
-                // Create an object with the data to be sent to the server
-                var dataToSend = {
-                    recordId: recordId,
-                    editpostercontent: editpostercontent,
-                    editposteridea: editposteridea
-                };
-
-                // Send an AJAX request to the server to save the data
-                $.ajax({
-                    type: 'POST',
-                    url: 'gd-contentupdate.php', // Replace with the actual path to your PHP script
-                    data: dataToSend,
-                    success: function(response) {
-                        // Handle the success response from the server
-                        console.log('Data saved successfully:', response);
-                        alert("Succesfully Updated Content.");
-                        // Optionally, you can close the modal after saving
-                        $('#editmodal').modal('hide');
-
-                        window.location.href = 'dmcontentlist.php';
-                    },
-                    error: function(error) {
-                        // Handle the error response from the server
-                        console.error('Error saving data:', error);
-                    }
-                });
-            });
+            
             </script>
 </body>
 

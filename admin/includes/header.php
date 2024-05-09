@@ -290,17 +290,11 @@ ini_set('display_errors', 1);
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="workdetailslist-web.php">
 									<span class="side-menu__icon"><i class="fe fe-align-left side_menu_img"></i></span>
-									<span class="side-menu__label">Web work Details</span>
+									<span class="side-menu__label">Other work Details</span>
 								</a>
 								
 							</li>
-							<li class="slide">
-								<a class="side-menu__item" data-bs-toggle="slide" href="dmstaffclienthandle.php">
-									<span class="side-menu__icon"><i class="fe fe-more-vertical side_menu_img"></i></span>
-									<span class="side-menu__label">DM work Details</span>
-								</a>
-								
-							</li>
+							
 							<li class="side-item side-item-category">Masters</li>
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">

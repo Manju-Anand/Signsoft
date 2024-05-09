@@ -17,52 +17,113 @@ include "includes/connection.php";
 function showorderlist()
 {
     global $connection;
-    $i=0;
+    $i = 0;
     $query = "select * from order_customers where order_status='Active'";
     $select_posts = mysqli_query($connection, $query);
     while ($row = mysqli_fetch_assoc($select_posts)) {
         $id = $row['id'];
-        $post_custName= $row['custName'];
+        $post_custName = $row['custName'];
         $post_brandName = $row['brandName'];
         $post_allocated = "No";
+        $post_dmallocated = "No";
+        $post_otherallocated = "No";
+        $post_dmexist = "No";
+        $post_otherexist = "No";
         $post_staffname = "";
         $post_assigndate = "";
+
+        $sql1 = "SELECT * FROM order_category WHERE order_id='" . $row['id'] . "' AND category_id IN (SELECT id FROM category WHERE category='Social Media')";
+
+        $result1 = $connection->query($sql1);
+        if ($result1->num_rows > 0) {
+            while ($row2 = $result1->fetch_assoc()) {
+                $post_dmexist = "Yes";
+            }}
+            $sql1 = "SELECT * FROM order_category WHERE order_id='" . $row['id'] . "' AND category_id not IN (SELECT id FROM category WHERE category='Social Media Marketing')";
+
+            $result1 = $connection->query($sql1);
+            if ($result1->num_rows > 0) {
+                while ($row2 = $result1->fetch_assoc()) {
+                    $post_otherexist = "Yes";
+                }}    
+    
+
+if ($post_dmexist == "Yes"){
         $sql1 = "SELECT * FROM staff_dm_allocation where orderid='" . $row['id'] . "'";
         $result1 = $connection->query($sql1);
         if ($result1->num_rows > 0) {
-        while($row2 = $result1->fetch_assoc()) {
-            $post_allocated = "Yes";
-            $post_staffid = $row2['staffid'];
-            $post_assigndate = $row2['assigndate'];
-            $sql2 = "SELECT * FROM employee where id='" . $post_staffid . "'";
-            $result2 = $connection->query($sql2);
-            if ($result2->num_rows > 0) {
-            while($row2 = $result2->fetch_assoc()) {
-                $post_staffname= $row2['empname'];
-            }}
-        }}
-
+            while ($row2 = $result1->fetch_assoc()) {
+                $post_allocated = "Yes";
+                $post_dmallocated = "Yes";
+                $post_staffid = $row2['staffid'];
+                $post_assigndate = $row2['assigndate'];
+                $sql2 = "SELECT * FROM employee where id='" . $post_staffid . "'";
+                $result2 = $connection->query($sql2);
+                if ($result2->num_rows > 0) {
+                    while ($row2 = $result2->fetch_assoc()) {
+                        $post_staffname = $row2['empname'];
+                    }
+                }
+            }
+        }
+    }
+    if ($post_otherexist == "Yes"){
+        $sql1 = "SELECT * FROM staff_allocation where orderid='" . $row['id'] . "'";
+        $result1 = $connection->query($sql1);
+        if ($result1->num_rows > 0) {
+            while ($row2 = $result1->fetch_assoc()) {
+                $post_allocated = "Yes";
+                $post_otherallocated = "Yes";
+                $post_staffid = $row2['empid'];
+                $post_assigndate = $row2['assignedDate'];
+                $sql2 = "SELECT * FROM employee where id='" . $post_staffid . "'";
+                $result2 = $connection->query($sql2);
+                if ($result2->num_rows > 0) {
+                    while ($row2 = $result2->fetch_assoc()) {
+                        $post_staffname = $row2['empname'];
+                    }
+                }
+            }
+        }
+    }
 
         $i = $i + 1;
         echo "<tr>";
         echo "<td>$i</td>";
         echo "<td>$post_custName</td>";
         echo "<td>$post_brandName</td>";
- 
-        if ($post_allocated == 'Yes'){
-                
-                echo "<td><span class='badge bg-success' style='font-size:15px;'>Allocated</span></td>";
+
+        if ($post_allocated == 'Yes') {
+            echo "<td>";
+if ($post_dmexist == "Yes"){
+            if ($post_dmallocated == 'Yes' ) {
+                echo "<span class='badge bg-success' style='font-size:15px;'>DM Allocated</span>";
+            } else {
+                echo "<span class='badge bg-danger' style='font-size:15px;'>DM not Allocated</span>";
+            }
+
+            echo "&nbsp;";
         }
- 
-if ($post_allocated == 'No'){
-                
-    echo "<td><span class='badge bg-danger' style='font-size:15px;'>Not Allocated</span></td>";
-}
+        if ($post_otherexist == "Yes"){
+            if ($post_otherallocated == 'Yes') {
+                echo "<span class='badge bg-warning' style='font-size:15px;'>Other Allocated</span>";
+            } else {
+                echo "<span class='badge bg-danger' style='font-size:15px;'>Other Not Allocated</span>";
+            }
+        }
+            echo "</td>";
+            // echo "<td><span class='badge bg-success' style='font-size:15px;'>Allocated</span><span class='badge bg-warning' style='font-size:15px;'>Allocated</span></td>";
+        }
 
-echo "<td>$post_staffname</td>";
-echo "<td>$post_assigndate</td>";
+        if ($post_allocated == 'No') {
 
-   
+            echo "<td><span class='badge bg-danger' style='font-size:15px;'>Not Allocated</span></td>";
+        }
+
+        echo "<td>$post_staffname</td>";
+        echo "<td>$post_assigndate</td>";
+
+
 
         echo "</tr>";
     }
@@ -174,7 +235,7 @@ echo "<td>$post_assigndate</td>";
                                                     <th>Allocation Status</th>
                                                     <th>Staff Name</th>
                                                     <th>Assign Date</th>
-                                                                                                      
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -182,7 +243,7 @@ echo "<td>$post_assigndate</td>";
                                                 <?php
                                                 showorderlist();
                                                 ?>
-                       
+
 
                                             </tbody>
                                         </table>
@@ -197,74 +258,72 @@ echo "<td>$post_assigndate</td>";
                 </div>
             </div>
         </div>
-            <!-- End Main Content-->
+        <!-- End Main Content-->
 
 
-            <!-- Main Footer-->
-            <?php include 'includes/footer.php'; ?>
-            <!--End Footer-->
+        <!-- Main Footer-->
+        <?php include 'includes/footer.php'; ?>
+        <!--End Footer-->
 
     </div>
-            <!-- Back-to-top -->
-            <a href="#top" id="back-to-top"><i class="fe fe-arrow-up"></i></a>
+    <!-- Back-to-top -->
+    <a href="#top" id="back-to-top"><i class="fe fe-arrow-up"></i></a>
 
-            <!-- Jquery js-->
-            <script src="../assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Jquery js-->
+    <script src="../assets/plugins/jquery/jquery.min.js"></script>
 
-            <!-- Bootstrap js-->
-            <script src="../assets/plugins/bootstrap/popper.min.js"></script>
-            <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap js-->
+    <script src="../assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
-            <!-- Select2 js-->
-            <script src="../assets/plugins/select2/js/select2.min.js"></script>
+    <!-- Select2 js-->
+    <script src="../assets/plugins/select2/js/select2.min.js"></script>
 
-            <!-- DATA TABLE JS-->
-            <script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
-            <script src="../assets/plugins/datatable/js/dataTables.bootstrap5.js"></script>
-            <script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
-            <script src="../assets/js/table-data.js"></script>
-            <script src="../assets/plugins/datatable/js/buttons.bootstrap5.min.js"></script>
-            <script src="../assets/plugins/datatable/js/jszip.min.js"></script>
-            <script src="../assets/plugins/datatable/pdfmake/pdfmake.min.js"></script>
-            <script src="../assets/plugins/datatable/pdfmake/vfs_fonts.js"></script>
-            <script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
-            <script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
-            <script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
-            <script src="../assets/plugins/datatable/dataTables.responsive.min.js"></script>
-            <script src="../assets/plugins/datatable/responsive.bootstrap5.min.js"></script>
+    <!-- DATA TABLE JS-->
+    <script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="../assets/plugins/datatable/js/dataTables.bootstrap5.js"></script>
+    <script src="../assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+    <script src="../assets/js/table-data.js"></script>
+    <script src="../assets/plugins/datatable/js/buttons.bootstrap5.min.js"></script>
+    <script src="../assets/plugins/datatable/js/jszip.min.js"></script>
+    <script src="../assets/plugins/datatable/pdfmake/pdfmake.min.js"></script>
+    <script src="../assets/plugins/datatable/pdfmake/vfs_fonts.js"></script>
+    <script src="../assets/plugins/datatable/js/buttons.html5.min.js"></script>
+    <script src="../assets/plugins/datatable/js/buttons.print.min.js"></script>
+    <script src="../assets/plugins/datatable/js/buttons.colVis.min.js"></script>
+    <script src="../assets/plugins/datatable/dataTables.responsive.min.js"></script>
+    <script src="../assets/plugins/datatable/responsive.bootstrap5.min.js"></script>
 
-            <!-- Perfect-scrollbar js-->
-            <script src="../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-            <script src="../assets/plugins/perfect-scrollbar/p-scroll-1.js"></script>
+    <!-- Perfect-scrollbar js-->
+    <script src="../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../assets/plugins/perfect-scrollbar/p-scroll-1.js"></script>
 
-            <!-- Sidemenu js-->
-            <script src="../assets/plugins/sidemenu/sidemenu.js"></script>
+    <!-- Sidemenu js-->
+    <script src="../assets/plugins/sidemenu/sidemenu.js"></script>
 
-            <!-- Sidebar js-->
-            <script src="../assets/plugins/sidebar/sidebar.js"></script>
+    <!-- Sidebar js-->
+    <script src="../assets/plugins/sidebar/sidebar.js"></script>
 
-            <!-- Sticky js-->
-            <script src="../assets/js/sticky.js"></script>
-            <!-- Select2 js-->
-            <script src="../assets/plugins/select2/js/select2.min.js"></script>
-            <script src="../assets/js/select2.js"></script>
-            <!-- Custom-Switcher js -->
-            <script src="../assets/js/custom-switcher.js"></script>
+    <!-- Sticky js-->
+    <script src="../assets/js/sticky.js"></script>
+    <!-- Select2 js-->
+    <script src="../assets/plugins/select2/js/select2.min.js"></script>
+    <script src="../assets/js/select2.js"></script>
+    <!-- Custom-Switcher js -->
+    <script src="../assets/js/custom-switcher.js"></script>
 
-            <!-- Custom js-->
-            <script src="../assets/js/custom.js"></script>
+    <!-- Custom js-->
+    <script src="../assets/js/custom.js"></script>
 
-            <!-- Switcher js -->
-            <script src="../assets/switcher/js/switcher.js"></script>
-            <script>
-
-                function confirmationDelete(anchor)
-                {
-                var conf = confirm('Are you sure want to delete this record?');
-                if(conf)
-                    window.location=anchor.attr("href");
-                }
-            </script>
+    <!-- Switcher js -->
+    <script src="../assets/switcher/js/switcher.js"></script>
+    <script>
+        function confirmationDelete(anchor) {
+            var conf = confirm('Are you sure want to delete this record?');
+            if (conf)
+                window.location = anchor.attr("href");
+        }
+    </script>
 </body>
 
 </html>

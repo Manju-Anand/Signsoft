@@ -102,15 +102,16 @@ if (isset($data['staffallocationdataToSave'])) {
     $assignDate = $row['assignDate'];
     $payStatus = $row['payStatus'];
     $postdate = date("M d,Y h:i:s a");
-    // if ($payStatus !== "Saved") {
+
+
     // Perform the SQL query to insert data into the database
     $sql = "INSERT INTO staff_allocation (orderid,entryid,entryname,empid, empname, work_assigned, deadline, per_of_work,assignedDate,created) VALUES
      ('$orderid','$entryid','$entry','$staffid', '$staffName', '$workAssigned', '$deadline', '$percentOfWork', '$assignDate','$postdate')";
-    
+
     if ($connection->query($sql) !== TRUE) {
         echo "Error: " . $sql . "<br>" . $connection->error;
     }
-  // }
+
 }
 }
 

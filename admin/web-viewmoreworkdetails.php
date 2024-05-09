@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Perform database query to fetch data from staff_dm_graphics_allocation
-    $sql = "SELECT * FROM staff_dm_graphics_allocation WHERE id = ?";
+    $sql = "SELECT * FROM staff_allocation WHERE id = ?";
     $stmt = $connection->prepare($sql);
     
     // Bind parameter
@@ -30,11 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if a row is fetched
     if ($row = $result->fetch_assoc()) {
         // Perform another database query to fetch data from staff_dm_graphics_allocation_details
-        $sqlDetails = "SELECT * FROM staff_dm_graphics_allocation_details WHERE staff_dm_allocation_id = ?";
+        $sqlDetails = "SELECT * FROM staff_allocation_details WHERE staff_allocation_id = ?";
         $stmtDetails = $connection->prepare($sqlDetails);
         
         // Bind parameter
-        $stmtDetails->bind_param('i', $redirectId);
+        $stmtDetails->bind_param('i', $recordId);
 
         // Execute the statement for details
         $stmtDetails->execute();
