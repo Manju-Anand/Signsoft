@@ -44,10 +44,10 @@ function showtracker()
         echo "<td>$post_created</td>";
         echo "<td>$post_modified </td>";
         echo "<td>
-        <a href='#editmemberModal' id='empedit{$id}'  onclick='prodedit({$id})' data-bs-toggle='modal' class='text-inverse pr-10' title='Edit' data-id='$id' data-toggle='tooltip'
+        <a href='edit-worktracker.php?edit={$id}' id='empedit{$id}'  onclick='prodedit({$id})'  class='text-inverse pr-10' title='Edit' data-id='$id' data-toggle='tooltip'
                          style='font-size:20px;font-weight:bold;'><i class='ri-edit-2-line'></i></a>
                &nbsp;&nbsp;<a onclick='javascript:confirmationDelete($(this));return false;' href='worktracker.php?delete={$id}' class='text-inverse' id='qusdelete' title='Delete' data-toggle='tooltip' style='font-size:20px;font-weight:bold;'><i class='ri-delete-bin-line'></i></a>
-        &nbsp;&nbsp;<a href='#viewmemberModal' id='empview{$id}' data-bs-toggle='modal' onclick='prodview({$id})'  data-id='$id' class='text-inverse' title='View' data-toggle='tooltip' style='font-size:20px;font-weight:bold;'><i class='ri-eye-line'></i></a></td>";
+        &nbsp;&nbsp;<a href='view-worktracker.php?edit={$id}' id='empview{$id}'  onclick='prodview({$id})'  data-id='$id' class='text-inverse' title='View' data-toggle='tooltip' style='font-size:20px;font-weight:bold;'><i class='ri-eye-line'></i></a></td>";
         echo "</tr>";
     }
 }
@@ -131,15 +131,15 @@ function deletetracker()
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">questions</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">Work Tracker Settings</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">questions</li>
+                                <li class="breadcrumb-item active" aria-current="page">Work Tracker Settings</li>
                             </ol>
                         </div>
                         <div class="btn-list">
                             <!-- <a class="btn ripple btn-primary" href="javascript:void(0);"><i class="fe fe-external-link"></i> Export</a> -->
-                            <a class="btn ripple btn-success" href="add-questions.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New questions</a>
+                            <a class="btn ripple btn-success" href="add-worktracker.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New Employees Work Tracker</a>
                             <!-- <a class="btn ripple btn-info" href="javascript:void(0);"><i class="fe fe-help-circle"></i> Help</a>
 						<a class="btn ripple btn-danger dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="true">
