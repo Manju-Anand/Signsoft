@@ -364,7 +364,7 @@ function showorderlist()
                 
 
 
-                $('.view-details-btn').on('click', function() {
+            $('.view-details-btn').on('click', function() {
                 var recordId = $(this).data('recordid');
 
                 // Make AJAX request to fetch data based on recordId
