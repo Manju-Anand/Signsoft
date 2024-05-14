@@ -20,6 +20,10 @@ while ($row = mysqli_fetch_assoc($result)) {
     $assignedDate =$row['assigndate'];
     $originalDate = new DateTime($assignedDate);
     $assignedDatenew = $originalDate->format('d-m-Y');
+
+    $deadlineDate =$row['deadline'];
+    $dDate = new DateTime($deadlineDate);
+    $assigneddeadline = $dDate->format('d-m-Y');
 }
 $options = "";
 // Query the database based on the selected order ID
@@ -32,6 +36,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 $options .= '<div class="col-md-4">
 <label class="form-label" ><strong>Job Name : </strong>' . $jobname  . '</label>
 <label class="form-label" ><strong>Assigned Date : </strong>' . $assignedDatenew . '</label>
+<label class="form-label" ><strong>Deadline : </strong>' . $assigneddeadline . '</label>
 <input type="hidden" value="' . $selectedworkId . '" id="allotid" name="allotid">
 </div></div>';
    

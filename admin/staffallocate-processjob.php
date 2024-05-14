@@ -126,7 +126,12 @@ include "includes/connection.php";
 
                                                         <input type="hidden" id="selectedEmpName" name="selectedEmpName" value="">
                                                         
-                                                        <br><br>
+                                                        <br>
+                                                        
+                                                        <label class="col-md-3 form-label" for="deadline">Deadline :</label>
+                                                        <input type="date" class="form-control" id="deadline" name="deadline" placeholder="Deadline" required>
+
+                                                        <br>
                                                 <label class="col-md-3 form-label" for="status">Status :</label>
                                                 <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status">
                                                     <option value="Active">Active</option>
@@ -177,6 +182,7 @@ include "includes/connection.php";
                                     if (isset($_POST['submit'])) {
                                         if (isset($_POST["fruits"])) {
                                         $empid = $_POST["empname"];
+                                        $deadline = $_POST["deadline"];
                                         $status = $_POST["status"];
                                         $empname = $_POST["selectedEmpName"];
 
@@ -198,11 +204,12 @@ include "includes/connection.php";
                                             // echo $fruit;
                                         }
                                         foreach ($fruits as $fruit) {
-                                        $sql = "INSERT INTO staff_pjob_allocation (empid,empname,status,assigndate,created,modified,jobid,noofjobs) values('" . mysqli_real_escape_string($connection, $empid) . "',
+                                        $sql = "INSERT INTO staff_pjob_allocation (empid,empname,status,assigndate,created,modified,jobid,noofjobs,deadline) values('" . mysqli_real_escape_string($connection, $empid) . "',
                                         '" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $status) . "',
                                                         '" . mysqli_real_escape_string($connection, $assigndate) . "'
                                                         ,'" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $postdate) . "',
-                                                        '" . mysqli_real_escape_string($connection, $fruit) . "','" . mysqli_real_escape_string($connection, $f) . "')";
+                                                        '" . mysqli_real_escape_string($connection, $fruit) . "','" . mysqli_real_escape_string($connection, $f) . "'
+                                                        ,'" . mysqli_real_escape_string($connection, $deadline) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
                                             

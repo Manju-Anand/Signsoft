@@ -13,11 +13,12 @@ $('body').on('click', '.edit-staff-btn', function () {
     // Extract values from the row
     var workdate = row.find('td:eq(1)').text(); // Replace 1 with the actual column index
     var worktime = row.find('td:eq(2)').text(); // Replace 2 with the actual column index
-    var workstatus = row.find('td:eq(3)').text(); // Replace 2 with the actual column index
+    var workdesc = row.find('td:eq(3)').text();
+    var workstatus = row.find('td:eq(4)').text(); // Replace 2 with the actual column index
     // var recordstatus = row.find('td:eq(5)').text(); // Replace 2 with the actual column index
-    var allotid = row.find('td:eq(6)').text(); // Replace 3 with the actual column index
-    var orderid = row.find('td:eq(7)').text(); // Replace 4 with the actual column index
-    var editid = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
+    var allotid = row.find('td:eq(7)').text(); // Replace 3 with the actual column index
+    var orderid = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
+    var editid = row.find('td:eq(9)').text(); // Replace 4 with the actual column index
     var staffrowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
     // alert (workdate);
     var workdate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
@@ -26,7 +27,7 @@ $('body').on('click', '.edit-staff-btn', function () {
 
     $('#modalworkdate').val(formattedDate);
     // Set values in the modal
-
+    $('#modalworkdesc').val(workdesc);
     $('#modalworkstatus').val(workstatus);
     $('#modalworktime').val(worktime);
     $('#modalallotid').val(allotid);
@@ -83,6 +84,7 @@ function addstaffRow() {
 
     // Get the values from the dropdowns
     var timetakenValue = document.getElementById("timetaken").value;
+    var workdesc = document.getElementById("workdesc").value;
     var workstatusValue = document.getElementById("workstatus").value;
     // Check if both timetaken and workstatus are selected
     if (timetakenValue && workstatusValue) {
@@ -115,37 +117,41 @@ function addstaffRow() {
         var selectBox1 = document.getElementById("timetaken");
         cell3.innerHTML = selectBox1.value;
 
-        // Select Box 1
         var cell4 = newRow.insertCell(3);
+        var selectBox1 = document.getElementById("workdesc");
+        cell4.innerHTML = selectBox1.value;
+
+        // Select Box 1
+        var cell5 = newRow.insertCell(4);
         var selectBox1 = document.getElementById("workstatus");
-        cell4.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
+        cell5.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
 
         // New cell with Edit and Delete buttons  ===========href='edit-supplier.php?edit=" + ++rowCounter + "'---onclick='javascript:confirmationDelete($(this));return false;
-        var cell5 = newRow.insertCell(4);
-        cell5.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
+        var cell6 = newRow.insertCell(5);
+        cell6.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
             "<span class='fe fe-edit'> </span></a>&nbsp;&nbsp;" +
             "<a class='btn btn-sm btn-danger delete-staff-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>" +
             "<span class='fe fe-trash-2'> </span></a>";
         // Text Box 3
-        var cell6 = newRow.insertCell(5);
-        cell6.innerHTML = "New";
-         cell6.classList.add('hidden-cell');
+        var cell7 = newRow.insertCell(6);
+        cell7.innerHTML = "New";
+         cell7.classList.add('hidden-cell');
 
         // Text Box 3
-        var cell7 = newRow.insertCell(6);
-        var textBox1 = document.getElementById("allotid");
-        cell7.innerHTML = textBox1.value;  // Set the content of the cell to be empty
-        cell7.classList.add('hidden-cell');
-
         var cell8 = newRow.insertCell(7);
-        cell8.innerHTML = "";  
-        // var textBox1 = document.getElementById("orderid");
-        // cell8.innerHTML = textBox1.value;  // Set the content of the cell to be empty
+        var textBox1 = document.getElementById("allotid");
+        cell8.innerHTML = textBox1.value;  // Set the content of the cell to be empty
         cell8.classList.add('hidden-cell');
 
         var cell9 = newRow.insertCell(8);
-               cell9.innerHTML = "";  // Set the content of the cell to be empty
+        cell9.innerHTML = "";  
+        // var textBox1 = document.getElementById("orderid");
+        // cell8.innerHTML = textBox1.value;  // Set the content of the cell to be empty
         cell9.classList.add('hidden-cell');
+
+        var cell10 = newRow.insertCell(9);
+               cell10.innerHTML = "";  // Set the content of the cell to be empty
+        cell10.classList.add('hidden-cell');
 
 
         // Clear input values after adding to the table
@@ -165,8 +171,10 @@ $('#savestaffChangesBtn').on('click', function () {
     // var modalworkdate = $('#modalworkdate').val();
   
     var modalworktime = $('#modalworktime').val();
+    var modalworkdesc = $('#modalworkdesc').val();
     var modalworkstatus = $('#modalworkstatus option:selected').text();
     var modalallotid = $('#modalallotid').val();
+
     var modalorderid = $('#modalorderid').val();
     var modaleditid = $('#modaleditid').val();
 
@@ -187,12 +195,15 @@ var formattedDate = ("0" + dateObject.getDate()).slice(-2) + "-" + ("0" + (dateO
     var selectedRow = $('#staffallocateTable tbody tr[data-rowid="' + selectedRowId + '"]');
     selectedRow.find('td:eq(1)').text(formattedDate); // Update with the correct column indices.
     selectedRow.find('td:eq(2)').text(modalworktime); // Update with the correct column indices.
-    selectedRow.find('td:eq(3)').text(modalworkstatus); // Update with the correct column indices
+
+    selectedRow.find('td:eq(3)').text(modalworkdesc);
+
+    selectedRow.find('td:eq(4)').text(modalworkstatus); // Update with the correct column indices
     // selectedRow.find('td:eq(4)').text(staffValueid); // Update with the correct column indices
-    selectedRow.find('td:eq(5)').text(pstatus); // Update with the correct column indices
-    selectedRow.find('td:eq(6)').text(modalallotid); // Update with the correct column indices
-    selectedRow.find('td:eq(7)').text(modalorderid); // Update with the correct column indices
-    selectedRow.find('td:eq(8)').text(modaleditid); // Update with the correct column indices
+    selectedRow.find('td:eq(6)').text(pstatus); // Update with the correct column indices
+    selectedRow.find('td:eq(7)').text(modalallotid); // Update with the correct column indices
+    selectedRow.find('td:eq(8)').text(modalorderid); // Update with the correct column indices
+    selectedRow.find('td:eq(9)').text(modaleditid); // Update with the correct column indices
    
     // Hide the modal
     $('#staffmodal').modal('hide');
@@ -226,12 +237,13 @@ function saveDataToDatabase() {
         var rowData1 = {
             workdate: cells[1].innerHTML, // Adjust the index based on your table structure
             worktime: cells[2].innerHTML, // Adjust the index based on your table structure
-            workstatus: cells[3].innerHTML, // Adjust the index based on your table structure
-            recordstatus: cells[5].innerHTML, // Adjust the index based on your table structure
-            allotid: cells[6].innerHTML, // Adjust the index based on your table structure
-            orderid: cells[7].innerHTML, // Adjust the index based on your table structure
+            workdesc: cells[3].innerHTML,
+            workstatus: cells[4].innerHTML, // Adjust the index based on your table structure
+            recordstatus: cells[6].innerHTML, // Adjust the index based on your table structure
+            allotid: cells[7].innerHTML, // Adjust the index based on your table structure
+            orderid: cells[8].innerHTML, // Adjust the index based on your table structure
             empid: empid,
-            editid: cells[8].innerHTML,
+            editid: cells[9].innerHTML,
 
         };
 

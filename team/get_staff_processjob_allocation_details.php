@@ -27,6 +27,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td><?php echo $r;?></td>
     <td><?php echo $row['workdate'];?></td>
     <td><?php echo $row['timetaken'];?></td>
+    <td><?php echo $row['job_description'];?></td>
     <td><?php echo $row['work_status'];?></td>
     
     <td><a class='btn btn-sm btn-primary  edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>

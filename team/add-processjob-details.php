@@ -136,21 +136,22 @@ $mainorderid = "";
                                                                 <input type="time" class="form-control" id="timetaken" name="timetaken" max="08:00" placeholder="" required>
 
                                                                           </div>
-
-
+                                                            <div class="col-md-3">
+                                                                <label class="form-label" for="staff">Work Description [If Any] :</label>
+                                                                <textarea class="form-control" name="workdesc" id="workdesc" rows="4"></textarea>
+                                                            </div>
                                                             <div class="col-md-3">
                                                                 <label class="form-label" for="staff">Work Status :</label>
                                                                 <select class="form-select mb-3" aria-label="Default select example" name="workstatus" id="workstatus" required>
                                                                     <option value="" disabled selected>Select Work Status</option>
 
                                                                     <option value="Work In Progress">Work In Progress</option>
-                                                                    <option value="Internal Edits">Internal Edits</option>
-                                                                    <option value="External Edits">External Edits</option>
+                                                                    <option value="Not Completed">Not Completed</option>
                                                                     <option value="Closed">Closed</option>
                                                                 </select>
                                                             </div>
 
-
+                                                                <br>
                                                             <div class="col-md-3">
                                                                 <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
                                                                 <button type="button" name="submit" class="btn btn-primary" onclick="addstaffRow()" style="color:white;cursor:pointer;">Add Work Details</button>
@@ -166,6 +167,7 @@ $mainorderid = "";
                                                                             <th>#</th>
                                                                             <th>Date</th>
                                                                             <th>Time Taken</th>
+                                                                            <th>Description</th>
                                                                             <th>Work Status</th>
 
                                                                             <th>Action</th>
@@ -239,16 +241,23 @@ $mainorderid = "";
 
 
                             </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="modaldmpayment">Work Description :</label>
+                               
+                                <textarea class="form-control" id="modalworkdesc" name="modalworkdesc" rows="4" ></textarea>
+
+                            </div>
 
                            
 
                             <div class="col-md-12">
-                                <label class="form-label" for="modalstaff">Staff Name :</label>
+                                <label class="form-label" for="modalstaff">Work Status :</label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="modalworkstatus" id="modalworkstatus" required>
                                     <option value="" disabled selected>Select Work Status</option>
 
                                     <option value="Work In Progress">Work In Progress</option>
-                                    <option value="Internal Edits">Internal Edits</option>
+
+                                    <option value="Not Completed">Not Completed</option>
                                     <option value="External Edits">External Edits</option>
                                     <option value="Closed">Closed</option>
                                 </select>

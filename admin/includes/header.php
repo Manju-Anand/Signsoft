@@ -440,6 +440,13 @@ ini_set('display_errors', 1);
 								</a>
 								
 							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="workdetailslist-processjobs.php">
+									<span class="side-menu__icon"><i class="fe fe-crop side_menu_img"></i></span>
+									<span class="side-menu__label">Process Job Details</span>
+								</a>
+								
+							</li>
 							
 							<li class="side-item side-item-category">Masters</li>
 							<li class="slide">
