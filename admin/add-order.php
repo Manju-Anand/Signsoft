@@ -157,6 +157,12 @@ include "includes/connection.php";
                                                         <input type="time" name="contactedtime" id="contactedtime" class="form-control" placeholder="">
                                                     </div>
                                                 </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="empname">GST IN :</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" id="gstin" name="gstin" placeholder="GST Number" required>
+                                                    </div>
+                                                </div>
                                                 <!-- -->
 
 
@@ -287,9 +293,20 @@ include "includes/connection.php";
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="statusreason">Status Reason<br>[If any] :</label>
                                                     <div class="col-md-9">
-                                                        <textarea class="form-control" name="statusreason" id="statusreason" palceholder="Here statusreason" rows="4"></textarea>
+                                                        <textarea class="form-control" name="statusreason" id="statusreason" placeholder="Here statusreason" rows="3"></textarea>
 
                                                     </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-3"><label class="form-label" for="cquality">Client Quality :</label></div>
+                                                    <div class="col-md-9"><select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
+                                                            <option value="" disabled selected>Select Option</option>
+                                                            <option value="Good">Good</option>
+                                                            <option value="Average">Average</option>
+                                                            <option value="Poor">Poor</option>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
 
 
@@ -324,11 +341,14 @@ include "includes/connection.php";
                                         $orderstatus = $_POST["status"];
                                         $statusreason = $_POST["statusreason"];
 
+                                        $cquality = $_POST['cquality'];
+                                        $gstin = $_POST['gstin'];
+
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
 
                                         $sql = "INSERT INTO order_customers (custName,brandName,addr,custPhone,custEmail,contactDate,contactTime,quotedAmt,leadSource,created,modified,lead_entered,
-                                        empid,order_status,status_reason,ordertype) 
+                                        empid,order_status,status_reason,ordertype,client_quality,gstin) 
                                         values('" . mysqli_real_escape_string($connection, $cusname) . "','" . mysqli_real_escape_string($connection, $brandname) . "',
                                                 '" . mysqli_real_escape_string($connection, $addr) . "','" . mysqli_real_escape_string($connection, $phoneno) . "',
                                                                 '" . mysqli_real_escape_string($connection, $emailid) . "','" . mysqli_real_escape_string($connection, $contacteddate) . "',
@@ -337,7 +357,8 @@ include "includes/connection.php";
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','Administrator',
                                                                 '" . mysqli_real_escape_string($connection, $_SESSION['adminempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
-                                                                '" . mysqli_real_escape_string($connection, $statusreason) . "','External')";
+                                                                '" . mysqli_real_escape_string($connection, $statusreason) . "','External',
+                                                                '" . mysqli_real_escape_string($connection, $cquality) . "','" . mysqli_real_escape_string($connection, $gstin) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
 

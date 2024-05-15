@@ -197,6 +197,12 @@ if ($resultorders->num_rows > 0) {
                                                                 <input type="time" name="contactedtime" id="contactedtime" value="<?php echo $roworders['contactTime'] ?>" class="form-control" placeholder="" readonly>
                                                             </div>
                                                         </div>
+                                                        <div class="row mb-4">
+                                                            <label class="col-md-3 form-label" for="empname">GST IN :</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" class="form-control" id="gstin" name="gstin" placeholder="GST Number"  value="<?php echo $roworders['gstin'] ?>" required>
+                                                            </div>
+                                                        </div>
                                                     
   
                                                     </div>
@@ -311,6 +317,18 @@ if ($resultorders->num_rows > 0) {
                                                                 <textarea class="form-control" name="statusreason" id="statusreason" placeholder="Here statusreason" rows="4" readonly><?php echo $roworders['status_reason'] ?></textarea>
 
                                                             </div>
+                                                        </div>
+                                                        <div class="row mb-4">
+                                                            <div class="col-md-3"><label class="form-label" for="cquality">Client Quality :</label></div>
+                                                            <div class="col-md-9"><select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
+                                                                    <option value="<?php echo $roworders['client_quality'] ?>"><?php echo $roworders['client_quality'] ?></option>
+
+                                                                    <option value="Good">Good</option>
+                                                                    <option value="Average">Average</option>
+                                                                    <option value="Poor">Poor</option>
+                                                                </select>
+                                                            </div>
+
                                                         </div>
 
 

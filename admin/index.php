@@ -1,20 +1,20 @@
 <?php
 ob_start();
-session_start(); 
+session_start();
 
 if (!isset($_SESSION['adminname'])) {
-  $_SESSION['msg'] = "You must log in first";
-   header('location: signin.php');
+	$_SESSION['msg'] = "You must log in first";
+	header('location: signin.php');
 }
 
 if (isset($_GET['logout'])) {
-  session_destroy();
-  unset($_SESSION['adminname']);
-  header("location: signin.php");
+	session_destroy();
+	unset($_SESSION['adminname']);
+	header("location: signin.php");
 }
 
 include "includes/connection.php";
-$totemployees=0;
+$totemployees = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,8 +25,7 @@ $totemployees=0;
 	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<meta name="keywords"
-		content="">
+	<meta name="keywords" content="">
 
 	<!-- Favicon -->
 	<link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
@@ -75,9 +74,9 @@ $totemployees=0;
 						<div>
 							<h2 class="main-content-title tx-24 mg-b-5">Welcome To Dashboard</h2>
 
-                            <?php
+							<?php
 							//  echo "id : " . $_SESSION['adminid'] . ' , ' . $_SESSION['adminname'];
-							  ?>
+							?>
 
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
@@ -86,9 +85,7 @@ $totemployees=0;
 						</div>
 						<div class="d-flex">
 							<div class="me-2">
-								<a class="btn ripple btn-primary dropdown-toggle mb-0"
-									href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="true">
+								<a class="btn ripple btn-primary dropdown-toggle mb-0" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 									<i class="fe fe-external-link"></i> Export <i class="fa fa-caret-down ms-1"></i>
 								</a>
 								<!-- <div class="dropdown-menu tx-13">
@@ -129,8 +126,7 @@ $totemployees=0;
 													<div class="input-group">
 														<div class="input-group-text">
 															<i class="fe fe-calendar lh--9 op-6"></i>
-														</div><input class="form-control fc-datepicker"
-															placeholder="11/01/2019" type="text">
+														</div><input class="form-control fc-datepicker" placeholder="11/01/2019" type="text">
 													</div>
 												</div>
 											</div>
@@ -140,8 +136,7 @@ $totemployees=0;
 													<div class="input-group">
 														<div class="input-group-text">
 															<i class="fe fe-calendar lh--9 op-6"></i>
-														</div><input class="form-control fc-datepicker"
-															placeholder="11/08/2019" type="text">
+														</div><input class="form-control fc-datepicker" placeholder="11/08/2019" type="text">
 													</div>
 												</div>
 											</div>
@@ -150,8 +145,7 @@ $totemployees=0;
 									<div class="col-md-6 col-xl-3">
 										<div class="form-group mb-lg-0">
 											<label>Sales By Country :</label>
-											<select class="form-control select2-flag-search select2"
-												data-placeholder="Select Contry">
+											<select class="form-control select2-flag-search select2" data-placeholder="Select Contry">
 												<option value="AF">Afghanistan</option>
 												<option value="AL">Albania</option>
 												<option value="AD">Andorra</option>
@@ -336,12 +330,8 @@ $totemployees=0;
 								</div>
 								<hr>
 								<div class="text-end">
-									<a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="collapse"
-										data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">Apply</a>
-									<a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="collapse"
-										data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">Reset</a>
+									<a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Apply</a>
+									<a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Reset</a>
 								</div>
 							</div>
 						</div>
@@ -363,13 +353,11 @@ $totemployees=0;
 										<h3 class="dash-25">$568</h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-70p" role="progressbar"></div>
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-70p" role="progressbar"></div>
 									</div>
 									<div class="expansion-label d-flex">
 										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-up me-1 text-success"></i>0.7%</span>
+										<span class="ms-auto"><i class="fa fa-caret-up me-1 text-success"></i>0.7%</span>
 									</div>
 								</div>
 							</div>
@@ -387,14 +375,12 @@ $totemployees=0;
 										<h3 class="dash-25">$12,897</h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-60p bg-secondary" role="progressbar">
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-60p bg-secondary" role="progressbar">
 										</div>
 									</div>
 									<div class="expansion-label d-flex">
 										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-down me-1 text-danger"></i>0.43%</span>
+										<span class="ms-auto"><i class="fa fa-caret-down me-1 text-danger"></i>0.43%</span>
 									</div>
 								</div>
 							</div>
@@ -412,26 +398,24 @@ $totemployees=0;
 										<h3 class="dash-25">$11,234</h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-50p bg-success" role="progressbar">
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-50p bg-success" role="progressbar">
 										</div>
 									</div>
 									<div class="expansion-label d-flex text-muted">
 										<span class="text-muted">Last Month</span>
-										<span class="ms-auto"><i
-												class="fa fa-caret-down me-1 text-danger"></i>1.44%</span>
+										<span class="ms-auto"><i class="fa fa-caret-down me-1 text-danger"></i>1.44%</span>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-sm-6 col-xl-3 col-lg-6">
 							<?php
-								$sql = "SELECT * FROM employee";
-								$result = $connection->query($sql);
+							$sql = "SELECT * FROM employee";
+							$result = $connection->query($sql);
 
-								if ($result->num_rows > 0) {
-									$totemployees=$result->num_rows;
-								}
+							if ($result->num_rows > 0) {
+								$totemployees = $result->num_rows;
+							}
 							?>
 							<div class="card custom-card">
 								<div class="card-body dash1">
@@ -445,8 +429,7 @@ $totemployees=0;
 										<h3 class="dash-25"><?php echo $totemployees; ?> </h3>
 									</div>
 									<div class="progress mb-1">
-										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-											class="progress-bar progress-bar-xs wd-40p bg-info" role="progressbar">
+										<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" class="progress-bar progress-bar-xs wd-40p bg-info" role="progressbar">
 										</div>
 									</div>
 									<div class="expansion-label d-flex text-muted">
@@ -461,7 +444,7 @@ $totemployees=0;
 					<!--End  Row -->
 
 					<!-- Row -->
-					<div class="row row-sm">
+					<!-- <div class="row row-sm">
 						<div class="col-sm-12 col-xl-8 col-lg-8">
 							<div class="card custom-card overflow-hidden">
 								<div class="card-body">
@@ -552,7 +535,7 @@ $totemployees=0;
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- End Row -->
 
 					<!-- Row -->
@@ -561,52 +544,39 @@ $totemployees=0;
 							<div class="card custom-card">
 								<div class="card-body">
 									<div>
-										<h6 class="card-title mb-1">Activity</h6>
-										<p class="text-muted mb-0 card-sub-title">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
+										<h6 class="card-title mb-1">Pending Workstatus</h6>
+										<p class="text-muted mb-0 card-sub-title">Yesterdays Work Status Pending Employee's List.</p>
 									</div>
 								</div>
 								<div class="card-body">
 									<div class="activity-block">
+
 										<ul class="task-list">
-											<li>
-												<i class="task-icon bg-success"></i>
-												<h6>Successful Purchase<small class="float-end text-muted tx-11">29 Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #4567</span>
-											</li>
-											<li>
-												<i class="task-icon bg-secondary"></i>
-												<h6>New Registered Seller<small class="float-end text-muted tx-11">25
-														Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">User ID: #8976</span>
-											</li>
-											<li>
-												<i class="task-icon bg-primary"></i>
-												<h6>Order Verification<small class="float-end text-muted tx-11">14 Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #6290</span>
-											</li>
-											<li>
-												<i class="task-icon bg-info"></i>
-												<h6>New Item Added<small class="float-end text-muted tx-11">02 Oct
-														2019</small></h6>
-												<span class="text-muted tx-12">Item ID: #0235</span>
-											</li>
-											<li>
-												<i class="task-icon bg-danger"></i>
-												<h6>Purchase Cancellation<small class="float-end text-muted tx-11">28
-														Sep
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #1905</span>
-											</li>
-											<li class="mb-0">
-												<i class="task-icon bg-warning"></i>
-												<h6>Overdue Shipments<small class="float-end text-muted tx-11">25 Sep
-														2019</small></h6>
-												<span class="text-muted tx-12">Order ID: #8902</span>
-											</li>
+											<?php
+											$currentDate = strtotime(date("d-m-Y"));
+											$yesterdayDate = strtotime('-1 day', $currentDate);
+											$sql = "SELECT * FROM employee where status='Active'";
+											$result = $connection->query($sql);
+											if ($result->num_rows > 0) {
+												while ($row = $result->fetch_assoc()) {
+													$sqlwsdate1 = "SELECT * FROM dailyworkstatus where work_date ='" . date('d-m-Y', $yesterdayDate)  . "' and emp_id = '" . $row['id'] . "'";
+													$resultwsdate1 = $connection->query($sqlwsdate1);
+													if ($resultwsdate1->num_rows > 0) {
+													} else {
+
+											?>
+														<li>
+															<i class="task-icon bg-danger"></i>
+															<h6><?php echo $row['empname']; ?></h6>
+
+														</li>
+											<?php    }
+												}
+											}     ?>
+
+
+
+
 										</ul>
 									</div>
 								</div>
@@ -616,167 +586,147 @@ $totemployees=0;
 							<div class="card custom-card pb-2">
 								<div class="card-body">
 									<div>
-										<h6 class="card-title mb-1">Top Users Conversion Rate</h6>
-										<p class="text-muted mb-0 card-sub-title">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
+										<h6 class="card-title mb-1">Pending Process Job's</h6>
+										<p class="text-muted mb-0 card-sub-title">Pending Process Job's - Employee List.</p>
 									</div>
 								</div>
 								<div class="user-manager scroll-widget border-top">
 									<div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/2.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Socrates Itumay</h6><small
-														class="tx-11 tx-gray-500">Sales Manager1</small>
+										<?php
+										$query = "select * from staff_pjob_allocation ";
+										$select_posts = mysqli_query($connection, $query);
+										while ($row = mysqli_fetch_assoc($select_posts)) {
+
+											$id = $row['id'];
+											$post_title = $row['empname'];
+
+											$post_jobname = "";
+											$sqljob = "SELECT * FROM process_jobs where id='" . $row['jobid'] . "'";
+											$resultjob = $connection->query($sqljob);
+											if ($resultjob->num_rows > 0) {
+												while ($rowjob = $resultjob->fetch_assoc()) {
+													$post_jobname = $rowjob['jobname'];
+												}
+											}
+											$post_description = "";
+											$post_workstatus = "";
+											$sql1 = "SELECT * FROM staff_pjob_allocation_details where staff_allocation_id ='" . $id . "' order by id desc limit 1";
+											$result1 = $connection->query($sql1);
+											if ($result1->num_rows > 0) {
+												while ($row2 = $result1->fetch_assoc()) {
+													$post_description = $row2['job_description'];
+													$post_workstatus = $row2['work_status'];
+												}
+											}
+											if ($post_workstatus !== 'Closed') {
+										?>
+												<div class="d-flex pt-2 pb-2 border-bottom">
+													<div class="d-flex ms-3">
+														<span class="main-img-user">
+															<!-- <img alt="avatar"
+														src="../assets/img/users/2.jpg"> -->
+															<?php
+															$colors = array('bg-pink', 'bg-blue', 'bg-green', 'bg-purple', 'bg-orange', 'bg-primary', 'bg-cyan', 'bg-success');
+															$randomColor = $colors[array_rand($colors)];
+															?>
+															<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
+																<?php echo strtoupper(substr($post_title, 0, 1)); ?>
+															</div>
+
+
+
+														</span>
+														<div class="ms-3">
+															<h6 class="mg-b-0"><?php echo $post_title; ?></h6><small class="tx-11 tx-gray-500"><?php echo $post_jobname; ?></small>
+														</div>
+													</div>
+													<div class="ms-auto me-3">
+														<h6 class="mg-b-0 font-weight-bold"><?php 
+														if ($post_workstatus == ""){
+															echo "No data Found";
+														} else {
+														echo 	$post_workstatus;
+														} ?></h6>
+														<!-- <small class="tx-11 tx-gray-500">Conversion Rate</small> -->
+													</div>
 												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">34%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/3.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Reynante Labares</h6><small
-														class="tx-11 tx-gray-500">Sales Manager2</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">22%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/4.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Owen Bongcaras</h6><small
-														class="tx-11 tx-gray-500">Sales Manager3</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">18%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/5.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Mariane Galeon</h6><small
-														class="tx-11 tx-gray-500">Sales Manager4</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">15%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/6.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Joyce Chua</h6><small
-														class="tx-11 tx-gray-500">Sales Manager5</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">12%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2 border-bottom">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/7.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Sonia Fraser</h6><small
-														class="tx-11 tx-gray-500">Sales Manager5</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">11%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
-										<div class="d-flex pt-2 pb-2">
-											<div class="d-flex ms-3">
-												<span class="main-img-user"><img alt="avatar"
-														src="../assets/img/users/4.jpg"></span>
-												<div class="ms-3">
-													<h6 class="mg-b-0">Owen Bongcaras</h6><small
-														class="tx-11 tx-gray-500">Sales Manager3</small>
-												</div>
-											</div>
-											<div class="ms-auto me-3">
-												<h6 class="mg-b-0 font-weight-bold">18%</h6><small
-													class="tx-11 tx-gray-500">Conversion Rate</small>
-											</div>
-										</div>
+										<?php }
+										} ?>
+
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-12 col-lg-12 col-xl-4 ">
-							<div class="card custom-card">
+						<div class="col-sm-12 col-lg-4 col-xl-4">
+							<div class="card custom-card pb-2">
 								<div class="card-body">
 									<div>
-										<h6 class="card-title mb-1">Countrywise Sales</h6>
-										<p class="text-muted mb-0 card-sub-title">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
+										<h6 class="card-title mb-1">Monthly Productivity</h6>
+										<p class="text-muted mb-0 card-sub-title">Your productivity Score.</p>
 									</div>
 								</div>
-								<div class="country-sales scroll-widget bd-t">
-									<div class="list-group">
-										<div class="list-group-item  d-flex border-end-0 border-start-0 border-top-0">
-											<i class="flag-icon flag-us flag-icon-squared"></i>
-											<p class="ms-3 mb-0">United States</p>
-											<span class="ms-auto font-weight-bold">$12,897</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-nl flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Netherlands</p>
-											<span class="ms-auto font-weight-bold">$11,789</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-gb flag-icon-squared"></i>
-											<p class="ms-3 mb-0">United Kingdom</p>
-											<span class="ms-auto font-weight-bold">$10,234</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-ca flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Canada</p>
-											<span class="ms-auto font-weight-bold">$9,104</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-au flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Australia</p>
-											<span class="ms-auto font-weight-bold">$16,205</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-si flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Slovenia</p>
-											<span class="ms-auto font-weight-bold">$18,165</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0 rounded-0">
-											<i class="flag-icon flag-de flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Denmark</p>
-											<span class="ms-auto font-weight-bold">$19,765</span>
-										</div>
-										<div class="list-group-item d-flex border-end-0 border-start-0">
-											<i class="flag-icon flag-si flag-icon-squared"></i>
-											<p class="ms-3 mb-0">Slovenia</p>
-											<span class="ms-auto font-weight-bold">$18,165</span>
-										</div>
+								<div class="user-manager scroll-widget border-top">
+									<div>
+										<?php
+										$query = "select * from employee order by  RAND()";
+										$select_posts = mysqli_query($connection, $query);
+										while ($row = mysqli_fetch_assoc($select_posts)) {
 
+											$id = $row['id'];
+											$post_title = $row['empname'];
+											$post_deptid = $row['department_id'];
+											$post_desigid = $row['desig_id'];
+											$post_deptname = "";
+											$post_designame = "";
+											$querydept = "select * from department where id='" .   $post_deptid   . "'";
+											$select_postsdept = mysqli_query($connection, $querydept);
+											while ($rowdept = mysqli_fetch_assoc($select_postsdept)) {
+												$post_deptname = $rowdept['department'];
+											}
+											$querydesig = "select * from designation where id='" .   $post_desigid   . "'";
+											$select_postsdesig = mysqli_query($connection, $querydesig);
+											while ($rowdesig = mysqli_fetch_assoc($select_postsdesig)) {
+												$post_designame = $rowdesig['designation'];
+											}
+
+
+
+										?>
+											<div class="d-flex pt-2 pb-2 border-bottom">
+												<div class="d-flex ms-3">
+													<span class="main-img-user">
+														<?php if (isset($row['emppic']) && $row['emppic'] !== "") { ?>
+															<img alt="avatar" src="../assets/img/users/2.jpg">
+														<?php	} else {
+
+															$colors = array('bg-pink', 'bg-blue', 'bg-green', 'bg-purple', 'bg-orange', 'bg-primary', 'bg-cyan', 'bg-success');
+															$randomColor = $colors[array_rand($colors)];
+														?>
+															<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
+																<?php echo strtoupper(substr($post_title, 0, 1)); ?>
+															</div>
+														<?php } ?>
+													</span>
+													<div class="ms-3">
+														<h6 class="mg-b-0"><?php echo $post_title;  ?></h6><small class="tx-11 tx-gray-500"><?php echo $post_designame;  ?></small>
+													</div>
+												</div>
+												<div class="ms-auto me-3">
+													<h6 class="mg-b-0 font-weight-bold">*****</h6><small class="tx-11 tx-gray-500">Productivity Score</small>
+												</div>
+											</div>
+										<?php } ?>
+										<!-- <div class="d-flex pt-2 pb-2">
+											<div class="d-flex ms-3">
+												<span class="main-img-user"><img alt="avatar" src="../assets/img/users/4.jpg"></span>
+												<div class="ms-3">
+													<h6 class="mg-b-0">Owen Bongcaras</h6><small class="tx-11 tx-gray-500">Sales Manager3</small>
+												</div>
+											</div>
+											<div class="ms-auto me-3">
+												<h6 class="mg-b-0 font-weight-bold">18%</h6><small class="tx-11 tx-gray-500">Conversion Rate</small>
+											</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -785,7 +735,7 @@ $totemployees=0;
 					<!-- End Row -->
 
 					<!-- Row-->
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-sm-12 col-xl-12 col-lg-12">
 							<div class="card custom-card">
 								<div class="card-body">
@@ -886,14 +836,14 @@ $totemployees=0;
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- End Row -->
 				</div>
 			</div>
 		</div>
 		<!-- End Main Content-->
 
-		<?php include 'includes/footer.php';?>
+		<?php include 'includes/footer.php'; ?>
 
 
 	</div>

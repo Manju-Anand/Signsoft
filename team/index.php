@@ -486,7 +486,7 @@ $activeworks = "0";
 										<?php
 										$currentData = date('Y-m-d');
 										?>
-<h6> TO DO LIST </h6>
+										<h6> TO DO LIST </h6>
 										<!-- Calendar Container -->
 										<div id='calendar-container'>
 										<div id='othercalendar'></div>

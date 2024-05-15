@@ -197,6 +197,12 @@ if ($resultorders->num_rows > 0) {
                                                                 <input type="time" name="contactedtime" id="contactedtime" value="<?php echo $roworders['contactTime'] ?>" class="form-control" placeholder="">
                                                             </div>
                                                         </div>
+                                                        <div class="row mb-4">
+                                                            <label class="col-md-3 form-label" for="empname">GST IN :</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" class="form-control" id="gstin" name="gstin" placeholder="GST Number"  value="<?php echo $roworders['gstin'] ?>" required>
+                                                            </div>
+                                                        </div>
                                                     
   
                                                     </div>
@@ -287,6 +293,18 @@ if ($resultorders->num_rows > 0) {
 
                                                             </div>
                                                         </div>
+                                                        <div class="row mb-4">
+                                                            <div class="col-md-3"><label class="form-label" for="cquality">Client Quality :</label></div>
+                                                            <div class="col-md-9"><select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
+                                                                    <option value="<?php echo $roworders['client_quality'] ?>"><?php echo $roworders['client_quality'] ?></option>
+
+                                                                    <option value="Good">Good</option>
+                                                                    <option value="Average">Average</option>
+                                                                    <option value="Poor">Poor</option>
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
 
 
                                                     </div>
@@ -321,6 +339,9 @@ if ($resultorders->num_rows > 0) {
                                                 $orderstatus = $_POST["status"];
                                                 $statusreason = $_POST["statusreason"];
 
+                                                $cquality = $_POST['cquality'];
+                                                $gstin = $_POST['gstin'];
+
                                                 date_default_timezone_set("Asia/Calcutta");
                                                 $postdate = date("M d,Y h:i:s a");
                                                 $sql = "UPDATE order_customers SET custName='". mysqli_real_escape_string($connection, $cusname) . "',
@@ -329,8 +350,8 @@ if ($resultorders->num_rows > 0) {
                                                 contactDate='". mysqli_real_escape_string($connection, $contacteddate) . "',contactTime='". mysqli_real_escape_string($connection, $contactedtime) . "',
                                                 quotedAmt='". mysqli_real_escape_string($connection, $qutamt) . "',leadSource='". mysqli_real_escape_string($connection, $leadsource) . "',
                                                 modified='". mysqli_real_escape_string($connection, $postdate) . "',order_status='". mysqli_real_escape_string($connection, $orderstatus) . "',
-                                                status_reason='". mysqli_real_escape_string($connection, $statusreason) . "',ordertype='External'  WHERE id='". $orgorderid ."'";
-
+                                                status_reason='". mysqli_real_escape_string($connection, $statusreason) . "',ordertype='External',
+                                                client_quality='". mysqli_real_escape_string($connection, $cquality) . "',gstin='". mysqli_real_escape_string($connection, $gstin) . "'  WHERE id='". $orgorderid ."'";
 
 
                                   
@@ -389,7 +410,7 @@ if ($resultorders->num_rows > 0) {
                                                     }
 
 
-                                                    // header("Location: orderlist.php");
+                                                    header("Location: orderlist.php");
                                                 } else {
                                                     echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                                 }

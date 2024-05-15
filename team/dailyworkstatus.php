@@ -24,7 +24,7 @@ function isDateLessThanOneDayFromToday($dateString) {
     
     // Check if the difference is less than 1 day
     // 
-    return ($interval->days < 1);
+    return ($interval->days < 10);
 }
 if(isset($_GET['delete']))
 {
@@ -109,10 +109,10 @@ if(isset($_GET['delete']))
 				<!-- Page Header -->
 				<div class="page-header">
 					<div>
-						<h2 class="main-content-title tx-24 mg-b-5">Empty Page</h2>
+						<h2 class="main-content-title tx-24 mg-b-5">Work Tracker</h2>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javascript:void(0);">Pages</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Empty Page</li>
+							<li class="breadcrumb-item active" aria-current="page">Work Tracker</li>
 						</ol>
 					</div>
 					<div class="btn-list">
@@ -180,12 +180,13 @@ if(isset($_GET['delete']))
                                                             <td class="text-primary"><?php echo $i ?></td>
 
                                                             <td><?php echo $rowwsdate1['work_date']; ?></td>
-                                                            <td>Done</td>
+                                                            <!-- <span class="badge bg-success">Delivered</span> -->
+                                                            <td> <span class="badge bg-success">Done</span></td>
                                                             <td class="text-center">
                                                                 <ul class="table-controls">
                                                                 <?php if (isDateLessThanOneDayFromToday($rowwsdate1['work_date'])) { ?>
                                                                     <li>
-                                                                      <a class='btn btn-sm btn-blue bs-tooltip' href='dailyworkentryedit.php?edit=<?php echo $rowwsdate1['id']?>' title='You Can Edit Now !' data-toggle="tooltip" data-placement="top" style='color:white'>
+                                                                      <a class='btn btn-sm btn-blue bs-tooltip' href='dailyworkentryedit1.php?edit=<?php echo $rowwsdate1['id']?>' title='You Can Edit Now !' data-toggle="tooltip" data-placement="top" style='color:white'>
                                                                     <span class='fe fe-edit'> </span></a> &nbsp;
                                                                
                                                                     <a onclick="javascript:confirmationDelete($(this));return false;"  class='btn btn-sm btn-danger delete-staff-btn bs-tooltip' data-toggle="tooltip" data-placement="top" href="dailyworkstatus.php?delete=<?php echo  $id; ?>" id='qusdelete' title='You Can Delete Now !' data-toggle='tooltip' style='color:white'>    
@@ -214,7 +215,8 @@ if(isset($_GET['delete']))
                                                         <td class="text-primary"><?php echo $i ?></td>
 
                                                         <td><?php echo date('d-m-Y', $currentDate) ?></td>
-                                                        <td>Not Done</td>
+                                                       
+                                                        <td><span class="badge bg-danger">Not Done</span></td>
                                                         <td class="text-center">
                                                             <ul class="table-controls">
 
