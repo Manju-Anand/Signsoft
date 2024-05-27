@@ -555,6 +555,12 @@ $totemployees = 0;
 											<?php
 											$currentDate = strtotime(date("d-m-Y"));
 											$yesterdayDate = strtotime('-1 day', $currentDate);
+											// Check if yesterday is a Sunday
+											if (date('w', $yesterdayDate) == 0) {
+												// If yesterday is a Sunday, set it to the previous Saturday
+												$yesterdayDate = strtotime('-1 day', $yesterdayDate);
+											}
+											echo "<p>Pending Date :" . date('d-m-Y', $yesterdayDate) . " </p>";
 											$sql = "SELECT * FROM employee where status='Active'";
 											$result = $connection->query($sql);
 											if ($result->num_rows > 0) {

@@ -1,13 +1,13 @@
 <?php
 // Include your database connection or any necessary files
 
-// Check if the month is set and not empty
-if(isset($_POST['month-select']) && !empty($_POST['month-select'])) {
-    $selectedMonth = $_POST['month-select'];
-    // Call the showorderlist function with the selected month
-    newshoworderlist($selectedMonth);
+include "includes/connection.php";; // Your database connection
+
+if (isset($_GET['monthselect'])) {
+    $cquality = $_GET['monthselect'];
+    showorderlist($cquality);
 }
-function newshoworderlist($selectedMonth)
+function showorderlist($selectedMonth)
 {
     global $connection;
     // $selectedMonth = $_POST['month-select']; 
@@ -38,7 +38,7 @@ function newshoworderlist($selectedMonth)
                 $result1 = $connection->query($sql1);
                 if ($result1->num_rows > 0) {
                 while($row2 = $result1->fetch_assoc()) {
-                    $post_timetaken += timeToDecimal($row2['timetaken']);
+                    $post_timetaken += timeToDecimal11($row2['timetaken']);
                 }}
 
                 $post_description="";
@@ -72,7 +72,7 @@ function newshoworderlist($selectedMonth)
         echo "<td>$post_deadline</td>"; 
         
  
-        echo "<td><a class='btn btn-sm btn-cyan  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id}  title='View Process Job  Details' style='color:white'>
+        echo "<td><a class='btn btn-sm btn-cyan view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id}  title='View Process Job  Details' style='color:white'>
         <span class='fe fe-eye'> </span></a>&nbsp;
         </td>";
 
@@ -81,5 +81,10 @@ function newshoworderlist($selectedMonth)
         echo "</tr>";
     }
 }
+// Function to convert HH:MM to decimal hours
+function timeToDecimal11($time) {
 
+    list($hours, $minutes) = explode(':', $time);
+    return $hours + ($minutes / 60);
+}
 ?>

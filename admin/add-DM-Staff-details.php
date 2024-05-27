@@ -214,7 +214,7 @@ $mainorderid = "";
                                                                 <select class="form-select mb-3" aria-label="Default select example" name="staff" id="staff" required>
                                                                     <option value="" disabled selected>Select Employee</option>
                                                                     <?php
-                                                                    $query = "SELECT * FROM employee WHERE department_id IN (SELECT id FROM department WHERE dname='Digital')";
+                                                                    $query = "SELECT * FROM employee WHERE status='Active' and department_id IN (SELECT id FROM department WHERE dname='Digital')";
                                                                     $select_posts = mysqli_query($connection, $query);
                                                                     while ($row = mysqli_fetch_assoc($select_posts)) {
                                                                     ?>

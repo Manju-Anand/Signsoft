@@ -14,12 +14,15 @@ if (isset($_GET['logout'])) {
 }
 
 include "includes/connection.php";
-function showorderlist()
+
+$currentMonth = date('m'); // Get the current month (as '01' for January, '02' for February, etc.)
+
+function showorderlist($currentMonth)
 {
     global $connection;
     // $query = "select * from staff_pjob_allocation order by id desc";
     // 
-    $currentMonth = date('m'); // Get the current month (as '01' for January, '02' for February, etc.)
+    
     // $query = "SELECT * FROM staff_pjob_allocation WHERE MONTH(assigndate) = '$currentMonth' ORDER BY id DESC";
     $query = "SELECT * FROM staff_pjob_allocation WHERE SUBSTRING(assigndate, 4, 2) = '$currentMonth' ORDER BY id DESC";
      $select_posts = mysqli_query($connection, $query);
@@ -82,7 +85,7 @@ function showorderlist()
         echo "<td>$post_deadline</td>"; 
         
  
-        echo "<td><a class='btn btn-sm btn-cyan  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id}  title='View Process Job  Details' style='color:white'>
+        echo "<td><a class='btn btn-sm btn-cyan view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id}  title='View Process Job Details' style='color:white'>
         <span class='fe fe-eye'> </span></a>&nbsp;
         </td>";
 
@@ -196,17 +199,17 @@ function timeToDecimal($time) {
                                             <div class="col-md-8">
                                            
                                                     <label for="designation" class="form-label">Select Month</label>
-                                                    <select id="month-select" name="month-select" class="form-select mb-3" required>
+                                                    <select id="month-select" name="month-select" class="form-select mb-3" required onchange="filterOrders()">
                                                     <option value="" disabled selected>Select Month</option>
-                                                        <option value="1">January</option>
-                                                        <option value="2">February</option>
-                                                        <option value="3">March</option>
-                                                        <option value="4">April</option>
-                                                        <option value="5">May</option>
-                                                        <option value="6">June</option>
-                                                        <option value="7">July</option>
-                                                        <option value="8">August</option>
-                                                        <option value="9">September</option>
+                                                        <option value="01">January</option>
+                                                        <option value="02">February</option>
+                                                        <option value="03">March</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">May</option>
+                                                        <option value="06">June</option>
+                                                        <option value="07">July</option>
+                                                        <option value="08">August</option>
+                                                        <option value="09">September</option>
                                                         <option value="10">October</option>
                                                         <option value="11">November</option>
                                                         <option value="12">December</option>
@@ -243,7 +246,8 @@ function timeToDecimal($time) {
                                             <tbody>
 
                                                 <?php
-                                                showorderlist();
+                                                $currentMonth = date('m');
+                                                showorderlist($currentMonth);
                                                 ?>
                                                
 
@@ -336,8 +340,8 @@ function timeToDecimal($time) {
             <script src="../assets/plugins/datatable/responsive.bootstrap5.min.js"></script>
 
             <!-- Perfect-scrollbar js-->
-            <script src="../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-            <script src="../assets/plugins/perfect-scrollbar/p-scroll-1.js"></script>
+            <!-- <script src="../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script> -->
+            <!-- <script src="../assets/plugins/perfect-scrollbar/p-scroll-1.js"></script> -->
 
             <!-- Sidemenu js-->
             <script src="../assets/plugins/sidemenu/sidemenu.js"></script>
@@ -361,20 +365,65 @@ function timeToDecimal($time) {
             <script>
 
                 
-
-
             $('.view-details-btn').on('click', function() {
                 var recordId = $(this).data('recordid');
-                var redirectId = $(this).data('redirectid');
+                alert(recordId);
+                // var redirectId = $(this).data('redirectid');
                 // Make AJAX request to fetch data based on recordId
                 $.ajax({
                     type: 'POST',
                     url: 'web-viewprocessjobworkdetails.php', // Replace with the actual path to your PHP script
                     data: {
                         recordId: recordId,
-                        redirectId: redirectId
+                        // redirectId: redirectId
                     },
                     dataType: 'json',
+                    success: function(response) {
+                        //
+
+
+                        // Clear existing rows in the workdetails table
+                        $('#workdetails tbody').empty();
+
+                        // Display data from the second table (staff_dm_graphics_allocation_details)
+                        if (response.details && response.details.length > 0) {
+                            for (var i = 0; i < response.details.length; i++) {
+                                j=i+1;
+                                var newRow = '<tr>' +
+                                    '<td>' + j + '</td>' +
+                                    '<td>' + response.details[i].workdate + '</td>' +
+                                    '<td>' + response.details[i].timetaken + '</td>' +
+                                    '<td>' + response.details[i].work_status + '</td>' +
+                                    // Add similar lines for other columns in staff_dm_graphics_allocation_details
+                                    '</tr>';
+
+                                // Append the new row to the workdetails table
+                                $('#workdetails tbody').append(newRow);
+                            }
+                        } else {
+                            // No details data available
+                            $('#workdetails tbody').html('<tr><td colspan="3">No details available.</td></tr>');
+                        }
+
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            });
+
+            $('.view-details-btn123').on('click', function() {
+                var recordId = $(this).data('recordid');
+               alert (recordId);
+                // Make AJAX request to fetch data based on recordId
+                $.ajax({
+                    type: 'POST',
+                    url: 'web-viewprocessjobworkdetails.php', // Replace with the actual path to your PHP script
+                    data: {
+                        recordId: recordId,
+                        
+                    },
+                    // dataType: 'json',
                     success: function(response) {
                         // Populate fields in viewmodal
                      
@@ -422,6 +471,19 @@ function timeToDecimal($time) {
 
     // Set the selected option in the select box
     document.getElementById("month-select").value = currentMonth;
+
+    function filterOrders() {
+    var monthselect = document.getElementById('month-select').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'fetch_processjob_data.php?monthselect=' + monthselect, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.querySelector('#example3 tbody').innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
 </script>
 </body>
 

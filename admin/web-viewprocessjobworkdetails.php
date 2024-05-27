@@ -1,12 +1,12 @@
 <?php
 // Include your database connection file
 include "includes/connection.php";
-
+echo $_SERVER['REQUEST_METHOD'];
 // Check if the request is a POST request
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve recordId from the POST request
     $recordId = $_POST['recordId'];
- 
+ echo $recordId;
     // Validate and sanitize the recordId (you should customize this based on your requirements)
 
     // Example validation: Ensure recordId is a number
@@ -65,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Close the database connection
     $connection->close();
-} else {
-    // If the request is not a POST request, return an error
-    die('Error: Invalid request method.');
-}
+// } else {
+//     // If the request is not a POST request, return an error
+//     die('Error: Invalid request method.');
+// }
 ?>

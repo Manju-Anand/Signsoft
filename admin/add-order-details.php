@@ -220,7 +220,7 @@ $mainorderid = "";
                                                         <select class="form-select mb-3" aria-label="Default select example" name="staff" id="staff" required>
                                                             <option value="" disabled selected>Select Employee</option>
                                                             <?php
-                                                            $query = "select * from employee order by id desc";
+                                                            $query = "select * from employee  where status='Active'order by id desc";
                                                             $select_posts = mysqli_query($connection, $query);
                                                             while ($row = mysqli_fetch_assoc($select_posts)) {
                                                             ?>
@@ -402,13 +402,18 @@ $mainorderid = "";
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <label class="form-label" for="paymentamt">Payment Amount :</label>
+                                                        <label class="form-label" for="invoiceamt">Invoice Amount :</label>
+                                                        <input type="number" class="form-control" id="invoiceamt" name="invoiceamt" placeholder="Payment Amount" required>
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="form-label" for="paymentamt">Received Amount :</label>
                                                         <input type="number" class="form-control" id="paymentamt" name="paymentamt" placeholder="Payment Amount" required>
 
                                                     </div>
 
                                                     <div class="col-md-2">
-                                                        <label class="form-label" for="paycustbillno">Customer Bill No :</label>
+                                                        <label class="form-label" for="paycustbillno">Customer Invoice No :</label>
                                                         <input type="text" class="form-control" id="paycustbillno" name="paycustbillno" placeholder="Customer Bill No" required>
 
                                                     </div>
@@ -436,6 +441,7 @@ $mainorderid = "";
                                                                 <th>#</th>
                                                                 <th>Payment Type</th>
                                                                 <th>Transaction Mode</th>
+                                                                <th>Invoice Amount</th>
                                                                 <th>Payment Amount</th>
                                                                 <th>Customer Bill No</th>
                                                                 <th>Date of Pay</th>
@@ -659,6 +665,11 @@ $mainorderid = "";
                                     <option value="UPI">UPI</option>
                                     <option value="Bank Transfer">Bank Transfer</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="paymentamt">Invoice Amount :</label>
+                                <input type="number" class="form-control" id="modalinvoiceamt" name="modalinvoiceamt" placeholder="Invoice Amount" required>
+
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="paymentamt">Payment Amount :</label>

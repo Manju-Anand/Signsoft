@@ -217,14 +217,16 @@ $('body').on('click', '.edit-pay-btn', function () {
     // Extract values from the row
     var paytype = row.find('td:eq(1)').text(); // Replace 1 with the actual column index
     var transmode = row.find('td:eq(2)').text(); // Replace 2 with the actual column index
-    var payamt = row.find('td:eq(3)').text(); // Replace 3 with the actual column index
-    var custbillno = row.find('td:eq(4)').text(); // Replace 4 with the actual column index
-    var custpaydate = row.find('td:eq(5)').text(); // Replace 4 with the actual column index
+    var invoiceamt = row.find('td:eq(3)').text(); // Replace 3 with the actual column index
+    var payamt = row.find('td:eq(4)').text(); // Replace 3 with the actual column index
+    var custbillno = row.find('td:eq(5)').text(); // Replace 4 with the actual column index
+    var custpaydate = row.find('td:eq(6)').text(); // Replace 4 with the actual column index
     var rowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
 
     // Set values in the modal
     $('#modalpaytype').val(paytype).trigger('change');
     $('#modalpaymenttransmode').val(transmode).trigger('change');
+    $('#modalinvoiceamt').val(invoiceamt);
     $('#modalpaymentamt').val(payamt);
     $('#modalpaycustbillno').val(custbillno);
     $('#modalcuspayDate').val(custpaydate);
@@ -311,32 +313,37 @@ function addPayment() {
     cell3.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
 
 
-    // Text Box 1
     var cell4 = newRow.insertCell(3);
-    var textBox1 = document.getElementById("paymentamt");
+    var textBox1 = document.getElementById("invoiceamt");
     cell4.innerHTML = textBox1.value;
     cell4.style.textAlign = "right";
 
-    // Text Box 2
+    // Text Box 1
     var cell5 = newRow.insertCell(4);
-    var textBox2 = document.getElementById("paycustbillno");
-    cell5.innerHTML = textBox2.value;
+    var textBox1 = document.getElementById("paymentamt");
+    cell5.innerHTML = textBox1.value;
+    cell5.style.textAlign = "right";
 
-
+    // Text Box 2
     var cell6 = newRow.insertCell(5);
-    var textBox2 = document.getElementById("cuspaydate");
+    var textBox2 = document.getElementById("paycustbillno");
     cell6.innerHTML = textBox2.value;
+
+
+    var cell7 = newRow.insertCell(6);
+    var textBox2 = document.getElementById("cuspaydate");
+    cell7.innerHTML = textBox2.value;
     // Text Box 3
     // New cell with Edit and Delete buttons  ===========href='edit-supplier.php?edit=" + ++rowCounter + "'---onclick='javascript:confirmationDelete($(this));return false;
-    var cell7 = newRow.insertCell(6);
-    cell7.innerHTML = "<a class='btn btn-sm btn-primary edit-pay-btn'  data-bs-target='#paymentmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
+    var cell8 = newRow.insertCell(7);
+    cell8.innerHTML = "<a class='btn btn-sm btn-primary edit-pay-btn'  data-bs-target='#paymentmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
         "<span class='fe fe-edit'> </span></a>&nbsp;&nbsp;" +
         "<a class='btn btn-sm btn-danger delete-pay-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>" +
         "<span class='fe fe-trash-2'> </span></a>";
 
-        var cell8 = newRow.insertCell(7);
-        cell8.innerHTML = "New";
-        cell8.classList.add('hidden-cell');
+        var cell9 = newRow.insertCell(8);
+        cell9.innerHTML = "New";
+        cell9.classList.add('hidden-cell');
     // Clear input values after adding to the table
     textBox1.value = "";
     textBox2.value = "";
@@ -354,6 +361,7 @@ $('#savepayChangesBtn').on('click', function () {
     var modalpaytype = $('#modalpaytype').val();
     var transmodeValue = $('#modalpaymenttransmode').val();
     var custbillnoValue = $('#modalpaycustbillno').val();
+    var invoiceamtValue = $('#modalinvoiceamt').val();
     var payamtValue = $('#modalpaymentamt').val();
     var payDate = $('#modalcuspayDate').val();
     var pstatus = "Edited";
@@ -367,10 +375,11 @@ $('#savepayChangesBtn').on('click', function () {
     var selectedRow = $('#paydataTable tbody tr[data-rowid="' + selectedRowId + '"]');
     selectedRow.find('td:eq(1)').text(modalpaytype); // Update with the correct column indices.
     selectedRow.find('td:eq(2)').text(transmodeValue); // Update with the correct column indices.
-    selectedRow.find('td:eq(3)').text(payamtValue); // Update with the correct column indices
-    selectedRow.find('td:eq(4)').text(custbillnoValue); // Update with the correct column indices
-    selectedRow.find('td:eq(5)').text(payDate); // Update with the correct column indices
-    selectedRow.find('td:eq(7)').text(pstatus); // Update with the correct column indices
+    selectedRow.find('td:eq(3)').text(invoiceamtValue); // Update with the correct column indices
+    selectedRow.find('td:eq(4)').text(payamtValue); // Update with the correct column indices
+    selectedRow.find('td:eq(5)').text(custbillnoValue); // Update with the correct column indices
+    selectedRow.find('td:eq(6)').text(payDate); // Update with the correct column indices
+    selectedRow.find('td:eq(8)').text(pstatus); // Update with the correct column indices
     // Hide the modal
     $('#paymentmodal').modal('hide');
 });
@@ -778,10 +787,11 @@ function saveDataToDatabase() {
             orderid: document.getElementById("ordersdisplay").value,
             PaymentType: cells[1].innerHTML, // Adjust the index based on your table structure
             TransactionMode: cells[2].innerHTML, // Adjust the index based on your table structure
-            PaymentAmount: cells[3].innerHTML, // Adjust the index based on your table structure
-            CustomerBillNo: cells[4].innerHTML, // Adjust the index based on your table structure
-            cuspayDate: cells[5].innerHTML, // Adjust the index based on your table structure
-            payStatus: cells[7].innerHTML
+            InvoiceAmount: cells[3].innerHTML, // Adjust the index based on your table structure
+            PaymentAmount: cells[4].innerHTML, // Adjust the index based on your table structure
+            CustomerBillNo: cells[5].innerHTML, // Adjust the index based on your table structure
+            cuspayDate: cells[6].innerHTML, // Adjust the index based on your table structure
+            payStatus: cells[8].innerHTML
         };
 
         paymentdataToSave.push(rowData1);

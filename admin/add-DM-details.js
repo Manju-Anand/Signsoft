@@ -67,17 +67,44 @@ $('body').on('click', '.delete-staff-btn', function () {
     var row = $(this).closest('tr');
 
     // Extract the row data id
-    var rowId = row.data('rowid');
+    // var rowId = row.data('rowid');
+    var orgId = row.data('id');
+    // alert (orgId);
     $('#paystatus').val('Payment edited');
     // Confirmation dialog before deleting
     if (confirm("Are you sure you want to delete this row?")) {
-        // Perform the delete action (you can replace this with your actual deletion logic)
-        row.remove();
+ 
+        if (orgId == "") {
+            row.remove();
+        }
+        if (orgId !== "") {
+            $.ajax({
+                url: 'delete_DM_details_row.php', // Replace with the actual URL of your server-side script
+                type: 'POST',
+                data: {
+                    specificColumnData: orgId
+                },
+                success: function(response) {
+                    row.remove();
 
-        // Here you can also add code to perform additional actions, such as making an AJAX request to delete the row from the server.
+                    updatestaffRowNumbers();
 
-        // Optionally, update the numbering in the first column of remaining rows
-        updatestaffRowNumbers();
+                    alert('Successfully deleted the row: ');
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred while deleting the row: ' + error);
+                }
+            });
+
+
+
+        }
+
+
+
+
+
+     
     }
 });
 
@@ -98,7 +125,32 @@ function findMaxstaffRowNumber() {
         rowCounter = Math.max(rowCounter, currentRowNumber);
     });
 } 
+
+function validateInputs() {
+    var selectBox1 = document.getElementById("dmpayment");
+    var selectBox2 = document.getElementById("postings");
+    var selectBox3 = document.getElementById("staff");
+    var textBox1 = document.getElementById("frequency");
+    var textBox2 = document.getElementById("startdate");
+    var textBox3 = document.getElementById("enddate");
+    var textBox4 = document.getElementById("paidpromotion");
+
+    // Check if any of the required fields are empty
+    if (selectBox1.value === "" || selectBox2.selectedIndex === -1 || selectBox3.selectedIndex === -1 ||
+        textBox1.value.trim() === "" || textBox2.value.trim() === "" || textBox3.value.trim() === "" || textBox4.value.trim() === "") {
+        alert("Please fill all the required fields.");
+        return false;
+    }
+
+    return true;
+}
+
 function addstaffRow() {
+
+     // Call the validation function
+     if (!validateInputs()) {
+        return; // Exit the function if validation fails
+    }
      // Call the function to find the maximum row number
      findMaxstaffRowNumber(); 
 

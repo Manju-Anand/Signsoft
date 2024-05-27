@@ -38,7 +38,7 @@ if (isset($data['staffallocationdataToSave'])) {
     $postdate = date("M d,Y h:i:s a");
     // $assigndate = date("d-m-Y");
     $editid = $row['editid'];
-echo "editid" . $editid ."!";
+    echo "editid" . $editid . "!";
     // Example usage:
     $cDate =    $EndDate;
     $estartDate = formatnewDate($cDate);
@@ -78,8 +78,8 @@ echo "editid" . $editid ."!";
 
     // Perform the SQL query to insert data into the database
     // 
-      if (isset($row['editid']) && $row['editid'] !== "") {
-        // if ($recordstatus == "Edited") {
+    if (isset($row['editid']) && $row['editid'] !== "") {
+      // if ($recordstatus == "Edited") {
       $sql = "UPDATE staff_dm_allocation SET payment='" . $Payment . "',postings='" . $Postings . "',staffname='" . $staffName . "',staffid='" . $staffid . "',frequency='" . $Frequency . "',
       startdate='" . $StartDate . "',enddate='" . $EndDate . "',promoamt='" . $promoamt . "',modified='" . $postdate . "',orderid='" . $orderid . "',status='" . $recordstatus . "'
       ,assigndate='" . $assigndate . "' WHERE id='" . $editid . "'";
@@ -89,7 +89,7 @@ echo "editid" . $editid ."!";
       } else {
         echo "staff_dm_allocation updated successfully";
       }
-    // }
+      // }
       // dm_reports adding
       $sql = "INSERT INTO dm_reports (orderid,dm_allot_id,dmreport_date,status,created,empid) VALUES
       ('$orderid','$editid', '$EndDate', 'Not Done','$postdate','$staffid')";
@@ -110,9 +110,9 @@ echo "editid" . $editid ."!";
 
 
 
-    // } elseif ($recordstatus == "New") {
+      // } elseif ($recordstatus == "New") {
 
-    }else{
+    } else {
 
 
       $sql = "INSERT INTO staff_dm_allocation (orderid,payment,postings,staffname, staffid, frequency, startdate, enddate,promoamt,status,assigndate,created,work_status) VALUES
@@ -142,7 +142,7 @@ echo "editid" . $editid ."!";
       } else {
         echo "dmevents saved successfully";
       }
-    } 
+    }
   }
 }
 

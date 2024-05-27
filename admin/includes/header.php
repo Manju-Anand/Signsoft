@@ -123,8 +123,197 @@ ini_set('display_errors', 1);
 									<span class="side-menu__label">Dashboard</span>
 								</a>
 							</li>
+<?php if ($_SESSION['adminname']=='Signefo'){  ?>
+							<li class="side-item side-item-category">Work Scheduling</li>
+							<!-- ====================================== -->
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+									<span class="side-menu__icon"><i class="fe fe-compass side_menu_img"></i></span>
+									<span class="side-menu__label">Orders</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side14" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
+													
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side14">
+													<ul class="sidemenu-list">
+														<li class="side-menu__label1"><a href="javascript:void(0)">Pages</a></li>
+														<li class="sub-slide">
+															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="javascript:void(0)">
+																<span class="sub-side-menu__label">External Order's</span>
+																<i class="sub-angle fe fe-chevron-down"></i>
+															</a>
+															<ul class="sub-slide-menu">
+																<li><a href="orderlist.php" class="slide-item">Order List</a></li>
+																<li><a href="add-order-details.php" class="slide-item">Add Order Details</a></li>
+																<li><a href="close-order.php" class="slide-item">Close Order</a></li>
+															</ul>
+														</li>
+														<li class="sub-slide">
+															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="javascript:void(0)">
+																<span class="sub-side-menu__label">Internal Order's</span>
+																<i class="sub-angle fe fe-chevron-down"></i>
+															</a>
+															<ul class="sub-slide-menu">
+																<li><a href="inorderlist.php" class="slide-item">Order List</a></li>
+																<li><a href="add-inorder-details.php" class="slide-item">Add Order Details</a></li>
+																<li><a href="close-inorder.php" class="slide-item">Close Order</a></li>
+															</ul>
+														</li>
+														
+														
+														
+													</ul>
+													
+												</div>
+											
+											</div>
+										</div>
+									</li>
 
-							
+								</ul>
+							</li>
+							<li class="side-item side-item-category">Masters</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+									<span class="side-menu__icon"><i class="fe fe-award side_menu_img"></i></span>
+									<span class="side-menu__label">Order Settings</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side8" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side8">
+													<ul class="sidemenu-list">
+														<li><a href="category.php" class="slide-item">Category</a></li>
+														<li><a href="subcategory.php" class="slide-item">Subcategory</a></li>
+														<li><a href="supplierslist.php" class="slide-item">Suppliers</a></li>
+														<li><a href="combocategorylist.php" class="slide-item">Combo Category</a></li>
+													</ul>
+													
+												</div>
+												
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+
+
+<?php  } elseif  ($_SESSION['adminname']=='SignefoMedia'){  	?>		
+	
+							<li class="side-item side-item-category">Work Scheduling</li>
+							<!-- ====================================== -->
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+									<span class="side-menu__icon"><i class="fe fe-compass side_menu_img"></i></span>
+									<span class="side-menu__label">Orders</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side14" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
+													
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side14">
+													<ul class="sidemenu-list">
+														<li class="side-menu__label1"><a href="javascript:void(0)">Pages</a></li>
+														<li class="sub-slide">
+															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="javascript:void(0)">
+																<span class="sub-side-menu__label">External Order's</span>
+																<i class="sub-angle fe fe-chevron-down"></i>
+															</a>
+															<ul class="sub-slide-menu">
+																<li><a href="orderlist.php" class="slide-item">Order List</a></li>
+																<li><a href="add-order-details.php" class="slide-item">Add Order Details</a></li>
+																<li><a href="close-order.php" class="slide-item">Close Order</a></li>
+															</ul>
+														</li>
+														<li class="sub-slide">
+															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="javascript:void(0)">
+																<span class="sub-side-menu__label">Internal Order's</span>
+																<i class="sub-angle fe fe-chevron-down"></i>
+															</a>
+															<ul class="sub-slide-menu">
+																<li><a href="inorderlist.php" class="slide-item">Order List</a></li>
+																<li><a href="add-inorder-details.php" class="slide-item">Add Order Details</a></li>
+																<li><a href="close-inorder.php" class="slide-item">Close Order</a></li>
+															</ul>
+														</li>
+														
+														
+														
+													</ul>
+													
+												</div>
+											
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+							<li class="side-item side-item-category">Masters</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+									<span class="side-menu__icon"><i class="fe fe-award side_menu_img"></i></span>
+									<span class="side-menu__label">Order Settings</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side8" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>Home</p></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side8">
+													<ul class="sidemenu-list">
+														<li><a href="category.php" class="slide-item">Category</a></li>
+														<li><a href="subcategory.php" class="slide-item">Subcategory</a></li>
+														<li><a href="supplierslist.php" class="slide-item">Suppliers</a></li>
+														<li><a href="combocategorylist.php" class="slide-item">Combo Category</a></li>
+													</ul>
+													
+												</div>
+												
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+
+
+
+
+
+	<?php  } else {  	?>
 							<li class="side-item side-item-category">Work Scheduling</li>
 							<!-- ====================================== -->
 							<li class="slide">
@@ -447,6 +636,13 @@ ini_set('display_errors', 1);
 								</a>
 								
 							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="orderlistvsclientquality.php">
+									<span class="side-menu__icon"><i class="fe fe-command side_menu_img"></i></span>
+									<span class="side-menu__label">Order Vs Client Quality</span>
+								</a>
+								
+							</li>
 							
 							<li class="side-item side-item-category">Masters</li>
 							<li class="slide">
@@ -551,7 +747,7 @@ ini_set('display_errors', 1);
 								</ul>
 							</li>
 							
-
+<?php  } ?>
 
 <!-- ================================================== -->
 							

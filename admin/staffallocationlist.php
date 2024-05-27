@@ -197,7 +197,7 @@ if ($post_dmexist == "Yes"){
                         </div>
                         <div class="btn-list">
                             <!-- <a class="btn ripple btn-primary" href="javascript:void(0);"><i class="fe fe-external-link"></i> Export</a> -->
-                            <a class="btn ripple btn-primary" href="add-DM-Staff-details.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New Staff Allocation</a>
+                            <a class="btn ripple btn-primary" href="add-DM-Staff-details.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add & Edit New Staff Allocation</a>
                             <!-- <a class="btn ripple btn-info" href="javascript:void(0);"><i class="fe fe-help-circle"></i> Help</a>
 						<a class="btn ripple btn-danger dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="true">

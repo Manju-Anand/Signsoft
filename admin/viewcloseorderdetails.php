@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     
         <label class="form-label" ><strong>Quoted Amount : </strong>' . $row['quotedAmt']  . '</label><br>
         <input type="hidden" id="quoteamt" name="quoteamt" value="' . $row['quotedAmt'] . '">
-    
+        <input type="text" id="cquality" name="cquality" value="' . $row['client_quality'] . '" readonly>
 
         <label class="form-label" ><strong>Selected Categories : </strong></label>
         <select class="form-control select2" multiple="multiple" id="mulselect[]" name="mulselect[]"  disabled>';

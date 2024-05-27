@@ -5,9 +5,9 @@ include "includes/connection.php";
 $sql = "SELECT * FROM nomevents where empid='" . $_SESSION['empid'] . "'";
 $eventsList = mysqli_query($connection,$sql);
 	
-$response = array();
+$responsenormal = array();
 while($row = mysqli_fetch_assoc($eventsList)){
-	$response[] = array(
+	$responsenormal[] = array(
 		"eventid" => $row['id'],
 		"title" => $row['title'],
 		"description" => $row['description'],
@@ -16,5 +16,5 @@ while($row = mysqli_fetch_assoc($eventsList)){
 	);
 }
 
-echo json_encode($response);
+echo json_encode($responsenormal);
 exit;

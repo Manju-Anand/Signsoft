@@ -166,7 +166,9 @@ if(isset($_GET['delete']))
                                             $i = 0;
                                             for ($currentDate = $workDate; $currentDate >= $startDate; $currentDate = strtotime('-1 day', $currentDate)) {
                                                 // for ($currentDate = $startDate; $currentDate <= $workDate; $currentDate = strtotime('+1 day', $currentDate)) {
-
+                                                    if (date('w', $currentDate) == 0) {
+                                                        continue; // Skip Sundays
+                                                    }
                                                 $sqlwsdate1 = "SELECT * FROM dailyworkstatus where work_date ='" . date('d-m-Y', $currentDate)  . "' and emp_id = '" . $_SESSION['empid'] . "'";
                                                 $resultwsdate1 = $connection->query($sqlwsdate1);
                                                 if ($resultwsdate1->num_rows > 0) {

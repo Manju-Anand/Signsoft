@@ -14,108 +14,83 @@ if (isset($_GET['logout'])) {
 }
 
 include "includes/connection.php";
-function showorderlist()
-{
+function showorderlist($cqty) {
     global $connection;
-    if ($_SESSION['adminname'] == 'Signefo') {
-        $query = "select * from order_customers where ordertype='External' and client_quality='Good' order by id desc";
-    } else if ($_SESSION['adminname'] == 'SignefoMedia') {
-        $query = "select * from order_customers where ordertype='External' and client_quality='Average' order by id desc";
-    } else {
-        $query = "select * from order_customers where ordertype='External' order by id desc";
-    }
-    $select_posts = mysqli_query($connection, $query);
+
+    // Prepare the SQL statement with a placeholder
+    $query = "SELECT * FROM order_customers WHERE client_quality = ? ORDER BY id DESC";
+    $stmt = mysqli_prepare($connection, $query);
+
+    // Bind the user input to the placeholder
+    mysqli_stmt_bind_param($stmt, 's', $cqty);
+
+    // Execute the statement
+    mysqli_stmt_execute($stmt);
+
+    // Get the result
+    $result = mysqli_stmt_get_result($stmt);
+
     $i = 0;
-    while ($row = mysqli_fetch_assoc($select_posts)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
         $post_custName = $row['custName'];
         $post_brandName = $row['brandName'];
         $post_order_status = $row['order_status'];
-        // $post_created = $row['created'];
-        // $post_modified = $row['modified'];
         $post_custPhone = $row['custPhone'];
         $post_custEmail = $row['custEmail'];
-        $post_phoneno = $row['custPhone'];
+        $post_add = $row['addr'];
         $post_qamt = $row['quotedAmt'];
-
-        $i = $i + 1;
+        $i++;
         echo "<tr>";
         echo "<td>$i</td>";
         echo "<td>$post_custName</td>";
-        echo "<td class='popup-container' data-id='{$id}'>$post_brandName</td>";
+        echo "<td data-id='{$id}'>$post_brandName</td>";
         echo "<td>$post_custPhone</td>";
         echo "<td>$post_custEmail</td>";
-        if ($post_order_status == 'Active') {
-
-            echo "<td><span class='badge bg-success' style='font-size:15px;'>$post_order_status</span></td>";
+        echo "<td>$post_add</td>";
+        echo "<td>$post_qamt</td>";
+        switch ($post_order_status) {
+            case 'Active':
+                echo "<td><span class='badge bg-success' style='font-size:15px;'>$post_order_status</span></td>";
+                break;
+            case 'Processing':
+                echo "<td><span class='badge bg-primary' style='font-size:15px;'>$post_order_status</span></td>";
+                break;
+            case 'Pending':
+                echo "<td><span class='badge bg-cyan' style='font-size:15px;'>$post_order_status</span></td>";
+                break;
+            case 'Stopped':
+                echo "<td><span class='badge bg-danger' style='font-size:15px;'>$post_order_status</span></td>";
+                break;
+            case 'On-Hold':
+                echo "<td><span class='badge bg-warning' style='font-size:15px;'>$post_order_status</span></td>";
+                break;
+            case 'Completed':
+                echo "<td><span class='badge bg-dark' style='font-size:15px;'>$post_order_status</span></td>";
+                break;
+            case 'Closed':
+                echo "<td><span class='badge bg-gray' style='font-size:15px;'>$post_order_status</span></td>";
+                break;
+            default:
+                echo "<td><span class='badge bg-secondary' style='font-size:15px;'>Unknown</span></td>";
+                break;
         }
-        if ($post_order_status == 'Processing') {
 
-            echo "<td><span class='badge bg-primary' style='font-size:15px;'>$post_order_status</span></td>";
-        }
-        if ($post_order_status == 'Pending') {
-
-            echo "<td><span class='badge bg-cyan' style='font-size:15px;'>$post_order_status</span></td>";
-        }
-        if ($post_order_status == 'Stopped') {
-
-            echo "<td><span class='badge bg-danger' style='font-size:15px;'>$post_order_status</span></td>";
-        }
-        if ($post_order_status == 'On-Hold') {
-
-            echo "<td><span class='badge bg-warning' style='font-size:15px;'>$post_order_status</span></td>";
-        }
-        if ($post_order_status == 'Completed') {
-
-            echo "<td><span class='badge bg-dark' style='font-size:15px;'>$post_order_status</span></td>";
-        }
-        if ($post_order_status == 'Closed') {
-
-            echo "<td><span class='badge bg-gray' style='font-size:15px;'>$post_order_status</span></td>";
-        }
-        echo "<td><a class='btn btn-sm btn-warning' href='view-order.php?edit={$id}' title='View' style='color:white'>
-        <span class='fe fe-eye'> </span></a>&nbsp;<a class='btn btn-sm btn-primary' href='edit-order.php?edit={$id}' title='Edit' style='color:white'>
-        <span class='fe fe-edit'> </span></a>&nbsp;<a class='btn btn-sm btn-danger' onclick='javascript:confirmationDelete($(this));return false;' href='orderlist.php?delete={$id}' class='text-inverse' id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>
-        <span class='fe fe-trash-2'> </span></a>
-        </td>";
-        // echo "<td>$post_created</td>";
-        // echo "<td>$post_modified </td>";
-
-
-
+        // echo "<td>
+        //         <a class='btn btn-sm btn-warning' href='view-order.php?edit={$id}' title='View' style='color:white'>
+        //             <span class='fe fe-eye'></span>
+        //         </a>
+               
+               
+        //       </td>";
         echo "</tr>";
     }
+
+    // Close the prepared statement
+    mysqli_stmt_close($stmt);
 }
 
-function deleteorderlist()
-{
-    global $connection;
-    if (isset($_GET['delete'])) {
-        $the_cat_id = $_GET['delete'];
-        $query = "DELETE FROM order_category WHERE empid = '" . $the_cat_id . "'";
-        $delete_query = mysqli_query($connection, $query);
-        if (!$delete_query) {
-            die('QUERY FAILED' . mysqli_error($connection));
-        }
-        $query = "DELETE FROM order_subcategory WHERE empid = '" . $the_cat_id . "'";
-        $delete_query = mysqli_query($connection, $query);
-        if (!$delete_query) {
-            die('QUERY FAILED' . mysqli_error($connection));
-        }
-        $query = "DELETE FROM order_followup WHERE empid = '" . $the_cat_id . "'";
-        $delete_query = mysqli_query($connection, $query);
-        if (!$delete_query) {
-            die('QUERY FAILED' . mysqli_error($connection));
-        }
-        $query = "DELETE FROM order_customers WHERE id = '" . $the_cat_id . "'";
-        $delete_query = mysqli_query($connection, $query);
-        if (!$delete_query) {
-            die('QUERY FAILED' . mysqli_error($connection));
-        }
 
-        header("Location: orderlist.php");
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,33 +124,7 @@ function deleteorderlist()
     <!-- Switcher css -->
     <link href="../assets/switcher/css/switcher.css" rel="stylesheet">
     <link href="../assets/switcher/demo.css" rel="stylesheet">
-    <style>
-        .popup-container {
-            display: inline-block;
-            position: relative;
-        }
-
-        .popup-content {
-            display: none;
-            position: absolute;
-            top: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px;
-            background-color: #ebdb00;
-            color: green;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out,
-                top 0.3s ease-in-out;
-        }
-
-        .popup-container:hover .popup-content {
-            top: 100%;
-            opacity: 1;
-        }
-    </style>
+    
 </head>
 
 <body class="app sidebar-mini">
@@ -209,7 +158,7 @@ function deleteorderlist()
                         </div>
                         <div class="btn-list">
                             <!-- <a class="btn ripple btn-primary" href="javascript:void(0);"><i class="fe fe-external-link"></i> Export</a> -->
-                            <a class="btn ripple btn-success" href="add-order.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New Order</a>
+                            <!-- <a class="btn ripple btn-success" href="add-order.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New Order</a> -->
                             <!-- <a class="btn ripple btn-info" href="javascript:void(0);"><i class="fe fe-help-circle"></i> Help</a>
 						<a class="btn ripple btn-danger dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="true">
@@ -233,34 +182,45 @@ function deleteorderlist()
                             <div class="card custom-card overflow-hidden">
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
-                                        <h6 class="card-title mb-1">List of Orders</h6>
-                                        <!-- <p class="text-muted card-sub-title">Searching, ordering and paging goodness will be
-										immediately added to the table, as shown in this example.</p> -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="card-title mb-1">List of Orders</h6>
+                                            </div>
+                                            <div class="col-md-6"><label class="form-label" for="cquality">Client Quality :</label>
+                                                                        <select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required onchange="filterOrders()">
+                                                                            <option value="" disabled selected>Select Option</option>
+                                                                            <option value="Good">Good</option>
+                                                                            <option value="Average">Average</option>
+                                                                            <option value="Poor">Poor</option>
+                                                                        </select>
+                                            </div>
+                                        </div>
+                                       
+                                       
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table" id="example3">
                                             <thead>
                                                 <tr>
-                                                    <th class="wd-1p">#</th>
-                                                    <th class="wd-20p">Customer Name</th>
-                                                    <th class="wd-20p">Brand Name</th>
-                                                    <th class="wd-10p">Phone no</th>
-                                                    <th class="wd-10p">Emailid</th>
-                                                    <th class="wd-20p">Order Status</th>
-                                                    <th class="wd-20p">Action</th>
-                                                    <!-- <th class="wd-20p">Created</th>
-                                                    <th class="wd-20p">Modified</th> -->
+                                                    <th>#</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Brand Name</th>
+                                                    <th>Phone no</th>
+                                                    <th>Emailid</th>
+                                                    <th>Address</th>
+                                                    <th>Quoted Amount</th>
+                                                    <th>Order Status</th>
+                                                    <!-- <th class="wd-20p">Action</th> -->
+                                                   
 
                                                 </tr>
                                             </thead>
                                             <tbody>
 
                                                 <?php
-                                                showorderlist();
+                                                showorderlist('Average');
                                                 ?>
-                                                <?php
-                                                deleteorderlist();
-                                                ?>
+                                              
 
 
 
@@ -345,26 +305,21 @@ function deleteorderlist()
         }
     </script>
     <script>
-        const popupContainers = document.querySelectorAll('.popup-container');
-        const popupContent = document.getElementById('popupContent');
+       
 
-        popupContainers.forEach(container => {
-            container.addEventListener('mouseenter', async () => {
-                const id = container.getAttribute('data-id');
-                const response = await fetch(`get_orderdata.php?id=${id}`); // Replace 'get_data.php' with your backend API endpoint
-                const data = await response.json();
-                popupContent.innerHTML = `
-                    <p><strong>Brand Name:</strong> ${data.brandName}</p>
-                    <p><strong>Quoted Amount:</strong> ${data.quotedAmount}</p>
-                    <p><strong>Customer Name:</strong> ${data.customerName}</p>
-                `;
-                popupContent.style.display = 'block';
-            });
+        function filterOrders() {
+    var cquality = document.getElementById('cquality').value;
 
-            container.addEventListener('mouseleave', () => {
-                popupContent.style.display = 'none';
-            });
-        });
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'fetchclientquality.php?cquality=' + cquality, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.querySelector('#example3 tbody').innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
+
     </script>
 
 </body>

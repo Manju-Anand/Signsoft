@@ -170,7 +170,7 @@ $mainorderid = "";
                                                                     <div class="col-md-5"><label class="form-label" for="greview">Received Google Reviews? </label></div>
                                                                     <div class="col-md-7"><input type="checkbox" id="greview" name="greview"></div>
                                                                 </div><br>
-                                                                <div class="row">
+                                                                <!-- <div class="row">
                                                                     <div class="col-md-3"><label class="form-label" for="cquality">Client Quality :</label></div>
                                                                     <div class="col-md-9"><select name="cquality" id="cquality" class="form-control form-select select2" data-bs-placeholder="Select Status" required>
                                                                             <option value="" disabled selected>Select Option</option>
@@ -180,7 +180,7 @@ $mainorderid = "";
                                                                         </select>
                                                                     </div>
 
-                                                                </div><br>
+                                                                </div><br> -->
                                                                 <div class="row">
                                                                     <div class="col-md-3"> <label class="form-label" for="notes">Notes if Any :</label></div>
 

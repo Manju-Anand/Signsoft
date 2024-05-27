@@ -48,7 +48,7 @@ if (mysqli_num_rows($result) > 0) {
                     $subqusetion= $rowsubqus['subquestion'];
                     
                 }}
-        
+              }  }
                 $rowData = array(
                 'question' => $rowqus['question'],
                 'qid' => $rowqus['id'],
@@ -65,7 +65,7 @@ if (mysqli_num_rows($result) > 0) {
 
   
 
-    }  }
+    
     
       }
     }

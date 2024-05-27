@@ -72,6 +72,7 @@ if (isset($data['paymentdataToSave'])) {
         $orderid = $row['orderid'];
         $paymentType = $row['PaymentType'];
         $transactionMode = $row['TransactionMode'];
+        $invoiceAmount = $row['InvoiceAmount'];
         $paymentAmount = $row['PaymentAmount'];
         $customerBillNo = $row['CustomerBillNo'];
         $cuspayDate = $row['cuspayDate'];
@@ -79,8 +80,8 @@ if (isset($data['paymentdataToSave'])) {
         $postdate = date("M d,Y h:i:s a");
         // if ($payStatus !== "Saved") {
         // Perform the SQL query to insert data into the second table (payment_customer)
-        $sqlPayment = "INSERT INTO payment_customer (orderid, payment_type, transaction_mode,payment_amount, customer_billno, created,modified,payDate)
-                       VALUES ('$orderid', '$paymentType', '$transactionMode', '$paymentAmount', '$customerBillNo','$postdate','$postdate','$cuspayDate')";
+        $sqlPayment = "INSERT INTO payment_customer (orderid, payment_type, transaction_mode,payment_amount, customer_billno, created,modified,payDate,invoiceAmt)
+                       VALUES ('$orderid', '$paymentType', '$transactionMode', '$paymentAmount', '$customerBillNo','$postdate','$postdate','$cuspayDate','$invoiceAmount')";
 
         if ($connection->query($sqlPayment) !== TRUE) {
             echo "Error: " . $sqlPayment . "<br>" . $connection->error;

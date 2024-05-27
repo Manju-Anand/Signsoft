@@ -184,7 +184,7 @@ $mainorderid = "";
                                                         <select class="form-select mb-3" aria-label="Default select example" name="staff" id="staff" required>
                                                             <option value="" disabled selected>Select Employee</option>
                                                             <?php
-                                                            $query = "select * from employee order by id desc";
+                                                            $query = "select * from employee where status='Active' order by id desc";
                                                             $select_posts = mysqli_query($connection, $query);
                                                             while ($row = mysqli_fetch_assoc($select_posts)) {
                                                             ?>
