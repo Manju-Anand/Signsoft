@@ -610,7 +610,61 @@ ini_set('display_errors', 1);
 							</li>				
 
 							<!-- ============================================ -->
-						
+							<li class="side-item side-item-category">Billing Details</li>
+							<!-- <li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="gstCalculate.php">
+									<span class="side-menu__icon"><i class="fe fe-dollar-sign side_menu_img"></i></span>
+									<span class="side-menu__label">GST</span>
+								</a>
+							</li> -->
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+									<span class="side-menu__icon"><i class="fe fe-dollar-sign side_menu_img"></i></span>
+									<span class="side-menu__label">GST</span><i class="angle fa fa-angle-right"></i>
+								</a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu ">
+												<ul class="nav panel-tabs">
+													<li><a href="#side14" class="active" data-bs-toggle="tab"><i class="bi bi-house"></i><p>GST</p></a></li>
+													
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane active" id="side14">
+													<ul class="sidemenu-list">
+														<li class="side-menu__label1"><a href="javascript:void(0)">Pages</a></li>
+														<li class="sub-slide">
+															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="gstCalculate.php">
+																<span class="sub-side-menu__label">Current Month List</span>
+																<!-- <i class="sub-angle fe fe-chevron-down"></i> -->
+															</a>
+															
+														</li>
+														<li class="sub-slide">
+															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="javascript:void(0)">
+																<span class="sub-side-menu__label">Paid Details</span>
+																<!-- <i class="sub-angle fe fe-chevron-down"></i> -->
+															</a>
+															
+														</li>
+														
+														
+														
+													</ul>
+													
+												</div>
+											
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+							
 
 							
 							

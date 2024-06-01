@@ -119,7 +119,7 @@ if(isset($_GET['delete']))
                 $('#htmlgrid').empty();
                 $('#htmlgrid1').empty();
                 // Create table header
-                var headerRow = "<tr><th>Questions</th>";
+                var headerRow = "<tr><th style='position: sticky; left: 0; background: white; z-index: 1;'>Questions</th>";
                 for (var i = 0; i < data.rows.length; i++) {
                     // headerRow += "<th>" + data.rows[i].day + "<br>" + data.rows[i].weekday + "</th>";
                     headerRow += "<th>" + data.rows[i].day + "</th>";
@@ -134,9 +134,9 @@ if(isset($_GET['delete']))
                 for (var i = 0; i < data.questions.length; i++) {
                     var r = "R" + i;
                     if (data.questions[i].subquestion == ""){
-                    var rowData = "<tr id='" + r + "'><td>" + data.questions[i].question + "</td>";
+                    var rowData = "<tr id='" + r + "'><td  style='position: sticky; left: 0; background: white;text-align:left'>" + data.questions[i].question + "</td>";
                     } else {
-                        var rowData = "<tr id='" + r + "' style='background-color:lightblue;'><td>" + data.questions[i].subquestion + "</td>";
+                        var rowData = "<tr id='" + r + "' style='background-color:#FAFFC7;'><td style='position: sticky; left: 0;background-color:#FAFFC7;text-align:right;'>" + data.questions[i].subquestion + "</td>";
                     }
                     for (var j = 0; j < data.rows.length; j++) {
 
@@ -234,11 +234,22 @@ if(isset($_GET['delete']))
             scrollbar-width: thick; /* Set the scrollbar width */
         }
 
-        /* Webkit browsers (Chrome, Safari) */
-        .table-container::-webkit-scrollbar {
-            width: 80px; /* Adjust the width as needed */
+       /* Webkit browsers (Chrome, Safari) */
+       .table-container::-webkit-scrollbar {
+            width: 500px; 
+            height:20px;
         }
+        /* Webkit browsers (Chrome, Safari) */
 
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px; 
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
         /* Apply styles to the entire table */
         #htmlgrid {
             width: 100%;
@@ -260,13 +271,20 @@ if(isset($_GET['delete']))
             width: 100px;
 
         }
-
+        #htmlgrid th:first-child, 
+        #htmlgrid td:first-child {
+            width: 300px;
+            border-left: 1px solid #ffcc00; 
+            border-right: 1px solid #ffcc00; 
+            border-top: 1px solid #ffcc00; 
+            border-bottom: 1px solid #ffcc00; 
+        }
         /* Apply styles to table data cells */
         #htmlgrid td {
             border: 1px solid #ccc;
             padding: 15px;
             text-align: center; 
-            word-wrap: break-word; /* Allow long words to wrap */
+            word-wrap: break-word; 
         }
 
         /* Apply alternating row colors for better readability */
@@ -346,7 +364,7 @@ if(isset($_GET['delete']))
 						</ol>
 					</div>
 					<div class="btn-list">
-						<a class="btn ripple " style="background-color: lightblue;"><i class="fe fe-external-link"></i> Indicates SubQuestion</a>
+						<a class="btn ripple " style="background-color:#FAFFC7;"><i class="fe fe-external-link"></i> Indicates SubQuestion</a>
 					
 						
 					</div>
@@ -544,7 +562,14 @@ if(isset($_GET['delete']))
 	<!-- Switcher js -->
 	<script src="../assets/switcher/js/switcher.js"></script>
     <script src="notification.js"></script>
-
+    <script>
+        // JavaScript to select the current month
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentMonth = new Date().getMonth() + 1; // getMonth() returns month index (0-11), so add 1
+            var monthSelect = document.getElementById('month-select');
+            monthSelect.value = currentMonth; // Set the value to the current month
+        });
+    </script>
 </body>
 
 </html>

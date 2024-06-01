@@ -214,7 +214,7 @@ function showorderlist()
             </div>
         </div>
             <!-- End Main Content-->
-            <div class="modal fade" id="editmodal">
+        <div class="modal fade" id="editmodal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">

@@ -674,7 +674,7 @@ $totemployees = 0;
 								<div class="user-manager scroll-widget border-top">
 									<div>
 										<?php
-										$query = "select * from employee order by  RAND()";
+										$query = "select * from employee where status='Active' order by  RAND()";
 										$select_posts = mysqli_query($connection, $query);
 										while ($row = mysqli_fetch_assoc($select_posts)) {
 
