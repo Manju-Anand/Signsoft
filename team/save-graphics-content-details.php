@@ -2,6 +2,8 @@
 // Example connection parameters; replace with your actual database credentials
 include "includes/connection.php";
 
+// Set the character set to UTF-8
+$connection->set_charset("utf8mb4");
 // Get the data sent from the client
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -14,7 +16,8 @@ if (isset($data['staffallocationdataToSave'])) {
     echo "2";
     $assigndate = $row['assigndate'];
     $posting = $row['posting'];
-    $content = $row['content'];
+    $content =  mysqli_real_escape_string($connection, $row['content']);
+    // $content = htmlspecialchars($_POST['content'], ENT_QUOTES, 'UTF-8');
     $idea = $row['idea'];
     $deadline = $row['deadline'];
     $orderid = $row['orderid'];
@@ -42,34 +45,66 @@ if (isset($data['staffallocationdataToSave'])) {
     // Perform the SQL query to insert data into the database
 
     if (isset($row['editid']) && $row['editid'] !== "") {
-    echo "3";
-          $sql = "UPDATE staff_dm_graphics_allocation SET orderid='" . $orderid . "',staffid='" . $staffid . "',postings='" . $posting . "',content='" . $content . "',
-      assigndate='" . $assigndate . "',status='Edited',modified='" . $postdate . "',assigned_staffid='" . $empid . "',redirect_status='Self',posteridea='" . $idea . "',
-      deadline='" . $deadline . "' WHERE id='" . $editid . "'";
-      if ($connection->query($sql) !== TRUE) {
+    // echo "3";
+    //       $sql = "UPDATE staff_dm_graphics_allocation SET orderid='" . $orderid . "',staffid='" . $staffid . "',postings='" . $posting . "',content='" . $content . "',
+    //   assigndate='" . $assigndate . "',status='Edited',modified='" . $postdate . "',assigned_staffid='" . $empid . "',redirect_status='Self',posteridea='" . $idea . "',
+    //   deadline='" . $deadline . "' WHERE id='" . $editid . "'";
+    //   if ($connection->query($sql) !== TRUE) {
 
-        echo "Error: " . $sql . "<br>" . $connection->error;
-      }else {
+    //     echo "Error: " . $sql . "<br>" . $connection->error;
+    //   }else {
+    //     echo "Updated";
+    //   }
+      // ========================================
+// Prepare an update statement
+$sql = "UPDATE staff_dm_graphics_allocation SET orderid=?, staffid=?, postings=?, content=?, assigndate=?, status='Edited', modified=?, assigned_staffid=?, redirect_status='Self', posteridea=?, deadline=? WHERE id=?";
+
+if ($stmt = $connection->prepare($sql)) {
+    // Bind variables to the prepared statement as parameters
+    $stmt->bind_param("sssssssssi", $orderid, $staffid, $posting,$content, $assigndate, $postdate, $empid, $idea, $deadline, $editid);
+
+    if ($stmt->execute()) {
         echo "Updated";
-      }
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close statement
+    $stmt->close();
+} else {
+    echo "Error: " . $connection->error;
+}
 
 
-      
+      // ==================================================
     } else {
 
-      $sql = "INSERT INTO staff_dm_graphics_allocation (orderid,staffid,postings,content, status, assigndate, work_status,created,assigned_staffid,redirect_status,posteridea,
-      deadline) VALUES
-      ('$orderid','$staffid','$posting','$content', 'New', '$assigndate', 'Active','$postdate','$empid','Self','$idea','$deadline')";
-      if ($connection->query($sql) !== TRUE) {
-        
-        echo "Error: " . $sql . "<br>" . $connection->error;
-      }else {
+      // ================================================
+      // Prepare an insert statement
+$sql = "INSERT INTO staff_dm_graphics_allocation (orderid, staffid, postings, content, status, assigndate, work_status, created, assigned_staffid, redirect_status, posteridea, deadline) VALUES (?, ?, ?, ?, 'New', ?, 'Active', ?, ?, 'Self', ?, ?)";
+
+if ($stmt = $connection->prepare($sql)) {
+    // Bind variables to the prepared statement as parameters
+    $stmt->bind_param("sssssssss", $orderid, $staffid, $posting, $content, $assigndate, $postdate, $empid, $idea, $deadline);
+
+  
+
+    if ($stmt->execute()) {
         echo "saved";
         $last_id = $connection->insert_id;
-      }
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close statement
+    $stmt->close();
+} else {
+    echo "Error: " . $connection->error;
+}
 
 
 
+// =============================================
     }
 
    

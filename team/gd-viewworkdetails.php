@@ -29,6 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if a row is fetched
     if ($row = $result->fetch_assoc()) {
+        // Decode HTML entities in specific fields (adjust as needed)
+        // $row['content'] = htmlspecialchars_decode($row['content'], ENT_QUOTES);
+        // $row['posteridea'] = htmlspecialchars_decode($row['posteridea'], ENT_QUOTES);
+        $row['content'] = str_replace("\n", '', htmlspecialchars_decode($row['content'], ENT_QUOTES));
+        $row['posteridea'] = str_replace("\n", '', htmlspecialchars_decode($row['posteridea'], ENT_QUOTES));
+
         // Return data as JSON
         header('Content-Type: application/json');
         echo json_encode($row);

@@ -39,6 +39,23 @@ $('body').on('click', '.edit-staff-btn', function () {
     $('#staffmodal').modal('show');
 });
 
+// $('body').on('click', '.delete-staff-btn', function () {
+
+//     var row = $(this).closest('tr');
+
+
+//     var rowId = row.data('rowid');
+//     $('#paystatus').val('Payment edited');
+
+//     if (confirm("Are you sure you want to delete this row?")) {
+
+//         row.remove();
+
+//             updatestaffRowNumbers();
+//     }
+// });
+
+
 $('body').on('click', '.delete-staff-btn', function () {
     // Get the corresponding row
     var row = $(this).closest('tr');
@@ -46,17 +63,38 @@ $('body').on('click', '.delete-staff-btn', function () {
     // Extract the row data id
     var rowId = row.data('rowid');
     $('#paystatus').val('Payment edited');
+
+        // Extract data from a specific column (e.g., third column)
+        var dataid = row.find('td').eq(9).text();
+
     // Confirmation dialog before deleting
-    if (confirm("Are you sure you want to delete this row?")) {
-        // Perform the delete action (you can replace this with your actual deletion logic)
-        row.remove();
-
-        // Here you can also add code to perform additional actions, such as making an AJAX request to delete the row from the server.
-
-        // Optionally, update the numbering in the first column of remaining rows
-        updatestaffRowNumbers();
+    if (confirm("You are going to permanently remove this data. Are you sure you want to delete this row?")) {
+        // Perform the AJAX request to delete the row from the database
+        $.ajax({
+            url: 'delete_processjob_details.php', // URL to the PHP script that will handle the deletion
+            type: 'POST',
+            data: { id: dataid },
+            success: function(response) {
+                if (response == 'success') {
+                    // Remove the row from the table
+                    row.remove();
+                    
+                    // Optionally, update the numbering in the first column of remaining rows
+                    updatestaffRowNumbers();
+                } else {
+                    alert('Error: Could not delete the row from the database.');
+                }
+            },
+            error: function() {
+                alert('Error: Could not contact the server.');
+            }
+        });
     }
 });
+
+function updatestaffRowNumbers() {
+    // Your code to update the numbering in the first column of remaining rows
+}
 
 function updatestaffRowNumbers() {
     // Update the numbering in the first column of each remaining row

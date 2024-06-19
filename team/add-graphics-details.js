@@ -60,14 +60,31 @@ $('body').on('click', '.delete-staff-btn', function () {
     var rowId = row.data('rowid');
     $('#paystatus').val('Payment edited');
     // Confirmation dialog before deleting
-    if (confirm("Are you sure you want to delete this row?")) {
-        // Perform the delete action (you can replace this with your actual deletion logic)
-        row.remove();
+    // Extract data from a specific column (e.g., third column)
+    var dataid = row.find('td').eq(8).text();
 
-        // Here you can also add code to perform additional actions, such as making an AJAX request to delete the row from the server.
-
-        // Optionally, update the numbering in the first column of remaining rows
-        updatestaffRowNumbers();
+    // Confirmation dialog before deleting
+    if (confirm("You are going to permanently remove this data. Are you sure you want to delete this row?")) {
+        // Perform the AJAX request to delete the row from the database
+        $.ajax({
+            url: 'delete_graphics_details.php', // URL to the PHP script that will handle the deletion
+            type: 'POST',
+            data: { id: dataid },
+            success: function(response) {
+                if (response == 'success') {
+                    // Remove the row from the table
+                    row.remove();
+                    
+                    // Optionally, update the numbering in the first column of remaining rows
+                    updatestaffRowNumbers();
+                } else {
+                    alert('Error: Could not delete the row from the database.');
+                }
+            },
+            error: function() {
+                alert('Error: Could not contact the server.');
+            }
+        });
     }
 });
 
@@ -167,6 +184,7 @@ function addstaffRow() {
             "<span class='fe fe-edit'> </span></a>&nbsp;&nbsp;" +
             "<a class='btn btn-sm btn-danger delete-staff-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>" +
             "<span class='fe fe-trash-2'> </span></a>";
+            
         // Text Box 3
         var cell8 = newRow.insertCell(7);
         cell8.innerHTML = "New";
@@ -176,11 +194,8 @@ function addstaffRow() {
         cell9.innerHTML = "";  // Set the content of the cell to be empty
         cell9.classList.add('hidden-cell');
 
-
         // Clear input values after adding to the table
-       
-
-       
+           
         selectBox1.selectedIndex = -1;
         textBox1.value="";
         textBox2.value="";
@@ -346,7 +361,7 @@ function saveDataToDatabase() {
                 // Handle the response from the server if needed
                 console.log("result: " + xhr.responseText);
                 alert("Succesfully Saved Data.");
-                window.location.href = 'dmworklist.php';
+                // window.location.href = 'dmworklist.php';
             } else {
                 // Handle errors if any
                 console.error("Error saving data: " + xhr.status);

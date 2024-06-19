@@ -21,93 +21,70 @@ $currentMonth = date('m'); // Get the current month (as '01' for January, '02' f
 function showorderlist($currentMonth)
 {
     global $connection;
-    $lastMonth = date('m', strtotime('-1 month')); // Get the previous month
-    // echo "Lat-" . $lastMonth ;+
-    $gstflag="false";
-    $secondlastMonth = date('m', strtotime('-2 month')); // Get the previous month
-    // echo "secLat-" . $secondlastMonth ;
-    $tot_invoice_amt = "0";
-    $tot_gst_amt = "0";
-    $tot_taxvalue_amt = "0";
-    $query = "select * from order_customers where order_status='Active'";
-    $select_posts = mysqli_query($connection, $query);
+    // $lastMonth = date('m', strtotime('-1 month')); // Get the previous month
+
+    $tot_invoice_amt = 0;
+    $tot_gst_amt = 0;
+    $gstamt =0;
     $i = 0;
-    $invoice_no = "";
-    $invoice_amt = "";
-    $gstamt = "";
-    $taxvalue = "";
-    
-    echo "<tbody>";
-    while ($row = mysqli_fetch_assoc($select_posts)) {
-        $id = $row['id'];
-        $brandname = $row['brandName'];
+     echo "<tbody>";
 
-        $sqlpay = "SELECT * FROM payment_customer where orderid='" . $row['id'] . "' and SUBSTRING(payDate, 6, 2)= '$lastMonth' order by invoiceAmt limit 1";
-        $resultpay = $connection->query($sqlpay);
-        if ($resultpay->num_rows > 0) {
+    $sqlgst = "SELECT * FROM gstamt where SUBSTRING(paiddate, 6, 2) = '$currentMonth'";
+    $resultgst = $connection->query($sqlgst);
+    if ($resultgst->num_rows > 0) {
+        while ($rowgst = $resultgst->fetch_assoc()) {
+            // ================================
+            $orderid = $rowgst['orderid'];
+            $gstamt = $rowgst['gst_amt'];
 
-            // echo "<br>";
-            // echo $resultpay->num_rows;
-
-            while ($rowpay = $resultpay->fetch_assoc()) {
-                // echo "order" . $row['id'];
-                $invoice_no = $rowpay['customer_billno'];
-                $invoice_amt = $rowpay['invoiceAmt'];
-                $tot_invoice_amt = $tot_invoice_amt + $invoice_amt;
-
-                // echo $invoice_amt . "<br>" .  $invoice_no .  "<br>";
-
-                $gstamt = "";
-                $taxvalue = "";
-                $sqlgst = "SELECT * FROM gstamt where orderid='" . $row['id'] . "' AND invoice_no='$invoice_no' ";
-                // and SUBSTRING(paiddate, 6, 2) = '$secondlastMonth'
-                $resultgst = $connection->query($sqlgst);
-                if ($resultgst->num_rows <= 0) {
-                    $gstflag="true";
-                    $gstamt = $invoice_amt * 18 / 100;
-                    $tot_gst_amt = $tot_gst_amt + $gstamt;
-                    //    echo "gst" . $gstamt;
-
-                    $taxvalue = $invoice_amt - $gstamt;
-                    $tot_taxvalue_amt = $tot_taxvalue_amt + $taxvalue;
- 
-
-                $i = $i + 1;
-                echo "<tr>";
-                echo "<td>$i</td>";
-
-                echo "<td>$id</td>";
-                echo "<td>$brandname</td>";
-
-                echo "<td>$invoice_no</td>";
-                echo "<td style='text-align:right;padding-right:20px;'> &#8377;&nbsp;$invoice_amt</td>";
+            $invoice_amt = $rowgst['invoice_amt'];
 
 
-                echo "<td style='text-align:right;padding-right:20px;'> &#8377;&nbsp;$gstamt</td>";
-                echo "<td style='text-align:right;padding-right:20px;'> &#8377;&nbsp;$taxvalue</td>";
+            $invoice_no = $rowgst['invoice_no'];
 
 
+            // Perform addition
+            $tot_invoice_amt = $tot_invoice_amt + $invoice_amt;
+            $tot_gst_amt = $tot_gst_amt + $gstamt;
+            $paid_date = $rowgst['paiddate'];
+        
 
-                // echo "<td><a class='btn btn-sm btn-cyan view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id}  title='View Process Job Details' style='color:white'>
-                // <span class='fe fe-eye'> </span></a>&nbsp;
-                // </td>";
-
-                echo "</tr>";
+            // =========================
+            $query = "select * from order_customers where id='" . $rowgst['orderid'] . "'";
+            $select_posts = $connection->query($query);
+            if ($select_posts->num_rows > 0) {
+                while ($rowbrand = $select_posts->fetch_assoc()) {
+                    $brandname =   $rowbrand['brandName'];
+                }
             }
-            }
+
+         
+
+
+            $i = $i + 1;
+            echo "<tr>";
+            echo "<td>$i</td>";
+
+            echo "<td>$orderid</td>";
+            echo "<td>$brandname</td>";
+            echo "<td>$invoice_no</td>";
+            echo "<td style='text-align:right;padding-right:20px;'>$invoice_amt</td>";
+            echo "<td style='text-align:right;padding-right:20px;'>$gstamt</td>";
+            echo "<td>$paid_date</td>";
+
+            echo "</tr>";
         }
     }
-    echo "<tbody><tfoot>";
-if ( $gstflag=="true"){
+    echo "</tbody><tfoot>";
+
     echo "<tr>";
     echo "<td colspan='4' style='font-weight:bold;'>Total </td>";
-    echo "<td style='text-align:right;padding-right:20px;font-weight:bold;'> &#8377;&nbsp;$tot_invoice_amt</td>";
-    echo "<td style='text-align:right;padding-right:20px;font-weight:bold;'> &#8377;&nbsp;$tot_gst_amt</td>";
-    echo "<td style='text-align:right;padding-right:20px;font-weight:bold;'> &#8377;&nbsp;$tot_taxvalue_amt</td>";
-}
+    echo "<td style='text-align:right;padding-right:20px;font-weight:bold;' id='total-invoice-amt'> &#8377;&nbsp;$tot_invoice_amt</td>";
+    echo "<td style='text-align:right;padding-right:20px;font-weight:bold;' id='total-gst-amt'> &#8377;&nbsp;$tot_gst_amt</td>";
+    echo "<td></td>";
+
     echo "</tfoot>";
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -171,12 +148,12 @@ if ( $gstflag=="true"){
                             <h2 class="main-content-title tx-24 mg-b-5">GST Details</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Admin</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">GST Amount for the last month</li>
+                                <li class="breadcrumb-item active" aria-current="page">GST Amount Paid Details</li>
                             </ol>
                         </div>
                         <div class="btn-list">
                             <!-- <a class="btn ripple btn-primary" href="javascript:void(0);"><i class="fe fe-external-link"></i> Export</a> -->
-                            <a class="btn ripple btn-success  view-details-btn" data-bs-target='#editmodal' data-bs-toggle='modal' data-recordid={$id} title='View DM Content &  Details' onclick="fetchGstAmount()"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Save GST Details</a>
+                            <!-- <a class="btn ripple btn-success  view-details-btn" data-bs-target='#editmodal' data-bs-toggle='modal' data-recordid={$id} title='View DM Content &  Details' onclick="fetchGstAmount()"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Save GST Details</a> -->
                             <!-- <a class="btn ripple btn-info" href="javascript:void(0);"><i class="fe fe-help-circle"></i> Help</a>
 						<a class="btn ripple btn-danger dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="true">
@@ -202,49 +179,48 @@ if ( $gstflag=="true"){
                                     <div class="card-header border-bottom-0 p-0">
                                         <!-- <a class="btn btn-sm btn-success  view-details-btn" data-bs-target='#editmodal' data-bs-toggle='modal' data-recordid={$id} title='View DM Content &  Details' ><i class="fe fe-external-link"></i> &nbsp;&nbsp; Save GST Details</a> -->
 
-                                        <!-- <div class="row">
+                                        <div class="row">
                                             <div class="col-md-4">
-                                                <h4 class="card-title mb-1">GST Amount for the last month</h4>
+                                                <h4 class="card-title mb-1">GST Amount </h4>
                                             </div>
                                             <div class="col-md-4">
-                                           
-                                                    <label for="designation" class="form-label">Select Month</label>
-                                                    <select id="month-select" name="month-select" class="form-select mb-3" required>
-                                                        <option value="" disabled selected>Select Month</option>
-                                                        <option value="1">January</option>
-                                                        <option value="2">February</option>
-                                                        <option value="3">March</option>
-                                                        <option value="4">April</option>
-                                                        <option value="5">May</option>
-                                                        <option value="6">June</option>
-                                                        <option value="7">July</option>
-                                                        <option value="8">August</option>
-                                                        <option value="9">September</option>
-                                                        <option value="10">October</option>
-                                                        <option value="11">November</option>
-                                                        <option value="12">December</option>
-                                                        <
-                                                    </select>
-                                                    
-                                            
+
+                                                <label for="designation" class="form-label">Select Month</label>
+                                                <select id="month-select" name="month-select" class="form-select mb-3" required onchange="filterOrders()">
+                                                    <option value="" disabled selected>Select Month</option>
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                    < </select>
+
+
                                             </div>
                                             <div class="col-md-4">
-                                                 <label for="designation" class="form-label">Select Year</label>
-                                                    <select id="year-select" name="year-select" class="form-select mb-3" required onchange="filterOrders()">
-                                                      
-                                                        <option value="2023">2023</option>
-                                                        <option value="2024">2024</option>
-                                                        <option value="2025">2025</option>
-                                                        <option value="2026">2026</option>
-                                                        <option value="2027">2027</option>
-                                                        <option value="2028">2028</option>
-                                                        <option value="2029">2029</option>
-                                                        <option value="2030">2030</option>
-                                                    
-                                                        
-                                                    </select>
+                                                <label for="designation" class="form-label">Select Year</label>
+                                                <select id="year-select" name="year-select" class="form-select mb-3" required onchange="filterOrders()">
+
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                    <option value="2027">2027</option>
+                                                    <option value="2028">2028</option>
+                                                    <option value="2029">2029</option>
+                                                    <option value="2030">2030</option>
+
+
+                                                </select>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table" id="example3">
@@ -257,7 +233,7 @@ if ( $gstflag=="true"){
                                                     <th>Invoice No</th>
                                                     <th>Invoice Amount</th>
                                                     <th>GST Amount</th>
-                                                    <th>Taxable Value</th>
+                                                    <th>Paid Date</th>
 
                                                 </tr>
                                             </thead>
@@ -308,7 +284,7 @@ if ( $gstflag=="true"){
             </div>
         </div> -->
 
-        <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -317,33 +293,33 @@ if ( $gstflag=="true"){
                     </div>
                     <div class="modal-body">
                         <form>
-                        <div class="mb-3">
-                        <div class="table-responsive">
-                           
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
+                            <div class="mb-3">
+                                <div class="table-responsive">
 
-                                                    <th>Order Id</th>
-                                                    <th>Brand Name</th>
-                                                    <th>Invoice No</th>
-                                                    <th>Invoice Amount</th>
-                                                    <th>GST Amount</th>
-                                                    <th>Taxable Value</th>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
 
-                                                </tr>
-                                            </thead>
-                                            <?php
-                                            $currentMonth = date('m');
-                                            showorderlist($currentMonth);
-                                            ?>
+                                                <th>Order Id</th>
+                                                <th>Brand Name</th>
+                                                <th>Invoice No</th>
+                                                <th>Invoice Amount</th>
+                                                <th>GST Amount</th>
+                                                <th>Taxable Value</th>
+
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                        $currentMonth = date('m');
+                                        showorderlist($currentMonth);
+                                        ?>
 
 
-                                        </table>
-                                        <hr>
-                                    </div>
-                        </div>
+                                    </table>
+                                    <hr>
+                                </div>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="gst-amount-input" class="form-label">Total GST Amount</label>
@@ -353,7 +329,7 @@ if ( $gstflag=="true"){
                                 <label for="gst-amount-input" class="form-label">Paid Date</label>
                                 <input type="date" class="form-control" id="gst-paid-date">
                             </div>
-                            
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -362,8 +338,8 @@ if ( $gstflag=="true"){
                     </div>
                 </div>
             </div>
-           
-        </div>
+
+        </div> -->
         <!-- Main Footer-->
         <?php include 'includes/footer.php'; ?>
         <!--End Footer-->
@@ -421,99 +397,46 @@ if ( $gstflag=="true"){
     <!-- Switcher js -->
     <script src="../assets/switcher/js/switcher.js"></script>
     <script>
-        function fetchGstAmount() {
-
-            // This function makes an AJAX call to the PHP function to fetch the GST amount
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'fetch_gst_data.php', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('gst-amount-input').value = xhr.responseText;
-                     // Set today's date in the gst_paid_date input field
-                    const today = new Date().toISOString().split('T')[0];
-                    document.getElementById('gst-paid-date').value = today;
-                }
-            };
-            xhr.send();
-        }
-
-
-        function saveGstAmount() {
-            // Get the total GST amount and paid date from the input fields
-            const gstAmount = document.getElementById('gst-amount-input').value;
-            const gstPaidDate = document.getElementById('gst-paid-date').value;
-
-            // Collect data from the table
-            const tableData = [];
-            const rows = document.querySelectorAll('#editmodal table tbody tr');
-            rows.forEach(row => {
-                const rowData = {
-                    orderId: row.cells[1].textContent,
-                    brandName: row.cells[2].textContent,
-                    invoiceNo: row.cells[3].textContent,
-                    invoiceAmt: row.cells[4].textContent,
-                    gstAmt: row.cells[5].textContent,
-                    taxableValue: row.cells[6].textContent
-                };
-                tableData.push(rowData);
-            });
-
-            // Make an AJAX call to save the GST amount and table data
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'save_gst_amount.php', true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Handle success or error
-                    alert(xhr.responseText);
-                    window.location = "gstCalculate.php";
-                }
-            };
-            xhr.send(JSON.stringify({
-                gstAmount: gstAmount,
-                gstPaidDate: gstPaidDate,
-                tableData: tableData
-            }));
-        }
-
         // JavaScript to select the current month
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     var currentMonth = new Date().getMonth() + 1; // getMonth() returns month index (0-11), so add 1
-        //     var monthSelect = document.getElementById('month-select');
-        //     monthSelect.value = currentMonth; // Set the value to the current month
-        // });
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentMonth = new Date().getMonth() + 1; // getMonth() returns month index (0-11), so add 1
+            var monthSelect = document.getElementById('month-select');
+            monthSelect.value = currentMonth; // Set the value to the current month
+        });
         // JavaScript to select the current year
-        // window.onload = function() {
-        //     const currentYear = new Date().getFullYear().toString();
-        //     const select = document.getElementById("year-select");
-        //     for (let i = 0; i < select.options.length; i++) {
-        //         if (select.options[i].value === currentYear) {
-        //             select.options[i].selected = true;
-        //             break;
-        //         }
-        //     }
-        // };
+        window.onload = function() {
+            const currentYear = new Date().getFullYear().toString();
+            const select = document.getElementById("year-select");
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === currentYear) {
+                    select.options[i].selected = true;
+                    break;
+                }
+            }
+        };
     </script>
 
     <script>
         // Get the current month
         // var currentMonth = new Date().getMonth() + 1; // JavaScript months are zero-based, so add 1
 
-        // Set the selected option in the select box
-        // document.getElementById("month-select").value = currentMonth;
+  
+        function filterOrders() {
+            var monthselect = document.getElementById('month-select').value;
+            var yearselect = document.getElementById('year-select').value;
 
-        //     function filterOrders() {
-        //     var monthselect = document.getElementById('month-select').value;
-
-        //     var xhr = new XMLHttpRequest();
-        //     xhr.open('GET', 'fetch_gst_data.php?monthselect=' + monthselect, true);
-        //     xhr.onreadystatechange = function() {
-        //         if (xhr.readyState == 4 && xhr.status == 200) {
-        //             document.querySelector('#example3 tbody').innerHTML = xhr.responseText;
-        //         }
-        //     };
-        //     xhr.send();
-        // }
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'fetch_gst_data_collected.php?monthselect=' + monthselect + '&yearselect=' + yearselect, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.querySelector('#example3 tbody').innerHTML = response.tableData;
+                    document.querySelector('#example3 tfoot #total-invoice-amt').innerText = response.totalInvoiceAmt;
+                    document.querySelector('#example3 tfoot #total-gst-amt').innerText = response.totalGstAmt;
+                }
+            };
+            xhr.send();
+        }
     </script>
 </body>
 

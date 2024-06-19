@@ -241,6 +241,22 @@ include "includes/connection.php";
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="basicsalary">Basic Salary :</label>
+                                                    <div class="col-md-9">
+                                                        <input type="number" name="basicsalary" id="basicsalary" class="form-control" placeholder="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="comp_expense">Company Expense:</label>
+                                                    <div class="col-md-9">
+                                                        <input type="Number" name="comp_expense" id="comp_expense" class="form-control" placeholder="">
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -267,6 +283,9 @@ include "includes/connection.php";
                                         $joindate = $_POST["joindate"];
                                         $bloodgroup = $_POST["bloodgroup"];
 
+                                        $basicsalary = $_POST["basicsalary"];
+                                        $comp_expense = $_POST["comp_expense"];
+
                                         $loginname = $_POST["loginemailid"];
                                         $pass1 = $_POST["loginpassword"];
                                         if (isset($_POST["hod"])) {
@@ -275,7 +294,9 @@ include "includes/connection.php";
                                             $hodvar ="No";
                                         }
                                         $saveFileName ="";
-                                        if (!empty(array_filter($_FILES['files']['name']))) {
+
+                                        if (isset($_FILES['files']['name']) && is_array($_FILES['files']['name']) && !empty(array_filter($_FILES['files']['name']))) {
+
                                         $upload_dir = '../assets/img/staff/';
                                         $file_tmpname = $_FILES['files']['tmp_name'];
                                         $file_name = $_FILES['files']['name'];
@@ -296,21 +317,33 @@ include "includes/connection.php";
                                         $status = $_POST["status"];
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
+                                        $adddate = date('d-m-Y');
+
+                                        // 
 
                                         $sql = "INSERT INTO employee (empname,department_id,desig_id,status,created,modified,addres,phoneno,emailid,
-                                                joindate,emppic,bloodgrp,hod) values('" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $department) . "',
+                                                joindate,emppic,bloodgrp,hod,basic_salary,company_expense) values('" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $department) . "',
                                                 '" . mysqli_real_escape_string($connection, $desig) . "','" . mysqli_real_escape_string($connection, $status) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $postdate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $addr) . "',
                                                                 '" . mysqli_real_escape_string($connection, $phoneno) . "','" . mysqli_real_escape_string($connection, $emailid) . "',
                                                                 '" . mysqli_real_escape_string($connection, $joindate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $saveFileName) . "','" . mysqli_real_escape_string($connection, $bloodgroup) . "'
-                                                                ,'" . mysqli_real_escape_string($connection, $hodvar) . "')";
+                                                                ,'" . mysqli_real_escape_string($connection, $hodvar) . "','" . mysqli_real_escape_string($connection, $basicsalary) . "'
+                                                                ,'" . mysqli_real_escape_string($connection, $comp_expense) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
 
                                             //  ======================= userid creation =========================  
                                             $last_emp_id = $connection->insert_id;
+
+                                            $queryce = "INSERT INTO companyexpense (empid, companyexpense, adddate)
+                                            VALUES('$last_emp_id', '$comp_expense', '$adddate')";
+
+                                            if ($connection->query($queryce) === TRUE) {
+                                                
+                                            }
+
                                              // Use password_hash to securely hash the password
                                             $hashed_password = password_hash($pass1, PASSWORD_DEFAULT);
                                             // $password = md5($pass1); //encrypt the password before saving in the database
@@ -328,6 +361,8 @@ include "includes/connection.php";
                                                     echo "Error updating record: " . $connection->error;
                                                 }
                                             }
+
+                                            
 
 
 

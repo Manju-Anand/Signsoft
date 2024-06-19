@@ -41,7 +41,7 @@ $mainorderid = "";
     <link href="../assets/css/icons.css" rel="stylesheet">
 
     <!--- Style css -->
-    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="../assets/css/style.css?v=1.0.1" rel="stylesheet">
 
     <!--- Plugins css -->
     <link href="../assets/css/plugins.css" rel="stylesheet">

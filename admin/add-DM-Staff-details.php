@@ -224,7 +224,7 @@ $mainorderid = "";
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label class="form-label" for="frequency">Frequency :</label>
-                                                                <input type="text" class="form-control" id="frequency" name="frequency" placeholder="Like 2 posters per week ETC." required>
+                                                                <input type="text" class="form-control" id="frequency" name="frequency" placeholder="Enter Frequency" required>
 
                                                             </div>
                                                             <div class="col-md-3">

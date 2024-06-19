@@ -137,7 +137,10 @@ $mainorderid = "";
 
                                                                           </div>
 
-
+                                                            <div class="col-md-3">
+                                                                <label class="form-label" for="staff">Work Description [If Any] :</label>
+                                                                <textarea class="form-control" name="workdesc" id="workdesc" rows="4"></textarea>
+                                                            </div>
                                                             <div class="col-md-3">
                                                                 <label class="form-label" for="staff">Work Status :</label>
                                                                 <select class="form-select mb-3" aria-label="Default select example" name="workstatus" id="workstatus" required>
@@ -166,6 +169,7 @@ $mainorderid = "";
                                                                             <th>#</th>
                                                                             <th>Date</th>
                                                                             <th>Time Taken</th>
+                                                                            <th>Description</th>
                                                                             <th>Work Status</th>
 
                                                                             <th>Action</th>

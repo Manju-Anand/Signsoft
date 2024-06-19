@@ -645,7 +645,7 @@ ini_set('display_errors', 1);
 															
 														</li>
 														<li class="sub-slide">
-															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="javascript:void(0)">
+															<a class="slide-item side-menu__item-sub" data-bs-toggle="sub-slide" href="gstList.php">
 																<span class="sub-side-menu__label">Paid Details</span>
 																<!-- <i class="sub-angle fe fe-chevron-down"></i> -->
 															</a>

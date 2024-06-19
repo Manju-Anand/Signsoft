@@ -83,6 +83,7 @@ function addstaffRow() {
 
     // Get the values from the dropdowns
     var timetakenValue = document.getElementById("timetaken").value;
+    var workDescription = document.getElementById("workdesc").value;
     var workstatusValue = document.getElementById("workstatus").value;
     // Check if both timetaken and workstatus are selected
     if (timetakenValue && workstatusValue) {
@@ -115,36 +116,41 @@ function addstaffRow() {
         var selectBox1 = document.getElementById("timetaken");
         cell3.innerHTML = selectBox1.value;
 
-        // Select Box 1
+
         var cell4 = newRow.insertCell(3);
+        var selectBox1 = document.getElementById("workdesc");
+        cell4.innerHTML = selectBox1.value;
+
+        // Select Box 1
+        var cell5 = newRow.insertCell(4);
         var selectBox1 = document.getElementById("workstatus");
-        cell4.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
+        cell5.innerHTML = selectBox1.options[selectBox1.selectedIndex].text;
 
         // New cell with Edit and Delete buttons  ===========href='edit-supplier.php?edit=" + ++rowCounter + "'---onclick='javascript:confirmationDelete($(this));return false;
-        var cell5 = newRow.insertCell(4);
-        cell5.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
+        var cell6 = newRow.insertCell(5);
+        cell6.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
             "<span class='fe fe-edit'> </span></a>&nbsp;&nbsp;" +
             "<a class='btn btn-sm btn-danger delete-staff-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>" +
             "<span class='fe fe-trash-2'> </span></a>";
         // Text Box 3
-        var cell6 = newRow.insertCell(5);
-        cell6.innerHTML = "New";
-         cell6.classList.add('hidden-cell');
+        var cell7 = newRow.insertCell(6);
+        cell7.innerHTML = "New";
+         cell7.classList.add('hidden-cell');
 
         // Text Box 3
-        var cell7 = newRow.insertCell(6);
-        var textBox1 = document.getElementById("allotid");
-        cell7.innerHTML = textBox1.value;  // Set the content of the cell to be empty
-        cell7.classList.add('hidden-cell');
-
         var cell8 = newRow.insertCell(7);
-        var textBox1 = document.getElementById("orderid");
+        var textBox1 = document.getElementById("allotid");
         cell8.innerHTML = textBox1.value;  // Set the content of the cell to be empty
         cell8.classList.add('hidden-cell');
 
         var cell9 = newRow.insertCell(8);
-               cell9.innerHTML = "";  // Set the content of the cell to be empty
+        var textBox1 = document.getElementById("orderid");
+        cell9.innerHTML = textBox1.value;  // Set the content of the cell to be empty
         cell9.classList.add('hidden-cell');
+
+        var cell10 = newRow.insertCell(9);
+               cell10.innerHTML = "";  // Set the content of the cell to be empty
+        cell10.classList.add('hidden-cell');
 
 
         // Clear input values after adding to the table
