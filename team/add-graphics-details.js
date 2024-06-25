@@ -14,7 +14,7 @@ $('body').on('click', '.edit-staff-btn', function () {
 
     // Get the corresponding row
     var row = $(this).closest('tr');
-
+// alert ("hai");
     // Extract values from the row
     var postings = row.find('td:eq(2)').text(); // Replace 2 with the actual column index
     // alert (postings);
@@ -25,31 +25,73 @@ $('body').on('click', '.edit-staff-btn', function () {
     
     var editid = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
     var staffrowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
-    // alert (workdate);
-    // var assigndate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
-    // var dateParts = assigndate.split('-');
-    // var formattedDate = dateParts[2] + '-' + dateParts[1].padStart(2, '0') + '-' + dateParts[0].padStart(2, '0');
-    var assigndate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
+
+     var assigndate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
     var dateParts = assigndate.split('-');
     var formattedDate = dateParts[2] + '-' + padWithZeros(dateParts[1], 2) + '-' + padWithZeros(dateParts[0], 2);
 
     var deadline = row.find('td:eq(5)').text(); // Assuming the format is 'dd-mm-YYYY'
     var dateParts = deadline.split('-');
-    // var deadlineDate = dateParts[2] + '-' + dateParts[1].padStart(2, '0') + '-' + dateParts[0].padStart(2, '0');
+
     var deadlineDate = dateParts[2] + '-' + padWithZeros(dateParts[1], 2) + '-' + padWithZeros(dateParts[0], 2);
 
-    $('#modaldeadline').val(deadlineDate);
-    $('#modalassigndate').val(formattedDate);
-    // Set values in the modal
+    var orderDisplay = document.getElementById('ordersdisplay');
+    var empid = document.getElementById("empid").value;
+    var selectedValue = orderDisplay.value;
 
-    $('#modalpost').val(postings);
-    $('#modalcontent').val(content);
-    $('#modalidea').val(idea);
-    // Set the value of the new textbox
-    $('#modalstaffrowid').val(staffrowId);
-    $('#modaleditid').val(editid);
-    // Trigger the modal to display
-    $('#staffmodal').modal('show');
+    if (selectedValue) {
+        // Create a form element
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'edit-Graphics-content.php';
+
+        // Create input elements for each parameter
+        var params = {
+            empid: empid,
+            orderid: selectedValue,
+            editid: editid,
+            postings :postings,
+            content : content,
+            idea :idea,
+            deadline:deadlineDate
+        };
+
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = params[key];
+                form.appendChild(input);
+            }
+        }
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    // $('#modaldeadline').val(deadlineDate);
+    // $('#modalassigndate').val(formattedDate);
+
+  
+  
+    // let formattedData = idea.replace(/\\n/g, '\n');
+    // document.getElementById("modalidea").value = formattedData;
+
+   
+    // let formattedData1 = content.replace(/\\n/g, '\n');
+    // document.getElementById("modalcontent").value = formattedData1;
+
+
+    // $('#modalpost').val(postings);
+    // // $('#modalcontent').val(content);
+    // // $('#modalidea').val(idea);
+    // // Set the value of the new textbox
+    // $('#modalstaffrowid').val(staffrowId);
+    // $('#modaleditid').val(editid);
+    // // Trigger the modal to display
+    // $('#staffmodal').modal('show');
 });
 
 $('body').on('click', '.delete-staff-btn', function () {
@@ -71,6 +113,7 @@ $('body').on('click', '.delete-staff-btn', function () {
             type: 'POST',
             data: { id: dataid },
             success: function(response) {
+                // alert (response);
                 if (response == 'success') {
                     // Remove the row from the table
                     row.remove();
@@ -90,7 +133,7 @@ $('body').on('click', '.delete-staff-btn', function () {
 
 function updatestaffRowNumbers() {
     // Update the numbering in the first column of each remaining row
-    $('#staffallocateTable tbody tr').each(function (index, element) {
+    $('.staffallocateTable tbody tr').each(function (index, element) {
         $(element).find('td:eq(0)').text(index + 1);
     });
 }
@@ -100,7 +143,7 @@ var rowCounter = 0; // Move the initialization here
 function findMaxstaffRowNumber() {
     // alert("increment");
     // Find the maximum row number in the existing table rows
-    $('#staffallocateTable tbody tr').each(function (index, element) {
+    $('.staffallocateTable tbody tr').each(function (index, element) {
         var currentRowNumber = parseInt($(element).find('td:eq(0)').text(), 10);
         rowCounter = Math.max(rowCounter, currentRowNumber);
     });
@@ -109,7 +152,7 @@ function addstaffRow() {
     // Call the function to find the maximum row number
     findMaxstaffRowNumber();
 
-    var table = document.getElementById("staffallocateTable");
+    var table = document.getElementsByClassName("staffallocateTable");
     var tbody = table.getElementsByTagName("tbody")[0]; // Get the tbody element
 
     // Get the values from the dropdowns
@@ -234,7 +277,7 @@ $('#savestaffChangesBtn').on('click', function () {
     var selectedRowId = $('#modalstaffrowid').val(); // Update this to the actual input or method to get the row ID
 
     // Update the corresponding row in the table
-    var selectedRow = $('#staffallocateTable tbody tr[data-rowid="' + selectedRowId + '"]');
+    var selectedRow = $('.staffallocateTable tbody tr[data-rowid="' + selectedRowId + '"]');
     selectedRow.find('td:eq(1)').text(formattedDate); // Update with the correct column indices.
     selectedRow.find('td:eq(2)').text(modalpost); // Update with the correct column indices.
     selectedRow.find('td:eq(3)').text(modalcontent); // Update with the correct column indices
@@ -253,8 +296,67 @@ $('#savestaffChangesBtn').on('click', function () {
 
 
 // ************* end staff details ****************
+
+       // Check the value when the page loads
+       window.onload = checkSelectValue;
+
+
+function checkSelectValue() {
+    var orderDisplay = document.getElementById('ordersdisplay');
+    var addButton = document.getElementById('addcontent');
+    addButton.disabled = !orderDisplay.value;  // Enable button if a value is selected
+}
+// ===============================================================
+// function navigateToPage() {
+//     var orderDisplay = document.getElementById('ordersdisplay');
+//     var selectedValue = orderDisplay.value;
+//     if (selectedValue) {
+//         window.location.href = 'add-Graphics-new-content.php?selected=' + encodeURIComponent(selectedValue);
+//     }
+// }
+
+function navigateToPage() {
+    var orderDisplay = document.getElementById('ordersdisplay');
+    var empid = document.getElementById("empid").value;
+    var selectedValue = orderDisplay.value;
+    if (selectedValue) {
+        // Create a form element
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'add-Graphics-new-content.php';
+
+        // Create input elements for each parameter
+        var params = {
+            empid: empid,
+            orderid: selectedValue
+        };
+
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = params[key];
+                form.appendChild(input);
+            }
+        }
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+// ==========================================================
+$(document).ready(function() {
+    $('#example1').DataTable();
+});
+ 
+
 // Add an event listener to the select element
 document.getElementById('ordersdisplay').addEventListener('change', function () {
+    checkSelectValue();
+    // var addButton = document.getElementById('addcontent');
+    // addButton.disabled = !this.value;  // Enable button if a value is selected
     // Get the selected option
     var selectedOption = this.options[this.selectedIndex];
     var custname = selectedOption.getAttribute('data-custName');
@@ -296,8 +398,22 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
         success: function (data) {
            
 
-            $('#ajaxstaffallocateresults').html(data);
-           
+             // Destroy the DataTable if it exists to reinitialize it
+        if ($.fn.DataTable.isDataTable('#example1')) {
+            $('#example1').DataTable().destroy();
+        }
+        $('#ajaxstaffallocateresults').html(data);
+        // Reinitialize DataTable with updated content
+        $('#example1').DataTable({
+            "paging": true,        // Enable pagination
+            "lengthChange": true,  // Enable number of records per page
+            "searching": true,     // Enable search box
+            "ordering": true,      // Enable column sorting
+            "info": true,          // Enable table information display
+            "autoWidth": true,    // Disable auto width calculation
+            "responsive": true,    // Enable responsive design
+            // Additional options as needed
+        });
 
         }
     });
@@ -313,9 +429,11 @@ function saveDataToDatabase() {
     var empid = document.getElementById("empid").value;
     var orderid = document.getElementById("ordersdisplay").value;
 
+
+
     // **********staff allocation details *********************
 
-    var table1 = document.getElementById("staffallocateTable");
+    var table1 = document.getElementsByClassName("staffallocateTable");
     var rows1 = table1.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
     console.log("hai staff  :" + rows1)
     var staffallocationdataToSave = [];
@@ -361,7 +479,7 @@ function saveDataToDatabase() {
                 // Handle the response from the server if needed
                 console.log("result: " + xhr.responseText);
                 alert("Succesfully Saved Data.");
-                // window.location.href = 'dmworklist.php';
+                window.location.href = 'add-Graphics-Staff-details.php';
             } else {
                 // Handle errors if any
                 console.error("Error saving data: " + xhr.status);

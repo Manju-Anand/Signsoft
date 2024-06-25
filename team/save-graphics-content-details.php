@@ -17,97 +17,86 @@ if (isset($data['staffallocationdataToSave'])) {
     $assigndate = $row['assigndate'];
     $posting = $row['posting'];
     $content =  mysqli_real_escape_string($connection, $row['content']);
-    // $content = htmlspecialchars($_POST['content'], ENT_QUOTES, 'UTF-8');
+    // $content = htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8');
     $idea = $row['idea'];
     $deadline = $row['deadline'];
     $orderid = $row['orderid'];
     $empid = $row['empid'];
     $editid = $row['editid'];
-    echo "edit-" . $editid; 
+    echo "edit-" . $editid;
     $recordstatus = $row['recordstatus'];
     date_default_timezone_set("Asia/Calcutta");
     $postdate = date("M d,Y h:i:s a");
 
     $sql = "SELECT * FROM department where dname='Graphics'";
     $result = $connection->query($sql);
-        if ($result->num_rows > 0) {
-      while($rowdept = $result->fetch_assoc()) {
-        $sqlemp = "SELECT * FROM employee where department_id='". $rowdept['id']  . "' and hod='Yes'";
-    $resultemp = $connection->query($sqlemp);
+    if ($result->num_rows > 0) {
+      while ($rowdept = $result->fetch_assoc()) {
+        $sqlemp = "SELECT * FROM employee where department_id='" . $rowdept['id']  . "' and hod='Yes'";
+        $resultemp = $connection->query($sqlemp);
         if ($resultemp->num_rows > 0) {
-      while($rowemp = $resultemp->fetch_assoc()) {
-       $staffid = $rowemp['id'];
+          while ($rowemp = $resultemp->fetch_assoc()) {
+            $staffid = $rowemp['id'];
+          }
+        }
       }
     }
-      }
-    } 
- 
+
     // Perform the SQL query to insert data into the database
 
-    if (isset($row['editid']) && $row['editid'] !== "") {
-    // echo "3";
-    //       $sql = "UPDATE staff_dm_graphics_allocation SET orderid='" . $orderid . "',staffid='" . $staffid . "',postings='" . $posting . "',content='" . $content . "',
-    //   assigndate='" . $assigndate . "',status='Edited',modified='" . $postdate . "',assigned_staffid='" . $empid . "',redirect_status='Self',posteridea='" . $idea . "',
-    //   deadline='" . $deadline . "' WHERE id='" . $editid . "'";
-    //   if ($connection->query($sql) !== TRUE) {
-
-    //     echo "Error: " . $sql . "<br>" . $connection->error;
-    //   }else {
-    //     echo "Updated";
-    //   }
+    // if (isset($row['editid']) && $row['editid'] !== "") {
+      if ($recordstatus == "Edited") {
       // ========================================
-// Prepare an update statement
-$sql = "UPDATE staff_dm_graphics_allocation SET orderid=?, staffid=?, postings=?, content=?, assigndate=?, status='Edited', modified=?, assigned_staffid=?, redirect_status='Self', posteridea=?, deadline=? WHERE id=?";
+      // Prepare an update statement
+      $sql = "UPDATE staff_dm_graphics_allocation SET orderid=?, staffid=?, postings=?, content=?, assigndate=?, status='Edited', modified=?, assigned_staffid=?, redirect_status='Self', posteridea=?, deadline=? WHERE id=?";
 
-if ($stmt = $connection->prepare($sql)) {
-    // Bind variables to the prepared statement as parameters
-    $stmt->bind_param("sssssssssi", $orderid, $staffid, $posting,$content, $assigndate, $postdate, $empid, $idea, $deadline, $editid);
+      if ($stmt = $connection->prepare($sql)) {
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param("sssssssssi", $orderid, $staffid, $posting, $content, $assigndate, $postdate, $empid, $idea, $deadline, $editid);
 
-    if ($stmt->execute()) {
-        echo "Updated";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+        if ($stmt->execute()) {
+          echo "Updated";
+        } else {
+          echo "Error: " . $stmt->error;
+        }
 
-    // Close statement
-    $stmt->close();
-} else {
-    echo "Error: " . $connection->error;
-}
+        // Close statement
+        $stmt->close();
+      } else {
+        echo "Error: " . $connection->error;
+      }
 
 
       // ==================================================
-    } else {
-
+    // } else {
+    } elseif ($recordstatus == "New") {
       // ================================================
       // Prepare an insert statement
-$sql = "INSERT INTO staff_dm_graphics_allocation (orderid, staffid, postings, content, status, assigndate, work_status, created, assigned_staffid, redirect_status, posteridea, deadline) VALUES (?, ?, ?, ?, 'New', ?, 'Active', ?, ?, 'Self', ?, ?)";
+      $sql = "INSERT INTO staff_dm_graphics_allocation (orderid, staffid, postings, content, status, assigndate, work_status, created, assigned_staffid, redirect_status, posteridea, deadline) VALUES (?, ?, ?, ?, 'New', ?, 'Active', ?, ?, 'Self', ?, ?)";
 
-if ($stmt = $connection->prepare($sql)) {
-    // Bind variables to the prepared statement as parameters
-    $stmt->bind_param("sssssssss", $orderid, $staffid, $posting, $content, $assigndate, $postdate, $empid, $idea, $deadline);
+      if ($stmt = $connection->prepare($sql)) {
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param("sssssssss", $orderid, $staffid, $posting, $content, $assigndate, $postdate, $empid, $idea, $deadline);
 
-  
 
-    if ($stmt->execute()) {
-        echo "saved";
-        $last_id = $connection->insert_id;
-    } else {
-        echo "Error: " . $stmt->error;
+
+        if ($stmt->execute()) {
+          echo "saved";
+          $last_id = $connection->insert_id;
+        } else {
+          echo "Error: " . $stmt->error;
+        }
+
+        // Close statement
+        $stmt->close();
+      } else {
+        echo "Error: " . $connection->error;
+      }
+
+
+
+      // =============================================
     }
-
-    // Close statement
-    $stmt->close();
-} else {
-    echo "Error: " . $connection->error;
-}
-
-
-
-// =============================================
-    }
-
-   
   }
 }
 

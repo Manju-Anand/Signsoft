@@ -81,8 +81,10 @@ function showworklist()
                 echo "<a class='btn btn-sm btn-yellow redirect-details-btn'   data-bs-target='#staffmodal' data-bs-toggle='modal' data-recordid={$id} title='Redirect work' style='color:white;font: weight 200px;'>
         <span class='fe fe-arrow-right-circle'> </span></a> &nbsp";
             }
-            echo "<a class='btn btn-sm btn-gray-dark  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
-        <span class='fe fe-eye'> </span></a>";
+            echo "<a class='btn btn-sm btn-gray-dark  view-details-btn' href='View-gd-work-details.php?workid={$id}'   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+            <span class='fe fe-eye'> </span></a>";
+        //     echo "<a class='btn btn-sm btn-gray-dark  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+        // <span class='fe fe-eye'> </span></a>";
             echo "</td>";
 
 
@@ -183,8 +185,6 @@ function showworklist()
 
                                                     <th>Brand Name</th>
                                                     <th>Postings</th>
-                                                    <!-- <th>Content</th>
-                                                    <th>Poster Idea</th> -->
                                                     <th>Work Assigned By</th>
                                                     <th>Assigned Date</th>
                                                     <th>Work Status</th>
@@ -273,55 +273,74 @@ function showworklist()
 
 
         <div class="modal fade" id="viewmodal">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">View Graphics Work Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                <label class="form-label" for="postercontent">Poster Content :</label>
-                                <textarea class="form-control" name="postercontent" id="postercontent" rows="5" readonly> </textarea>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label" for="posteridea">Poster Idea :</label>
-                                <textarea class="form-control" name="posteridea" id="posteridea" rows="5" readonly> </textarea>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label" for="pdeadline">Deadline Assigned by DM:</label>
-                                <input class="form-control" type="text" id="pdeadline" name="pdeadline" value="" readonly>
-                            </div>
-                            <h4>Redirected Work Details [ If Any ]</h4>
-                            <div class="col-md-6">
-                                <label class="form-label" for="redirectstaff">Redirected to :</label>
-                                <!-- <input class="form-control"  type="text" id="redirectstaff" name="redirectstaff" value="" readonly> -->
-                                <select class="form-select" name="redirectstaff" id="redirectstaff" readonly>
-                                    <?php
-                                    $sql = "SELECT * FROM department where dname='Graphics'";
-                                    $result = $connection->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($rowdept = $result->fetch_assoc()) {
-                                            $sqlemp = "SELECT * FROM employee where department_id='" . $rowdept['id']  . "' and hod='No'";
-                                            $resultemp = $connection->query($sqlemp);
-                                            if ($resultemp->num_rows > 0) {
-                                                while ($rowemp = $resultemp->fetch_assoc()) {
-                                                    $staffid = $rowemp['id'];
-                                                    echo "<option value='" . $staffid . "'>" . $rowemp['empname'] . "</option>";
+                            <div class="col-md-8">
+                                <div class="col-md-12">
+                                    <label class="form-label" for="postercontent">Poster Content :</label>
+                                    <textarea class="form-control" name="postercontent" id="postercontent" rows="5" readonly> </textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label" for="posteridea">Poster Idea :</label>
+                                    <textarea class="form-control" name="posteridea" id="posteridea" rows="5" readonly> </textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label" for="pdeadline">Deadline Assigned by DM:</label>
+                                    <input class="form-control" type="text" id="pdeadline" name="pdeadline" value="" readonly>
+                                </div>
+                                <h4>Redirected Work Details [ If Any ]</h4>
+                                <div class="col-md-12">
+                                    <label class="form-label" for="redirectstaff">Redirected to :</label>
+                                    <!-- <input class="form-control"  type="text" id="redirectstaff" name="redirectstaff" value="" readonly> -->
+                                    <select class="form-select" name="redirectstaff" id="redirectstaff" readonly>
+                                        <?php
+                                        $sql = "SELECT * FROM department where dname='Graphics'";
+                                        $result = $connection->query($sql);
+                                        if ($result->num_rows > 0) {
+                                            while ($rowdept = $result->fetch_assoc()) {
+                                                $sqlemp = "SELECT * FROM employee where department_id='" . $rowdept['id']  . "' and hod='No'";
+                                                $resultemp = $connection->query($sqlemp);
+                                                if ($resultemp->num_rows > 0) {
+                                                    while ($rowemp = $resultemp->fetch_assoc()) {
+                                                        $staffid = $rowemp['id'];
+                                                        echo "<option value='" . $staffid . "'>" . $rowemp['empname'] . "</option>";
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
 
 
-                                    ?>
+                                        ?>
 
-                                </select>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label" for="redirectdeadline">Redirected Deadline :</label>
+                                    <input class="form-control" type="text" id="redirectdeadline" name="redirectdeadline" value="" readonly>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="redirectdeadline">Redirected Deadline :</label>
-                                <input class="form-control" type="text" id="redirectdeadline" name="redirectdeadline" value="" readonly>
+                            <!-- =============================================== -->
+                            <div class="col-md-4">
+                                <span>Click on the image to enlarge it</span>
+                                <ul id="lightgallery2" class="list-unstyled row mb-0"></ul>
+                                <ul id="lightgallery" class="list-unstyled row mb-0">
+
+                                    <li class="col-xs-6 col-sm-6 col-md-6 col-xl-3 mb-3 ps-sm-2 pe-sm-2" data-responsive="uploads/dm/dprawns.jpg" data-src="uploads/dm/dprawns.jpg">
+                                        <a href="javascript:void(0);">
+                                            <img class="img-responsive br-3" src="uploads/dm/dprawns.jpg" alt="Thumb-1">
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul id="lightgallery1" class="list-unstyled row mb-0"></ul>
                             </div>
+                            <!-- ========================================= -->
+
 
                             <!-- </div> -->
                         </div>
@@ -353,6 +372,17 @@ function showworklist()
 
     <!-- Select2 js-->
     <script src="../assets/plugins/select2/js/select2.min.js"></script>
+
+    <!-- Gallery js-->
+    <script src="../assets/plugins/gallery/picturefill.js"></script>
+    <script src="../assets/plugins/gallery/lightgallery.js"></script>
+    <script src="../assets/plugins/gallery/lightgallery-1.js"></script>
+    <script src="../assets/plugins/gallery/lg-pager.js"></script>
+    <script src="../assets/plugins/gallery/lg-autoplay.js"></script>
+    <script src="../assets/plugins/gallery/lg-fullscreen.js"></script>
+    <script src="../assets/plugins/gallery/lg-zoom.js"></script>
+    <script src="../assets/plugins/gallery/lg-hash.js"></script>
+    <script src="../assets/plugins/gallery/lg-share.js"></script>
 
     <!-- DATA TABLE JS-->
     <script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
@@ -417,14 +447,14 @@ function showworklist()
                     },
                     dataType: 'json',
                     success: function(response) {
-                        
-                            var newOptionValue = response.redirect_staffid;
-                            $('#modalgraph').val(newOptionValue);
-                            $('#modaldeadline').val(response.redirect_deadline);
-                            if (response.redirect_deadline !== "") {
+
+                        var newOptionValue = response.redirect_staffid;
+                        $('#modalgraph').val(newOptionValue);
+                        $('#modaldeadline').val(response.redirect_deadline);
+                        if (response.redirect_deadline !== "") {
                             $('#redstatus').text("Already Redirected");
                         }
-
+                       
                     },
                     error: function(error) {
                         console.error('Error fetching data:', error);
@@ -462,7 +492,7 @@ function showworklist()
                         // Optionally, you can close the modal after saving
                         $('#staffmodal').modal('hide');
 
-                        // window.location.href = 'gdworklist.php';
+                        window.location.href = 'gdworklist.php';
                     },
                     error: function(error) {
                         // Handle the error response from the server
@@ -471,35 +501,76 @@ function showworklist()
                 });
             });
 
-            $('.view-details-btn').on('click', function() {
-                var recordId = $(this).data('recordid');
+            // $('.view-details-btn').on('click', function() {
+            //     var recordId = $(this).data('recordid');
 
-                // Make AJAX request to fetch data based on recordId
-                $.ajax({
-                    type: 'POST',
-                    url: 'gd-viewworkdetails.php', // Replace with the actual path to your PHP script
-                    data: {
-                        recordId: recordId
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        // Populate fields in viewmodal
-                        var isReadOnly = true; // Set this based on your condition
-                        document.getElementById('redirectstaff').disabled = isReadOnly;
-                        var newOptionValue = response.redirect_staffid;
-                        $('#redirectstaff').val(newOptionValue);
-                        $('#postercontent').val(response.content);
-                        $('#posteridea').val(response.posteridea);
-                        $('#pdeadline').val(response.deadline);
-                        // $('#redirectstaff').val(response.redirect_staffid);
-                        $('#redirectdeadline').val(response.redirect_deadline);
-                        // Add similar lines for other fields
-                    },
-                    error: function(error) {
-                        console.error('Error fetching data:', error);
-                    }
-                });
-            });
+            //     // Make AJAX request to fetch data based on recordId
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: 'gd-viewworkdetails.php', // Replace with the actual path to your PHP script
+            //         data: {
+            //             recordId: recordId
+            //         },
+            //         dataType: 'json',
+            //         success: function(response) {
+            //             // Populate fields in viewmodal
+            //             var isReadOnly = true; // Set this based on your condition
+            //             document.getElementById('redirectstaff').disabled = isReadOnly;
+            //             var newOptionValue = response.redirect_staffid;
+
+            //             let fetchedData = response.content; // example fetched data
+            //             let formattedData = fetchedData.replace(/\\n/g, '\n');
+            //             document.getElementById("postercontent").value = formattedData;
+
+            //             let fetchedData1 = response.posteridea; // example fetched data
+            //             let formattedData1 = fetchedData1.replace(/\\n/g, '\n');
+            //             document.getElementById("posteridea").value = formattedData1;
+
+
+            //             $('#redirectstaff').val(newOptionValue);
+            //             // $('#postercontent').val(response.content);
+            //             // $('#posteridea').val(response.posteridea);
+            //             $('#pdeadline').val(response.deadline);
+            //             // $('#redirectstaff').val(response.redirect_staffid);
+            //             $('#redirectdeadline').val(response.redirect_deadline);
+            //             // Add similar lines for other fields
+
+            //             // *********************************************
+
+            //             // Handle images
+            //             var imageList = $('#lightgallery1');
+            //             imageList.empty(); // Clear any existing images
+            //             if (response.images && response.images.length > 0) {
+            //                 response.images.forEach(function(image) {
+            //                     var imageItem = `
+            //             <li class="col-xs-6 col-sm-6 col-md-6 col-xl-3 mb-3 ps-sm-2 pe-sm-2"
+            //                 data-responsive="${image}" data-src="${image}">
+            //                 <a href="javascript:void(0);">
+            //                     <img class="img-responsive br-3" src="${image}" alt="Thumb">
+            //                 </a>
+            //             </li>`;
+            //                     imageList.append(imageItem);
+            //                 });
+            //             }
+
+            //             // Reinitialize lightGallery after adding new images
+            //             // $("#lightgallery1").data('lightGallery') && $("#lightgallery1").data('lightGallery').destroy(true);
+            //             // $("#lightgallery1").lightGallery();
+            //             // Reinitialize lightGallery after adding new images
+            //             // $("#lightgallery1").data('lightGallery') && $("#lightgallery1").data('lightGallery').destroy(true);
+            //             // $("#lightgallery1").lightGallery();
+
+
+            //             // ******************************************
+
+
+
+            //         },
+            //         error: function(error) {
+            //             console.error('Error fetching data:', error);
+            //         }
+            //     });
+            // });
 
         });
     </script>

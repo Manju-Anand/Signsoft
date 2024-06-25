@@ -209,6 +209,11 @@ ini_set('display_errors', 1);
 							<span class="side-menu__label">Assign Graphics Work</span>
 						</a>
 
+						<a class="side-menu__item" data-bs-toggle="slide" href="delete_sample_images.php">
+							<span class="side-menu__icon"><i class="fe fe-scissors side_menu_img"></i></span>
+							<span class="side-menu__label">Delete Sample Images</span>
+						</a>
+<hr>
 					</li>
 				<?php } ?>
 

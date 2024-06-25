@@ -35,6 +35,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row['content'] = str_replace("\n", '', htmlspecialchars_decode($row['content'], ENT_QUOTES));
         $row['posteridea'] = str_replace("\n", '', htmlspecialchars_decode($row['posteridea'], ENT_QUOTES));
 
+// ****************************************************
+        // Fetch images associated with the record
+        $imageSql = "SELECT file_name FROM staff_dm_graphics_images WHERE allocation_id = ?";
+        $imageStmt = $connection->prepare($imageSql);
+        $imageStmt->bind_param('i', $recordId);
+        $imageStmt->execute();
+        $imageResult = $imageStmt->get_result();
+
+        $images = [];
+        while ($imageRow = $imageResult->fetch_assoc()) {
+            $images[] = $imageRow['file_name'];
+        }
+        $row['images'] = $images;
+
+
+// ********************************************
         // Return data as JSON
         header('Content-Type: application/json');
         echo json_encode($row);
@@ -45,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Close the statement
     $stmt->close();
-    
+    $imageStmt->close();
     // Close the database connection
     $connection->close();
 } else {
@@ -53,3 +69,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     die('Error: Invalid request method.');
 }
 ?>
+

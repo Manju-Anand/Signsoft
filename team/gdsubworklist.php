@@ -69,9 +69,10 @@ function showworklist()
             
                 echo "<a class='btn btn-sm btn-blue' href='add-gdsub-work-details.php?workid={$id}' title='Enter Work Details' style='color:white;font: weight 200px;'>
         <span class='fe fe-edit'> </span></a> &nbsp;";
-           
-            echo "<a class='btn btn-sm btn-gray-dark  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+        echo "<a class='btn btn-sm btn-gray-dark  view-details-btn' href='View-gd-sub-work-details.php?workid={$id}'   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
         <span class='fe fe-eye'> </span></a>";
+        //     echo "<a class='btn btn-sm btn-gray-dark  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+        // <span class='fe fe-eye'> </span></a>";
             echo "</td>";
 
 
@@ -201,63 +202,11 @@ function showworklist()
         </div>
         <!-- End Main Content-->
         <!-- Basic modal -->
-        <div class="modal fade" id="staffmodal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content modal-content-demo">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Redirect Graphics Work</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-
-                            <input type="hidden" class="form-control" id="modalrecordid" name="modalrecordid" required>
-                            <div class="col-md-6">
-                                <label class="form-label" for="modalgraph">Graphic Designers :</label>
-
-                                <select class="form-select" name="modalgraph" id="modalgraph" required>
-                                    <option value="" disabled selected>Select Employee</option>
-                                    <?php
-                                    $sql = "SELECT * FROM department where dname='Graphics'";
-                                    $result = $connection->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($rowdept = $result->fetch_assoc()) {
-                                            $sqlemp = "SELECT * FROM employee where department_id='" . $rowdept['id']  . "' and hod=''";
-                                            $resultemp = $connection->query($sqlemp);
-                                            if ($resultemp->num_rows > 0) {
-                                                while ($rowemp = $resultemp->fetch_assoc()) {
-                                                    $staffid = $rowemp['id'];
-                                                    echo "<option value='" . $staffid . "'>" . $rowemp['empname'] . "</option>";
-                                                }
-                                            }
-                                        }
-                                    }
-
-
-                                    ?>
-
-                                </select>
-
-
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="modaldeadline">Deadline :</label>
-                                <input type="date" class="form-control" id="modaldeadline" name="modaldeadline" placeholder="">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="savestaffChangesBtn" type="button">Assign Work</button>
-                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+       
 
      
 
-        <div class="modal fade" id="viewmodal">
+        <!-- <div class="modal fade" id="viewmodal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
@@ -279,7 +228,7 @@ function showworklist()
                             </div>
                            
 
-                        <!-- </div> -->
+                  
                     </div>
                     <div class="modal-footer">
                        
@@ -288,7 +237,8 @@ function showworklist()
                 </div>
             </div>
 
-        </div></div>
+        </div>
+    </div> -->
         <!-- End Basic modal -->
 
         <!-- Main Footer-->
@@ -348,86 +298,8 @@ function showworklist()
     <!-- Switcher js -->
     <script src="../assets/switcher/js/switcher.js"></script>
     <script src="notification.js"></script>
-    <script>
-        function confirmationDelete(anchor) {
-            var conf = confirm('Are you sure want to delete this record?');
-            if (conf)
-                window.location = anchor.attr("href");
-        }
-    </script>
-    <script>
-        $(document).ready(function() {
-
-            // Triggered when the modal is about to be shown
-            $('#staffmodal').on('show.bs.modal', function(e) {
-                // Extract the data-recordid attribute value from the button
-                var recordId = $(e.relatedTarget).data('recordid');
-
-                // Set the value of the input box in the modal
-                $('#modalrecordid').val(recordId);
-            });
-
-
-            $('#savestaffChangesBtn').on('click', function() {
-                // Get values from the modal inputs
-                var recordId = $('#modalrecordid').val();
-                var selectedEmployeeId = $('#modalgraph').val();
-                var deadline = $('#modaldeadline').val();
-
-                // Create an object with the data to be sent to the server
-                var dataToSend = {
-                    recordId: recordId,
-                    selectedEmployeeId: selectedEmployeeId,
-                    deadline: deadline
-                };
-
-                // Send an AJAX request to the server to save the data
-                $.ajax({
-                    type: 'POST',
-                    url: 'gd-redirectworksave.php', // Replace with the actual path to your PHP script
-                    data: dataToSend,
-                    success: function(response) {
-                        // Handle the success response from the server
-                        console.log('Data saved successfully:', response);
-                        alert("Succesfully Redirected Work.");
-                        // Optionally, you can close the modal after saving
-                        $('#staffmodal').modal('hide');
-
-                        window.location.href = 'gdworklist.php';
-                    },
-                    error: function(error) {
-                        // Handle the error response from the server
-                        console.error('Error saving data:', error);
-                    }
-                });
-            });
-
-            $('.view-details-btn').on('click', function () {
-                var recordId = $(this).data('recordid');
-
-                // Make AJAX request to fetch data based on recordId
-                $.ajax({
-                    type: 'POST',
-                    url: 'gd-viewworkdetails.php', // Replace with the actual path to your PHP script
-                    data: { recordId: recordId },
-                    dataType: 'json',
-                    success: function (response) {
-                        // Populate fields in viewmodal
-                       
-                        $('#postercontent').val(response.content);
-                        $('#posteridea').val(response.posteridea);
-                        $('#pdeadline').val(response.deadline);
-                       
-                        // Add similar lines for other fields
-                    },
-                    error: function (error) {
-                        console.error('Error fetching data:', error);
-                    }
-                });
-            });
-
-        });
-    </script>
+    
+   
 </body>
 
 </html>
