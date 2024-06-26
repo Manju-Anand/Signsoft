@@ -237,16 +237,22 @@ $mainorderid = "";
                                                                 <input type="date" class="form-control" id="enddate" name="enddate" placeholder="enddate" readonly>
 
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-2">
                                                                 <label class="form-label" for="paidpromotion">Paid Promotion Amount :</label>
                                                                 <input type="number" class="form-control" id="paidpromotion" name="paidpromotion" placeholder="Paid Promotion Amount" required>
 
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-2">
+                                                                <label class="form-label" for="paidpromotion">Percentage of work :</label>
+                                                                <input type="number" class="form-control" id="percentage" name="percentage" placeholder="" required>
+
+                                                            </div>
+                                                            <div class="col-md-2">
                                                                 <label class="form-label" for="dept" style="color:transparent">Transparent Label :</label>
                                                                 <button type="button" name="submit" class="btn btn-primary" onclick="addstaffRow()" style="color:white;cursor:pointer;">Assign</button>
 
                                                             </div>
+
                                                             <hr>
 
                                                             <div class="table-responsive">
@@ -264,6 +270,7 @@ $mainorderid = "";
                                                                             <th>End Date</th>
                                                                             <th>Paid Promotion Amount</th>
                                                                             <th>Assign Date</th>
+                                                                            <th> % of work</th>
                                                                             <th>Action</th>
                                                                             <!-- class="hidden-cell" -->
                                                                             <th class="hidden-cell">status</th>
@@ -386,6 +393,11 @@ $mainorderid = "";
                             <div class="col-md-6">
                                 <label class="form-label" for="modalenddate">Assigned Date :</label>
                                 <input type="date" class="form-control" id="modalassigndate" name="modalassigndate" placeholder="Assigndate">
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="paidpromotion">Percentage of work :</label>
+                                <input type="number" class="form-control" id="modalpercentage" name="modalpercentage" placeholder="" required>
 
                             </div>
 

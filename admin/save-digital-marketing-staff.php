@@ -33,6 +33,7 @@ if (isset($data['staffallocationdataToSave'])) {
     $EndDate = $row['EndDate'];
     $promoamt = $row['promoamt'];
     $assigndate = $row['assigndate'];
+    $perofwork = $row['perofwork'];
     $recordstatus = $row['status'];
     date_default_timezone_set("Asia/Calcutta");
     $postdate = date("M d,Y h:i:s a");
@@ -78,11 +79,11 @@ if (isset($data['staffallocationdataToSave'])) {
 
     // Perform the SQL query to insert data into the database
     // 
-    if (isset($row['editid']) && $row['editid'] !== "") {
-      // if ($recordstatus == "Edited") {
+    // if (isset($row['editid']) && $row['editid'] !== "") {
+      if ($recordstatus == "Edited") {
       $sql = "UPDATE staff_dm_allocation SET payment='" . $Payment . "',postings='" . $Postings . "',staffname='" . $staffName . "',staffid='" . $staffid . "',frequency='" . $Frequency . "',
       startdate='" . $StartDate . "',enddate='" . $EndDate . "',promoamt='" . $promoamt . "',modified='" . $postdate . "',orderid='" . $orderid . "',status='" . $recordstatus . "'
-      ,assigndate='" . $assigndate . "' WHERE id='" . $editid . "'";
+      ,assigndate='" . $assigndate . "',workpercentage='" . $perofwork . "' WHERE id='" . $editid . "'";
       if ($connection->query($sql) !== TRUE) {
 
         echo "Error: " . $sql . "<br>" . $connection->error;
@@ -110,13 +111,13 @@ if (isset($data['staffallocationdataToSave'])) {
 
 
 
-      // } elseif ($recordstatus == "New") {
+      } elseif ($recordstatus == "New") {
 
-    } else {
+    // } else {
 
 
-      $sql = "INSERT INTO staff_dm_allocation (orderid,payment,postings,staffname, staffid, frequency, startdate, enddate,promoamt,status,assigndate,created,work_status) VALUES
-      ('$orderid','$Payment','$Postings','$staffName', '$staffid', '$Frequency', '$StartDate', '$EndDate', '$promoamt','$recordstatus','$assigndate','$postdate','Active')";
+      $sql = "INSERT INTO staff_dm_allocation (orderid,payment,postings,staffname, staffid, frequency, startdate, enddate,promoamt,status,assigndate,created,work_status,workpercentage) VALUES
+      ('$orderid','$Payment','$Postings','$staffName', '$staffid', '$Frequency', '$StartDate', '$EndDate', '$promoamt','$recordstatus','$assigndate','$postdate','Active','$perofwork')";
       if ($connection->query($sql) !== TRUE) {
 
         echo "Error: " . $sql . "<br>" . $connection->error;

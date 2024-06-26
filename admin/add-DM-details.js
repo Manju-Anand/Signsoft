@@ -21,7 +21,9 @@ $('body').on('click', '.edit-staff-btn', function () {
     var enddate = row.find('td:eq(7)').text(); // Replace 4 with the actual column index
     var promoamt = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
     var assigndate = row.find('td:eq(9)').text(); // Replace 4 with the actual column index
-    var editid= row.find('td:eq(12)').text(); // Replace 4 with the actual column index
+    var perofwork = row.find('td:eq(10)').text();
+    // var recordstatus = row.find('td:eq(12)').text();
+    var editid= row.find('td:eq(13)').text(); // Replace 4 with the actual column index
     var staffrowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
 
 
@@ -55,6 +57,7 @@ $('body').on('click', '.edit-staff-btn', function () {
     $('#modalenddate').val(enddate);
     $('#modalpaidpromotion').val(promoamt);
     $('#modalassigndate').val(assigndate);
+    $('#modalpercentage').val(perofwork);
     // Set the value of the new textbox
     $('#modalstaffrowid').val(staffrowId);
     $('#modaleditid').val(editid);
@@ -229,23 +232,26 @@ var yyyy = today.getFullYear();
 today =  yyyy + '-' + mm + '-' + dd;
 cell10.innerHTML = today;
 
+var cell11 = newRow.insertCell(10);
+var textBox3 = document.getElementById("percentage");
+cell11.innerHTML = textBox3.value;
 
 // New cell with Edit and Delete buttons  ===========href='edit-supplier.php?edit=" + ++rowCounter + "'---onclick='javascript:confirmationDelete($(this));return false;
-var cell11 = newRow.insertCell(10);
-cell11.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
+var cell12 = newRow.insertCell(11);
+cell12.innerHTML = "<a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>" +
     "<span class='fe fe-edit'> </span></a>&nbsp;&nbsp;" +
     "<a class='btn btn-sm btn-danger delete-staff-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'>" +
     "<span class='fe fe-trash-2'> </span></a>";
  // Text Box 3
- var cell12 = newRow.insertCell(11);
- cell12.innerHTML = "New";
- cell12.classList.add('hidden-cell');
+
+ var cell13 = newRow.insertCell(12);
+ cell13.innerHTML = "New";
+ cell13.classList.add('hidden-cell');
 
  // Text Box 3
-var cell13 = newRow.insertCell(12);
-
-cell13.innerHTML = "";  // Set the content of the cell to be empty
-cell13.classList.add('hidden-cell');
+var cell14 = newRow.insertCell(13);
+cell14.innerHTML = "";  // Set the content of the cell to be empty
+cell14.classList.add('hidden-cell');
 
 
 //  cell11.classList.add('hidden-cell');
@@ -273,6 +279,7 @@ $('#savestaffChangesBtn').on('click', function () {
     var modalenddate = $('#modalenddate').val();
     var modalpaidpromotion = $('#modalpaidpromotion').val();
     var modalassigndate = $('#modalassigndate').val();
+    var modalpercentage = $('#modalpercentage').val();
     var pstatus = "Edited";
     $('#paystatus').val('Payment edited');
     // Get the selected row in the table (assuming it has an id, adjust as needed)
@@ -289,7 +296,8 @@ $('#savestaffChangesBtn').on('click', function () {
     selectedRow.find('td:eq(7)').text(modalenddate); // Update with the correct column indices
     selectedRow.find('td:eq(8)').text(modalpaidpromotion); // Update with the correct column indices
     selectedRow.find('td:eq(9)').text(modalassigndate); // Update with the correct column indices
-    selectedRow.find('td:eq(11)').text(pstatus); // Update with the correct column indices
+    selectedRow.find('td:eq(10)').text(modalpercentage); 
+    selectedRow.find('td:eq(12)').text(pstatus); // Update with the correct column indices
     // Hide the modal
     $('#staffmodal').modal('hide');
 });
@@ -331,8 +339,9 @@ function saveDataToDatabase() {
              EndDate: cells[7].innerHTML, // Adjust the index based on your table structure
              promoamt: cells[8].innerHTML, // Adjust the index based on your table structure
              assigndate: cells[9].innerHTML, // Adjust the index based on your table structure
-             status: cells[11].innerHTML, // Adjust the index based on your table structure
-             editid: cells[12].innerHTML,
+             perofwork: cells[10].innerHTML,
+             status: cells[12].innerHTML, // Adjust the index based on your table structure
+             editid: cells[13].innerHTML,
  
         };
  

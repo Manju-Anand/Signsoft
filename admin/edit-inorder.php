@@ -229,7 +229,7 @@ if ($resultorders->num_rows > 0) {
                                                     
                                                             <label class="col-md-3 form-label" for="contacteddate">Sub-Categories :</label>
                                                             <div class="col-md-9">
-                                                                <select class="form-control select2" multiple="multiple" id="mulselectsub[]" name="mulselectsub[]">
+                                                                <select class="form-control select2" multiple="multiple" id="mulselectsub" name="mulselectsub[]">
                                                                
 
                                                                 </select>
@@ -272,14 +272,16 @@ if ($resultorders->num_rows > 0) {
                                                 </div>
                                                 <!--End Row-->
                                             </div>
+                                            
                                             <?php
                                             if (isset($_POST['submit'])) {
+                                              
                                                 $cusname = $_POST["cusname"];
                                                 $projectname = $_POST["brandname"];
                                                 $orgorderid= $_POST["orgorderid"];
                                               
                                                 $projectdescription = $_POST["addr"];
-                                                
+                                             
 
                                                 $qutamt = $_POST["qutamt"];
                                                
@@ -300,22 +302,19 @@ if ($resultorders->num_rows > 0) {
                                                 if ($connection->query($sql) === TRUE) {
 
                                                     //  ======================= userid creation =========================  
-                                                    $sql = "DELETE FROM order_category WHERE order_id='" . $orgorderid . "'";
-
-                                                    if ($connection->query($sql) === TRUE) {
-                                                      echo "Record deleted successfully";
-                                                    } else {
-                                                      echo "Error deleting record: " . $connection->error;
-                                                    }
-                                                    $sql = "DELETE FROM order_subcategory WHERE order_id='" . $orgorderid . "'";
-
-                                                    if ($connection->query($sql) === TRUE) {
-                                                    echo "Record deleted successfully";
-                                                    } else {
-                                                    echo "Error deleting record: " . $connection->error;
-                                                    }
+                                                  
+                                                   
 
                                                     if (isset($_POST['mulselect'])) {
+
+                                                        $sql = "DELETE FROM order_category WHERE order_id='" . $orgorderid . "'";
+
+                                                        if ($connection->query($sql) === TRUE) {
+                                                          echo "Record deleted successfully";
+                                                        } else {
+                                                          echo "Error deleting record: " . $connection->error;
+                                                        }
+
                                                         $selectedOptions = $_POST['mulselect'];
                                                     
                                                         // Loop through selected options and insert into the database
@@ -333,6 +332,16 @@ if ($resultorders->num_rows > 0) {
                                                         }
                                                     }
                                                     if (isset($_POST['mulselectsub'])) {
+
+                                                        $sql = "DELETE FROM order_subcategory WHERE order_id='" . $orgorderid . "'";
+
+                                                        if ($connection->query($sql) === TRUE) {
+                                                        echo "Record deleted successfully";
+                                                        } else {
+                                                        echo "Error deleting record: " . $connection->error;
+                                                        }
+                                                        
+                                                        echo "sub categories";
                                                         $selectedOptions = $_POST['mulselectsub'];
                                                     echo $selectedOptions ;
 
@@ -450,7 +459,7 @@ if ($resultorders->num_rows > 0) {
 
                     // $("#mulselect").on("change", function() {
                         $('#mulselect').delegate('', 'click change', function() {
-                            alert("adada");
+                            // alert("adada");
                             var fname = $(this).find(":selected").attr("data-questions");
                             $.ajax({
                                 type: "POST",

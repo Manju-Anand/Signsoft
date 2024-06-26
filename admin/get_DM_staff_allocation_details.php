@@ -34,6 +34,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td><?php echo $row['enddate'];?></td>
     <td><?php echo $row['promoamt'];?></td>
     <td><?php echo $row['assigndate'];?></td>
+    <td><?php echo $row['workpercentage'];?></td>
     <td><a class='btn btn-sm btn-primary  edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>
         <span class='fe fe-edit'> </span></a>&nbsp;&nbsp;
         <a class='btn btn-sm btn-danger delete-staff-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'> 

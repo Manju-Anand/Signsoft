@@ -6,7 +6,7 @@ $categid = $_POST["fname"];
 ?>
 <label class="col-md-2 form-label" for="catesubcategorygory">Sub Category Name :</label>
 <div class="col-md-10">
-    <select class="form-control select2" multiple="multiple" name="subcategory[]" id="subcategory[]" required>
+    <select class="form-control select2" multiple="multiple" name="mulselectsub[]" id="mulselectsub[]" required>
 
         <?php
         
