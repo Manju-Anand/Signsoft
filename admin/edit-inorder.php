@@ -85,7 +85,7 @@ if ($resultorders->num_rows > 0) {
             <!-- Switcher css -->
             <link href="../assets/switcher/css/switcher.css" rel="stylesheet">
             <link href="../assets/switcher/demo.css" rel="stylesheet">
-          
+
         </head>
 
         <body class="app sidebar-mini">
@@ -144,9 +144,9 @@ if ($resultorders->num_rows > 0) {
                                         <div class="card-header">
                                             <div class="card-title">Edit Order Details</div>
                                         </div>
-                                        
+
                                         <form id="adddesig" method="post" action="" enctype="multipart/form-data">
-                                        <input type="hidden" id="orgorderid" name="orgorderid" value="<?php echo $_GET["edit"]; ?>">
+                                            <input type="hidden" id="orgorderid" name="orgorderid" value="<?php echo $_GET["edit"]; ?>">
                                             <div class="row">
                                                 <div class="col-md-6">
 
@@ -179,10 +179,10 @@ if ($resultorders->num_rows > 0) {
                                                                 <input type="text" class="form-control" id="qutamt" name="qutamt" value="<?php echo $roworders['quotedAmt'] ?>" placeholder="Quoted Amount" required>
                                                             </div>
                                                         </div>
-                                                       
-                                                        
-                                                    
-  
+
+
+
+
                                                     </div>
 
                                                 </div>
@@ -195,7 +195,7 @@ if ($resultorders->num_rows > 0) {
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="contacteddate">Categories :</label>
                                                             <div class="col-md-9">
-                                                                
+
                                                                 <select class="form-control select2" multiple="multiple" id="mulselect" name="mulselect[]">
                                                                     <?php
                                                                     $presentchk = "false";
@@ -225,21 +225,21 @@ if ($resultorders->num_rows > 0) {
                                                         </div>
 
 
-                                                        <div class="row mb-4"  id="ajaxresult">
-                                                    
+                                                        <div class="row mb-4" id="ajaxresult">
+
                                                             <label class="col-md-3 form-label" for="contacteddate">Sub-Categories :</label>
                                                             <div class="col-md-9">
                                                                 <select class="form-control select2" multiple="multiple" id="mulselectsub" name="mulselectsub[]">
-                                                               
+
 
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    
+
                                                         <!-- ============================================================= -->
 
-                                                        
-                                                       
+
+
                                                         <div class="row mb-4">
                                                             <label class="col-md-3 form-label" for="status">Order Status :</label>
                                                             <div class="col-md-9">
@@ -254,7 +254,7 @@ if ($resultorders->num_rows > 0) {
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                       
+
 
 
                                                     </div>
@@ -272,56 +272,56 @@ if ($resultorders->num_rows > 0) {
                                                 </div>
                                                 <!--End Row-->
                                             </div>
-                                            
+
                                             <?php
                                             if (isset($_POST['submit'])) {
-                                              
+
                                                 $cusname = $_POST["cusname"];
                                                 $projectname = $_POST["brandname"];
-                                                $orgorderid= $_POST["orgorderid"];
-                                              
+                                                $orgorderid = $_POST["orgorderid"];
+
                                                 $projectdescription = $_POST["addr"];
-                                             
+
 
                                                 $qutamt = $_POST["qutamt"];
-                                               
+
                                                 $orderstatus = $_POST["status"];
-                                                
+
 
                                                 date_default_timezone_set("Asia/Calcutta");
                                                 $postdate = date("M d,Y h:i:s a");
-                                                $sql = "UPDATE order_customers SET custName='". mysqli_real_escape_string($connection, $cusname) . "',
-                                                projectname	='". mysqli_real_escape_string($connection, $projectname) . "', projectdescription='". mysqli_real_escape_string($connection, $projectdescription) . "',
-                                                quotedAmt='". mysqli_real_escape_string($connection, $qutamt) . "',
-                                                modified='". mysqli_real_escape_string($connection, $postdate) . "',order_status='". mysqli_real_escape_string($connection, $orderstatus) . "',
-                                                ordertype='Internal'  WHERE id='". $orgorderid ."'";
+                                                $sql = "UPDATE order_customers SET custName='" . mysqli_real_escape_string($connection, $cusname) . "',
+                                                projectname	='" . mysqli_real_escape_string($connection, $projectname) . "', projectdescription='" . mysqli_real_escape_string($connection, $projectdescription) . "',
+                                                quotedAmt='" . mysqli_real_escape_string($connection, $qutamt) . "',
+                                                modified='" . mysqli_real_escape_string($connection, $postdate) . "',order_status='" . mysqli_real_escape_string($connection, $orderstatus) . "',
+                                                ordertype='Internal'  WHERE id='" . $orgorderid . "'";
 
 
 
-                                  
+
                                                 if ($connection->query($sql) === TRUE) {
 
                                                     //  ======================= userid creation =========================  
-                                                  
-                                                   
+
+
 
                                                     if (isset($_POST['mulselect'])) {
 
                                                         $sql = "DELETE FROM order_category WHERE order_id='" . $orgorderid . "'";
 
                                                         if ($connection->query($sql) === TRUE) {
-                                                          echo "Record deleted successfully";
+                                                            echo "Record deleted successfully";
                                                         } else {
-                                                          echo "Error deleting record: " . $connection->error;
+                                                            echo "Error deleting record: " . $connection->error;
                                                         }
 
                                                         $selectedOptions = $_POST['mulselect'];
-                                                    
+
                                                         // Loop through selected options and insert into the database
                                                         foreach ($selectedOptions as $categoryId) {
                                                             $querycategory = "INSERT INTO order_category (order_id, category_id)
                                                             VALUES('$orgorderid', '$categoryId')";
-                                                    
+
                                                             if ($connection->query($querycategory) === TRUE) {
                                                                 echo "new inserted";
                                                                 // Successfully inserted into the database
@@ -336,20 +336,20 @@ if ($resultorders->num_rows > 0) {
                                                         $sql = "DELETE FROM order_subcategory WHERE order_id='" . $orgorderid . "'";
 
                                                         if ($connection->query($sql) === TRUE) {
-                                                        echo "Record deleted successfully";
+                                                            echo "Record deleted successfully";
                                                         } else {
-                                                        echo "Error deleting record: " . $connection->error;
+                                                            echo "Error deleting record: " . $connection->error;
                                                         }
-                                                        
+
                                                         echo "sub categories";
                                                         $selectedOptions = $_POST['mulselectsub'];
-                                                    echo $selectedOptions ;
+                                                        echo $selectedOptions;
 
                                                         // Loop through selected options and insert into the database
                                                         foreach ($selectedOptions as $subcategoryId) {
                                                             $querysubcategory = "INSERT INTO order_subcategory (order_id,  subcategory_id)
                                                             VALUES ('$orgorderid',  '$subcategoryId')";
-                                                    
+
                                                             if ($connection->query($querysubcategory) === TRUE) {
                                                                 echo "new sub inserted";
                                                                 // Successfully inserted into the database
@@ -446,36 +446,6 @@ if ($resultorders->num_rows > 0) {
             <!-- <script src="../assets/js/password-addon.js"></script> -->
 
             <script>
-                $(document).ready(function(e) {
-                    $('#cancel').delegate('', 'click change', function() {
-                        window.location = "inorderlist.php";
-                        return false;
-                    });
-
-                    // $('#mulselect').delegate('', 'click change', function() {
-                    //     var ordersValueid = $('#mulselect').val();
-                    //     console.log(ordersValueid);
-                    // });
-
-                    // $("#mulselect").on("change", function() {
-                        $('#mulselect').delegate('', 'click change', function() {
-                            // alert("adada");
-                            var fname = $(this).find(":selected").attr("data-questions");
-                            $.ajax({
-                                type: "POST",
-                                url: "ajaxcombosubcategory.php",
-                                data: "fname=" + fname,
-                                success: function(data) {
-                                    $('#ajaxresult').html(data);
-                                }
-                            });
-                        });
-                    });
-
-               
-
-
-
                 function togglePasswordVisibility(inputId) {
                     const passwordField = document.getElementById(inputId);
                     const togglePassword = document.querySelector(`[data-toggle="${inputId}"]`);
@@ -488,6 +458,65 @@ if ($resultorders->num_rows > 0) {
                         togglePassword.textContent = "👁️";
                     }
                 }
+
+                $(document).ready(function() {
+                    // Initialize Select2 for both selects
+                    $('#mulselect').select2();
+                    $('#mulselectsub').select2();
+
+                    // Function to fetch and update subcategories
+                    function updateSubcategories() {
+                        var selectedCategories = $('#mulselect').val();
+
+                        if (selectedCategories.length > 0) {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'fetch_subcategories.php',
+                                data: {
+                                    category_ids: selectedCategories
+                                },
+                                success: function(data) {
+                                    $('#mulselectsub').html(data);
+
+                                    // Reinitialize Select2 for subcategories
+                                    $('#mulselectsub').select2();
+
+                                    // Pre-select subcategories if editing an order
+                                    <?php if (isset($orderid)) { ?>
+                                        preselectSubcategories();
+                                    <?php } ?>
+                                }
+                            });
+                        } else {
+                            $('#mulselectsub').html('');
+                            $('#mulselectsub').select2();
+                        }
+                    }
+
+                    // Event listener for category change
+                    $('#mulselect').on('change', function() {
+                        updateSubcategories();
+                    });
+
+                    // Function to preselect subcategories when editing
+                    function preselectSubcategories() {
+                        var orderId = '<?php echo $orderid; ?>';
+                        $.ajax({
+                            type: 'POST',
+                            url: 'fetch_selected_subcategories.php',
+                            data: {
+                                order_id: orderId
+                            },
+                            success: function(data) {
+                                var selectedSubcategories = JSON.parse(data);
+                                $('#mulselectsub').val(selectedSubcategories).trigger('change');
+                            }
+                        });
+                    }
+
+                    // Initial call to update subcategories if categories are already selected
+                    updateSubcategories();
+                });
             </script>
         </body>
 

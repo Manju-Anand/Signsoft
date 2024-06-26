@@ -251,7 +251,7 @@ if ($resultorders->num_rows > 0) {
                                                     
                                                             <label class="col-md-3 form-label" for="contacteddate">Sub-Categories :</label>
                                                             <div class="col-md-9">
-                                                                <select class="form-control select2" multiple="multiple" id="mulselectsub[]" name="mulselectsub[]">
+                                                                <select class="form-control select2" multiple="multiple" id="mulselectsub" name="mulselectsub[]">
                                                                
 
                                                                 </select>
@@ -495,33 +495,85 @@ if ($resultorders->num_rows > 0) {
             <!-- <script src="../assets/js/password-addon.js"></script> -->
 
             <script>
-                $(document).ready(function(e) {
-                    $('#cancel').delegate('', 'click change', function() {
-                        window.location = "orderlist.php";
-                        return false;
-                    });
+                // $(document).ready(function(e) {
+                //     $('#cancel').delegate('', 'click change', function() {
+                //         window.location = "orderlist.php";
+                //         return false;
+                //     });
 
-                    // $('#mulselect').delegate('', 'click change', function() {
-                    //     var ordersValueid = $('#mulselect').val();
-                    //     console.log(ordersValueid);
-                    // });
+                  
+                //         $('#mulselect').delegate('', 'click change', function() {
+                //             alert("adada");
+                //             var fname = $(this).find(":selected").attr("data-questions");
+                //             $.ajax({
+                //                 type: "POST",
+                //                 url: "ajaxcombosubcategory.php",
+                //                 data: "fname=" + fname,
+                //                 success: function(data) {
+                //                     $('#ajaxresult').html(data);
+                //                 }
+                //             });
+                //         });
+                //     });
 
-                    // $("#mulselect").on("change", function() {
-                        $('#mulselect').delegate('', 'click change', function() {
-                            alert("adada");
-                            var fname = $(this).find(":selected").attr("data-questions");
+                $(document).ready(function() {
+                    // Initialize Select2 for both selects
+                    $('#mulselect').select2();
+                    $('#mulselectsub').select2();
+
+                    // Function to fetch and update subcategories
+                    function updateSubcategories() {
+                        var selectedCategories = $('#mulselect').val();
+
+                        if (selectedCategories.length > 0) {
                             $.ajax({
-                                type: "POST",
-                                url: "ajaxcombosubcategory.php",
-                                data: "fname=" + fname,
+                                type: 'POST',
+                                url: 'fetch_subcategories.php',
+                                data: {
+                                    category_ids: selectedCategories
+                                },
                                 success: function(data) {
-                                    $('#ajaxresult').html(data);
+                                    $('#mulselectsub').html(data);
+
+                                    // Reinitialize Select2 for subcategories
+                                    $('#mulselectsub').select2();
+
+                                    // Pre-select subcategories if editing an order
+                                    <?php if (isset($orderid)) { ?>
+                                        preselectSubcategories();
+                                    <?php } ?>
                                 }
                             });
-                        });
+                        } else {
+                            $('#mulselectsub').html('');
+                            $('#mulselectsub').select2();
+                        }
+                    }
+
+                    // Event listener for category change
+                    $('#mulselect').on('change', function() {
+                        updateSubcategories();
                     });
 
-               
+                    // Function to preselect subcategories when editing
+                    function preselectSubcategories() {
+                        var orderId = '<?php echo $orderid; ?>';
+                        $.ajax({
+                            type: 'POST',
+                            url: 'fetch_selected_subcategories.php',
+                            data: {
+                                order_id: orderId
+                            },
+                            success: function(data) {
+                                var selectedSubcategories = JSON.parse(data);
+                                $('#mulselectsub').val(selectedSubcategories).trigger('change');
+                            }
+                        });
+                    }
+
+                    // Initial call to update subcategories if categories are already selected
+                    updateSubcategories();
+                });
 
 
 
