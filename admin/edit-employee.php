@@ -281,6 +281,21 @@ if ($resultuser->num_rows > 0) {
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="basicsalary">Basic Salary :</label>
+                                                    <div class="col-md-9">
+                                                        <input type="number" name="basicsalary" id="basicsalary" class="form-control"  value="<?php echo $rowemployee['basic_salary'] ?>" placeholder="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="comp_expense">Company Expense:</label>
+                                                    <div class="col-md-9">
+                                                        <input type="number" name="comp_expense" id="comp_expense" class="form-control"  value="<?php echo $rowemployee['company_expense'] ?>" placeholder="">
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -307,6 +322,9 @@ if ($resultuser->num_rows > 0) {
                                         $emailid = $_POST["emailid"];
                                         $joindate = $_POST["joindate"];
                                         $bloodgroup = $_POST["bloodgroup"];
+
+                                        $basicsalary = $_POST["basicsalary"];
+                                        $comp_expense = $_POST["comp_expense"];
 
                                         $loginname = $_POST["loginemailid"];
                                         $pass1 = $_POST["loginpassword"];
@@ -348,7 +366,8 @@ if ($resultuser->num_rows > 0) {
                                             phoneno='" . mysqli_real_escape_string($connection, $phoneno) . "',emailid='" . mysqli_real_escape_string($connection, $emailid) . "',
                                             joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
                                             emppic='" . mysqli_real_escape_string($connection, $saveFileName) . "',bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
-                                            empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "' WHERE id = {$empid}";
+                                            empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "',
+                                            basic_salary='" . mysqli_real_escape_string($connection, $basicsalary) . "',company_expense='" . mysqli_real_escape_string($connection, $comp_expense) . "' WHERE id = {$empid}";
                                         } else {
                                             $sql = "UPDATE employee set desig_id ='" . mysqli_real_escape_string($connection, $desig) . "',
                                             status='" . mysqli_real_escape_string($connection, $status) . "',modified='" . mysqli_real_escape_string($connection, $postdate) . "'
@@ -356,7 +375,8 @@ if ($resultuser->num_rows > 0) {
                                             phoneno='" . mysqli_real_escape_string($connection, $phoneno) . "',emailid='" . mysqli_real_escape_string($connection, $emailid) . "',
                                             joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
                                             bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
-                                            empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "' WHERE id = {$empid}";
+                                            empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "',
+                                            basic_salary='" . mysqli_real_escape_string($connection, $basicsalary) . "',company_expense='" . mysqli_real_escape_string($connection, $comp_expense) . "' WHERE id = {$empid}";
                                             
                                         }
 

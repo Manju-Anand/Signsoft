@@ -22,6 +22,9 @@ function showworklist()
     $i = 0;
     while ($row = mysqli_fetch_assoc($select_posts)) {
         $id = $row['id'];
+        $redirectid = $row['redirect_recordid'];
+        $redirectStat =  $row['redirect_status'];
+        // echo $id . "," , $redirectid . "<br>";
         $post_orderid = $row['orderid'];
         $queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
         $select_postsorder = mysqli_query($connection, $queryorder);
@@ -29,7 +32,10 @@ function showworklist()
 
             $post_brandName = $roworder['brandName'];
             $post_postings = $row['postings'];
-            $post_content = $row['content'];
+            $post_deadline = $row['deadline'];
+            $date = new DateTime($post_deadline); // create a DateTime object
+            $formatted_date = $date->format('d-m-Y');
+
             $post_idea = $row['posteridea'];
             $post_assigndate = $row['assigndate'];
             $post_redirectstatus = $row['redirect_status'];
@@ -45,6 +51,27 @@ function showworklist()
             while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
                 $post_hod = $rowemp['hod'];
             }
+            $post_wstatus = "Not Yet Updated";
+            if ($redirectStat == "Redirected") {
+
+                $querywstatus1 = "select * from staff_dm_graphics_allocation where redirect_recordid='" .  $id . "'";
+                $select_postswstatus1 = mysqli_query($connection, $querywstatus1);
+                while ($rowwstatus1 = mysqli_fetch_assoc($select_postswstatus1)) {
+                    $checkid = $rowwstatus1['id'];
+                    $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $checkid . "' order by id desc limit 1";
+                    $select_postswstatus = mysqli_query($connection, $querywstatus);
+                    while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
+                        $post_wstatus = $rowwstatus['work_status'];
+                    }
+                }
+            } else {
+
+                $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $id . "' order by id desc limit 1";
+                $select_postswstatus = mysqli_query($connection, $querywstatus);
+                while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
+                    $post_wstatus = $rowwstatus['work_status'];
+                }
+            }
 
             $post_workstatus = $row['work_status'];
 
@@ -53,17 +80,18 @@ function showworklist()
             echo "<td>$i</td>";
             echo "<td>$post_brandName</td>";
             echo "<td>$post_postings</td>";
-            // echo "<td>$post_content</td>";
+
             // echo "<td>$post_idea</td>";
             echo "<td>$post_empname</td>";
             echo "<td>$post_assigndate</td>";
-
-            if ($post_workstatus === 'Active') {
-                echo "<td><span class='badge bg-success' style='font-size:15px'>$post_workstatus</span></td>";
-            }
-            if ($post_workstatus === 'Closed') {
-                echo "<td><span class='badge bg-danger' style='font-size:15px'>$post_workstatus</span></td>";
-            }
+            echo "<td>$formatted_date </td>";
+            echo "<td>$post_wstatus</td>";
+            // if ($post_workstatus === 'Active') {
+            //     echo "<td><span class='badge bg-success' style='font-size:15px'>$post_workstatus</span></td>";
+            // }
+            // if ($post_workstatus === 'Closed') {
+            //     echo "<td><span class='badge bg-danger' style='font-size:15px'>$post_workstatus</span></td>";
+            // }
 
             if ($post_redirectstatus === 'Self') {
                 echo "<td ><span class='badge bg-secondary' style='font-size:15px'>$post_redirectstatus</span></td>";
@@ -83,8 +111,8 @@ function showworklist()
             }
             echo "<a class='btn btn-sm btn-gray-dark  view-details-btn' href='View-gd-work-details.php?workid={$id}'   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
             <span class='fe fe-eye'> </span></a>";
-        //     echo "<a class='btn btn-sm btn-gray-dark  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
-        // <span class='fe fe-eye'> </span></a>";
+            //     echo "<a class='btn btn-sm btn-gray-dark  view-details-btn'   data-bs-target='#viewmodal' data-bs-toggle='modal' data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+            // <span class='fe fe-eye'> </span></a>";
             echo "</td>";
 
 
@@ -187,6 +215,7 @@ function showworklist()
                                                     <th>Postings</th>
                                                     <th>Work Assigned By</th>
                                                     <th>Assigned Date</th>
+                                                    <th>Deadline</th>
                                                     <th>Work Status</th>
                                                     <th>Redirect Status</th>
                                                     <th>Action</th>
@@ -454,7 +483,7 @@ function showworklist()
                         if (response.redirect_deadline !== "") {
                             $('#redstatus').text("Already Redirected");
                         }
-                       
+
                     },
                     error: function(error) {
                         console.error('Error fetching data:', error);

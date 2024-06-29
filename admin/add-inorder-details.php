@@ -78,7 +78,7 @@ $mainorderid = "";
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5" style="color:brown;text-transform:uppercase; text-decoration: underline;">Add & Edit Order Details</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5" style="color:brown;text-transform:uppercase; text-decoration: underline;">Add & Edit Internal Order Details</h2>
                             <!-- <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Payment Details</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Closing Order Form</li>
@@ -193,7 +193,7 @@ $mainorderid = "";
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <label class="form-label" for="assignwork">Work Assigned :</label>
+                                                        <label class="form-label" for="assignwork">Work Assigned[ Module Name ] :</label>
                                                         <input type="text" class="form-control" id="assignwork" name="assignwork" placeholder="Work Assigned" required>
 
                                                     </div>

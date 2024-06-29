@@ -142,7 +142,7 @@ $mainorderid = "";
                                                                 <label class="form-label" for="staff">Work Status :</label>
                                                                 <select class="form-select mb-3" aria-label="Default select example" name="workstatus" id="workstatus" required>
                                                                     <option value="" disabled selected>Select Work Status</option>
-
+                                                                    <option value="Completed">Completed</option>
                                                                     <option value="Work In Progress">Work In Progress</option>
                                                                     <option value="Internal Edits">Internal Edits</option>
                                                                     <option value="External Edits">External Edits</option>

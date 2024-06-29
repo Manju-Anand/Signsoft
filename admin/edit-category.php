@@ -116,7 +116,7 @@ include "includes/connection.php";
                                                             
                                                         while($row1 = mysqli_fetch_assoc($select_edits))
                                                         {
-                                                       
+                                                            $chksub_value=$row1['subchk'];
 
                                                         
                                                     ?> 
@@ -154,6 +154,15 @@ include "includes/connection.php";
                                              </select>
                                             </div>
                                          </div>
+
+                                         <div class="row mb-4">
+                                            <label class="col-md-3 form-label" for="category"> </label>
+                                            <div class="col-md-9">
+                                            <input type="checkbox" name="chksub" id="chksub" <?php echo ($chksub_value == 1) ? 'checked' : ''; ?>>Tick to display of subcategories on a quotation split-up
+                                              
+                                            </div>
+                                        </div>
+
                                         <div class="row mb-4">
                                             <label class="col-md-3 form-label" for="status">Status :</label>
                                             <div class="col-md-9">
@@ -176,7 +185,7 @@ include "includes/connection.php";
                                         <div class="row">
                                             <div class="col-md-3"></div>
                                             <div class="col-md-9">
-                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Edit Department</button>
+                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Edit Category</button>
                                                 <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
                                             </div>
                                         </div>
@@ -191,9 +200,11 @@ include "includes/connection.php";
                                         $postdate = date("M d,Y h:i:s a");
                                         $dept = $_POST["dept"];
 
+                                        $chksub = isset($_POST["chksub"]) ? 1 : 0; // Checkbox value (1 if checked, 0 if not)
+
                                         $sql = "update category set category='". mysqli_real_escape_string($connection,$category)."',
                                         status='". mysqli_real_escape_string($connection,$status)."',modified='" . mysqli_real_escape_string($connection,$postdate)."'
-                                        ,dept_id='" . mysqli_real_escape_string($connection,$dept). "' WHERE id = {$the_cat_id}";
+                                        ,dept_id='" . mysqli_real_escape_string($connection,$dept). "',subchk='" . mysqli_real_escape_string($connection,$chksub). "' WHERE id = {$the_cat_id}";
                                        
                                         if ($connection->query($sql) === TRUE) {
                                             header("Location: category.php");

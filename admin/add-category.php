@@ -132,6 +132,13 @@ include "includes/connection.php";
                                          </div>
 
                                         <div class="row mb-4">
+                                            <label class="col-md-3 form-label" for="category"> :</label>
+                                            <div class="col-md-9">
+                                                <input type="checkbox"  name="chksub" id="chksub" >Tick to display of subcategories on a quotation split-up
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-4">
                                             <label class="col-md-3 form-label" for="status">Status :</label>
                                             <div class="col-md-9">
                                                 <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status">
@@ -166,10 +173,14 @@ include "includes/connection.php";
                                         date_default_timezone_set("Asia/Calcutta");
                                         $postdate = date("M d,Y h:i:s a");
 
-                                        $sql = "INSERT INTO category (category,status,created,modified,dept_id) values('" . mysqli_real_escape_string($connection, $category) . "',
+                                        $chksub = isset($_POST["chksub"]) ? 1 : 0; // Checkbox value (1 if checked, 0 if not)
+
+
+                                        $sql = "INSERT INTO category (category,status,created,modified,dept_id,subchk) values('" . mysqli_real_escape_string($connection, $category) . "',
                                                         '" . mysqli_real_escape_string($connection, $status) . "',
                                                         '" . mysqli_real_escape_string($connection, $postdate) . "'
-                                                        ,'" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $dept) . "')";
+                                                        ,'" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $dept) . "'
+                                                        ,'" . mysqli_real_escape_string($connection, $chksub) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
                                             header("Location: category.php");

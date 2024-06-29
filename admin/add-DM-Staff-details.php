@@ -79,13 +79,10 @@ $mainorderid = "";
                 <div class="main-container container-fluid">
 
                     <!-- Page Header -->
-                    <div class="page-header">
+                    <!-- <div class="page-header">
                         <div>
                             <h2 class="main-content-title tx-24 mg-b-5">Assign Digital Marketing Staff</h2>
-                            <!-- <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Payment Details</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Closing Order Form</li>
-                            </ol> -->
+                         
                         </div>
                         <div class="btn-list">
                             <a class="btn ripple btn-primary" href="javascript:void(0);"><i class="fe fe-external-link"></i> Export</a>
@@ -94,16 +91,9 @@ $mainorderid = "";
                             <a class="btn ripple btn-danger dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <i class="fe fe-settings"></i> Settings <i class="fa fa-caret-down ms-1"></i>
                             </a>
-                            <!-- <div class="dropdown-menu tx-13">
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-eye me-2 float-start"></i>View</a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-plus-circle me-2 float-start"></i>Add</a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-mail me-2 float-start"></i>Email</a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-folder-plus me-2 float-start"></i>Save</a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-trash-2 me-2 float-start"></i>Remove</a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);"><i class="fe fe-settings me-2 float-start"></i>More</a>
-                            </div> -->
+
                         </div>
-                    </div>
+                    </div> -->
                     <!-- End Page Header -->
                     <div class="row">
                         <div class="col-md-12">
@@ -112,9 +102,10 @@ $mainorderid = "";
 
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <h5 class="mt-2">You can Add & Edit Digital Marketing staff Assiging here.</h5>
-                                            <input type="text" id="paystatus" name="paystatus" value="Payment Add" readonly>
-                                            <input type="text" id="datastatus" name="datastatus" value="" readonly>
+                                        <h2 class="main-content-title tx-24 mg-b-5">Assign Digital Marketing Staff</h2>
+                                        <h5 class="mt-2">You can Add & Edit Digital Marketing staff here.</h5>
+                                            <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
+                                            <input type="hidden" id="datastatus" name="datastatus" value="" readonly>
                                         </div>
                                         <div class="col-md-7">
                                             <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
