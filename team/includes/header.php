@@ -72,7 +72,7 @@ ini_set('display_errors', 1);
 
 						</li>
 						<li class="dropdown main-profile-menu">
-							<?php
+						<?php
 							$query = "select * from employee where id = '" . $_SESSION['empid'] . "'";
 							$select_posts = mysqli_query($connection, $query);
 
@@ -80,7 +80,7 @@ ini_set('display_errors', 1);
 
 								if (isset($row['emppic']) && $row['emppic'] !== "") {
 
-							?>
+							?>				
 									<a class="main-img-user" href="javascript:void(0);" data-bs-toggle="dropdown"><img alt="avatar" src="../assets/img/staff/<?php echo $row['emppic']; ?>"></a>
 
 								<?php	} else {
@@ -197,7 +197,7 @@ ini_set('display_errors', 1);
 					<li class="side-item side-item-category">Work Shedules</li>
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="dmworklist.php">
-							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__icon"><i class="fe fe-clipboard side_menu_img"></i></span>
 							<span class="side-menu__label">Works Assigned</span>
 						</a>
 						<a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
@@ -221,7 +221,7 @@ ini_set('display_errors', 1);
 					<li class="side-item side-item-category">Work Shedules</li>
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
-							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__icon"><i class="fe fe-clipboard side_menu_img"></i></span>
 							<span class="side-menu__label">Works Assigned</span>
 						</a>
 						<!-- <a class="side-menu__item" data-bs-toggle="slide" href="calendar.php">
@@ -278,9 +278,29 @@ ini_set('display_errors', 1);
 
 					</li>
 				<?php } ?>
+				<?php
+							$query = "select * from employee where id = '" . $_SESSION['empid'] . "'";
+							$select_posts = mysqli_query($connection, $query);
+
+							while ($row = mysqli_fetch_assoc($select_posts)) {
+
+								if (isset($row['work_approval_section']) && $row['work_approval_section'] !== "0") {
+
+							?>	
+
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="gdworkapproval.php">
+							<span class="side-menu__icon"><i class="fe fe-award side_menu_img"></i></span>
+							<span class="side-menu__label">GD work approval Panel</span>
+						</a>
+					
+
+					</li>
+
+				<?php } }?>
 				<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="processjoblist.php">
-							<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>
+							<span class="side-menu__icon"><i class="fe fe-codepen side_menu_img"></i></span>
 							<span class="side-menu__label">Process Jobs</span>
 						</a>
 					

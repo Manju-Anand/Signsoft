@@ -142,9 +142,9 @@ include "includes/connection.php";
                                                     </div>
                                                  </div>
                                                  <div class="row mb-4">
-                                                 <label class="col-md-3 form-label" for="desig">HOD :</label>
+                                                 <label class="col-md-3 form-label" for="desig">DH :</label>
                                                  <div class="col-md-9">
-                                                 <label class="ckbox"><input type="checkbox" name="hod" id="hod"><span class="tx-13">Select if he/she is HOD</span></label>
+                                                 <label class="ckbox"><input type="checkbox" name="hod" id="hod"><span class="tx-13">Select if he/she is the Department Head</span></label>
                                                  </div>
                                                  </div>
 
@@ -166,6 +166,13 @@ include "includes/connection.php";
                                                     <label class="col-md-3 form-label" for="emailid">Email ID :</label>
                                                     <div class="col-md-9">
                                                         <input type="email" name="emailid" id="emailid"  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" class="form-control" placeholder="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="category">QA</label>
+                                                    <div class="col-md-9">
+                                                        <input type="checkbox"  name="chksub" id="chksub" >Tick to grant access to the GD work approval section.
                                                     </div>
                                                 </div>
 
@@ -286,6 +293,8 @@ include "includes/connection.php";
                                         $basicsalary = $_POST["basicsalary"];
                                         $comp_expense = $_POST["comp_expense"];
 
+                                        $chksub = isset($_POST["chksub"]) ? 1 : 0; // Checkbox value (1 if checked, 0 if not)
+
                                         $loginname = $_POST["loginemailid"];
                                         $pass1 = $_POST["loginpassword"];
                                         if (isset($_POST["hod"])) {
@@ -294,6 +303,7 @@ include "includes/connection.php";
                                             $hodvar ="No";
                                         }
                                         $saveFileName ="";
+
 
                                         if (isset($_FILES['files']['name']) && is_array($_FILES['files']['name']) && !empty(array_filter($_FILES['files']['name']))) {
 
@@ -322,7 +332,7 @@ include "includes/connection.php";
                                         // 
 
                                         $sql = "INSERT INTO employee (empname,department_id,desig_id,status,created,modified,addres,phoneno,emailid,
-                                                joindate,emppic,bloodgrp,hod,basic_salary,company_expense) values('" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $department) . "',
+                                                joindate,emppic,bloodgrp,hod,basic_salary,company_expense,work_approval_section) values('" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $department) . "',
                                                 '" . mysqli_real_escape_string($connection, $desig) . "','" . mysqli_real_escape_string($connection, $status) . "',
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $postdate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $addr) . "',
@@ -330,7 +340,7 @@ include "includes/connection.php";
                                                                 '" . mysqli_real_escape_string($connection, $joindate) . "',
                                                                 '" . mysqli_real_escape_string($connection, $saveFileName) . "','" . mysqli_real_escape_string($connection, $bloodgroup) . "'
                                                                 ,'" . mysqli_real_escape_string($connection, $hodvar) . "','" . mysqli_real_escape_string($connection, $basicsalary) . "'
-                                                                ,'" . mysqli_real_escape_string($connection, $comp_expense) . "')";
+                                                                ,'" . mysqli_real_escape_string($connection, $comp_expense) . "','" . mysqli_real_escape_string($connection, $chksub) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
 

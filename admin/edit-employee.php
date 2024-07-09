@@ -25,6 +25,8 @@ $resultemployee = $connection->query($sqlemployee);
 if ($resultemployee->num_rows > 0) {
   while($rowemployee = $resultemployee->fetch_assoc()) {
 
+    $chksub_value=$rowemployee['work_approval_section'];
+
 $sqldept = "SELECT * FROM department where id='" . $rowemployee['department_id']  . "'";
 $resultdept = $connection->query($sqldept);
 if ($resultdept->num_rows > 0) {
@@ -178,9 +180,9 @@ if ($resultuser->num_rows > 0) {
                                                     </div>
                                                 </div>
                                                 <div class="row mb-4">
-                                                 <label class="col-md-3 form-label" for="desig">HOD :</label>
+                                                 <label class="col-md-3 form-label" for="desig">DH :</label>
                                                  <div class="col-md-9">
-                                                 <label class="ckbox"><input <?php echo ($rowemployee['hod'] == "Yes") ? 'checked' : ''; ?>  type="checkbox" name="hod" id="hod"><span class="tx-13">Select if he/she is HOD</span></label>
+                                                 <label class="ckbox"><input <?php echo ($rowemployee['hod'] == "Yes") ? 'checked' : ''; ?>  type="checkbox" name="hod" id="hod"><span class="tx-13">Select if he/she is the department Head</span></label>
                                                   
                                                                                                 </div>
                                                  </div>
@@ -202,6 +204,13 @@ if ($resultuser->num_rows > 0) {
                                                     <label class="col-md-3 form-label" for="emailid">Email ID :</label>
                                                     <div class="col-md-9">
                                                         <input type="email" name="emailid" id="emailid" class="form-control" value="<?php echo $rowemployee['emailid'] ?>"  placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="category"> QA: </label>
+                                                    <div class="col-md-9">
+                                                    <input type="checkbox" name="chksub" id="chksub" <?php echo ($chksub_value == 1) ? 'checked' : ''; ?>>Tick to grant access to the GD work approval section.
+                                                    
                                                     </div>
                                                 </div>
 
@@ -326,6 +335,8 @@ if ($resultuser->num_rows > 0) {
                                         $basicsalary = $_POST["basicsalary"];
                                         $comp_expense = $_POST["comp_expense"];
 
+                                        $chksub = isset($_POST["chksub"]) ? 1 : 0; // Checkbox value (1 if checked, 0 if not)
+
                                         $loginname = $_POST["loginemailid"];
                                         $pass1 = $_POST["loginpassword"];
                                         if (isset($_POST["hod"])) {
@@ -367,7 +378,8 @@ if ($resultuser->num_rows > 0) {
                                             joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
                                             emppic='" . mysqli_real_escape_string($connection, $saveFileName) . "',bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
                                             empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "',
-                                            basic_salary='" . mysqli_real_escape_string($connection, $basicsalary) . "',company_expense='" . mysqli_real_escape_string($connection, $comp_expense) . "' WHERE id = {$empid}";
+                                            basic_salary='" . mysqli_real_escape_string($connection, $basicsalary) . "',company_expense='" . mysqli_real_escape_string($connection, $comp_expense) . "',
+                                            work_approval_section='" . mysqli_real_escape_string($connection, $chksub) . "' WHERE id = {$empid}";
                                         } else {
                                             $sql = "UPDATE employee set desig_id ='" . mysqli_real_escape_string($connection, $desig) . "',
                                             status='" . mysqli_real_escape_string($connection, $status) . "',modified='" . mysqli_real_escape_string($connection, $postdate) . "'
@@ -376,7 +388,8 @@ if ($resultuser->num_rows > 0) {
                                             joindate='" . mysqli_real_escape_string($connection, $joindate) . "',
                                             bloodgrp='" . mysqli_real_escape_string($connection, $bloodgroup) . "',
                                             empname='" . mysqli_real_escape_string($connection, $empname) . "',hod='" . mysqli_real_escape_string($connection, $hodvar) . "',
-                                            basic_salary='" . mysqli_real_escape_string($connection, $basicsalary) . "',company_expense='" . mysqli_real_escape_string($connection, $comp_expense) . "' WHERE id = {$empid}";
+                                            basic_salary='" . mysqli_real_escape_string($connection, $basicsalary) . "',company_expense='" . mysqli_real_escape_string($connection, $comp_expense) . "',
+                                            work_approval_section='" . mysqli_real_escape_string($connection, $chksub) . "' WHERE id = {$empid}";
                                             
                                         }
 

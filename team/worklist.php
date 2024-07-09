@@ -33,7 +33,13 @@ function showworklist()
 
         $post_workassigned = $row['work_assigned'];
         $post_deadline = $row['deadline'];
+        $date = new DateTime($post_deadline); // create a DateTime object
+        $formatted_date = $date->format('d-m-Y');
+
          $post_assigndate = $row['assignedDate'];
+         $date = new DateTime($post_assigndate); // create a DateTime object
+         $formatted_date1 = $date->format('d-m-Y');
+
          $post_workstatus = $row['work_status'];
         $i = $i + 1;
         echo "<tr>";
@@ -41,8 +47,8 @@ function showworklist()
         echo "<td>$post_custName</td>";
         echo "<td>$post_brandName</td>";
         echo "<td>$post_workassigned</td>";
-        echo "<td>$post_deadline</td>";
-         echo "<td>$post_assigndate</td>";
+        echo "<td>$formatted_date</td>";
+         echo "<td>$formatted_date1</td>";
          if ($post_workstatus ==='Active'){
          echo "<td><span class='badge bg-success' style='font-size:15px'>$post_workstatus</span></td>";}
          if ($post_workstatus ==='Closed'){
