@@ -1,16 +1,9 @@
 <?php
-ob_start();
 session_start();
 
 if (!isset($_SESSION['salesname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
-}
-
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['salesname']);
-    header("location: signin.php");
 }
 
 include "includes/connection.php";

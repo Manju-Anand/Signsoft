@@ -664,7 +664,15 @@ ini_set('display_errors', 1);
 
 								</ul>
 							</li>
-							
+
+							<li class="side-item side-item-category">Work Approval Section</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="gdworkapproval.php">
+									<span class="side-menu__icon"><i class="fe fe-move side_menu_img"></i></span>
+									<span class="side-menu__label">GD Work Approval</span>
+								</a>
+							</li>
+						
 
 							
 							

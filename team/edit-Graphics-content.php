@@ -1,5 +1,4 @@
 <?php
-ob_start();
 session_start();
 
 if (!isset($_SESSION['empname'])) {
@@ -8,13 +7,22 @@ if (!isset($_SESSION['empname'])) {
 }
 
 if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['empname']);
-    header("location: signin.php");
+	unset($_SESSION['empname']);
+		session_destroy();
+	header("location: signin.php");
 }
-
 include "includes/connection.php";
+// Enable error logging
+ini_set('log_errors', 1);
 
+// Specify the file where errors should be logged
+ini_set('error_log', 'php/signsoft/team/errors/local_error.log');
+
+// Optionally disable the display of errors
+ini_set('display_errors',1);
+
+// Set error reporting level
+error_reporting(E_ALL);
 $mainorderid = "";
 
 

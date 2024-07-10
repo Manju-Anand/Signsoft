@@ -1,5 +1,4 @@
 <?php 
-ob_start();
 session_start();
 include "includes/connection.php";
 $errors = array();

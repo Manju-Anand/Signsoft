@@ -1,8 +1,67 @@
 <?php 
-ob_start();
 session_start();
 include "includes/connection.php";
 $errors = array(); // Initialize errors array
+
+// if (isset($_POST['submit'])) {
+//     $email = mysqli_real_escape_string($connection, $_POST['email']);
+//     $password = mysqli_real_escape_string($connection, $_POST['password']);
+//     $deptid = mysqli_real_escape_string($connection, $_POST['dept']);
+//     $desigid = mysqli_real_escape_string($connection, $_POST['desig']);
+
+//     if (empty($email)) {
+//         array_push($errors, "Email is required");
+//     }
+
+//     if (empty($password)) {
+//         array_push($errors, "Password is required");
+//     }
+
+//     if (count($errors) === 0) {
+//         $sqldept = "SELECT * FROM department WHERE id='" . $deptid . "'";
+//         $resultdept = $connection->query($sqldept);
+
+//         if ($resultdept->num_rows > 0) {
+//             while ($rowuserdept = $resultdept->fetch_assoc()) {
+//                 $modulename = $rowuserdept['dname'];
+//                 $deptid = $rowuserdept['id'];
+//                 $_SESSION['deptid'] = $deptid;
+//                 $_SESSION['modulename'] = $modulename;
+
+//                 $sql = "SELECT * FROM employee_user WHERE email='$email' and department='$deptid' and designation='$desigid'";
+//                 $result = mysqli_query($connection, $sql);
+
+//                 if ($result) {
+//                     if (mysqli_num_rows($result) === 1) {
+//                         $rowuser = mysqli_fetch_assoc($result);
+//                         $login_successful = false;
+
+//                         if (password_verify($password, $rowuser['password'])) {
+//                             $_SESSION['empname'] = $rowuser['username'];
+//                             $_SESSION['empemail'] = $email;
+//                             $_SESSION['empid'] = $rowuser['empid'];
+//                             $login_successful = true;
+//                         } else {
+//                             array_push($errors, "Wrong username/password combination");
+//                         }
+
+//                         if ($login_successful) {
+//                             header('Location: index.php');
+//                             exit(); 
+//                         } else {
+//                             array_push($errors, "Wrong username/password/department/designation combination");
+//                         }
+//                     } else {
+//                         array_push($errors, "Wrong username/password/department/designation combination");
+//                     }
+//                     mysqli_free_result($result);
+//                 } else {
+//                     array_push($errors, "Query error: " . mysqli_error($connection));
+//                 }
+//             }
+//         }
+//     }
+// }
 
 if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($connection, $_POST['email']);
@@ -10,12 +69,22 @@ if (isset($_POST['submit'])) {
     $deptid = mysqli_real_escape_string($connection, $_POST['dept']);
     $desigid = mysqli_real_escape_string($connection, $_POST['desig']);
 
+    $errors = array();
+
     if (empty($email)) {
         array_push($errors, "Email is required");
     }
 
     if (empty($password)) {
         array_push($errors, "Password is required");
+    }
+
+    if (empty($deptid)) {
+        array_push($errors, "Department is required");
+    }
+
+    if (empty($desigid)) {
+        array_push($errors, "Designation is required");
     }
 
     if (count($errors) === 0) {
@@ -29,39 +98,37 @@ if (isset($_POST['submit'])) {
                 $_SESSION['deptid'] = $deptid;
                 $_SESSION['modulename'] = $modulename;
 
-                $sql = "SELECT * FROM employee_user WHERE email='$email' and department='$deptid' and designation='$desigid'";
+                $sql = "SELECT * FROM employee_user WHERE email='$email' AND department='$deptid' AND designation='$desigid'";
                 $result = mysqli_query($connection, $sql);
 
                 if ($result) {
                     if (mysqli_num_rows($result) === 1) {
                         $rowuser = mysqli_fetch_assoc($result);
-                        $login_successful = false;
-
-                        // Verify the password using password_verify
                         if (password_verify($password, $rowuser['password'])) {
                             $_SESSION['empname'] = $rowuser['username'];
                             $_SESSION['empemail'] = $email;
                             $_SESSION['empid'] = $rowuser['empid'];
-                            $login_successful = true;
-                        } else {
-                            array_push($errors, "Wrong username/password combination");
-                        }
-
-                        if ($login_successful) {
                             header('Location: index.php');
                             exit(); // Ensure that the script stops execution after redirect
                         } else {
-                            array_push($errors, "Wrong username/password/department/designation combination");
+                            array_push($errors, "Incorrect password");
                         }
                     } else {
-                        array_push($errors, "Wrong username/password/department/designation combination");
+                        array_push($errors, "No user found with the provided email, department, and designation");
                     }
                     mysqli_free_result($result);
                 } else {
                     array_push($errors, "Query error: " . mysqli_error($connection));
                 }
             }
+        } else {
+            array_push($errors, "Invalid department ID");
         }
+    }
+
+    if (count($errors) > 0) {
+        // Display all errors in a single alert
+        // echo "<script>alert('".implode("\\n", $errors)."');</script>";
     }
 }
 ?>

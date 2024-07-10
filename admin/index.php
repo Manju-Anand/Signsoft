@@ -1,5 +1,4 @@
 <?php
-ob_start();
 session_start();
 
 if (!isset($_SESSION['adminname'])) {
@@ -8,8 +7,9 @@ if (!isset($_SESSION['adminname'])) {
 }
 
 if (isset($_GET['logout'])) {
-	session_destroy();
+
 	unset($_SESSION['adminname']);
+	session_destroy();
 	header("location: signin.php");
 }
 

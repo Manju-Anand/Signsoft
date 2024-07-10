@@ -1,5 +1,4 @@
 <?php
-ob_start();
 session_start();
 
 if (!isset($_SESSION['adminname'])) {
@@ -7,11 +6,7 @@ if (!isset($_SESSION['adminname'])) {
     header('location: signin.php');
 }
 
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['adminname']);
-    header("location: signin.php");
-}
+
 
 include "includes/connection.php";
 
