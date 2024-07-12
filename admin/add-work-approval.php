@@ -1,27 +1,17 @@
 <?php
 session_start();
 ob_start();
-if (!isset($_SESSION['empname'])) {
+if (!isset($_SESSION['adminname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
 }
 
-if (isset($_GET['logout'])) {
-	unset($_SESSION['empname']);
-		session_destroy();
-	header("location: signin.php");
-}
 
 include "includes/connection.php";
+$adminname = isset($_SESSION['adminname']) ? $_SESSION['adminname'] : '';
 
 $mainorderid = "";
 $workid = $_GET["workid"];
-$empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
-
-
-
-
-
 
 
 ?>
@@ -96,8 +86,8 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
 
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <h5 class="mt-2">GD Work Approval section.</h5>
-                                            <input type="hidden" id="empid" name="empid" value="<?php echo $_SESSION['empid']; ?>" readonly>
+                                            <h5 class="mt-2">Work Approval section.</h5>
+                                            
                                            
                                         </div>
           
@@ -109,7 +99,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                         <div class="panel-body ">
                                             <form method="post">
 
-
+                                            <input type="hidden" id="empid" name="empid" value="Admin" readonly>
                                                 <div class="row mb-4">
 
                                                     <div class="col-md-7" style="margin: bottom 10px; border: 1px double  rgb(210, 180, 140);padding:15px;
@@ -154,7 +144,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                         <button type="submit" name="submit" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
                                                        
                                                         <button type="submit" name="delsubmit" class="btn btn-primary " onclick="return confirmDelete()" style="color:white;cursor:pointer;">Delete Details</button>
-                                                        <a href="gdworkapproval.php" class="btn btn-default float-end" id="cancel">Discard</a>
+                                                        <a href="workapproval.php" class="btn btn-default float-end" id="cancel">Discard</a>
                                                     </div>
                                                     <div class="col-md-12" style="margin: bottom 10px; border: 1px double  rgb(210, 180, 140);padding:15px;
                                                             border-top-style: dotted;  border-right-style: solid;  border-bottom-style: dotted;
@@ -169,6 +159,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                                         <th>#</th>
                                                                         <th>Date</th>
                                                                         <th>Time Taken</th>
+                                                                        <th>Work Description</th>
                                                                         <th>Work Status</th>
                                                                         <th class="hidden-cell">status</th>
                                                                         <th class="hidden-cell">editid</th>
@@ -188,7 +179,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                     if (isset($editid) && $editid !== null) {
                                                         $sql = "DELETE FROM gd_work_approval WHERE id='" . $editid  . "'";
                                                         if ($connection->query($sql) === TRUE) {
-                                                            header("Location: gdworkapproval.php");
+                                                            header("Location: workapproval.php");
                                                         } else {
                                                             echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                                         }
@@ -202,6 +193,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                     $percompletion = $_POST["percompletion"];
                                                     $deadline_status = $_POST["deadlinestatus"];
                                                     $workid = $_POST["newallotid"];
+                                                    $empid = $_POST["empid"];
                                                     date_default_timezone_set("Asia/Calcutta");
                                                     $postdate = date("M d,Y h:i:s a");
 
@@ -216,20 +208,17 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                         '" . mysqli_real_escape_string($connection, $percompletion) . "',
                                                         '" . mysqli_real_escape_string($connection, $postdate) . "'
                                                         ,'" . mysqli_real_escape_string($connection, $postdate) . "',
-                                                        '" . mysqli_real_escape_string($connection, $deadline_status) . "',
-                                                        '" . mysqli_real_escape_string($connection, $empid) . "',
-                                                        'Graphics')";
+                                                        '" . mysqli_real_escape_string($connection, $deadline_status) . "','" . mysqli_real_escape_string($connection, $empid) . "','Other-Works')";
                                                     } elseif ($editstatus == "Edit") {
 
                                                         $sql = "UPDATE gd_work_approval SET workid='" . mysqli_real_escape_string($connection, $workid) . "',total_hours_worked='" . mysqli_real_escape_string($connection, $noofhours) . "',
                                                         no_internal_edits='" . mysqli_real_escape_string($connection, $internaledits) . "',no_external_edits='" . mysqli_real_escape_string($connection, $extrenaledits) . "',
                                                         percentage_completion='" . mysqli_real_escape_string($connection, $percompletion) . "',modified='" . mysqli_real_escape_string($connection, $postdate) . "',
-                                                        deadline_status='" . mysqli_real_escape_string($connection, $deadline_status) . "',empid='" . mysqli_real_escape_string($connection, $empid) . "',
-                                                        worktype='Graphics' WHERE id='" . $editid . "'";
+                                                        deadline_status='" . mysqli_real_escape_string($connection, $deadline_status) . "',worktype='Other-Works' WHERE id='" . $editid . "'";
                                                          }
 
                                                     if ($connection->query($sql) === TRUE) {
-                                                        header("Location: gdworkapproval.php");
+                                                        header("Location: workapproval.php");
                                                     } else {
                                                         echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                                     }
@@ -366,7 +355,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
 
             $.ajax({
                 type: 'POST',
-                url: 'viewgdworkdetails_approval.php',
+                url: 'viewworkdetails_approval.php',
                 data: {
                     selectedOrderId: orderIdFromURL
                 },
@@ -379,7 +368,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
             $.ajax({
 
                 type: 'POST',
-                url: 'get_gd_staff_work_approval.php',
+                url: 'get_staff_work_approval.php',
                 data: {
                     selectedOrderId: orderIdFromURL
                 },
@@ -393,7 +382,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
             });
             // ===========================================================
             $.ajax({
-            url: 'fetch_gd_data.php',
+            url: 'fetch_work_data.php',
             type: 'GET',
             data: { workid: orderIdFromURL },
             success: function(response) {

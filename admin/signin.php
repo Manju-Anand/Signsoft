@@ -137,6 +137,7 @@ $errors = array();
 													 if (password_verify($password, $rowuser['password'])) {
 										  
 														 $_SESSION['adminname'] = $rowuser['username'];
+														
 														 $_SESSION['adminemail'] = $email;
 														 $_SESSION['adminempid'] = $rowuser['empid'];
 														 $_SESSION['adminid'] = $rowuser['id'];

@@ -1,16 +1,13 @@
 <?php
 session_start();
+ob_start();
 
 if (!isset($_SESSION['empname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
 }
 
-if (isset($_GET['logout'])) {
-	unset($_SESSION['empname']);
-		session_destroy();
-	header("location: signin.php");
-}
+
 include "includes/connection.php";
 // $orderid = $_GET["add"];
 $mainorderid = "";
@@ -347,3 +344,4 @@ $mainorderid = "";
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

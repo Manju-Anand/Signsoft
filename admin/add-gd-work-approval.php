@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ob_start();
 if (!isset($_SESSION['adminname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
@@ -86,7 +86,7 @@ $workid = $_GET["workid"];
                                     <div class="row">
                                         <div class="col-md-5">
                                             <h5 class="mt-2">GD Work Approval section.</h5>
-                                            <input type="hidden" id="empid" name="empid" value="<?php echo $adminname; ?>" readonly>
+                                           
                                            
                                         </div>
           
@@ -98,7 +98,7 @@ $workid = $_GET["workid"];
                                         <div class="panel-body ">
                                             <form method="post">
 
-
+                                            <input type="hidden" id="empid" name="empid" value="<?php echo $adminname; ?>" readonly>
                                                 <div class="row mb-4">
 
                                                     <div class="col-md-7" style="margin: bottom 10px; border: 1px double  rgb(210, 180, 140);padding:15px;
@@ -419,3 +419,4 @@ $workid = $_GET["workid"];
 </body>
 
 </html>
+<?php ob_end_flush();?>

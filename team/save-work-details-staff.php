@@ -14,6 +14,7 @@ if (isset($data['staffallocationdataToSave'])) {
     $workdate = $row['workdate'];
     // echo "2";
     $worktime = $row['worktime'];
+    $workdesp = $row['workdesp'];
     $workstatus = $row['workstatus'];
     $allotid = $row['allotid'];
     $orderid = $row['orderid'];
@@ -29,7 +30,7 @@ if (isset($data['staffallocationdataToSave'])) {
       if (isset($row['editid']) && $row['editid'] !== "") {
 
       $sql = "UPDATE staff_allocation_details SET orderid='" . $orderid . "',empid='" . $empid . "',staff_allocation_id='" . $allotid . "',timetaken='" . $worktime . "',
-      work_status='" . $workstatus . "',workdate='" . $workdate . "',record_status='" . $recordstatus . "',modified='" . $postdate . "' WHERE id='" . $editid . "'";
+      work_status='" . $workstatus . "',workdate='" . $workdate . "',record_status='" . $recordstatus . "',modified='" . $postdate . "',workdesp='" . $workdesp . "' WHERE id='" . $editid . "'";
       if ($connection->query($sql) !== TRUE) {
 
         echo "Error: " . $sql . "<br>" . $connection->error;
@@ -41,8 +42,8 @@ if (isset($data['staffallocationdataToSave'])) {
       
     // } elseif ($recordstatus == "New") {
 
-      $sql = "INSERT INTO staff_allocation_details (orderid,empid,staff_allocation_id,timetaken, work_status, workdate, record_status,created) VALUES
-      ('$orderid','$empid','$allotid','$worktime', '$workstatus', '$workdate', '$recordstatus','$postdate')";
+      $sql = "INSERT INTO staff_allocation_details (orderid,empid,staff_allocation_id,timetaken, work_status, workdate, record_status,created,workdesp) VALUES
+      ('$orderid','$empid','$allotid','$worktime', '$workstatus', '$workdate', '$recordstatus','$postdate','$workdesp')";
       if ($connection->query($sql) !== TRUE) {
         
         echo "Error: " . $sql . "<br>" . $connection->error;

@@ -148,7 +148,7 @@ $mainorderid = "";
                                                                     <option value="Work In Progress">Work In Progress</option>
                                                                     <option value="Internal Edits">Internal Edits</option>
                                                                     <option value="External Edits">External Edits</option>
-                                                                    <option value="Closed">Closed</option>
+                                                                    <option value="Completed">Completed</option>
                                                                 </select>
                                                             </div>
 
@@ -229,6 +229,7 @@ $mainorderid = "";
                             <input type="hidden" class="form-control" id="modaleditid" name="modaleditid" required>
                             <input type="hidden" class="form-control" id="modalorderid" name="modalorderid" required>
                             <input type="hidden" class="form-control" id="modalallotid" name="modalallotid" required>
+                            <input type="hidden" class="form-control" id="modalrecordstatus" name="modalrecordstatus" required>
 
                             <div class="col-md-6">
                                 <label class="form-label" for="modalworkdate">Work Date :</label>
@@ -242,18 +243,22 @@ $mainorderid = "";
 
 
                             </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="staff">Work Description [If Any] :</label>
+                                <textarea class="form-control" name="modalworkdesc" id="modalworkdesc" rows="4"></textarea>
+                            </div>
 
                            
 
                             <div class="col-md-12">
-                                <label class="form-label" for="modalstaff">Staff Name :</label>
+                                <label class="form-label" for="modalstaff">Work Status :</label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="modalworkstatus" id="modalworkstatus" required>
                                     <option value="" disabled selected>Select Work Status</option>
 
                                     <option value="Work In Progress">Work In Progress</option>
                                     <option value="Internal Edits">Internal Edits</option>
                                     <option value="External Edits">External Edits</option>
-                                    <option value="Closed">Closed</option>
+                                    <option value="Completed">Completed</option>
                                 </select>
                             </div>
                            

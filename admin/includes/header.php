@@ -1,5 +1,7 @@
 <?php
-// session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Check if the 'adminname' session variable is set before using it
 $adminname = isset($_SESSION['adminname']) ? $_SESSION['adminname'] : '';
@@ -123,7 +125,7 @@ ini_set('display_errors', 1);
 									<span class="side-menu__label">Dashboard</span>
 								</a>
 							</li>
-<?php if ($_SESSION['adminname']=='Signefo'){  ?>
+<?php if ($adminname=='Signefo'){  ?>
 							<li class="side-item side-item-category">Work Scheduling</li>
 							<!-- ====================================== -->
 							<li class="slide">
@@ -216,7 +218,7 @@ ini_set('display_errors', 1);
 							</li>
 
 
-<?php  } elseif  ($_SESSION['adminname']=='SignefoMedia'){  	?>		
+<?php  } elseif  ($adminname=='SignefoMedia'){  	?>		
 	
 							<li class="side-item side-item-category">Work Scheduling</li>
 							<!-- ====================================== -->
@@ -670,6 +672,12 @@ ini_set('display_errors', 1);
 								<a class="side-menu__item" data-bs-toggle="slide" href="gdworkapproval.php">
 									<span class="side-menu__icon"><i class="fe fe-move side_menu_img"></i></span>
 									<span class="side-menu__label">GD Work Approval</span>
+								</a>
+							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="workapproval.php">
+									<span class="side-menu__icon"><i class="fe fe-server side_menu_img"></i></span>
+									<span class="side-menu__label">Other Work Approval</span>
 								</a>
 							</li>
 						

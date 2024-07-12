@@ -13,11 +13,13 @@ $('body').on('click', '.edit-staff-btn', function () {
     // Extract values from the row
     var workdate = row.find('td:eq(1)').text(); // Replace 1 with the actual column index
     var worktime = row.find('td:eq(2)').text(); // Replace 2 with the actual column index
-    var workstatus = row.find('td:eq(3)').text(); // Replace 2 with the actual column index
-    // var recordstatus = row.find('td:eq(5)').text(); // Replace 2 with the actual column index
-    var allotid = row.find('td:eq(6)').text(); // Replace 3 with the actual column index
-    var orderid = row.find('td:eq(7)').text(); // Replace 4 with the actual column index
-    var editid = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
+    var workdesp = row.find('td:eq(3)').text(); // Replace 2 with the actual column index
+    // alert (workdesp);
+    var workstatus = row.find('td:eq(4)').text(); // Replace 2 with the actual column index
+    var recordstatus = row.find('td:eq(6)').text(); // Replace 2 with the actual column index
+    var allotid = row.find('td:eq(7)').text(); // Replace 3 with the actual column index
+    var orderid = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
+    var editid = row.find('td:eq(9)').text(); // Replace 4 with the actual column index
     var staffrowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
     // alert (workdate);
     var workdate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
@@ -29,6 +31,8 @@ $('body').on('click', '.edit-staff-btn', function () {
 
     $('#modalworkstatus').val(workstatus);
     $('#modalworktime').val(worktime);
+    $('#modalrecordstatus').val(recordstatus);
+    $('#modalworkdesc').val(workdesp);
     $('#modalallotid').val(allotid);
     $('#modalorderid').val(orderid);
     // Set the value of the new textbox
@@ -170,6 +174,8 @@ $('#savestaffChangesBtn').on('click', function () {
     // var modalworkdate = $('#modalworkdate').val();
   
     var modalworktime = $('#modalworktime').val();
+    var modalworkdesp = $('#modalworkdesc').val();
+    var modalrecordstatus = $('#modalrecordstatus').val();
     var modalworkstatus = $('#modalworkstatus option:selected').text();
     var modalallotid = $('#modalallotid').val();
     var modalorderid = $('#modalorderid').val();
@@ -192,12 +198,13 @@ var formattedDate = ("0" + dateObject.getDate()).slice(-2) + "-" + ("0" + (dateO
     var selectedRow = $('#staffallocateTable tbody tr[data-rowid="' + selectedRowId + '"]');
     selectedRow.find('td:eq(1)').text(formattedDate); // Update with the correct column indices.
     selectedRow.find('td:eq(2)').text(modalworktime); // Update with the correct column indices.
-    selectedRow.find('td:eq(3)').text(modalworkstatus); // Update with the correct column indices
-    // selectedRow.find('td:eq(4)').text(staffValueid); // Update with the correct column indices
-    selectedRow.find('td:eq(5)').text(pstatus); // Update with the correct column indices
-    selectedRow.find('td:eq(6)').text(modalallotid); // Update with the correct column indices
-    selectedRow.find('td:eq(7)').text(modalorderid); // Update with the correct column indices
-    selectedRow.find('td:eq(8)').text(modaleditid); // Update with the correct column indices
+    selectedRow.find('td:eq(3)').text(modalworkdesp); 
+    selectedRow.find('td:eq(4)').text(modalworkstatus); // Update with the correct column indices
+    // selectedRow.find('td:eq(5)').text(staffValueid); // Update with the correct column indices
+    selectedRow.find('td:eq(6)').text(pstatus); // Update with the correct column indices
+    selectedRow.find('td:eq(7)').text(modalallotid); // Update with the correct column indices
+    selectedRow.find('td:eq(8)').text(modalorderid); // Update with the correct column indices
+    selectedRow.find('td:eq(9)').text(modaleditid); // Update with the correct column indices
    
     // Hide the modal
     $('#staffmodal').modal('hide');
@@ -231,12 +238,13 @@ function saveDataToDatabase() {
         var rowData1 = {
             workdate: cells[1].innerHTML, // Adjust the index based on your table structure
             worktime: cells[2].innerHTML, // Adjust the index based on your table structure
-            workstatus: cells[3].innerHTML, // Adjust the index based on your table structure
-            recordstatus: cells[5].innerHTML, // Adjust the index based on your table structure
-            allotid: cells[6].innerHTML, // Adjust the index based on your table structure
-            orderid: cells[7].innerHTML, // Adjust the index based on your table structure
+            workdesp: cells[3].innerHTML,
+            workstatus: cells[4].innerHTML, // Adjust the index based on your table structure
+            recordstatus: cells[6].innerHTML, // Adjust the index based on your table structure
+            allotid: cells[7].innerHTML, // Adjust the index based on your table structure
+            orderid: cells[8].innerHTML, // Adjust the index based on your table structure
             empid: empid,
-            editid: cells[8].innerHTML,
+            editid: cells[9].innerHTML,
 
         };
 
