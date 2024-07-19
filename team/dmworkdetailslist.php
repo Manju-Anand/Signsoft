@@ -1,171 +1,95 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['adminname'])) {
+ob_start();
+if (!isset($_SESSION['empname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
 }
 
+if (isset($_GET['logout'])) {
+	unset($_SESSION['empname']);
+		session_destroy();
+	header("location: signin.php");
+}
+$empname = isset($_SESSION['empname']) ? $_SESSION['empname'] : '';
 
 include "includes/connection.php";
 function showworklist()
 {
     global $connection;
-    $queryemphod = "select * from employee where department_id in (select id from department where dname='Graphics') and hod='Yes'";
-    $select_postsemphod = mysqli_query($connection, $queryemphod);
-    while ($rowemphod = mysqli_fetch_assoc($select_postsemphod)) {
-        // $post_empname1 = $rowemphod['empname'];
-        $post_emphodid = $rowemphod['id'];
-        $post_completed_date ="";
-        $query = "select * from staff_dm_graphics_allocation where staffid='" . $post_emphodid . "' order by id desc";
+
+    $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
+        $query = "select * from dm_workdetails where empid='" . $empid . "' order by id desc";
         $select_posts = mysqli_query($connection, $query);
         $i = 0;
         while ($row = mysqli_fetch_assoc($select_posts)) {
-            $id = $row['id'];
-            $redirectStat =  $row['redirect_status'];
+            $id=$row['id'];
+            $upload_content_type = $row['upload_content_type'];
+            $channel =  $row['channel'];
+            $upload_date = $row['upload_date'];
+            $campaign = $row['campaign'];
             $post_orderid = $row['orderid'];
-            $post_deadline_status = "Not-Done";
+
             $queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
             $select_postsorder = mysqli_query($connection, $queryorder);
             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
 
                 $post_brandName = $roworder['brandName'];
-                $post_postings = $row['postings'];
-                $post_deadline = $row['deadline'];
-                $date = new DateTime($post_deadline); // create a DateTime object
-                $formatted_date = $date->format('d-m-Y');
-
-                $post_assigndate = $row['assigndate'];
-                $post_redirectstatus = $row['redirect_status'];
-                $post_assignstaffid = $row['assigned_staffid'];
-
-                $queryemp = "select * from employee where id='" .  $post_assignstaffid . "'";
-                $select_postsemp = mysqli_query($connection, $queryemp);
-                while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
-                    $post_empname = $rowemp['empname'];
-                }
-                // $queryemp = "select * from employee where id='" .  $post_emphodid . "'";
-                // $select_postsemp = mysqli_query($connection, $queryemp);
-                // while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
-                //     $post_hod = $rowemp['hod'];
-                // }
-                $post_wstatus = "Not Yet Updated";
-                if ($redirectStat == "Redirected") {
-
-                    $querywstatus1 = "select * from staff_dm_graphics_allocation where redirect_recordid='" .  $id . "'";
-                    $select_postswstatus1 = mysqli_query($connection, $querywstatus1);
-                    while ($rowwstatus1 = mysqli_fetch_assoc($select_postswstatus1)) {
-                        $checkid = $rowwstatus1['id'];
-                        $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $checkid . "' order by id desc limit 1";
-                        $select_postswstatus = mysqli_query($connection, $querywstatus);
-                        while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
-                            $post_wstatus = $rowwstatus['work_status'];
-                            $post_completed_date =  $rowwstatus['workdate'];
-                        }
-                    }
-                } else {
-
-                    $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $id . "' order by id desc limit 1";
-                    $select_postswstatus = mysqli_query($connection, $querywstatus);
-                    while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
-                        $post_wstatus = $rowwstatus['work_status'];
-                        $post_completed_date =  $rowwstatus['workdate'];
-                    }
-                }
-                if (isset($post_completed_date) && $post_completed_date !== "") {
-    
-                if ($post_completed_date <= $formatted_date) {
-   
-                    $post_deadline_status = "On-time";
-                } else {
-
-                    $post_deadline_status = "Overdue";
-                }
             }
-                
-
-
-                // if ($post_wstatus === 'Completed') {
+    
                     $i = $i + 1;
                     echo "<tr>";
                     echo "<td>$i</td>";
                     echo "<td>$post_brandName</td>";
-                    // echo "<td>$post_postings</td>";
-
-                    echo "<td>$post_empname</td>";
-                    echo "<td>$post_assigndate</td>";
-                    echo "<td>$formatted_date </td>";
-                    echo "<td>$post_wstatus</td>";
-
-
-                    if ($post_redirectstatus === 'Self') {
-                        echo "<td ><span class='badge bg-primary' style='font-size:15px'>$post_redirectstatus</span></td>";
+                    echo "<td>$channel</td>";
+                    echo "<td>$upload_content_type</td>";
+                    echo "<td>$upload_date</td>";
+                    if($campaign == "1"){
+                    echo "<td>Yes</td>";
+                    } else {
+                        echo "<td>No</td>";
                     }
-                    if ($post_redirectstatus === 'Redirected') {
-                        echo "<td ><span class='badge bg-pink' style='font-size:15px'>$post_redirectstatus</span></td>";
-                    }
+                    
 
-                    if ($post_deadline_status === "On-time") {
-                        echo "<td ><span class='badge bg-success' style='font-size:15px'>$post_deadline_status</span></td>";
-                    }
-                    if ($post_deadline_status === "Overdue") {
-                        echo "<td ><span class='badge bg-danger' style='font-size:15px'>$post_deadline_status</span></td>";
-                    }
-                    if ($post_deadline_status === "Not-Done") {
-                        echo "<td ><span class='badge bg-warning' style='font-size:15px'>$post_deadline_status</span></td>";
-                    }
 
-                    // if ($post_deadline_status === "Not-Done") {
-                    //     echo "<td>";
+                    
+                 
+                    echo "<td>";
 
-                    //     echo "<a class='btn btn-sm btn-blue btn-disabled' href='' title='Enter Work Details' style='color:white;font: weight 200px;' >
-                    //         <span class='fe fe-edit'> </span></a> &nbsp;";
-    
-     
-                    //     echo "<a class='btn btn-sm btn-gray-dark  view-details-btn btn-disabled' href=''   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
-                    //         <span class='fe fe-eye'> </span></a>";
-    
-                    //     echo "</td>";
-                    // }else{
-                    // echo "<td>";
-
-                    // echo "<a class='btn btn-sm btn-blue' href='add-gd-work-approval.php?workid={$id}' title='Enter Work Details' style='color:white;font: weight 200px;'>
-                    //     <span class='fe fe-edit'> </span></a> &nbsp;";
+                    echo "<a class='btn btn-sm btn-blue' href='edit-DM-work-details.php?workid={$id}' title='Edit Work Details' style='color:white;font: weight 200px;'>
+                        <span class='fe fe-edit'> </span></a> &nbsp;";
 
 
                     // echo "<a class='btn btn-sm btn-gray-dark  view-details-btn' href='View-gd-work-approval.php?workid={$id}'   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
                     //     <span class='fe fe-eye'> </span></a>";
-
-                    // echo "</td>";
-                    // }
-                    echo "<td>";
-                    if ($post_deadline_status === "Not-Done") {
-                      
-
-                        echo "<a class='btn btn-sm btn-blue btn-disabled' href='' title='Enter Work Details' style='color:white;font: weight 200px;' >
-                            <span class='fe fe-edit'> </span></a> &nbsp;";
-    
-     
-                    }else{
-                    
-
-                    echo "<a class='btn btn-sm btn-blue' href='add-gd-work-approval.php?workid={$id}' title='Enter Work Details' style='color:white;font: weight 200px;'>
-                        <span class='fe fe-edit'> </span></a> &nbsp;";
-
-
-                   
-                    }
-                    echo "<a class='btn btn-sm btn-gray-dark  view-details-btn' href='View-gd-work-approval.php?workid={$id}'   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
-                        <span class='fe fe-eye'> </span></a>";
+                    echo" <a href='dmworkdetailslist.php?delete={$id}' class='btn btn-sm btn-danger' id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white' onclick='return confirmationDelete(this);'><span class='fe fe-trash-2'> </span></a>";
                     echo "</td>";
+                 
+
                     echo "</tr>";
-                // }
+              
             }
-        }
-    }
+ 
+    
 }
 
-
+function deleteworklist()
+{
+     global $connection; 
+     if(isset($_GET['delete']))
+     {
+        //  echo "hiii";
+         $the_cat_id = $_GET['delete'];
+         $query="DELETE FROM dm_workdetails WHERE id = '". $the_cat_id ."'";
+         $delete_query=mysqli_query($connection,$query);
+          if(!$delete_query)
+            {
+                die('QUERY FAILED' . mysqli_error($connection));
+            }
+            
+         header("Location: dmworkdetailslist.php");
+     }  
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,7 +158,7 @@ function showworklist()
                         <div>
                             <h2 class="main-content-title tx-24 mg-b-5">Work List</h2>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Graphic Designers</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Digital Marketers</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Completed Works</li>
                             </ol>
                         </div>
@@ -251,9 +175,15 @@ function showworklist()
                             <div class="card custom-card overflow-hidden">
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
-                                        <h6 class="card-title mb-1">List of Works</h6>
-                                        <p class="text-muted card-sub-title"><?php echo $_SESSION['adminname'] ?> , These are the List of works details entered by Graphic Designers.</p>
-                                    </div>
+                                        <div class="row">
+                                            <div class="col-md-6">  <h6 class="card-title mb-1">List of Works</h6>
+                                                <p class="text-muted card-sub-title"><?php echo $empname; ?> , These are the List of DM works details you entered .</p>
+                                            </div>
+                                            <div class="col-md-6"> 
+                                                <a class="btn ripple btn-success float-end" href="add-DM-work-details.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New DM wrok details</a>
+                                            </div>
+                                        </div>
+                                                                          </div>
                                     <div class="table-responsive">
                                         <table class="table" id="example1">
                                             <thead style="background-color:beige;">
@@ -262,13 +192,10 @@ function showworklist()
                                                     <th>#</th>
 
                                                     <th>Brand Name</th>
-                                                    <!-- <th>Postings</th> -->
-                                                    <th>Assigned By</th>
-                                                    <th>Assigned Date</th>
-                                                    <th>Deadline</th>
-                                                    <th>Work Status</th>
-                                                    <th>Redirect Status</th>
-                                                    <th>Deadline Status</th>
+                                                    <th>Channel</th>
+                                                    <th>Uploaded Content</th>
+                                                    <th>Upload On</th>
+                                                    <th>Campaign/Not</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -276,6 +203,9 @@ function showworklist()
 
                                                 <?php
                                                 showworklist();
+                                                ?>
+                                                 <?php
+                                                deleteworklist();
                                                 ?>
 
 
@@ -371,13 +301,16 @@ function showworklist()
     <script src="../assets/switcher/js/switcher.js"></script>
     <script src="notification.js"></script>
     <script>
-        function confirmationDelete(anchor) {
-            var conf = confirm('Are you sure want to delete this record?');
-            if (conf)
-                window.location = anchor.attr("href");
-        }
+      function confirmationDelete(anchor) {
+    var conf = confirm('Are you sure you want to delete this record?');
+    if (conf) {
+        window.location = anchor.href;
+    }
+    return false; // Prevent the default link behavior
+}
     </script>
 
 </body>
 
 </html>
+<?php ob_end_flush();?>

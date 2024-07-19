@@ -12,6 +12,7 @@ if (!$connection) {
 $selectedworkId = $_POST['selectedOrderId'];
 $selectedOrderId ="";
 $post_empname="";
+$post_completed_date ="";
 $query = "SELECT * FROM staff_dm_graphics_allocation WHERE id = '$selectedworkId' and work_status='Active'";
 $result = mysqli_query($connection, $query);
 while ($row = mysqli_fetch_assoc($result)) {
@@ -82,10 +83,14 @@ while ($rowee = mysqli_fetch_assoc($resultee)) {
             $post_completed_date =  $rowwstatus['workdate'];
         }
     }
-    if ($post_completed_date <= $formattedDate) {
-        $post_deadline_status = "On-time";
-    } else {
-        $post_deadline_status = "Overdue";
+    if($post_completed_date !== ""){
+        if ($post_completed_date <= $formattedDate) {
+            $post_deadline_status = "On-time";
+        } else {
+            $post_deadline_status = "Overdue";
+        }
+    }else{
+        $post_deadline_status = "Not-Done";
     }
 }
 

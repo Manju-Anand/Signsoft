@@ -12,11 +12,15 @@ if (isset($_GET['logout'])) {
 	header("location: signin.php");
 }
 
+$empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
+$empname = isset($_SESSION['empname']) ? $_SESSION['empname'] : '';
+
 include "includes/connection.php";
 function showworklist()
 {
     global $connection;
-    $query = "select * from staff_allocation where empid='" . $_SESSION['empid'] ."' order by id desc";
+    $empidnew = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
+    $query = "select * from staff_allocation where empid='" . $empidnew ."' order by id desc";
     $select_posts = mysqli_query($connection, $query);
     $i = 0;
     while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -147,7 +151,7 @@ function showworklist()
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
                                         <h6 class="card-title mb-1">List of Works</h6>
-                                        <p class="text-muted card-sub-title"><?php echo $_SESSION['empname'] ?> , These are the List of works assigned by Admin.</p>
+                                        <p class="text-muted card-sub-title"><?php echo $empname ?> , These are the List of works assigned by Admin.</p>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table" id="example1">

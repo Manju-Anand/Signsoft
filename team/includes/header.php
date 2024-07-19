@@ -73,7 +73,7 @@ ini_set('display_errors', 1);
 						</li>
 						<li class="dropdown main-profile-menu">
 						<?php
-							$query = "select * from employee where id = '" . $_SESSION['empid'] . "'";
+							$query = "select * from employee where id = '" . $empid . "'";
 							$select_posts = mysqli_query($connection, $query);
 
 							while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -169,7 +169,7 @@ ini_set('display_errors', 1);
 
 				<!-- ******************************************************** -->
 
-				<?php if ($_SESSION['modulename'] == "Sales") { ?>
+				<?php if ($modulename == "Sales") { ?>
 					<li class="side-item side-item-category">Leads</li>
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="add-lead.php">
@@ -193,7 +193,7 @@ ini_set('display_errors', 1);
 
 					</li>
 				<?php } ?>
-				<?php if ($_SESSION['modulename'] == "Digital") { ?>
+				<?php if ($modulename == "Digital") { ?>
 					<li class="side-item side-item-category">Work Shedules</li>
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="dmworklist.php">
@@ -209,6 +209,16 @@ ini_set('display_errors', 1);
 							<span class="side-menu__label">Assign Graphics Work</span>
 						</a>
 
+						<a class="side-menu__item" data-bs-toggle="slide" href="dmworkdetailslist.php">
+							<span class="side-menu__icon"><i class="fe fe-book-open side_menu_img"></i></span>
+							<span class="side-menu__label">Work Details</span>
+						</a>
+
+						<a class="side-menu__item" data-bs-toggle="slide" href="dmmonthlyreportlist.php">
+							<span class="side-menu__icon"><i class="fe fe-battery-charging side_menu_img"></i></span>
+							<span class="side-menu__label">Monthly Report Details</span>
+						</a>
+
 						<a class="side-menu__item" data-bs-toggle="slide" href="delete_sample_images.php">
 							<span class="side-menu__icon"><i class="fe fe-scissors side_menu_img"></i></span>
 							<span class="side-menu__label">Delete Sample Images</span>
@@ -217,7 +227,7 @@ ini_set('display_errors', 1);
 					</li>
 				<?php } ?>
 
-				<?php if ($_SESSION['modulename'] == "Web") { ?>
+				<?php if ($modulename == "Web") { ?>
 					<li class="side-item side-item-category">Work Shedules</li>
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
@@ -231,7 +241,7 @@ ini_set('display_errors', 1);
 
 					</li>
 				<?php } ?>
-				<?php if ($_SESSION['modulename'] == "Graphics") { ?>
+				<?php if ($modulename == "Graphics") { ?>
 					<li class="side-item side-item-category">Work Shedules</li>
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="worklist.php">
@@ -279,7 +289,7 @@ ini_set('display_errors', 1);
 					</li>
 				<?php } ?>
 				<?php
-							$query = "select * from employee where id = '" . $_SESSION['empid'] . "'";
+							$query = "select * from employee where id = '" . $empid . "'";
 							$select_posts = mysqli_query($connection, $query);
 
 							while ($row = mysqli_fetch_assoc($select_posts)) {
