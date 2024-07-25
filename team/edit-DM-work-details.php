@@ -309,7 +309,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                                     <div class="row">
                                                                         <div class="col-md-3 form-label">Date : </div>
                                                                         <div class="col-md-9">
-                                                                            <input type="date" class="form-control" name="intrim2Date" id="intrim2Date"   value="<?php echo $row1['intrim2_date']; ?> " <?php if ($disableDiv) { echo 'disabled'; } ?>>
+                                                                            <input type="date" class="form-control" name="intrim2Date" id="intrim2Date"   value="<?php echo $row1['intrim2_date'];?>" <?php if ($disableDiv) { echo 'disabled'; } ?>>
                                                                         </div>
                                                                     </div>
                                                                 </div>

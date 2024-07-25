@@ -14,7 +14,7 @@ if (isset($_GET['logout'])) {
 }
 
 include "includes/connection.php";
-
+$empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
 $mainorderid = "";
 
 // Function to fetch and delete images
@@ -166,7 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_images'])) {
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $sqlFetchImages = "SELECT * FROM staff_dm_graphics_images ORDER BY id ASC";
+                                                        // $sqlFetchImages = "SELECT * FROM staff_dm_graphics_images ORDER BY id ASC";
+                                                        $sqlFetchImages = "SELECT * FROM staff_dm_graphics_images where allocation_id IN(select id  from staff_dm_graphics_allocation where assigned_staffid='$empid')  ORDER BY id DESC";
                                                         if ($stmtFetchImages = $connection->prepare($sqlFetchImages)) {
                                                             $stmtFetchImages->execute();
                                                             $resultFetchImages = $stmtFetchImages->get_result();

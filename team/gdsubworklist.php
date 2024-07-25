@@ -11,12 +11,15 @@ if (isset($_GET['logout'])) {
 		session_destroy();
 	header("location: signin.php");
 }
+$empname = isset($_SESSION['empname']) ? $_SESSION['empname'] : '';
+
 
 include "includes/connection.php";
 function showworklist()
 {
     global $connection;
-    $query = "select * from staff_dm_graphics_allocation where staffid='" . $_SESSION['empid'] . "' order by id desc";
+    $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
+    $query = "select * from staff_dm_graphics_allocation where staffid='" . $empid . "' order by id desc";
     $select_posts = mysqli_query($connection, $query);
     $i = 0;
     while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -171,7 +174,7 @@ function showworklist()
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
                                         <h6 class="card-title mb-1">List of Works</h6>
-                                        <p class="text-muted card-sub-title"><?php echo $_SESSION['empname'] ?> , These are the List of works assigned by Digital Marketers.</p>
+                                        <p class="text-muted card-sub-title"><?php echo $empname ?> , These are the List of works assigned by Digital Marketers.</p>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table" id="example1">

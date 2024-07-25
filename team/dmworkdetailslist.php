@@ -22,6 +22,7 @@ function showworklist()
         $query = "select * from dm_workdetails where empid='" . $empid . "' order by id desc";
         $select_posts = mysqli_query($connection, $query);
         $i = 0;
+        $intrimstatus="";
         while ($row = mysqli_fetch_assoc($select_posts)) {
             $id=$row['id'];
             $upload_content_type = $row['upload_content_type'];
@@ -29,6 +30,16 @@ function showworklist()
             $upload_date = $row['upload_date'];
             $campaign = $row['campaign'];
             $post_orderid = $row['orderid'];
+            $intrim1 =  $row['intrim1'];
+            $intrim2 =  $row['intrim2'];
+            if ($intrim1 == "1"  && $intrim2 == "1"){
+                $intrimstatus="Completed";
+            }else {
+                $intrimstatus="Not Completed";
+            }
+
+
+
 
             $queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
             $select_postsorder = mysqli_query($connection, $queryorder);
@@ -51,7 +62,7 @@ function showworklist()
                     }
                     
 
-
+echo "<td>$intrimstatus</td>";
                     
                  
                     echo "<td>";
@@ -196,6 +207,7 @@ function deleteworklist()
                                                     <th>Uploaded Content</th>
                                                     <th>Upload On</th>
                                                     <th>Campaign/Not</th>
+                                                    <th>Intrim Report Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>

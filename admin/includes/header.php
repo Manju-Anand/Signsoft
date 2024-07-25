@@ -16,7 +16,7 @@ ini_set('display_errors', 1);
 						<a class="main-header-menu-icon" href="javascript:void(0);" data-bs-toggle="sidebar" id="mainSidebarToggle"><span></span></a>
 					</div>
 					<div class="main-header-left horizontal">
-						<a class="main-logo" href="index.html">
+						<a class="main-logo" href="index.php">
 							<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
 							<img src="../assets/img/SLogoWhite.png" class="desktop-logo theme-logo" alt="dashleadlogo">
 						</a>
@@ -102,11 +102,11 @@ ini_set('display_errors', 1);
 			<div class="sticky">
 				<aside class="app-sidebar ps horizontal-main">
 					<div class="app-sidebar__header">
-						<a class="main-logo" href="index.html">
+						<a class="main-logo" href="index.php">
 							<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
-							<img src="../assets/img/SLogoBlue.png" class="desktop-logo" alt="dashleadlogo">
-							<img src="../assets/img/brand/favicon.png" class="mobile-logo mobile-logo-dark" alt="dashleadlogo">
-							<img src="../assets/img/brand/favicon1.png" class="mobile-logo" alt="dashleadlogo">
+							<img src="../assets/img/SLogoWhite.png" class="desktop-logo" alt="dashleadlogo">
+							<img src="../assets/img/favicon.png" class="mobile-logo mobile-logo-dark" alt="dashleadlogo">
+							<img src="../assets/img/favicon1.png" class="mobile-logo" alt="dashleadlogo">
 						</a>
 					</div>
 					<div class="main-sidemenu">
@@ -685,6 +685,13 @@ ini_set('display_errors', 1);
 							
 							
 							<li class="side-item side-item-category">Work Details</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="workdetailslist-dm.php">
+									<span class="side-menu__icon"><i class="fe fe-sliders side_menu_img"></i></span>
+									<span class="side-menu__label">DM Work Details</span>
+								</a>
+								
+							</li>
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="workdetailslist-graphics.php">
 									<span class="side-menu__icon"><i class="fe fe-feather side_menu_img"></i></span>

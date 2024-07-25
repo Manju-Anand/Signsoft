@@ -94,7 +94,7 @@ $mainorderid = "";
                                         </div>
                                         <div class="col-md-7">
                                             <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
-                                            <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
+                                            <a href="gdsubworklist.php" class="btn btn-default float-end" id="cancel">Discard</a>
                                             <!-- float-end -->
 
                                         </div>
@@ -244,7 +244,7 @@ $mainorderid = "";
                                 <label class="form-label" for="modalstaff">Staff Name :</label>
                                 <select class="form-select mb-3" aria-label="Default select example" name="modalworkstatus" id="modalworkstatus" required>
                                     <option value="" disabled selected>Select Work Status</option>
-
+                                    <option value="Completed">Completed</option>
                                     <option value="Work In Progress">Work In Progress</option>
                                     <option value="Internal Edits">Internal Edits</option>
                                     <option value="External Edits">External Edits</option>

@@ -1,18 +1,20 @@
 <?php
 session_start();
 include "includes/connection.php";
-
+$empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
+$empname = isset($_SESSION['empname']) ? $_SESSION['empname'] : '';
+$modulename = isset($_SESSION['modulename']) ? $_SESSION['modulename'] : '';
 
 if (isset($_POST['view'])) {
-    if ($_SESSION['modulename'] == "Digital") {
+    if ($modulename == "Digital") {
         $brandname = "";
         if ($_POST["view"] != '') {
-            $update_query = "UPDATE staff_dm_allocation SET notify_status = 1 WHERE notify_status=0 and work_status='Active' and staffid='" . $_SESSION['empid'] . "'";
+            $update_query = "UPDATE staff_dm_allocation SET notify_status = 1 WHERE notify_status=0 and work_status='Active' and staffid='" . $empid . "'";
             mysqli_query($connection, $update_query);
         }
         $count = "0";
         $output = '';
-        $status_query = "SELECT * FROM staff_dm_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $_SESSION['empid'] . "'";
+        $status_query = "SELECT * FROM staff_dm_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $empid . "'";
         $result_query = mysqli_query($connection, $status_query);
         $count = mysqli_num_rows($result_query);
 
@@ -22,7 +24,7 @@ if (isset($_POST['view'])) {
             <a class="btn ripple btn-primary btn-sm ms-auto" href="dmworklist.php">Latest Works Assigned</a>
         </div>';
 
-        $query = "SELECT * FROM staff_dm_allocation WHERE staffid='" . $_SESSION['empid'] . "'and work_status='Active' ORDER BY id DESC LIMIT 5";
+        $query = "SELECT * FROM staff_dm_allocation WHERE staffid='" . $empid . "'and work_status='Active' ORDER BY id DESC LIMIT 5";
         $result = mysqli_query($connection, $query);
        
         $i = 0;
@@ -59,7 +61,7 @@ if (isset($_POST['view'])) {
         </div>';
 
         $count = "0";
-        $status_query = "SELECT * FROM staff_dm_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $_SESSION['empid'] . "'";
+        $status_query = "SELECT * FROM staff_dm_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $empid . "'";
         $result_query = mysqli_query($connection, $status_query);
         $count = mysqli_num_rows($result_query);
         $data = array(
@@ -73,18 +75,18 @@ if (isset($_POST['view'])) {
 
         $brandname = "";
         if ($_POST["view"] != '') {
-            $update_query = "UPDATE staff_allocation SET notify_status = 1 WHERE notify_status=0 and work_status='Active' and empid='" . $_SESSION['empid'] . "'";
+            $update_query = "UPDATE staff_allocation SET notify_status = 1 WHERE notify_status=0 and work_status='Active' and empid='" . $empid . "'";
             mysqli_query($connection, $update_query);
 
-            $update_query = "UPDATE staff_dm_graphics_allocation SET notify_status = 1 WHERE notify_status=0 and work_status='Active' and staffid='" . $_SESSION['empid'] . "'";
+            $update_query = "UPDATE staff_dm_graphics_allocation SET notify_status = 1 WHERE notify_status=0 and work_status='Active' and staffid='" . $empid . "'";
             mysqli_query($connection, $update_query);
         }
         $othercount = "0";
         $output = '';
-        $status_query = "SELECT * FROM staff_allocation WHERE notify_status=0 and work_status='Active' and empid='" . $_SESSION['empid'] . "'";
+        $status_query = "SELECT * FROM staff_allocation WHERE notify_status=0 and work_status='Active' and empid='" . $empid . "'";
         $result_query = mysqli_query($connection, $status_query);
         $othercount = mysqli_num_rows($result_query);
-        $status_query = "SELECT * FROM staff_dm_graphics_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $_SESSION['empid'] . "'";
+        $status_query = "SELECT * FROM staff_dm_graphics_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $empid . "'";
         $result_query = mysqli_query($connection, $status_query);
         $othercount =  $othercount + mysqli_num_rows($result_query);
 
@@ -94,7 +96,7 @@ if (isset($_POST['view'])) {
             <a class="btn ripple btn-primary btn-sm ms-auto" href="">Latest Works Assigned</a>
         </div>';
         // ************* work assigned by admin ********************
-        $query = "SELECT * FROM staff_allocation WHERE empid='" . $_SESSION['empid'] . "' and work_status='Active' ORDER BY id DESC LIMIT 5";
+        $query = "SELECT * FROM staff_allocation WHERE empid='" . $empid . "' and work_status='Active' ORDER BY id DESC LIMIT 5";
         $result = mysqli_query($connection, $query);
        
         $i = 0;
@@ -127,7 +129,7 @@ if (isset($_POST['view'])) {
             }
         }
         // ******************** work assigned by dm ************
-        $query = "SELECT * FROM staff_dm_graphics_allocation WHERE staffid='" . $_SESSION['empid'] . "' and work_status='Active' ORDER BY id DESC LIMIT 5";
+        $query = "SELECT * FROM staff_dm_graphics_allocation WHERE staffid='" . $empid . "' and work_status='Active' ORDER BY id DESC LIMIT 5";
         $result = mysqli_query($connection, $query);
        
        
@@ -171,10 +173,10 @@ if (isset($_POST['view'])) {
         </div>';
 
         $count = "0";
-        $status_query = "SELECT * FROM staff_allocation WHERE notify_status=0 and work_status='Active' and empid='" . $_SESSION['empid'] . "'";
+        $status_query = "SELECT * FROM staff_allocation WHERE notify_status=0 and work_status='Active' and empid='" . $empid . "'";
         $result_query = mysqli_query($connection, $status_query);
         $count = mysqli_num_rows($result_query);
-        $status_query = "SELECT * FROM staff_dm_graphics_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $_SESSION['empid'] . "'";
+        $status_query = "SELECT * FROM staff_dm_graphics_allocation WHERE notify_status=0 and work_status='Active' and staffid='" . $empid . "'";
         $result_query = mysqli_query($connection, $status_query);
         $count = $count + mysqli_num_rows($result_query);
 

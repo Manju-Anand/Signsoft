@@ -160,6 +160,9 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                                     <option value="" disabled selected>Select Channel</option>
                                                                     <option value="FaceBook">FaceBook</option>
                                                                     <option value="Instagram">Instagram</option>
+                                                                    <option value="FB&Insta">FB&Insta</option>
+                                                                    
+                                                                    <option value="Indeed">Indeed</option>
                                                                     <option value="YouTube">YouTube</option>
                                                                 </select>
                                                             </div>

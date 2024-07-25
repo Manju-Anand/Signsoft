@@ -94,7 +94,7 @@ $mainorderid = "";
                                         </div>
                                         <div class="col-md-7">
                                             <button type="submit" name="submit" onclick="saveDataToDatabase()" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Submit Details</button>
-                                            <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
+                                            <a href="gdworklist.php" class="btn btn-default float-end" id="cancel">Discard</a>
                                             <!-- float-end -->
 
                                         </div>

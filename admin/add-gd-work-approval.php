@@ -120,25 +120,25 @@ $workid = $_GET["workid"];
                                                         <div class="row mb-4">
                                                             <label class="col-md-5 form-label" for="category">Total No of Hours :</label>
                                                             <div class="col-md-7">
-                                                                <input type="text" class="form-control" name="noofhours" id="noofhours" placeholder="Total No of Hours Worked" value="<?php echo $post_timetaken; ?>" readonly>
+                                                                <input type="text" class="form-control" name="noofhours" id="noofhours" placeholder="Total No of Hours Worked"  readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-5 form-label" for="category">Internal Edits:</label>
                                                             <div class="col-md-7">
-                                                                <input type="text" class="form-control" name="internaledits" id="internaledits" value="<?php echo $internal; ?>" placeholder="Enter No of Internal Edits">
+                                                                <input type="text" class="form-control" name="internaledits" id="internaledits"  placeholder="Enter No of Internal Edits">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-5 form-label" for="category">External Edits :</label>
                                                             <div class="col-md-7">
-                                                                <input type="text" class="form-control" name="extrenaledits" id="extrenaledits" value="<?php echo $external; ?>" placeholder="Enter No of External Edits">
+                                                                <input type="text" class="form-control" name="extrenaledits" id="extrenaledits"  placeholder="Enter No of External Edits">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-4">
                                                             <label class="col-md-5 form-label" for="category">Percentage of Completion :</label>
                                                             <div class="col-md-7">
-                                                                <input type="text" class="form-control" name="percompletion" id="percompletion" value="<?php echo $percompletion; ?>" placeholder="Enter Percentage of Completion">
+                                                                <input type="text" class="form-control" name="percompletion" id="percompletion"  placeholder="Enter Percentage of Completion">
                                                             </div>
                                                         </div>
                                                         <!-- float-end -->

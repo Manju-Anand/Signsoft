@@ -20,7 +20,8 @@ ini_set('display_errors', 1);
 		<div class="main-header-left horizontal">
 			<a class="main-logo" href="index.php">
 				<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
-				<img src="../assets/img/SLogoBlue.png" class="desktop-logo theme-logo" alt="dashleadlogo">
+				<img src="../assets/img/SLogoWhite.png" class="desktop-logo theme-logo" alt="dashleadlogo">
+				
 			</a>
 		</div>
 		<div class="main-header-right">
@@ -137,6 +138,8 @@ ini_set('display_errors', 1);
 			<a class="main-logo" href="index.php">
 				<img src="../assets/img/SLogoBlue.png" class="desktop-logo desktop-logo-dark" alt="dashleadlogo">
 				<img src="../assets/img/SLogoWhite.png" class="desktop-logo" alt="dashleadlogo">
+				<img src="../assets/img/favicon.png" class="mobile-logo mobile-logo-dark" alt="dashleadlogo">
+				<img src="../assets/img/favicon1.png" class="mobile-logo" alt="dashleadlogo">
 
 			</a>
 		</div>
@@ -165,7 +168,7 @@ ini_set('display_errors', 1);
 						</a>
 						</li>
 						
-
+					<hr>
 
 				<!-- ******************************************************** -->
 
@@ -209,6 +212,14 @@ ini_set('display_errors', 1);
 							<span class="side-menu__label">Assign Graphics Work</span>
 						</a>
 
+					
+
+						<a class="side-menu__item" data-bs-toggle="slide" href="delete_sample_images.php">
+							<span class="side-menu__icon"><i class="fe fe-scissors side_menu_img"></i></span>
+							<span class="side-menu__label">Delete Sample Images</span>
+						</a>
+						<hr>
+						<li class="side-item side-item-category">Work Details</li>
 						<a class="side-menu__item" data-bs-toggle="slide" href="dmworkdetailslist.php">
 							<span class="side-menu__icon"><i class="fe fe-book-open side_menu_img"></i></span>
 							<span class="side-menu__label">Work Details</span>
@@ -218,12 +229,7 @@ ini_set('display_errors', 1);
 							<span class="side-menu__icon"><i class="fe fe-battery-charging side_menu_img"></i></span>
 							<span class="side-menu__label">Monthly Report Details</span>
 						</a>
-
-						<a class="side-menu__item" data-bs-toggle="slide" href="delete_sample_images.php">
-							<span class="side-menu__icon"><i class="fe fe-scissors side_menu_img"></i></span>
-							<span class="side-menu__label">Delete Sample Images</span>
-						</a>
-<hr>
+						<hr>
 					</li>
 				<?php } ?>
 
@@ -308,6 +314,7 @@ ini_set('display_errors', 1);
 					</li>
 
 				<?php } }?>
+				<li class="side-item side-item-category">Other Work Details</li>
 				<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="processjoblist.php">
 							<span class="side-menu__icon"><i class="fe fe-codepen side_menu_img"></i></span>

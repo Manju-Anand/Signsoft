@@ -49,9 +49,9 @@ $mainorderid = "";
 
 
     <!-- Loader -->
-    <div id="global-loader">
+    <!-- <div id="global-loader">
         <img src="../assets/img/loader.svg" class="loader-img" alt="Loader">
-    </div>
+    </div> -->
     <!-- End Loader -->
 
     <!-- Page -->
@@ -223,6 +223,10 @@ $mainorderid = "";
 <?php
 if (isset($_POST['submit'])) {
     $closestatus = "false";
+    $supplierstatus = "false";
+    $paymentstatus = "false";
+    $monthlyreportstatus = "false";
+
     $orderstatus = $_POST["status"];
     if ($orderstatus !== null) {
         $orderclosed = "Closed";
@@ -242,17 +246,21 @@ if (isset($_POST['submit'])) {
                 if ($row['transaction_mode'] !== 'CASH') {
                     if ($row['supplier_billno'] !== '' ) {
                         // echo "suppliertrue";
+                        $supplierstatus = "true";
                         $closestatus = "true";
                     } else {
                         // echo "supplierfalse";
+                        $supplierstatus = "false";
                         $closestatus = "false";
                         goto pc;
                     }
                     if ( $row['customer_billno'] !== '') {
                         // echo "suppliertrue";
+                        $supplierstatus = "true";
                         $closestatus = "true";
                     } else {
                         // echo "supplierfalse";
+                        $supplierstatus = "false";
                         $closestatus = "false";
                         goto pc;
                     }
@@ -268,9 +276,11 @@ if (isset($_POST['submit'])) {
                 if ($row['transaction_mode'] !== 'CASH') {
                     if ($row['customer_billno'] !== '') {
                         // echo "custtrue";
+                        $paymentstatus = "true";
                         $closestatus = "true";
                     } else {
                         // echo "custfalse";
+                        $paymentstatus = "false";
                         $closestatus = "false";
                         goto ppc;
                     }
@@ -279,8 +289,55 @@ if (isset($_POST['submit'])) {
         }
         ppc:
 
+
+        // ===================================================== if order dtails contain DM works, then after submitting monthly report renewal process should work.===========
+        $queryorder = "select * from order_customers where id = '" . $orderid . "'";
+        $select_postsorder = mysqli_query($connection, $queryorder);
+        while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+
+            $mainorderid = $roworder['id'];
+            $dmorder = "false";
+            $querydigital = "select * from category where dept_id=(select id from department where dname='Digital')";
+            $select_postsdigital = mysqli_query($connection, $querydigital);
+            while ($rowdigital = mysqli_fetch_assoc($select_postsdigital)) {
+                $catId = $rowdigital['id'];
+
+
+
+                $queryordercat = "select * from order_category where order_id='" . $roworder['id'] . "' and category_id='" . $catId . "'";
+                $select_postsordercat = mysqli_query($connection, $queryordercat);
+                while ($rowordercat = mysqli_fetch_assoc($select_postsordercat)) {
+                    $categoryId = $rowordercat['category_id'];
+                    $querydmallot = "select * from staff_dm_allocation where orderid='" . $roworder['id'] . "' and staffid='" .  $_SESSION['empid'] . "'";
+                    $select_postsdmallot = mysqli_query($connection, $querydmallot);
+                    while ($rowdmallot = mysqli_fetch_assoc($select_postsdmallot)) {
+                        $dmorder = "true";
+                    }
+                }
+            }
+
+            if ($dmorder == "true") {
+                $monthlyreportstatus = "true";
+                $closestatus = "true";
+            }else {
+                // echo "custfalse";
+                $monthlyreportstatus = "false";
+                $closestatus = "false";
+                goto ppc1;
+            }
+        }
+ppc1:
+        // =======================================================================================
         if ($closestatus == "false") {
-            echo "<script> alert('Order cannot be closed because there are missing billnos.'); </script>";
+                if( $monthlyreportstatus == "false"){
+                    echo "<script> alert('Monthly Report Not Submitted.'); </script>";
+                }
+
+                if ( $paymentstatus == "false"){
+                    echo "<script> alert('Order cannot be closed because there are missing billnos.'); </script>";
+                }
+
+
         } else {
             // *************** transaction entry ****** based on $cquality ****************
             if ($cquality=="Good"){

@@ -142,27 +142,58 @@ $mainorderid = "";
 
                                                                         $mainorderid = $roworder['id'];
 
-
-                                                                        $querydigital = "select * from category where category='Social Media'";
+                                                                        $dmorder = "false";
+                                                                        $querydigital = "select * from category where  dept_id=(select id from department where dname='Digital')";
                                                                         $select_postsdigital = mysqli_query($connection, $querydigital);
                                                                         while ($rowdigital = mysqli_fetch_assoc($select_postsdigital)) {
                                                                             $catId = $rowdigital['id'];
-                                                                        }
-                                                                        $dmorder = "false";
+                                                                       
+                                                                        
 
                                                                         $queryordercat = "select * from order_category where order_id='" . $roworder['id'] . "' and category_id='" . $catId . "'";
                                                                         $select_postsordercat = mysqli_query($connection, $queryordercat);
                                                                         while ($rowordercat = mysqli_fetch_assoc($select_postsordercat)) {
                                                                             $categoryId = $rowordercat['category_id'];
                                                                             $dmorder = "true";
-                                                                        }
+                                                                        } }
 
                                                                         if ($dmorder == "true") {
                                                                     ?>
 
-                                                                            <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
+                                                                            <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['brandName'] ?></option>
                                                                     <?php }
                                                                     }    ?>
+                                                                    <?php
+                                                                    // $queryorder = "select * from order_customers where order_status='Active' order by id desc";
+                                                                    // $select_postsorder = mysqli_query($connection, $queryorder);
+                                                                    // while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+
+                                                                    //     $mainorderid = $roworder['id'];
+
+
+                                                                    //     // $querydigital = "select * from category where category='Social Media Marketing'";
+                                                                    //     $querydigital = "select * from category where  dept_id=(select id from department where dname='Digital')";
+                                                                    //     $select_postsdigital = mysqli_query($connection, $querydigital);
+                                                                    //     while ($rowdigital = mysqli_fetch_assoc($select_postsdigital)) {
+                                                                    //         $catId = $rowdigital['id'];
+                                                                    //     }
+                                                                    //     $dmorder = "false";
+
+                                                                    //     $queryordercat = "select * from order_category where order_id='" . $roworder['id'] . "' and category_id='" . $catId . "'";
+                                                                    //     $select_postsordercat = mysqli_query($connection, $queryordercat);
+                                                                    //     while ($rowordercat = mysqli_fetch_assoc($select_postsordercat)) {
+                                                                    //         $categoryId = $rowordercat['category_id'];
+                                                                    //         $dmorder = "true";
+                                                                    //     }
+
+                                                                    //     if ($dmorder == "true") {
+                                                                    ?>
+
+                                                                            <!-- <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option> -->
+                                                                    <?php 
+                                                                    // }
+                                                                    // }    
+                                                                    ?>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-8" style="margin: bottom 10px; border: 1px double  rgb(210, 180, 140);padding:15px;

@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ob_start();
 if (!isset($_SESSION['adminname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
@@ -516,3 +516,4 @@ include "includes/connection.php";
 </body>
 
 </html>
+<?php ob_end_flush();?>

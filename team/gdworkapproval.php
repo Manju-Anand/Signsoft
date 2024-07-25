@@ -30,6 +30,7 @@ function showworklist()
             $redirectStat =  $row['redirect_status'];
             $post_orderid = $row['orderid'];
             $post_deadline_status = "Not-Done";
+            $post_completed_date ="";
             $queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
             $select_postsorder = mysqli_query($connection, $queryorder);
             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
@@ -79,7 +80,7 @@ function showworklist()
                 }
                 if (isset($post_completed_date) && $post_completed_date !== "") {
     
-                if ($post_completed_date <= $formatted_date) {
+                if ($post_completed_date <= $formatted_date && $post_wstatus == "Completed") {
    
                     $post_deadline_status = "On-time";
                 } else {

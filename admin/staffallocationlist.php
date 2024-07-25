@@ -11,7 +11,7 @@ function showorderlist()
 {
     global $connection;
     $i = 0;
-    $query = "select * from order_customers where order_status='Active'";
+    $query = "select * from order_customers where order_status='Active' order by id DESC";
     $select_posts = mysqli_query($connection, $query);
     while ($row = mysqli_fetch_assoc($select_posts)) {
         $id = $row['id'];
@@ -25,7 +25,7 @@ function showorderlist()
         $post_staffname = "";
         $post_assigndate = "";
 
-        $sql1 = "SELECT * FROM order_category WHERE order_id='" . $row['id'] . "' AND category_id IN (SELECT id FROM category WHERE category='Social Media')";
+        $sql1 = "SELECT * FROM order_category WHERE order_id='" . $row['id'] . "' AND category_id IN (SELECT id FROM category WHERE category='Social Media Marketing')";
 
         $result1 = $connection->query($sql1);
         if ($result1->num_rows > 0) {
@@ -83,6 +83,7 @@ if ($post_dmexist == "Yes"){
         $i = $i + 1;
         echo "<tr>";
         echo "<td>$i</td>";
+        echo "<td>$id</td>";
         echo "<td>$post_custName</td>";
         echo "<td>$post_brandName</td>";
 
@@ -223,6 +224,7 @@ if ($post_dmexist == "Yes"){
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>OrderId</th>
                                                     <th>Customer Name</th>
                                                     <th>Brand Name</th>
                                                     <th>Allocation Status</th>
