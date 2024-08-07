@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ob_start();
 if (!isset($_SESSION['adminname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
@@ -299,6 +299,13 @@ if ($resultorders->num_rows > 0) {
                                                             </div>
 
                                                         </div>
+                                                        <div class="row mb-4">
+                                                            <label class="col-md-3 form-label" for="leadsource">Order Expense :</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" class="form-control" id="orderexpense" name="orderexpense" value="<?php echo $roworders['order_expense'] ?>" placeholder="Order Expense" >
+                                                            </div>
+                                                        </div>
+
 
 
                                                     </div>
@@ -321,7 +328,7 @@ if ($resultorders->num_rows > 0) {
                                                 $cusname = $_POST["cusname"];
                                                 $brandname = $_POST["brandname"];
                                                 $orgorderid= $_POST["orgorderid"];
-                                                echo   $orgorderid;
+                                                // echo   $orgorderid;
                                                 $addr = $_POST["addr"];
                                                 $phoneno = $_POST["phoneno"];
                                                 $emailid = $_POST["emailid"];
@@ -332,7 +339,7 @@ if ($resultorders->num_rows > 0) {
                                                 $leadsource = $_POST["leadsource"];
                                                 $orderstatus = $_POST["status"];
                                                 $statusreason = $_POST["statusreason"];
-
+                                                $orderexpense = $_POST["orderexpense"];
                                                 $cquality = $_POST['cquality'];
                                                 $gstin = $_POST['gstin'];
 
@@ -345,7 +352,8 @@ if ($resultorders->num_rows > 0) {
                                                 quotedAmt='". mysqli_real_escape_string($connection, $qutamt) . "',leadSource='". mysqli_real_escape_string($connection, $leadsource) . "',
                                                 modified='". mysqli_real_escape_string($connection, $postdate) . "',order_status='". mysqli_real_escape_string($connection, $orderstatus) . "',
                                                 status_reason='". mysqli_real_escape_string($connection, $statusreason) . "',ordertype='External',
-                                                client_quality='". mysqli_real_escape_string($connection, $cquality) . "',gstin='". mysqli_real_escape_string($connection, $gstin) . "'  WHERE id='". $orgorderid ."'";
+                                                client_quality='". mysqli_real_escape_string($connection, $cquality) . "',gstin='". mysqli_real_escape_string($connection, $gstin) . "',
+                                                order_expense='". mysqli_real_escape_string($connection, $orderexpense) . "'  WHERE id='". $orgorderid ."'";
 
 
                                   
@@ -590,3 +598,4 @@ if ($resultorders->num_rows > 0) {
 
 <?php }
 } ?>
+<?php ob_end_flush();?>

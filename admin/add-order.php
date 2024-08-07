@@ -287,7 +287,7 @@ include "includes/connection.php";
                                                 <div class="row mb-4">
                                                     <label class="col-md-3 form-label" for="statusreason">Status Reason<br>[If any] :</label>
                                                     <div class="col-md-9">
-                                                        <textarea class="form-control" name="statusreason" id="statusreason" placeholder="Here statusreason" rows="3"></textarea>
+                                                        <textarea class="form-control" name="statusreason" id="statusreason" placeholder="Here statusreason" ></textarea>
 
                                                     </div>
                                                 </div>
@@ -301,6 +301,12 @@ include "includes/connection.php";
                                                         </select>
                                                     </div>
 
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <label class="col-md-3 form-label" for="leadsource">Order Expense :</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" id="orderexpense" name="orderexpense" placeholder="Order Expense" >
+                                                    </div>
                                                 </div>
 
 
@@ -334,7 +340,7 @@ include "includes/connection.php";
                                         $leadsource = $_POST["leadsource"];
                                         $orderstatus = $_POST["status"];
                                         $statusreason = $_POST["statusreason"];
-
+                                        $orderexpense = $_POST["orderexpense"];
                                         $cquality = $_POST['cquality'];
                                         $gstin = $_POST['gstin'];
 
@@ -342,7 +348,7 @@ include "includes/connection.php";
                                         $postdate = date("M d,Y h:i:s a");
 
                                         $sql = "INSERT INTO order_customers (custName,brandName,addr,custPhone,custEmail,contactDate,contactTime,quotedAmt,leadSource,created,modified,lead_entered,
-                                        empid,order_status,status_reason,ordertype,client_quality,gstin) 
+                                        empid,order_status,status_reason,ordertype,client_quality,gstin,order_expense) 
                                         values('" . mysqli_real_escape_string($connection, $cusname) . "','" . mysqli_real_escape_string($connection, $brandname) . "',
                                                 '" . mysqli_real_escape_string($connection, $addr) . "','" . mysqli_real_escape_string($connection, $phoneno) . "',
                                                                 '" . mysqli_real_escape_string($connection, $emailid) . "','" . mysqli_real_escape_string($connection, $contacteddate) . "',
@@ -352,7 +358,8 @@ include "includes/connection.php";
                                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','Administrator',
                                                                 '" . mysqli_real_escape_string($connection, $_SESSION['adminempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
                                                                 '" . mysqli_real_escape_string($connection, $statusreason) . "','External',
-                                                                '" . mysqli_real_escape_string($connection, $cquality) . "','" . mysqli_real_escape_string($connection, $gstin) . "')";
+                                                                '" . mysqli_real_escape_string($connection, $cquality) . "','" . mysqli_real_escape_string($connection, $gstin) . "',
+                                                                ,'" . mysqli_real_escape_string($connection, $orderexpense) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
 

@@ -666,6 +666,12 @@ ini_set('display_errors', 1);
 
 								</ul>
 							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="productivity.php">
+									<span class="side-menu__icon"><i class="fe fe-wind side_menu_img"></i></span>
+									<span class="side-menu__label">Productivity</span>
+								</a>
+							</li>
 
 							<li class="side-item side-item-category">Work Approval Section</li>
 							<li class="slide">
@@ -678,6 +684,12 @@ ini_set('display_errors', 1);
 								<a class="side-menu__item" data-bs-toggle="slide" href="workapproval.php">
 									<span class="side-menu__icon"><i class="fe fe-server side_menu_img"></i></span>
 									<span class="side-menu__label">Other Work Approval</span>
+								</a>
+							</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="qa_processjob_approval.php">
+									<span class="side-menu__icon"><i class="fe fe-thumbs-up side_menu_img"></i></span>
+									<span class="side-menu__label">QA & Process Job Approval</span>
 								</a>
 							</li>
 						
@@ -722,6 +734,14 @@ ini_set('display_errors', 1);
 							</li>
 							
 							<li class="side-item side-item-category">Masters</li>
+
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="add-graphics-rate.php">
+									<span class="side-menu__icon"><i class="fe fe-link side_menu_img"></i></span>
+									<span class="side-menu__label">Graphics Master</span>
+								</a>
+								
+							</li>
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 									<span class="side-menu__icon"><i class="fe fe-box side_menu_img"></i></span>

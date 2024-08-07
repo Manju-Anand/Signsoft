@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ob_start();
 if (!isset($_SESSION['adminname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
@@ -517,3 +517,4 @@ if ($resultuser->num_rows > 0) {
 
 </html>
 <?php }} ?>
+<?php ob_end_flush();?>

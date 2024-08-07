@@ -7,6 +7,7 @@ if (!isset($_SESSION['adminname'])) {
 }
 
 include "includes/connection.php";
+$empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
 // $orderid = $_GET["add"];
 $mainorderid = "";
 ?>
@@ -308,7 +309,7 @@ if (isset($_POST['submit'])) {
                 $select_postsordercat = mysqli_query($connection, $queryordercat);
                 while ($rowordercat = mysqli_fetch_assoc($select_postsordercat)) {
                     $categoryId = $rowordercat['category_id'];
-                    $querydmallot = "select * from staff_dm_allocation where orderid='" . $roworder['id'] . "' and staffid='" .  $_SESSION['empid'] . "'";
+                    $querydmallot = "select * from dm_monthlyreport where orderid='" . $roworder['id'] . "'";
                     $select_postsdmallot = mysqli_query($connection, $querydmallot);
                     while ($rowdmallot = mysqli_fetch_assoc($select_postsdmallot)) {
                         $dmorder = "true";
@@ -330,7 +331,7 @@ ppc1:
         // =======================================================================================
         if ($closestatus == "false") {
                 if( $monthlyreportstatus == "false"){
-                    echo "<script> alert('Monthly Report Not Submitted.'); </script>";
+                    echo "<script> alert('HauiMonthly Report Not Submitted.'); </script>";
                 }
 
                 if ( $paymentstatus == "false"){

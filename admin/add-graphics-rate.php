@@ -5,8 +5,20 @@ if (!isset($_SESSION['adminname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
 }
-
 include "includes/connection.php";
+
+$posterrate = 0;
+$videorate = 0;
+$gifrate = 0;
+
+$query = "select * from graphics_masters";
+$select_edits = mysqli_query($connection,$query);
+while($row1 = mysqli_fetch_assoc($select_edits))
+{
+    $posterrate=$row1['poster'];
+    $videorate=$row1['video'];
+    $gifrate=$row1['gif'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,10 +79,10 @@ include "includes/connection.php";
                     <!-- Page Header -->
                     <div class="page-header">
                         <div>
-                            <h2 class="main-content-title tx-24 mg-b-5">Allocate Process Jobs</h2>
+                            <h2 class="main-content-title tx-24 mg-b-5">Graphics Master</h2>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Employee Masters</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Allocate Process Jobs</li>
+                                <li class="breadcrumb-item active" aria-current="page">Graphics</li>
                             </ol>
                         </div>
                         <div class="btn-list">
@@ -97,63 +109,32 @@ include "includes/connection.php";
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Allocate Process Jobs</div>
+                                    <div class="card-title">Graphics Master</div>
                                 </div>
                                 <form id="addcateg" method="post" action="">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                        <label for="designation" class="form-label">Select Employee</label>
-                                                        <select class="form-control form-select" data-bs-placeholder="Select Employee" id="empname" name="empname" required>
-                                                            <option value="" disabled selected>Select Employee</option>
-                                                            <?php
-                                                            $query = "select * from employee where status='Active' order by id desc";
-                                                            $select_posts = mysqli_query($connection, $query);
-                                                            while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                            ?>
-                                                                <option value="<?php echo $row['id'] ?>" data-questions="<?php echo $row['id']; ?>" data-ans="<?php echo $row['empname']; ?>"><?php echo $row['empname'] ?></option>
-                                                            <?php } ?>
-
-
-                                                        </select>
-
-                                                        <input type="hidden" id="selectedEmpName" name="selectedEmpName" value="">
-                                                        
-                                                        <br>
-                                                        
-                                                        <label class="col-md-3 form-label" for="deadline">Deadline :</label>
-                                                        <input type="date" class="form-control" id="deadline" name="deadline" placeholder="Deadline" required>
-
-                                                        <br>
-                                                <label class="col-md-3 form-label" for="status">Status :</label>
-                                                <select name="status" id="status" class="form-control form-select select2" data-bs-placeholder="Select Status">
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
-
-                                                </select>
+                                        <div class="row mb-4">
+                                            <label class="col-md-3 form-label" for="poster">Poster Rate :</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="poster" id="poster" placeholder="Poster Rate" value="<?php echo $posterrate; ?>">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="designation" class="form-label">Select Process Job for the employee</label>
-                                                <div data-simplebar data-simplebar-auto-hide="false" data-simplebar-track="primary">
-                                                    <div class="list-group">
-                                                        <?php
-                                                        $query = "select * from process_jobs order by id desc";
-                                                        $select_posts = mysqli_query($connection, $query);
-                                                        while ($row = mysqli_fetch_assoc($select_posts)) {
-                                                        ?>
-                                                            <label class="list-group-item">
-                                                                <input class="form-check-input me-1" type="checkbox" name="fruits[]" value="<?php echo $row['id']; ?>">
-                                                                <?php echo $row['jobname']; ?>
-                                                            </label>
-                                                        <?php } ?>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                         </div>
+                                        <div class="row mb-4">
+                                            <label class="col-md-3 form-label" for="Video">Video Rate :</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="video" id="video" placeholder="Video Rate" value="<?php echo $videorate; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <label class="col-md-3 form-label" for="gif">Gif Rate :</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" name="gif" id="gif" placeholder="Gif Rate" value="<?php echo $gifrate; ?>">
+                                            </div>
+                                        </div>
+                                       
 
-
+                                       
+                                       
 
 
 
@@ -164,7 +145,7 @@ include "includes/connection.php";
                                         <div class="row">
                                             <div class="col-md-3"></div>
                                             <div class="col-md-9">
-                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Allocate Process Jobs</button>
+                                                <button type="submit" name="submit" class="btn btn-primary" style="color:white;cursor:pointer;">Add Master</button>
                                                 <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
                                             </div>
                                         </div>
@@ -173,47 +154,35 @@ include "includes/connection.php";
 
                                     <?php
                                     if (isset($_POST['submit'])) {
-                                        if (isset($_POST["fruits"])) {
-                                        $empid = $_POST["empname"];
-                                        $deadline = $_POST["deadline"];
-                                        $status = $_POST["status"];
-                                        $empname = $_POST["selectedEmpName"];
 
-                                        $query = "DELETE FROM staff_pjob_allocation WHERE empid = '" . $empid . "'";
-                                        $delete_query = mysqli_query($connection, $query);
-                                        if (!$delete_query) {
-                                            die('QUERY FAILED' . mysqli_error($connection));
-                                        }
-
-                                       
-                                        date_default_timezone_set("Asia/Calcutta");
-                                        $postdate = date("M d,Y h:i:s a");
-                                       
-                                        $assigndate = date("d-m-Y");
-                                        $fruits = $_POST["fruits"];
-                                        $f=0;
-                                        foreach ($fruits as $fruit) {
-                                            $f = $f + 1;
-                                            // echo $fruit;
-                                        }
-                                        foreach ($fruits as $fruit) {
-                                        $sql = "INSERT INTO staff_pjob_allocation (empid,empname,status,assigndate,created,modified,jobid,noofjobs,deadline) values('" . mysqli_real_escape_string($connection, $empid) . "',
-                                        '" . mysqli_real_escape_string($connection, $empname) . "','" . mysqli_real_escape_string($connection, $status) . "',
-                                                        '" . mysqli_real_escape_string($connection, $assigndate) . "'
-                                                        ,'" . mysqli_real_escape_string($connection, $postdate) . "','" . mysqli_real_escape_string($connection, $postdate) . "',
-                                                        '" . mysqli_real_escape_string($connection, $fruit) . "','" . mysqli_real_escape_string($connection, $f) . "'
-                                                        ,'" . mysqli_real_escape_string($connection, $deadline) . "')";
+                                        $sql = "DELETE FROM graphics_masters ";
 
                                         if ($connection->query($sql) === TRUE) {
-                                            
+                                          echo "Record deleted successfully";
+                                        } else {
+                                          echo "Error deleting record: " . $conn->error;
+                                        }
+
+
+
+                                        $poster = $_POST["poster"];
+                                        $Video = $_POST["video"];
+                                        $gif = $_POST["gif"];
+                                       
+
+
+
+
+                                        $sql = "INSERT INTO graphics_masters (poster,video,gif) values('" . mysqli_real_escape_string($connection, $poster) . "',
+                                                        '" . mysqli_real_escape_string($connection, $Video) . "',
+                                                        '" . mysqli_real_escape_string($connection, $gif) . "')";
+
+                                        if ($connection->query($sql) === TRUE) {
+                                            header("Location: add-graphics-rate.php");
                                         } else {
                                             echo "Error:ans1 " . $sql . "<br>" . $connection->error;
                                         }
                                     }
-
-                                    header("Location: processjoblist.php");
-                                    }
-                                }
                                     ?>
                                 </form>
                             </div>
@@ -257,7 +226,7 @@ include "includes/connection.php";
 
     <!-- Sidemenu js-->
     <script src="../assets/plugins/sidemenu/sidemenu.js"></script>
-    <!-- <script src="../assets/js/simplebar.min.js"></script> -->
+
     <!-- Sidebar js-->
     <script src="../assets/plugins/sidebar/sidebar.js"></script>
 
@@ -284,37 +253,14 @@ include "includes/connection.php";
     <!-- Switcher js -->
     <script src="../assets/switcher/js/switcher.js"></script>
     <script>
-        $(document).ready(function(e) {
-            $('#cancel').delegate('', 'click change', function() {
-                window.location = "processjoblist.php";
-                return false;
-            });
-
-// Get the select element
-var selectElement = document.getElementById('empname');
-
-// Add change event listener to select element
-selectElement.addEventListener('change', function() {
-    // Get the selected option
-    var selectedOption = this.options[this.selectedIndex];
-
-    // Get the value of the data-ans attribute of the selected option
-    var empName = selectedOption.getAttribute('data-ans');
-
-    // Set the value of the hidden input field
-    document.getElementById('selectedEmpName').value = empName;
-});
-
-            
-        });
-
-        
+    $(document).ready(function(e){
+        $('#cancel').delegate('','click change',function(){
+        window.location = "index.php";
+        return false;
+    });
+    });
     </script>
-    <script>
-
-</script>
-
 </body>
 
 </html>
-<?php ob_end_flush();?>
+<?php ob_end_flush(); ?>

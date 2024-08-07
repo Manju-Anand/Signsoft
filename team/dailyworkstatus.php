@@ -23,7 +23,7 @@ function isDateLessThanOneDayFromToday($dateString) {
     
     // Check if the difference is less than 1 day
     // 
-    return ($interval->days < 10);
+    return ($interval->days < 1);
 }
 if(isset($_GET['delete']))
 {
@@ -189,19 +189,26 @@ if(isset($_GET['delete']))
                                                                     <li>
                                                                       <a class='btn btn-sm btn-blue bs-tooltip' href='dailyworkentryedit1.php?edit=<?php echo $rowwsdate1['id']?>' title='You Can Edit Now !' data-toggle="tooltip" data-placement="top" style='color:white'>
                                                                     <span class='fe fe-edit'> </span></a> &nbsp;
-                                                               
+
+                                                                    <a href="dailyworkentryviewer.php?edit=<?php echo $rowwsdate1['id']?>" class="btn btn-sm btn-success bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"><span class='fe fe-eye'> </span></a>&nbsp;
+
                                                                     <a onclick="javascript:confirmationDelete($(this));return false;"  class='btn btn-sm btn-danger delete-staff-btn bs-tooltip' data-toggle="tooltip" data-placement="top" href="dailyworkstatus.php?delete=<?php echo  $id; ?>" id='qusdelete' title='You Can Delete Now !' data-toggle='tooltip' style='color:white'>    
                                                                     <span class='fe fe-trash-2'> </span></a>
                                                                 </li>
                                                                 <?php } else { ?>
-                                                                    <li class="disabled-li"><a href="javascript:void(0);" class="btn btn-sm btn-blue bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><span class='fe fe-edit'> </span></a>&nbsp;
-                                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><span class='fe fe-trash-2'> </span></a></li>
-                                                                <?php } ?>
+                                                                    <li class=""><a href="javascript:void(0);" class="btn btn-sm btn-blue bs-tooltip disabled-li" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><span class='fe fe-edit'> </span></a>&nbsp;
+                                                                    <a href="dailyworkentryviewer.php?edit=<?php echo $rowwsdate1['id']?>" class="btn btn-sm btn-success bs-tooltip " data-toggle="tooltip" data-placement="top" title="" data-original-title="View"><span class='fe fe-eye'> </span></a>&nbsp;
 
+                                                                          <a href="javascript:void(0);" class="btn btn-sm btn-danger bs-tooltip disabled-li" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><span class='fe fe-trash-2'> </span></a>
+                                                                          
+                                                                </li>
+                                                                <?php } ?>
+                                                               
                                                                 </ul>
                                                             </td>
                                                         </tr>
 
+                                                        
 
 
 
@@ -225,11 +232,14 @@ if(isset($_GET['delete']))
                                                          
                                                              <li><a href="daily_work_entry.php" class="btn btn-sm btn-blue bs-tooltip" data-toggle="tooltip" data-placement="top" title="" title="You Can Add Now !"><span class='fe fe-edit'> </span></a></li>
                   
-                                                            
+                                                             <a href="dailyworkentryviewer.php?edit=<?php echo $rowwsdate1['id']?>" class="btn btn-sm btn-success bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"><span class='fe fe-eye'> </span></a>&nbsp;
+
                                                                     <!--<li><a href="dailyworkentry_editnewdate.php?param1=<?php echo date('d-m-Y', $currentDate) ?>&param2=<?php echo $_SESSION['empid'] ?>" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="You Can Edit Now !"><i class="flaticon-edit  p-1 br-6 mb-1"></i></a></li>-->
                                                                   <?php } else { ?>
-                                                                    <li class="disabled-li"><a href="javascript:void(0);" class="btn btn-sm btn-blue bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><span class='fe fe-edit'> </span></a> &nbsp;
-                                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><span class='fe fe-trash-2'> </span></a></li>
+                                                                    <li class=""><a href="javascript:void(0);" class="btn btn-sm btn-blue bs-tooltip disabled-li" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><span class='fe fe-edit'> </span></a> &nbsp;
+                                                                    <a href="dailyworkentryviewer.php?edit=<?php echo $rowwsdate1['id']?>" class="btn btn-sm btn-success bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"><span class='fe fe-eye'> </span></a>&nbsp;
+
+                                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger bs-tooltip disabled-li" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><span class='fe fe-trash-2'> </span></a></li>
                                                                 <?php } ?>
 
 

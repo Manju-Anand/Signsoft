@@ -80,7 +80,7 @@ $mainorderid = "";
 
                                     <div class="POST">
                                         <div class="col-md-5">
-                                            <h2 class="main-content-title tx-24 mg-b-5" ;">Add Graphics Designers Content</h2>
+                                            <h2 class="main-content-title tx-24 mg-b-5">Add Graphics Designers Content</h2>
                                             <span class="mt-2">You can Add Graphics Designers Content here.</span>
                                             
                                         </div>
@@ -91,7 +91,7 @@ $mainorderid = "";
                                     <div class="panel panel-primary">
                                         <form method="post"  enctype="multipart/form-data">
 
-                                            <input type="hidden" class="form-control" id="orderid" name="orderid" value="<?php echo isset($_POST['orderid']) ? htmlspecialchars($_POST['orderid']) : ''; ?>">
+                                            <input type="text" class="form-control" id="orderid" name="orderid" value="<?php echo isset($_POST['orderid']) ? htmlspecialchars($_POST['orderid']) : ''; ?>">
                                             <input type="hidden" class="form-control" id="empid" name="empid" value="<?php echo isset($_POST['empid']) ? htmlspecialchars($_POST['empid']) : ''; ?>">
 
 

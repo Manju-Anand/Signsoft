@@ -3,12 +3,26 @@ header('Content-Type: application/json');
 
 $workid = $_GET["workid"];
 
-function timeToDecimal($time)
-{
-    list($hours, $minutes) = explode(':', $time);
-    return $hours + ($minutes / 60);
+// function timeToDecimal($time)
+// {
+//     list($hours, $minutes) = explode(':', $time);
+//     return $hours + ($minutes / 60);
+// }
+function timeToMinutes($time) {
+    $parts = explode(':', $time);
+    if (count($parts) == 2) {
+        $hours = intval($parts[0]);
+        $minutes = intval($parts[1]);
+        return ($hours * 60) + $minutes;
+    }
+    return intval($time) * 60; // In case there's no colon, treat it as hours
 }
 
+function minutesToTime($minutes) {
+    $hours = floor($minutes / 60);
+    $remainingMinutes = $minutes % 60;
+    return sprintf('%d:%02d', $hours, $remainingMinutes);
+}
 $post_timetaken = 0;
 $editstatus = "New";
 $editid = "";
@@ -31,7 +45,9 @@ while ($row = mysqli_fetch_assoc($result)) {
         $querywstatus = "select * from staff_allocation_details where staff_allocation_id='" .  $workid . "' order by id desc";
         $select_postswstatus = mysqli_query($connection, $querywstatus);
         while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
-            $post_timetaken += timeToDecimal($rowwstatus['timetaken']);
+            $timetaken = $rowwstatus['timetaken'];
+            $post_timetaken += timeToMinutes($timetaken);
+
         }
 
         $sql1 = "SELECT * FROM gd_work_approval where workid ='" . $workid . "'";
@@ -47,9 +63,9 @@ while ($row = mysqli_fetch_assoc($result)) {
         }
  
 }
-
+$post_timetaken1= minutesToTime($post_timetaken);
 $response = [
-    'post_timetaken' => $post_timetaken,
+    'post_timetaken' => $post_timetaken1,
     'editstatus' => $editstatus,
     'editid' => $editid,
     'internal' => $internal,
