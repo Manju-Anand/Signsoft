@@ -107,8 +107,7 @@ $isReturnFromEdit = isset($_GET['from']) && $_GET['from'] === 'change';
 
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <h2 class="main-content-title tx-24 mg-b-5">Assign Graphics Designers</h2>
-                                            <span class="mt-2">You can Add & Edit Graphics Designers Content here.</span>
+                                            <h2 class="main-content-title tx-24 mg-b-5">View Given Contents here.</span>
                                             <input type="hidden" id="paystatus" name="paystatus" value="Payment Add" readonly>
                                             <input type="hidden" id="datastatus" name="datastatus" value="" readonly>
                                             <input type="hidden" id="empid" name="empid" value="<?php echo $_SESSION['empid']; ?>" readonly>
@@ -182,9 +181,9 @@ $isReturnFromEdit = isset($_GET['from']) && $_GET['from'] === 'change';
                                                                 <a href="add-Graphics-new-content.php" style="color: white; text-decoration: none;">Add New Content</a>
                                                             </button> -->
 
-                                                    <button type="button" name="addcontent" id="addcontent" class="btn btn-primary" style="color:white; cursor:pointer;" disabled onclick="navigateToPage()">
+                                                    <!-- <button type="button" name="addcontent" id="addcontent" class="btn btn-primary" style="color:white; cursor:pointer;" disabled onclick="navigateToPage()">
                                                         Add New Content
-                                                    </button>
+                                                    </button> -->
 
 
 
@@ -203,7 +202,7 @@ $isReturnFromEdit = isset($_GET['from']) && $_GET['from'] === 'change';
                                                                 <th class="wd-30p">Content</th>
                                                                 <th class="wd-20p">Idea</th>
                                                                 <th class="wd-10p">Deadline</th>
-                                                                <th class="wd-10p">Action</th>
+                                                                <th class="hidden-cell">Action</th>
                                                                 <!-- class="hidden-cell" -->
                                                                 <th class="hidden-cell">status</th>
                                                                 <th class="hidden-cell">editid</th>
@@ -250,63 +249,7 @@ $isReturnFromEdit = isset($_GET['from']) && $_GET['from'] === 'change';
         <!-- ===========================modals ======================================= -->
 
         <!-- Basic modal -->
-        <div class="modal fade" id="staffmodal">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content modal-content-demo">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Edit Graphics Work Details</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <input type="hidden" class="form-control" id="modalstaffrowid" name="modalstaffrowid" required>
-                            <input type="hidden" class="form-control" id="modaleditid" name="modaleditid" required>
-                            <div class="col-md-4">
-                                <label class="form-label" for="modalpost">Postings :</label>
-
-                                <select class="form-select" name="modalpost" id="modalpost" required>
-                                    <option value="Poster">Poster</option>
-                                    <option value="Video">Video</option>
-                                    <option value="GIF">GIF</option>
-                                </select>
-
-
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="modalassigndate">Assigned Date :</label>
-                                <input type="date" class="form-control" id="modalassigndate" name="modalassigndate" placeholder="Assigndate">
-
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="modaldeadline">Deadline :</label>
-                                <input type="date" class="form-control" id="modaldeadline" name="modaldeadline" placeholder="">
-
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label" for="modalidea">Idea :</label>
-                                <textarea class="form-control" name="modalidea" id="modalidea" rows="4" style="margin-bottom: 10px;"></textarea>
-
-                            </div>
-
-
-
-                            <div class="col-md-12">
-                                <label class="form-label" for="modalcontent">Content :</label>
-                                <textarea class="form-control" name="modalcontent" id="modalcontent" rows="4" style="margin-bottom: 10px;"></textarea>
-
-                            </div>
-
-
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn ripple btn-primary" id="savestaffChangesBtn" type="button">Save changes</button>
-                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+      
         <!-- End Basic modal -->
 
         <!-- Main Footer-->
@@ -397,10 +340,10 @@ $isReturnFromEdit = isset($_GET['from']) && $_GET['from'] === 'change';
 
 
     <script>
-        $(document).ready(function() {
-            var selectedOrderId = "<?php echo $orderid; ?>";
+        document.getElementById('ordersdisplay').addEventListener('change', function () {
             // alert (selectedOrderId);
-
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedOrderId = selectedOption.value;
             if (selectedOrderId) {
                 var ordersDisplay = document.getElementById('ordersdisplay');
                 ordersDisplay.value = selectedOrderId;
@@ -419,7 +362,7 @@ $isReturnFromEdit = isset($_GET['from']) && $_GET['from'] === 'change';
 
                 $.ajax({
                     type: 'POST',
-                    url: 'get_graphics_content_details.php',
+                    url: 'get_graphics_content_details_viewing.php',
                     data: {
                         selectedOrderId: selectedOrderId
                     },
@@ -443,67 +386,7 @@ $isReturnFromEdit = isset($_GET['from']) && $_GET['from'] === 'change';
                     }
                 });
                 // Ensure event delegation is set up after content is loaded
-                $('body').on('click', '.edit-staff-btn', function() {
-
-                    // Get the corresponding row
-                    var row = $(this).closest('tr');
-
-                    // Extract values from the row
-                    var postings = row.find('td:eq(2)').text(); // Replace 2 with the actual column index
-
-                    var content = row.find('td:eq(3)').text(); // Replace 2 with the actual column 
-                    var idea = row.find('td:eq(4)').text(); // Replace 2 with the actual column index
-
-                    var editid = row.find('td:eq(8)').text(); // Replace 4 with the actual column index
-                    var staffrowId = row.data('rowid'); // Assuming you have a data-rowid attribute on your row
-
-                    var assigndate = row.find('td:eq(1)').text(); // Assuming the format is 'dd-mm-YYYY'
-                    var dateParts = assigndate.split('-');
-                    var formattedDate = dateParts[2] + '-' + padWithZeros(dateParts[1], 2) + '-' + padWithZeros(dateParts[0], 2);
-
-                    var deadline = row.find('td:eq(5)').text(); // Assuming the format is 'dd-mm-YYYY'
-                    var dateParts = deadline.split('-');
-
-                    var deadlineDate = dateParts[2] + '-' + padWithZeros(dateParts[1], 2) + '-' + padWithZeros(dateParts[0], 2);
-
-                    var orderDisplay = document.getElementById('ordersdisplay');
-                    var empid = document.getElementById("empid").value;
-                    var selectedValue = orderDisplay.value;
-
-                    if (selectedValue) {
-                        // Create a form element
-                        var form = document.createElement('form');
-                        form.method = 'POST';
-                        form.action = 'edit-Graphics-content.php';
-
-                        // Create input elements for each parameter
-                        var params = {
-                            empid: empid,
-                            orderid: selectedValue,
-                            editid: editid,
-                            postings: postings,
-                            content: content,
-                            idea: idea,
-                            deadline: deadlineDate
-                        };
-
-                        for (var key in params) {
-                            if (params.hasOwnProperty(key)) {
-                                var input = document.createElement('input');
-                                input.type = 'hidden';
-                                input.name = key;
-                                input.value = params[key];
-                                form.appendChild(input);
-                            }
-                        }
-
-                        // Append the form to the body and submit it
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-
-
-                });
+             
             }
         });
     </script>

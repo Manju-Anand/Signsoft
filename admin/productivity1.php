@@ -52,9 +52,11 @@ function showquestions()
         $bs = (float)$row['basic_salary'];
         $ce = (float)$row['company_expense'];
         $staff_cost = $bs + $ce;
-        $per_hour_cost = ($staff_cost / 200) * 2; // 200 hours in minutes- 12000
-
-        // echo $per_hour_cost . " - per /hour cost of " . $post_title . "<br>";
+        $per_hour_cost = ($staff_cost / 12000) * 2; // 200 hours in minutes- 12000
+        echo "BS :".$bs . "<br>";
+        echo "CE :" . $ce . "<br>";
+        echo "StaffCost :".  $staff_cost . "<br>";
+        echo $per_hour_cost . " - per minute cost of " . $post_title . "<br>";
         // =================================================================================
         $post_timetaken = 0;
         $orderid = "";
@@ -73,15 +75,16 @@ function showquestions()
         $select_posts1 = mysqli_query($connection, $query1);
         while ($row1 = mysqli_fetch_assoc($select_posts1)) {
             $post_timetaken = 0;
+            echo "Hai";
             $orderid = $row1['orderid'];
-            // echo $orderid . " - orderid " .  "<br>";
+            echo $orderid . " - orderid " .  "<br>";
             $per_of_work = $row1['per_of_work'];
             $catid = $row1['entryid'];
-            // echo "Percentage : " . $per_of_work . "<br>";
+            echo "Percentage : " . $per_of_work . "<br>";
             $query2 = "select * from order_customers where id='" . $orderid . "'";
             $select_posts2 = mysqli_query($connection, $query2);
             while ($row2 = mysqli_fetch_assoc($select_posts2)) {
-                $order_expense = $row2['order_expense'];
+                
                 $orderamt2 = $row2['quotedAmt'];
             }
 
@@ -90,7 +93,9 @@ function showquestions()
             if ($select_postscategory) {
                 // Check the number of records
                 $num_records = mysqli_num_rows($select_postscategory);
+                echo "Number of records: " . $num_records . "<br>";
                 while ($rowcategory = mysqli_fetch_assoc($select_postscategory)) {
+                    echo "split";
                     $querysplitup = "select * from quote_splitup where orderid='" . $orderid . "' and itemid='" . $catid . "'";
                     $select_postssplitup = mysqli_query($connection, $querysplitup);
                     while ($rowsplitup = mysqli_fetch_assoc($select_postssplitup)) {
@@ -98,21 +103,44 @@ function showquestions()
                         $order_expense = $rowsplitup['order_expense'];
                     }
                 }
+
                 if ($orderamt1 == 0) {
                     $orderamt = $orderamt2;
                 } else {
                     $orderamt = $orderamt1;
                 }
+                
             } else {
                 echo "Error: " . mysqli_error($connection);
             }
 
-            $project_quote = $orderamt - $order_expense;
-            $involvementpercentage = $project_quote *  $per_of_work / 100;
-            $post_timetaken = '200';
-            $green_completion = round($involvementpercentage / $per_hour_cost, 2);
-            $pts1 = round($green_completion / $post_timetaken * 100, 2);
-            $pts  += $pts1;
+            echo "expense : " . $order_expense . "<br>";
+            $involvementpercentage = intval($orderamt) *  intval($per_of_work) / 100;
+
+            echo "Involveamt : " . $involvementpercentage ;
+            
+            $workid = $row1['id'];
+            $querywstatus = "select * from staff_allocation_details where staff_allocation_id='" .  $workid . "' order by id desc";
+            $select_postswstatus = mysqli_query($connection, $querywstatus);
+            while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
+                $timetaken = $rowwstatus['timetaken'];
+                $post_timetaken += timeToMinutes($timetaken);
+            }
+            echo "post_timetaken: " . $post_timetaken . "<br>";
+
+            if ($post_timetaken > 0) {
+                $post_timetaken1 = minutesToTime($post_timetaken); // minutes to hour - not needed - using minute wise calculation[$post_timetaken]
+                // echo "timetaken : " . $post_timetaken1 . "<br>";
+                $project_quote = intval($involvementpercentage) - intval($order_expense);
+                echo "project_quote : " . $project_quote . "<br>";
+                $green_completion = round($project_quote / $per_hour_cost, 2);
+                echo "green_completion : " . $green_completion . "<br>";
+                $pts1 = round($green_completion / $post_timetaken * 100, 2);
+                echo "pts1 : " . $pts1 . "<br>";
+                $pts  += $pts1;
+                // echo "pts : " . $pts . "<br>";
+                // echo "=============================" . "<br>";
+            }
         }
         //    ============================== staff allocation =======================
         // ================================= staff DM allocation ===============================
@@ -124,13 +152,12 @@ function showquestions()
             $per_of_work = $row1['workpercentage'];
             $order_expense = $row1['promoamt'];
             $orderamt = $row1['payment'];
+            $involvementpercentage = $orderamt *  $per_of_work / 100;
 
-            $project_quote = $orderamt - $order_expense;
-            $involvementpercentage = $project_quote *  $per_of_work / 100;
+            $post_timetaken = "12000";  // 200 hours - full hours work for digital marketers
 
-            $post_timetaken = "200";  // 200 hours - full hours work for digital marketers
-
-            $green_completion = round($involvementpercentage / $per_hour_cost, 2);
+            $project_quote = $involvementpercentage - $order_expense;
+            $green_completion = round($project_quote / $per_hour_cost, 2);
             $pts1 = round($green_completion / $post_timetaken * 100, 2);
             $pts  += $pts1;
         }
@@ -140,8 +167,8 @@ function showquestions()
         $videocount = 0;
         $gifcount = 0;
         $timecount = 0;
-        $posterpervalue  = 0;
-        $videopervalue = 0;
+        $posterpervalue  =0 ;
+        $videopervalue =0;
         $gifpervalue  = 0;
 
         $query21 = "select * from graphics_masters";
@@ -163,13 +190,15 @@ function showquestions()
         if ($select_posts1->num_rows > 0) {
             // $postercount = $select_posts1->num_rows;
             $postercount = 0;
-
+           
             while ($rowposter = mysqli_fetch_assoc($select_posts1)) {
                 // echo "pos1";
                 $query21 = "select * from gd_work_approval where workid='" . $rowposter['id'] . "'";
                 $select_posts21 = mysqli_query($connection, $query21);
                 while ($row21 = mysqli_fetch_assoc($select_posts21)) {
                     $postercount += 1;
+                    $timecount += timeToMinutes($row21['total_hours_worked']);
+                    $posterpervalue += $postervalue * $row21['percentage_completion'] /100 ;
                 }
             }
         } else {
@@ -192,6 +221,8 @@ function showquestions()
                 $select_posts21 = mysqli_query($connection, $query21);
                 while ($row21 = mysqli_fetch_assoc($select_posts21)) {
                     $gifcount += 1;
+                    $timecount += timeToMinutes($row21['total_hours_worked']);
+                    $gifpervalue += $gifvalue * $row21['percentage_completion'] /100 ;
                 }
             }
         }
@@ -212,84 +243,35 @@ function showquestions()
                 $select_posts21 = mysqli_query($connection, $query21);
                 while ($row21 = mysqli_fetch_assoc($select_posts21)) {
                     $videocount += 1;
+                    $timecount += timeToMinutes($row21['total_hours_worked']);
+                    $videopervalue += $videovalue * $row21['percentage_completion'] /100 ;
                 }
             }
         }
 
 
-        $post_timetaken = '200';
+        $post_timetaken = $timecount;
         $order_expense = 0;
+        echo "StaffId :" . $id;
+        echo "post_timetaken : " . $post_timetaken;
+        echo "Poster : " . $postercount;
+        echo "Video :" . $videocount;
+        echo "GIF  :" . $gifcount;
+        echo "<br>";
 
-        // echo "StaffId :" . $id . "<br>";
-        // echo "Poster : " . $postercount. "<br>";
-        // echo "Video :" . $videocount. "<br>";
-        // echo "GIF  :" . $gifcount. "<br>";
-        // echo "<hr>";
+if ($post_timetaken > 0) {
 
-        if ($post_timetaken > 0) {
+        $videoamt = $videocount * $videopervalue;
+        $gifamt = $gifcount * $gifpervalue;
+        $posteramt = $postercount * $posterpervalue;
 
-            $videoamt = $videocount * $videovalue;
-            $gifamt = $gifcount * $gifvalue;
-            $posteramt = $postercount * $postervalue;
+        $involvementpercentage = $videoamt + $gifamt + $posteramt;
+        $project_quote = $involvementpercentage - $order_expense;
+        $green_completion = round($project_quote / $per_hour_cost, 2);
+        $pts1 = round(($green_completion / $post_timetaken) * 100, 2);
+        $pts  += $pts1;
+}
 
-            $involvementpercentage = $videoamt + $gifamt + $posteramt;
-            $project_quote = ($involvementpercentage - $order_expense) / 2;
-            $green_completion = round($project_quote / $per_hour_cost, 2);
-            $pts1 = round(($green_completion / $post_timetaken) * 100, 2);
-            $pts  += $pts1;
-        }
-
-
-
-
-
-
-
-
-        // ================================= staff GD allocation ===============================
-        // ================================= staff GD allocation ===============================
-
-        // $query1 = "SELECT * 
-        //         FROM staff_dm_graphics_allocation 
-        //         WHERE staffid = '" . $id . "' 
-        //         AND MONTH(STR_TO_DATE(assigndate, '%d-%m-%Y')) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) 
-        //         AND YEAR(STR_TO_DATE(assigndate, '%d-%m-%Y')) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) 
-        //         AND work_status = 'Active'";
-        // $select_posts1 = mysqli_query($connection, $query1);
-        // while ($row1 = mysqli_fetch_assoc($select_posts1)) {
-
-        //     $post_timetaken = 0;
-        //     $orderid = $row1['orderid'];
-
-
-        //     $query21 = "select * from staff_dm_allocation where  orderid='" . $orderid . "'";
-        //     $select_posts21 = mysqli_query($connection, $query21);
-        //     while ($row21 = mysqli_fetch_assoc($select_posts21)) {
-        //         $order_expense = intval($row21['promoamt']);
-        //         $orderamt = intval($row21['payment']);
-        //     }
-
-
-
-        //     $workid = $row1['id'];
-        //     $querywstatus = "select * from gd_work_approval where workid='" .  $workid . "'";
-        //     $select_postswstatus = mysqli_query($connection, $querywstatus);
-        //     while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
-        //         $timetaken = $rowwstatus['total_hours_worked'];
-        //         $post_timetaken += timeToMinutes($timetaken);
-        //         $per_of_work = $rowwstatus['percentage_completion'];
-        //     }
-
-
-
-        //     if ($post_timetaken > 0) {
-        //         $involvementpercentage = $orderamt *  intval($per_of_work) / 100;
-        //         $project_quote = $involvementpercentage - $order_expense;
-        //         $green_completion = round($project_quote / $per_hour_cost, 2);
-        //         $pts1 = round($green_completion / $post_timetaken * 100, 2);
-        //         $pts  += $pts1;
-        //     }
-        // }
 
 
 
@@ -391,7 +373,11 @@ function minutesToTime($minutes)
                                 <li class="breadcrumb-item active" aria-current="page">Last Month</li>
                             </ol>
                         </div>
+                        <!-- <div class="btn-list">
+                            <a class="btn ripple btn-primary" href="javascript:void(0);"><i class="fe fe-external-link"></i> Export</a>
+                            <a class="btn ripple btn-success" href="add-questions.php"><i class="fe fe-external-link"></i> &nbsp;&nbsp; Add New questions</a>
 
+                        </div> -->
                     </div>
                     <!-- End Page Header -->
 

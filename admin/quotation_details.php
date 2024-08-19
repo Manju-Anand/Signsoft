@@ -49,6 +49,7 @@ if (isset($_POST['order_id'])) {
                             echo "<td>" . $rowsubcat['category_id'] . "</td>";
                             echo "<td>" . $rowsubcat['subcategory'] . "</td>";
                             echo "<td contenteditable='true' class='numeric-column'></td>";
+                            echo "<td contenteditable='true' class='numeric-column'></td>";
                             echo "</tr>";
                             $u++;
                         }
@@ -58,6 +59,7 @@ if (isset($_POST['order_id'])) {
                         echo "<td>" . $u . "</td>";
                         echo "<td>" . $row['category_id'] . "</td>";
                         echo "<td>" . $rowitemname['category'] . "</td>";
+                        echo "<td contenteditable='true' class='numeric-column'></td>";
                         echo "<td contenteditable='true' class='numeric-column'></td>";
                         echo "</tr>";
                         $u++;
@@ -70,6 +72,7 @@ if (isset($_POST['order_id'])) {
         echo "<td>" . $u . "</td>";
         echo "<td>**</td>";
         echo "<td>Advance Percentage[ % ]</td>";
+        echo "<td contenteditable='true' class='numeric-column-adv'></td>";
         echo "<td contenteditable='true' class='numeric-column-adv'></td>";
         echo "</tr>";
         $u++;

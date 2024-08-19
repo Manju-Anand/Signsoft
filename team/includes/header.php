@@ -9,7 +9,7 @@ $modulename = isset($_SESSION['modulename']) ? $_SESSION['modulename'] : '';
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+include "includes/connection.php";
 ?>
 <!--Main Header -->
 <div class="main-header side-header sticky">
@@ -217,6 +217,10 @@ ini_set('display_errors', 1);
 						<a class="side-menu__item" data-bs-toggle="slide" href="delete_sample_images.php">
 							<span class="side-menu__icon"><i class="fe fe-scissors side_menu_img"></i></span>
 							<span class="side-menu__label">Delete Sample Images</span>
+						</a>
+						<a class="side-menu__item" data-bs-toggle="slide" href="view-all-dm-contents.php">
+							<span class="side-menu__icon"><i class="fe fe-cast side_menu_img"></i></span>
+							<span class="side-menu__label">View Given Contents</span>
 						</a>
 						<hr>
 						<li class="side-item side-item-category">Work Details</li>

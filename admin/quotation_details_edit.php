@@ -30,6 +30,7 @@ if (isset($_POST['order_id'])) {
             } else {
                 echo "<td contenteditable='true' class='numeric-column'>" . $row['price'] . "</td>";
             }
+            echo "<td contenteditable='true' class='numeric-column'>" . $row['order_expense'] . "</td>";
             echo "</tr>";
         }
         if ($advpresent == "false") {
@@ -38,6 +39,7 @@ if (isset($_POST['order_id'])) {
             echo "<td>" . $u . "</td>";
             echo "<td>**</td>";
             echo "<td>Advance Percentage[ % ]</td>";
+            echo "<td contenteditable='true' class='numeric-column-adv'></td>";
             echo "<td contenteditable='true' class='numeric-column-adv'></td>";
             echo "</tr>";
         }

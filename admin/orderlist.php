@@ -12,9 +12,10 @@ include "includes/connection.php";
 function showorderlist()
 {
     global $connection;
-    if ($_SESSION['adminname'] == 'Signefo') {
+    $adminname = isset($_SESSION['adminname']) ? $_SESSION['adminname'] : '';
+    if ($adminname  == 'Signefo') {
         $query = "select * from order_customers where ordertype='External' and client_quality='Good' order by id desc";
-    } else if ($_SESSION['adminname'] == 'SignefoMedia') {
+    } else if ($adminname  == 'SignefoMedia') {
         $query = "select * from order_customers where ordertype='External' and client_quality='Average' order by id desc";
     } else {
         $query = "select * from order_customers where ordertype='External' order by id desc";

@@ -14,6 +14,7 @@ if (isset($_GET['logout'])) {
 }
 
 include "includes/connection.php";
+$adminname = isset($_SESSION['adminname']) ? $_SESSION['adminname'] : '';
 $totemployees = 0;
 ?>
 <!DOCTYPE html>
@@ -112,92 +113,14 @@ $totemployees = 0;
 						</div>
 					</div>
 					<!-- End Page Header -->
-
-					<!--Navbar-->
-					<div class="responsive-background">
-						<div class="collapse navbar-collapse" id="navbarSupportedContent">
-							<div class="advanced-search br-3">
-								<div class="row align-items-center">
-									<div class="col-md-12 col-xl-4">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group mb-lg-0">
-													<label>From :</label>
-													<div class="input-group">
-														<div class="input-group-text">
-															<i class="fe fe-calendar lh--9 op-6"></i>
-														</div><input class="form-control fc-datepicker" placeholder="11/01/2019" type="text">
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group mb-lg-0">
-													<label>To :</label>
-													<div class="input-group">
-														<div class="input-group-text">
-															<i class="fe fe-calendar lh--9 op-6"></i>
-														</div><input class="form-control fc-datepicker" placeholder="11/08/2019" type="text">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-xl-3">
-										<div class="form-group mb-lg-0">
-											<label>Sales By Country :</label>
-											
-										</div>
-									</div>
-									<div class="col-md-6 col-xl-3">
-										<div class="form-group mb-lg-0">
-											<label>Products :</label>
-											<select multiple="multiple" class="group-filter">
-												<optgroup label="Mens">
-													<option value="1">Foot wear</option>
-													<option value="2">Top wear</option>
-													<option value="3">Bootom wear</option>
-													<option value="4">Men's Groming</option>
-													<option value="5">Accessories</option>
-												</optgroup>
-												<optgroup label="Women">
-													<option value="1">Western wear</option>
-													<option value="2">Foot wear</option>
-													<option value="3">Top wear</option>
-													<option value="4">Bootom wear</option>
-													<option value="5">Beuty Groming</option>
-													<option value="6">Accessories</option>
-													<option value="7">Jewellery</option>
-												</optgroup>
-												<optgroup label="Baby & Kids">
-													<option value="1">Boys clothing</option>
-													<option value="2">Girls Clothing</option>
-													<option value="3">Toys</option>
-													<option value="4">Baby Care</option>
-													<option value="5">Kids footwear</option>
-												</optgroup>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-12 col-xl-2">
-										<div class="form-group mb-lg-0">
-											<label>Sales Type :</label>
-											<select multiple="multiple" class="multi-select">
-												<option value="1">Online</option>
-												<option value="2">Offline</option>
-												<option value="3">Reseller</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<hr>
-								<div class="text-end">
-									<a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Apply</a>
-									<a href="javascript:void(0);" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Reset</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--End Navbar -->
+					 <?php
+					// if ($adminname  == 'Signefo') {
+					// 	} else if ($adminname  == 'SignefoMedia') {
+					// 	} else {
+						if (in_array($adminname, ['Signefo', 'SignefoMedia'])) {
+							// Your code here for both 'Signefo' and 'SignefoMedia'
+						} else {					
+				?>
 
 					<!-- Row -->
 					<div class="row row-sm">
@@ -304,100 +227,7 @@ $totemployees = 0;
 					</div>
 					<!--End  Row -->
 
-					<!-- Row -->
-					<!-- <div class="row row-sm">
-						<div class="col-sm-12 col-xl-8 col-lg-8">
-							<div class="card custom-card overflow-hidden">
-								<div class="card-body">
-									<div class="card-option d-flex">
-										<div>
-											<h6 class="card-title mb-1">Overview of Sales Win/Lost</h6>
-											<p class="text-muted mb-0 card-sub-title">Compared to last month sales.</p>
-										</div>
-										<div class="card-option-title ms-auto">
-											<div class="btn-group p-0">
-												<button class="btn btn-light btn-sm" type="button">Month</button>
-												<button class="btn btn-outline-light btn-sm" type="button">Year</button>
-											</div>
-										</div>
-									</div>
-									<div>
-										<canvas id="sales"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-lg-4 col-xl-4">
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Cost BreakDown</h6>
-										<p class="text-muted card-sub-title">Excepteur sint occaecat cupidatat non
-											proident.
-										</p>
-									</div>
-									<div class="row">
-										<div class="col-6 col-md-6 text-center">
-											<div class="mb-2">
-												<span class="peity-donut"
-													data-peity='{ "fill": ["#eb6f33", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>4/7</span>
-											</div>
-											<p class="mb-1 tx-inverse">Marketing</p>
-											<h4 class="mb-1"><span>$</span>67,927</h4>
-											<span class="text-muted fs-12"><i
-													class="fa fa-caret-up me-1 text-success"></i>54% last month</span>
-										</div>
-										<div class="col-6 col-md-6 text-center">
-											<div class="mb-2">
-												<span class="peity-donut"
-													data-peity='{ "fill": ["#01b8ff", "#e1e6f1"], "innerRadius": 14, "radius": 20 }'>2/7</span>
-											</div>
-											<p class="mb-1 tx-inverse">Sales</p>
-											<h4 class="mb-1"><span>$</span>24,789</h4>
-											<span class="text-muted fs-12"><i
-													class="fa fa-caret-down me-1 text-danger"></i>33% last month</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Monthly Profits</h6>
-										<p class="text-muted mb-2 card-sub-title">Excepteur sint occaecat cupidatat non
-											proident.
-										</p>
-									</div>
-									<h3><span>$</span>22,534</h3>
-									<div class="clearfix mb-3">
-										<div class="clearfix">
-											<span class="float-start text-muted">This Month</span>
-											<span class="float-end">75%</span>
-										</div>
-										<div class="progress mt-1">
-											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="70"
-												class="progress-bar progress-bar-xs wd-70p bg-primary"
-												role="progressbar">
-											</div>
-										</div>
-									</div>
-									<div class="clearfix">
-										<div class="clearfix">
-											<span class="float-start text-muted">Last Month</span>
-											<span class="float-end">50%</span>
-										</div>
-										<div class="progress mt-1">
-											<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50"
-												class="progress-bar progress-bar-xs wd-50p bg-success"
-												role="progressbar">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div> -->
-					<!-- End Row -->
+					
 					<div class="card custom-card" id="solid-alert">
 						<div class="card-body">
 							<div>
@@ -490,6 +320,8 @@ $totemployees = 0;
 										$sname="";
 										$totalclients = 0;
 										$reportvariable ="Monthly Report Not Submitted";
+										
+										
 										$queryorder = "select * from order_customers where order_status='Active' order by id desc";
 										$select_postsorder = mysqli_query($connection, $queryorder);
 										while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
@@ -783,111 +615,8 @@ $totemployees = 0;
 						</div>
 					</div>
 					<!-- End Row -->
-
-					<!-- Row-->
-					<!-- <div class="row">
-						<div class="col-sm-12 col-xl-12 col-lg-12">
-							<div class="card custom-card">
-								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Product Summary</h6>
-										<p class="text-muted card-sub-title mb-2">Nemo enim ipsam voluptatem fugit sequi
-											nesciunt.</p>
-									</div>
-									<div class="table-responsive br-3">
-										<table class="table table-bordered text-nowrap mb-0">
-											<thead>
-												<tr>
-													<th>#No</th>
-													<th>Client Name</th>
-													<th>Product ID</th>
-													<th>Product</th>
-													<th>Product Cost</th>
-													<th>Payment Mode</th>
-													<th>Status</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>#01</td>
-													<td>Sean Black</td>
-													<td>PRO12345</td>
-													<td>Mi LED Smart TV 4A 80</td>
-													<td>$14,500</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-success">Delivered</span></td>
-												</tr>
-												<tr>
-													<td>#02</td>
-													<td>Evan Rees</td>
-													<td>PRO8765</td>
-													<td>Thomson R9 122cm (48 inch) Full HD LED TV </td>
-													<td>$30,000</td>
-													<td>Cash on delivered</td>
-													<td><span class="badge bg-primary">Add Cart</span></td>
-												</tr>
-												<tr>
-													<td>#03</td>
-													<td>David Wallace</td>
-													<td>PRO54321</td>
-													<td>Vu 80cm (32 inch) HD Ready LED TV</td>
-													<td>$13,200</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-secondary">Pending</span></td>
-												</tr>
-												<tr>
-													<td>#04</td>
-													<td>Julia Bower</td>
-													<td>PRO97654</td>
-													<td>Micromax 81cm (32 inch) HD Ready LED TV</td>
-													<td>$15,100</td>
-													<td>Cash on delivered</td>
-													<td><span class="badge bg-info">Delivering</span></td>
-												</tr>
-												<tr>
-													<td>#05</td>
-													<td>Kevin James</td>
-													<td>PRO4532</td>
-													<td>HP 200 Mouse &amp; Wireless Laptop Keyboard </td>
-													<td>$5,987</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-danger">Shipped</span></td>
-												</tr>
-												<tr>
-													<td>#06</td>
-													<td>Theresa Wright</td>
-													<td>PRO6789</td>
-													<td>Digisol DG-HR3400 Router </td>
-													<td>$11,987</td>
-													<td>Cash on delivered</td>
-													<td><span class="badge bg-secondary">Delivering</span></td>
-												</tr>
-												<tr>
-													<td>#07</td>
-													<td>Sebastian Black</td>
-													<td>PRO4567</td>
-													<td>Dell WM118 Wireless Optical Mouse</td>
-													<td>$4,700</td>
-													<td>Online Payment</td>
-													<td><span class="badge bg-info">Add to Cart</span></td>
-												</tr>
-												<tr>
-													<td>#08</td>
-													<td>Kevin Glover</td>
-													<td>PRO32156</td>
-													<td>Dell 16 inch Laptop Backpack </td>
-													<td>$678</td>
-													<td>Cash On delivered</td>
-													<td><span class="badge bg-success">Delivered</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div> -->
-					<!-- End Row -->
+				<?php } ?>
+				
 				</div>
 			</div>
 		</div>

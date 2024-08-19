@@ -895,17 +895,20 @@ document.getElementById('ordersdisplay').addEventListener('change', function () 
     var custname = selectedOption.getAttribute('data-custName');
     var brandname = selectedOption.getAttribute('data-brandName');
     var quotedamt = selectedOption.getAttribute('data-quotedAmt');
+    var orderexp = selectedOption.getAttribute('data-orderexp');
     // Get the values from the selected option
     var selectedOrderId = selectedOption.value;
     $('#quotesplitupbtn').attr('data-quoteid', selectedOrderId);
     $('#quotesplitupbtn').attr('data-custname', custname);
     $('#quotesplitupbtn').attr('data-brandname', brandname);
     $('#quotesplitupbtn').attr('data-quotedamt', quotedamt);
+    $('#quotesplitupbtn').attr('data-orderexpense', orderexp);
 
     $('#editquotesplitupbtn').attr('data-quoteid', selectedOrderId);
     $('#editquotesplitupbtn').attr('data-custname', custname);
     $('#editquotesplitupbtn').attr('data-brandname', brandname);
     $('#editquotesplitupbtn').attr('data-quotedamt', quotedamt);
+    $('#editquotesplitupbtn').attr('data-orderexpense', orderexp);
 
     $.ajax({
         type: 'POST',
@@ -1031,8 +1034,9 @@ $('#quotesplitupbtn').on('click', function() {
     var brandName = $(this).data('brandname');
    $('#brandname').val(brandName);
     var quoteAmt = $(this).data('quotedamt');
-    // alert (quoteAmt)
     $('#quotedamt').val(quoteAmt);
+    var orderExp = $(this).data('orderexpense');
+    $('#orderexpense').val(orderExp);
     // alert("complete");
     // Your code to be executed when the element is clicked
     // alert('Element with id "quoteSplit" clicked! Data Quote ID: ' + quoteIdValue);
@@ -1080,7 +1084,8 @@ $('#saveQuotesplitupBtn').on('click', function() {
             var rowData = {
                 itemId: $(this).find('td:nth-child(2)').text(),
                 itemName: $(this).find('td:nth-child(3)').text(),
-                price: $(this).find('td:nth-child(4)').text()
+                price: $(this).find('td:nth-child(4)').text(),
+                orderexpense: $(this).find('td:nth-child(5)').text()
             };
             tableData.push(rowData);
         }
@@ -1140,6 +1145,8 @@ $('#editquotesplitupbtn').on('click', function() {
    $('#editbrandname').val(brandName);
     var quoteAmt = $(this).data('quotedamt');
     $('#editquoteamt').val(quoteAmt);
+    var orderExp = $(this).data('orderexpense');
+    $('#editorderexpense').val(orderExp);
     // Your code to be executed when the element is clicked
     // alert('Element with id "quoteSplit" clicked! Data Quote ID: ' + quoteIdValue);
     // Fetch data from the server using AJAX (you may need to adjust the URL)
@@ -1186,7 +1193,8 @@ $('#updateChangesBtn').on('click', function() {
             var rowData = {
                 itemId: $(this).find('td:nth-child(2)').text(),
                 itemName: $(this).find('td:nth-child(3)').text(),
-                price: $(this).find('td:nth-child(4)').text()
+                price: $(this).find('td:nth-child(4)').text(),
+                orderexpense: $(this).find('td:nth-child(5)').text()
             };
             tableData.push(rowData);
         }

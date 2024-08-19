@@ -32,8 +32,8 @@ function showworklist()
             $post_orderid = $row['orderid'];
             $reportmonth = $row['reportmonth'];
             $reportyear = $row['reportyear'];
-
-            $queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
+            $post_brandName = "";
+            $queryorder = "select * from order_customers where id='" .  $post_orderid . "'";
             $select_postsorder = mysqli_query($connection, $queryorder);
             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
 

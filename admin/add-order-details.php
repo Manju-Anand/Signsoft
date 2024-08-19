@@ -147,12 +147,24 @@ $mainorderid = "";
                                                         <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
                                                             <option value="" disabled selected>Select Order Entry</option>
                                                             <?php
-                                                            $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' order by id desc";
+                                                            $adminname = isset($_SESSION['adminname']) ? $_SESSION['adminname'] : '';
+                                                            if ($adminname  == 'Signefo') {
+                                                                $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' and client_quality='Good' order by id desc";
+                                                            } else if ($adminname  == 'SignefoMedia') {
+                                                                $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' and client_quality='Average' order by id desc";
+                                                            } else {
+                                                                $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' order by id desc";
+                                                            }
+
+
+
+                                                            // $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' order by id desc";
                                                             $select_postsorder = mysqli_query($connection, $queryorder);
                                                             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
                                                                 $mainorderid = $roworder['id'];
                                                             ?>
-                                                                <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>" data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>"><?php echo $roworder['custName'] ?></option>
+                                                                <option value="<?php echo $roworder['id'] ?>" data-custName="<?php echo $roworder['custName'] ?>" data-brandName="<?php echo $roworder['brandName'] ?>"
+                                                                 data-quotedAmt="<?php echo $roworder['quotedAmt'] ?>" data-orderexp="<?php echo $roworder['order_expense'] ?>"><?php echo $roworder['custName'] ?></option>
                                                             <?php }
                                                             ?>
                                                         </select>
@@ -189,6 +201,7 @@ $mainorderid = "";
                                                                 <th>#</th>
                                                                 <th>Item Name</th>
                                                                 <th>Price</th>
+                                                                <th>Order Expense</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="ajaxquotesplitupresults">
@@ -784,17 +797,21 @@ $mainorderid = "";
                                 <label class="form-label" for="dept">Order ID :</label>
                                 <input class="form-control" type="text" id="quoteid" value="" readonly>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label" for="dept">Customer Name :</label>
                                 <input class="form-control" type="text" id="custname" value="" readonly>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label" for="dept">Brand Name :</label>
                                 <input class="form-control" type="text" id="brandname" value="" readonly>
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label" for="dept">Quoted Amount</label>
                                 <input class="form-control" type="text" id="quotedamt" value="" readonly>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="dept">Order Expense</label>
+                                <input class="form-control" type="text" id="orderexpense" value="" readonly>
                             </div>
 
 
@@ -811,6 +828,7 @@ $mainorderid = "";
                                                 <th>Item ID</th>
                                                 <th>Item Name</th>
                                                 <th>Price</th>
+                                                <th>Order Expense</th>
 
                                             </tr>
                                         </thead>
@@ -819,6 +837,7 @@ $mainorderid = "";
                                                 <th scope="row">1</th>
                                                 <td>Joan Powell</td>
                                                 <td>Associate Developer</td>
+                                                <td>$450,870</td>
                                                 <td>$450,870</td>
                                             </tr>
 
@@ -851,11 +870,11 @@ $mainorderid = "";
                                 <label class="form-label" for="dept">Order ID :</label>
                                 <input class="form-control" type="text" id="editquoteid" value="" readonly>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label" for="dept">Customer Name :</label>
                                 <input class="form-control" type="text" id="editcustname" value="" readonly>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label" for="dept">Brand Name :</label>
                                 <input class="form-control" type="text" id="editbrandname" value="" readonly>
                             </div>
@@ -863,7 +882,10 @@ $mainorderid = "";
                                 <label class="form-label" for="dept">Quoted Amount</label>
                                 <input class="form-control" type="text" id="editquoteamt" value="" readonly>
                             </div>
-
+                            <div class="col-md-2">
+                                <label class="form-label" for="dept">Order Expense</label>
+                                <input class="form-control" type="text" id="editorderexpense" value="" readonly>
+                            </div>
 
 
                         </div><br>
@@ -878,7 +900,7 @@ $mainorderid = "";
                                                 <th>Splitup ID</th>
                                                 <th>Item Name</th>
                                                 <th>Price</th>
-
+                                                <th>Order Expense</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -886,6 +908,7 @@ $mainorderid = "";
                                                 <th scope="row">1</th>
                                                 <td>Joan Powell</td>
                                                 <td>Associate Developer</td>
+                                                <td>$450,870</td>
                                                 <td>$450,870</td>
                                             </tr>
 

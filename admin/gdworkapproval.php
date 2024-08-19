@@ -25,6 +25,9 @@ function showworklist()
             $redirectStat =  $row['redirect_status'];
             $post_orderid = $row['orderid'];
             $post_deadline_status = "Not-Done";
+            $post_completed_date ="";
+            $post_staffname ="";
+            $approval_status = "No";
             $queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
             $select_postsorder = mysqli_query($connection, $queryorder);
             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
@@ -38,6 +41,9 @@ function showworklist()
                 $post_assigndate = $row['assigndate'];
                 $post_redirectstatus = $row['redirect_status'];
                 $post_assignstaffid = $row['assigned_staffid'];
+
+                $post_staffid = $row['staffid'];
+                $post_redirectstaffid = $row['redirect_staffid'];
 
                 $queryemp = "select * from employee where id='" .  $post_assignstaffid . "'";
                 $select_postsemp = mysqli_query($connection, $queryemp);
@@ -56,6 +62,19 @@ function showworklist()
                     $select_postswstatus1 = mysqli_query($connection, $querywstatus1);
                     while ($rowwstatus1 = mysqli_fetch_assoc($select_postswstatus1)) {
                         $checkid = $rowwstatus1['id'];
+
+                        $queryemp = "select * from employee where id='" .  $post_redirectstaffid . "'";
+                        $select_postsemp = mysqli_query($connection, $queryemp);
+                        while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
+                            $post_staffname = $rowemp['empname'];
+                        }
+
+                        $queryapproval = "select * from gd_work_approval where workid='" .  $checkid . "'";
+                        $select_postsapproval = mysqli_query($connection, $queryapproval);
+                        while ($rowapproval = mysqli_fetch_assoc($select_postsapproval)) {
+                            $approval_status = "Yes";
+                        }
+
                         $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $checkid . "' order by id desc limit 1";
                         $select_postswstatus = mysqli_query($connection, $querywstatus);
                         while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
@@ -64,6 +83,18 @@ function showworklist()
                         }
                     }
                 } else {
+
+                    $queryemp = "select * from employee where id='" .  $post_staffid . "'";
+                    $select_postsemp = mysqli_query($connection, $queryemp);
+                    while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
+                        $post_staffname = $rowemp['empname'];
+                    }
+
+                    $queryapproval = "select * from gd_work_approval where workid='" .   $id . "'";
+                        $select_postsapproval = mysqli_query($connection, $queryapproval);
+                        while ($rowapproval = mysqli_fetch_assoc($select_postsapproval)) {
+                            $approval_status = "Yes";
+                        }
 
                     $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $id . "' order by id desc limit 1";
                     $select_postswstatus = mysqli_query($connection, $querywstatus);
@@ -87,13 +118,18 @@ function showworklist()
 
                 // if ($post_wstatus === 'Completed') {
                     $i = $i + 1;
-                    echo "<tr>";
+                    if ($approval_status == "Yes"){
+                        echo "<tr style='color:brown;font-weight:bold;'>";
+                    }else {
+                        echo "<tr>";
+                    }
                     echo "<td>$i</td>";
                     echo "<td>$post_brandName</td>";
                     // echo "<td>$post_postings</td>";
 
                     echo "<td>$post_empname</td>";
                     echo "<td>$post_assigndate</td>";
+                    echo "<td>$post_staffname</td>";
                     echo "<td>$formatted_date </td>";
                     echo "<td>$post_wstatus</td>";
 
@@ -265,11 +301,12 @@ function showworklist()
                                                     <!-- <th>Postings</th> -->
                                                     <th>Assigned By</th>
                                                     <th>Assigned Date</th>
+                                                    <th>Staff</th>
                                                     <th>Deadline</th>
                                                     <th>Work Status</th>
-                                                    <th>Redirect Status</th>
-                                                    <th>Deadline Status</th>
-                                                    <th>Action</th>
+                                                    <th class="wd-5p">Redirect Status</th>
+                                                    <th class="wd-5p">Deadline Status</th>
+                                                    <th class="wd-10p">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td><?php echo $row['itemname'];?></td>
     <td style="text-align: right;"><?php echo $row['price'];?></td>
 
-   
+    <td style="text-align: right;"><?php echo $row['order_expense'];?></td>
     
 
 </tr>

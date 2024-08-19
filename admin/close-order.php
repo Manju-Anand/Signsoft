@@ -129,7 +129,15 @@ $mainorderid = "";
                                                         <select class="form-select mb-3" aria-label="Default select example" name="ordersdisplay" id="ordersdisplay" required>
                                                             <option value="" disabled selected>Select Order Entry</option>
                                                             <?php
-                                                            $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' order by id desc";
+                                                              $adminname = isset($_SESSION['adminname']) ? $_SESSION['adminname'] : '';
+                                                              if ($adminname  == 'Signefo') {
+                                                                  $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' and client_quality='Good' order by id desc";
+                                                              } else if ($adminname  == 'SignefoMedia') {
+                                                                  $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' and client_quality='Average' order by id desc";
+                                                              } else {
+                                                                  $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' order by id desc";
+                                                              }
+                                                            // $queryorder = "select * from order_customers where order_status='Active' and ordertype='External' order by id desc";
                                                             $select_postsorder = mysqli_query($connection, $queryorder);
                                                             while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
                                                                 $mainorderid = $roworder['id'];
@@ -400,10 +408,13 @@ ppc1:
                         $orderstatus = "Active";
                         $statusreason = $rowneworder["status_reason"];
 
+                        $clientquality = $rowneworder["client_quality"];
+                        $gstin = $rowneworder["gstin"];
+
                         date_default_timezone_set("Asia/Calcutta");
                         $postdate = date("M d,Y h:i:s a");
                         $sql = "INSERT INTO order_customers (custName,brandName,addr,custPhone,custEmail,contactDate,contactTime,quotedAmt,leadSource,created,modified,lead_entered,
-                        empid,order_status,status_reason) 
+                        empid,order_status,status_reason,client_quality,gstin) 
                         values('" . mysqli_real_escape_string($connection, $cusname) . "','" . mysqli_real_escape_string($connection, $brandname) . "',
                                 '" . mysqli_real_escape_string($connection, $addr) . "','" . mysqli_real_escape_string($connection, $phoneno) . "',
                                                 '" . mysqli_real_escape_string($connection, $emailid) . "','" . mysqli_real_escape_string($connection, $contacteddate) . "',
@@ -412,7 +423,8 @@ ppc1:
                                                 '" . mysqli_real_escape_string($connection, $postdate) . "',
                                                 '" . mysqli_real_escape_string($connection, $postdate) . "','Administrator',
                                                 '" . mysqli_real_escape_string($connection, $_SESSION['adminempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
-                                                '" . mysqli_real_escape_string($connection, $statusreason) . "')";
+                                                '" . mysqli_real_escape_string($connection, $statusreason) . "','" . mysqli_real_escape_string($connection, $clientquality) . "'
+                                                ,'" . mysqli_real_escape_string($connection, $gstin) . "')";
                                                 if ($connection->query($sql) === TRUE) {
                                                     $last_lead_id = $connection->insert_id;
                                                     $sqlnewcat = "SELECT * FROM order_category where order_id='" . $orderid . "'";

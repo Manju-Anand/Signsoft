@@ -98,8 +98,8 @@ function showprocessjobworklist()
         $query = "select * from employee where work_approval_section='1'";
         $select_posts = mysqli_query($connection, $query);
         while ($row = mysqli_fetch_assoc($select_posts)) {
-            $qaid =$row['id'];
-            $empname =$row['empname'];
+            $qaid = $row['id'];
+            $empname = $row['empname'];
         }
 
         $query = "select DATE_FORMAT(STR_TO_DATE(created, '%b %d,%Y %r'), '%m') AS month from gd_work_approval where empid = '" . $qaid . "'";
@@ -243,7 +243,7 @@ function showprocessjobworklist()
                                                     <th>#</th>
 
                                                     <th>Staff Name</th>
-                                                    <th>No of Works</th>
+                                                    <th>No of Approvals</th>
                                                    
                                                     <th>Action</th>
                                                 </tr>
@@ -251,7 +251,7 @@ function showprocessjobworklist()
                                             <tbody>
 
                                                 <?php
-                                                showworklist();
+                                                    showworklist();
                                                 ?>
 
 
@@ -278,7 +278,7 @@ function showprocessjobworklist()
                                         <table class="table" id="example2">
                                             <thead style="background-color:beige;">
                                                 <tr>
-                                                    <!-- class="wd-5p" -->
+
                                                     <th>#</th>
                                                     <th>Staff Name</th>
                                                     <th>No of Works</th>
@@ -288,7 +288,7 @@ function showprocessjobworklist()
                                             <tbody>
 
                                                 <?php
-                                                showprocessjobworklist();
+                                                    showprocessjobworklist();
                                                 ?>
 
 
