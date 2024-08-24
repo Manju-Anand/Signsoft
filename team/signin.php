@@ -175,7 +175,9 @@ if (isset($_POST['submit'])) {
         }
     </style>
 </head>
-<body class="main-body ltr login-img">
+<!-- <body class="main-body ltr login-img"> -->
+<body class="main-body ltr login-img" style="background: url('../assets/img/login/un4.png') no-repeat center center fixed; background-size: cover; margin: 0; padding: 0; font-family: 'Arial', sans-serif; color: #333;">
+
     <!-- Loader -->
     <div id="global-loader">
         <img src="../assets/img/loader.svg" class="loader-img" alt="Loader">

@@ -61,6 +61,7 @@ function trafficlight()
         $green_completion = 0;
         $orderamt = 0;
         $involvementpercentage = 0;
+		$involvementpercentagetotal = 0;
         $orderamt1 = 0;
         $orderamt2 = 0;
         $pts = 0;
@@ -111,6 +112,7 @@ function trafficlight()
 
             $project_quote = $orderamt - $order_expense;
             $involvementpercentage = $project_quote *  $per_of_work / 100;
+			$involvementpercentagetotal = $involvementpercentagetotal + $involvementpercentage;
             $post_timetaken = '200';
             $green_completion = round($involvementpercentage / $per_hour_cost, 2);
             $pts1 = round($green_completion / $post_timetaken * 100, 2);
@@ -129,7 +131,7 @@ function trafficlight()
 
             $project_quote = $orderamt - $order_expense;
             $involvementpercentage = $project_quote *  $per_of_work / 100;
-
+			$involvementpercentagetotal = $involvementpercentagetotal + $involvementpercentage;
             $post_timetaken = "200";  // 200 hours - full hours work for digital marketers
 
             $green_completion = round($involvementpercentage / $per_hour_cost, 2);
@@ -221,6 +223,8 @@ function trafficlight()
             $posteramt = $postercount * $postervalue;
 
             $involvementpercentage = $videoamt + $gifamt + $posteramt;
+			$involvementpercentagetotal = $involvementpercentagetotal + $involvementpercentage;
+
             $project_quote = ($involvementpercentage - $order_expense) / 2;
             $green_completion = round($project_quote / $per_hour_cost, 2);
             $pts1 = round(($green_completion / $post_timetaken) * 100, 2);
@@ -229,19 +233,35 @@ function trafficlight()
 
 
         // ================================= staff GD allocation ===============================
-
 		$colorcode ="Grey";
+		// ==============new calculation ============
+echo $involvementpercentagetotal;
+$test1= 0;
+$test1= ($bs + $ce) * 2;
+$test2= ($bs + $ce);
 
-			if ($pts  == 100 && $pts > 100){
-				$colorcode ="Green";
-			}elseif ($pts  >= 50 && $pts <= 99 ){
-				$colorcode ="Amber";
-			}elseif ($pts  >= 1 && $pts <= 49 ){
-				$colorcode ="Red";
-			}
-			$insertRowStmt = $connection->prepare("INSERT INTO traffic_light (empid, empname, empdesig, points, colorcode, monthcode) VALUES (?, ?, ?, ?, ?, ?)");
 
-			$insertRowStmt->bind_param("sssdss", $id, $post_title, $post_desig, $pts, $colorcode, $currentMonthCode);
+if ($involvementpercentagetotal == $test1){
+	$colorcode ="Green";
+}elseif ($involvementpercentagetotal == $test2){
+	$colorcode ="Amber";
+}elseif ($involvementpercentagetotal == $bs){
+	$colorcode ="Red";
+}elseif ($involvementpercentagetotal < $bs){
+	$colorcode ="Grey";
+}
+		
+// ============== end new calculation ============
+			// if ($pts  == 100 && $pts > 100){
+			// 	$colorcode ="Green";
+			// }elseif ($pts  >= 50 && $pts <= 99 ){
+			// 	$colorcode ="Amber";
+			// }elseif ($pts  >= 1 && $pts <= 49 ){
+			// 	$colorcode ="Red";
+			// }
+			$insertRowStmt = $connection->prepare("INSERT INTO traffic_light (empid, empname, empdesig, points, colorcode, monthcode,color_score) VALUES (?, ?, ?, ?, ?, ?,?)");
+
+			$insertRowStmt->bind_param("sssdsss", $id, $post_title, $post_desig, $pts, $colorcode, $currentMonthCode, $involvementpercentagetotal);
 			$insertRowStmt->execute();
 		
     //    ===================================================

@@ -30,7 +30,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td><?php echo $row['deadline'];?></td>
     <td><?php echo $row['per_of_work'];?></td>
     <td><?php echo $row['assignedDate'];?></td>
-    <td><a class='btn btn-sm btn-primary  edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>
+    <td><a class='btn btn-sm btn-primary edit-staff-btn'  data-bs-target='#staffmodal' data-bs-toggle='modal' title='Edit' style='color:white'>
         <span class='fe fe-edit'> </span></a>&nbsp;&nbsp;
         <a class='btn btn-sm btn-danger delete-staff-btn'  id='qusdelete' title='Delete' data-toggle='tooltip' style='color:white'> 
         <span class='fe fe-trash-2'> </span></a></td>
