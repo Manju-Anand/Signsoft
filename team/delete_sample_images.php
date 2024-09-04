@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_images'])) {
 
                                     <div class="POST">
                                         <div class="col-md-12">
-                                            <h2 class="main-content-title tx-24 mg-b-5" ;">Delete Sample Images from Graphics Designers Content</h2>
+                                            <h2 class="main-content-title tx-24 mg-b-5" >Delete Sample Images from Graphics Designers Content</h2>
                                             <span class="mt-2">You can Delete Graphics Designers sample images here.</span>
                                         </div>
                                     </div>
