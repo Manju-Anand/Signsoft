@@ -223,7 +223,7 @@ $mainorderid = "";
                                                 <div class="row">
                                                     <div class="col-md-3"></div>
                                                     <div class="col-md-9">
-                                                        <button type="submit" name="submit" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Close Order</button>
+                                                        <button type="submit" name="submit" class="btn btn-primary float-end" style="color:white;cursor:pointer;">Close / Renew Order</button>
                                                         <a href="javascript:void(0)" class="btn btn-default float-end" id="cancel">Discard</a>
                                                         <!-- float-end -->
 

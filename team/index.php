@@ -18,254 +18,254 @@ $activeworks = "0";
 trafficlight();
 function trafficlight()
 {
-// 	echo "<script>alert('fgh');</script>";
-    global $connection;
-	$currentMonthCode = date('m') - 1; 
-	
-	$sql = "DELETE FROM traffic_light WHERE monthcode='". $currentMonthCode . "'";
+	// 	echo "<script>alert('fgh');</script>";
+	global $connection;
+	$currentMonthCode = date('m') - 1;
 
-    if ($connection->query($sql) === TRUE) {
-      echo "Record deleted successfully";
-    } else {
-      echo "Error deleting record: " . $connection->error;
-    }
-	
-	
-    $query = "select * from employee where status='Active' order by id desc";
-    $select_posts = mysqli_query($connection, $query);
-    $i = 0;
-    while ($row = mysqli_fetch_assoc($select_posts)) {
-        $id = $row['id'];
-        $post_title = $row['empname'];
+	$sql = "DELETE FROM traffic_light WHERE monthcode='" . $currentMonthCode . "'";
+
+	if ($connection->query($sql) === TRUE) {
+		//   echo "Record deleted successfully";
+	} else {
+		echo "Error deleting record: " . $connection->error;
+	}
+
+
+	$query = "select * from employee where status='Active' order by id desc";
+	$select_posts = mysqli_query($connection, $query);
+	$i = 0;
+	while ($row = mysqli_fetch_assoc($select_posts)) {
+		$id = $row['id'];
+		$post_title = $row['empname'];
 		$post_desigid = $row['desig_id'];
 
-		$querydesig = "SELECT * FROM designation where id ='" . $post_desigid ."'";
+		$querydesig = "SELECT * FROM designation where id ='" . $post_desigid . "'";
 		$select_postdesig = mysqli_query($connection, $querydesig);
 		while ($rowdesig = mysqli_fetch_assoc($select_postdesig)) {
 			$post_desig = $rowdesig['designation'];
 		}
 
 
-        // ====================== Calculation starts ================
-        $bs = (float)$row['basic_salary'];
-        $ce = (float)$row['company_expense'];
-        $staff_cost = $bs + $ce;
-        $per_hour_cost = ($staff_cost / 200) * 2; // 200 hours in minutes- 12000
+		// ====================== Calculation starts ================
+		$bs = (float)$row['basic_salary'];
+		$ce = (float)$row['company_expense'];
+		$staff_cost = $bs + $ce;
+		$per_hour_cost = ($staff_cost / 200) * 2; // 200 hours in minutes- 12000
 
-        // echo $per_hour_cost . " - per /hour cost of " . $post_title . "<br>";
-        // =================================================================================
-        $post_timetaken = 0;
-        $orderid = "";
-        $per_of_work = "";
-        $project_quote = 0;
-        $green_completion = 0;
-        $orderamt = 0;
-        $involvementpercentage = 0;
+		// echo $per_hour_cost . " - per /hour cost of " . $post_title . "<br>";
+		// =================================================================================
+		$post_timetaken = 0;
+		$orderid = "";
+		$per_of_work = "";
+		$project_quote = 0;
+		$green_completion = 0;
+		$orderamt = 0;
+		$involvementpercentage = 0;
 		$involvementpercentagetotal = 0;
-        $orderamt1 = 0;
-        $orderamt2 = 0;
-        $pts = 0;
-        $pts1 = 0;
-        $catid = "";
+		$orderamt1 = 0;
+		$orderamt2 = 0;
+		$pts = 0;
+		$pts1 = 0;
+		$catid = "";
 		$order_expense = 0;
-        // ===================== staff allocation =============================================
-        $query1 = "select * from staff_allocation where empid='" . $id . "' AND MONTH(assignedDate) = MONTH(CURRENT_DATE)-1 and work_status='Active'";
-        $select_posts1 = mysqli_query($connection, $query1);
-        while ($row1 = mysqli_fetch_assoc($select_posts1)) {
-            $post_timetaken = 0;
-            $orderid = $row1['orderid'];
-            // echo $orderid . " - orderid " .  "<br>";
-            $per_of_work = $row1['per_of_work'];
-            $catid = $row1['entryid'];
-            // echo "Percentage : " . $per_of_work . "<br>";
-            $query2 = "select * from order_customers where id='" . $orderid . "'";
-            $select_posts2 = mysqli_query($connection, $query2);
-            while ($row2 = mysqli_fetch_assoc($select_posts2)) {
-                $order_expense = $row2['order_expense'];
-                $orderamt2 = $row2['quotedAmt'];
-            }
+		// ===================== staff allocation =============================================
+		$query1 = "select * from staff_allocation where empid='" . $id . "' AND MONTH(assignedDate) = MONTH(CURRENT_DATE)-1 and work_status='Active'";
+		$select_posts1 = mysqli_query($connection, $query1);
+		while ($row1 = mysqli_fetch_assoc($select_posts1)) {
+			$post_timetaken = 0;
+			$orderid = $row1['orderid'];
+			// echo $orderid . " - orderid " .  "<br>";
+			$per_of_work = $row1['per_of_work'];
+			$catid = $row1['entryid'];
+			// echo "Percentage : " . $per_of_work . "<br>";
+			$query2 = "select * from order_customers where id='" . $orderid . "'";
+			$select_posts2 = mysqli_query($connection, $query2);
+			while ($row2 = mysqli_fetch_assoc($select_posts2)) {
+				$order_expense = $row2['order_expense'];
+				$orderamt2 = $row2['quotedAmt'];
+			}
 
-            $querycategory = "select * from order_category where order_id='" .  $orderid . "'";
-            $select_postscategory = mysqli_query($connection, $querycategory);
-            if ($select_postscategory) {
-                // Check the number of records
-                $num_records = mysqli_num_rows($select_postscategory);
-                while ($rowcategory = mysqli_fetch_assoc($select_postscategory)) {
-                    $querysplitup = "select * from quote_splitup where orderid='" . $orderid . "' and itemid='" . $catid . "'";
-                    $select_postssplitup = mysqli_query($connection, $querysplitup);
-                    while ($rowsplitup = mysqli_fetch_assoc($select_postssplitup)) {
-                        $orderamt1 = $rowsplitup['price'];
+			$querycategory = "select * from order_category where order_id='" .  $orderid . "'";
+			$select_postscategory = mysqli_query($connection, $querycategory);
+			if ($select_postscategory) {
+				// Check the number of records
+				$num_records = mysqli_num_rows($select_postscategory);
+				while ($rowcategory = mysqli_fetch_assoc($select_postscategory)) {
+					$querysplitup = "select * from quote_splitup where orderid='" . $orderid . "' and itemid='" . $catid . "'";
+					$select_postssplitup = mysqli_query($connection, $querysplitup);
+					while ($rowsplitup = mysqli_fetch_assoc($select_postssplitup)) {
+						$orderamt1 = $rowsplitup['price'];
 						$order_expense = (!empty($rowsplitup['order_expense']) || $rowsplitup['order_expense'] === '0') ? $rowsplitup['order_expense'] : '0';
-                        // $order_expense = $rowsplitup['order_expense'];
-                    }
-                }
-                if ($orderamt1 == 0) {
-                    $orderamt = $orderamt2;
-                } else {
-                    $orderamt = $orderamt1;
-                }
-            } else {
-                echo "Error: " . mysqli_error($connection);
-            }
-// echo "Orderamt : " . $orderamt ."<br>";
+						// $order_expense = $rowsplitup['order_expense'];
+					}
+				}
+				if ($orderamt1 == 0) {
+					$orderamt = $orderamt2;
+				} else {
+					$orderamt = $orderamt1;
+				}
+			} else {
+				echo "Error: " . mysqli_error($connection);
+			}
 
-
-            $project_quote = $orderamt - $order_expense;
-            $involvementpercentage = $project_quote *  $per_of_work / 100;
+			$project_quote = $orderamt - $order_expense;
+			$involvementpercentage = $project_quote *  $per_of_work / 100;
 			$involvementpercentagetotal = $involvementpercentagetotal + $involvementpercentage;
-            $post_timetaken = '200';
-            $green_completion = round($involvementpercentage / $per_hour_cost, 2);
-            $pts1 = round($green_completion / $post_timetaken * 100, 2);
-            $pts  += $pts1;
-        }
-        //    ============================== staff allocation =======================
-        // ================================= staff DM allocation ===============================
-        $query1 = "select * from staff_dm_allocation where staffid='" . $id . "' AND MONTH(assigndate) = MONTH(CURRENT_DATE)-1";
-        $select_posts1 = mysqli_query($connection, $query1);
-        while ($row1 = mysqli_fetch_assoc($select_posts1)) {
-            $post_timetaken = 0;
-            $orderid = $row1['orderid'];
-            $per_of_work = $row1['workpercentage'];
-            $order_expense = $row1['promoamt'];
-            $orderamt = $row1['payment'];
+			$post_timetaken = '200';
+			$green_completion = round($involvementpercentage / $per_hour_cost, 2);
+			$pts1 = round($green_completion / $post_timetaken * 100, 2);
+			$pts  += $pts1;
+		}
+		//    ============================== staff allocation =======================
+		// ================================= staff DM allocation ===============================
+		$query1 = "select * from staff_dm_allocation where staffid='" . $id . "' AND MONTH(assigndate) = MONTH(CURRENT_DATE)-1 and work_status='Active'";
+		$select_posts1 = mysqli_query($connection, $query1);
+		while ($row1 = mysqli_fetch_assoc($select_posts1)) {
+			$post_timetaken = 0;
+			$orderid = $row1['orderid'];
+			$per_of_work = $row1['workpercentage'];
+			$order_expense = $row1['promoamt'];
+			$orderamt = $row1['payment'];
 
-            $project_quote = $orderamt - $order_expense;
-            $involvementpercentage = $project_quote *  $per_of_work / 100;
+			$project_quote = $orderamt - $order_expense;
+			$involvementpercentage = $project_quote *  $per_of_work / 100;
 			$involvementpercentagetotal = $involvementpercentagetotal + $involvementpercentage;
-            $post_timetaken = "200";  // 200 hours - full hours work for digital marketers
 
-            $green_completion = round($involvementpercentage / $per_hour_cost, 2);
-            $pts1 = round($green_completion / $post_timetaken * 100, 2);
-            $pts  += $pts1;
-        }
-        // ================================= staff DM allocation ===============================
-        // ================================= staff GD allocation ===============================
-        $postercount = 0;
-        $videocount = 0;
-        $gifcount = 0;
+			$post_timetaken = "200";  // 200 hours - full hours work for digital marketers
 
-
-        $query21 = "select * from graphics_masters";
-        $select_posts21 = mysqli_query($connection, $query21);
-        while ($row21 = mysqli_fetch_assoc($select_posts21)) {
-            $postervalue = intval($row21['poster']);
-            $videovalue = intval($row21['video']);
-            $gifvalue = intval($row21['gif']);
-        }
+			$green_completion = round($involvementpercentage / $per_hour_cost, 2);
+			$pts1 = round($green_completion / $post_timetaken * 100, 2);
+			$pts  += $pts1;
+		}
+		// ================================= staff DM allocation ===============================
+		// ================================= staff GD allocation ===============================
+		$postercount = 0;
+		$videocount = 0;
+		$gifcount = 0;
 
 
-        $query1 = "SELECT * 
+		$query21 = "select * from graphics_masters";
+		$select_posts21 = mysqli_query($connection, $query21);
+		while ($row21 = mysqli_fetch_assoc($select_posts21)) {
+			$postervalue = intval($row21['poster']);
+			$videovalue = intval($row21['video']);
+			$gifvalue = intval($row21['gif']);
+		}
+
+
+		$query1 = "SELECT * 
                 FROM staff_dm_graphics_allocation 
                 WHERE staffid = '" . $id . "' 
                 AND MONTH(STR_TO_DATE(assigndate, '%d-%m-%Y')) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) 
                 AND YEAR(STR_TO_DATE(assigndate, '%d-%m-%Y')) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) 
                 AND work_status = 'Active' and postings = 'Poster'";
-        $select_posts1 = mysqli_query($connection, $query1);
-        if ($select_posts1->num_rows > 0) {
-            $postercount = 0;
+		$select_posts1 = mysqli_query($connection, $query1);
+		if ($select_posts1->num_rows > 0) {
+			$postercount = 0;
 
-            while ($rowposter = mysqli_fetch_assoc($select_posts1)) {
-                $query21 = "select * from gd_work_approval where workid='" . $rowposter['id'] . "'";
-                $select_posts21 = mysqli_query($connection, $query21);
-                while ($row21 = mysqli_fetch_assoc($select_posts21)) {
-                    $postercount += 1;
-                }
-            }
-        } else {
-
-        }
-        $query1 = "SELECT * 
+			while ($rowposter = mysqli_fetch_assoc($select_posts1)) {
+				$query21 = "select * from gd_work_approval where workid='" . $rowposter['id'] . "'";
+				$select_posts21 = mysqli_query($connection, $query21);
+				while ($row21 = mysqli_fetch_assoc($select_posts21)) {
+					$postercount += 1;
+				}
+			}
+		} else {
+		}
+		$query1 = "SELECT * 
                 FROM staff_dm_graphics_allocation 
                 WHERE staffid = '" . $id . "' 
                 AND MONTH(STR_TO_DATE(assigndate, '%d-%m-%Y')) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) 
                 AND YEAR(STR_TO_DATE(assigndate, '%d-%m-%Y')) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) 
                 AND work_status = 'Active' and postings = 'GIF'";
-        $select_posts1 = mysqli_query($connection, $query1);
-        if ($select_posts1->num_rows > 0) {
+		$select_posts1 = mysqli_query($connection, $query1);
+		if ($select_posts1->num_rows > 0) {
 
-            $gifcount = 0;
-            while ($rowposter = mysqli_fetch_assoc($select_posts1)) {
-                $query21 = "select * from gd_work_approval where workid='" . $rowposter['id'] . "'";
-                $select_posts21 = mysqli_query($connection, $query21);
-                while ($row21 = mysqli_fetch_assoc($select_posts21)) {
-                    $gifcount += 1;
-                }
-            }
-        }
-        $query1 = "SELECT * 
+			$gifcount = 0;
+			while ($rowposter = mysqli_fetch_assoc($select_posts1)) {
+				$query21 = "select * from gd_work_approval where workid='" . $rowposter['id'] . "'";
+				$select_posts21 = mysqli_query($connection, $query21);
+				while ($row21 = mysqli_fetch_assoc($select_posts21)) {
+					$gifcount += 1;
+				}
+			}
+		}
+		$query1 = "SELECT * 
                 FROM staff_dm_graphics_allocation 
                 WHERE staffid = '" . $id . "' 
                 AND MONTH(STR_TO_DATE(assigndate, '%d-%m-%Y')) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) 
                 AND YEAR(STR_TO_DATE(assigndate, '%d-%m-%Y')) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) 
                 AND work_status = 'Active' and postings = 'Video'";
-        $select_posts1 = mysqli_query($connection, $query1);
-        if ($select_posts1->num_rows > 0) {
+		$select_posts1 = mysqli_query($connection, $query1);
+		if ($select_posts1->num_rows > 0) {
 
-            $videocount = 0;
-            while ($rowposter = mysqli_fetch_assoc($select_posts1)) {
-                $query21 = "select * from gd_work_approval where workid='" . $rowposter['id'] . "'";
-                $select_posts21 = mysqli_query($connection, $query21);
-                while ($row21 = mysqli_fetch_assoc($select_posts21)) {
-                    $videocount += 1;
-                }
-            }
-        }
-
-
-        $post_timetaken = '200';
-        $order_expense = 0;
+			$videocount = 0;
+			while ($rowposter = mysqli_fetch_assoc($select_posts1)) {
+				$query21 = "select * from gd_work_approval where workid='" . $rowposter['id'] . "'";
+				$select_posts21 = mysqli_query($connection, $query21);
+				while ($row21 = mysqli_fetch_assoc($select_posts21)) {
+					$videocount += 1;
+				}
+			}
+		}
 
 
-        if ($post_timetaken > 0) {
+		$post_timetaken = '200';
+		$order_expense = 0;
 
-            $videoamt = $videocount * $videovalue;
-            $gifamt = $gifcount * $gifvalue;
-            $posteramt = $postercount * $postervalue;
 
-            $involvementpercentage = $videoamt + $gifamt + $posteramt;
+		if ($post_timetaken > 0) {
+
+			$videoamt = $videocount * $videovalue;
+			$gifamt = $gifcount * $gifvalue;
+			$posteramt = $postercount * $postervalue;
+
+			$involvementpercentage = $videoamt + $gifamt + $posteramt;
 			$involvementpercentagetotal = $involvementpercentagetotal + $involvementpercentage;
 
-            $project_quote = ($involvementpercentage - $order_expense) / 2;
-            $green_completion = round($project_quote / $per_hour_cost, 2);
-            $pts1 = round(($green_completion / $post_timetaken) * 100, 2);
-            $pts  += $pts1;
-        }
+			$project_quote = ($involvementpercentage - $order_expense) / 2;
+			$green_completion = round($project_quote / $per_hour_cost, 2);
+			$pts1 = round(($green_completion / $post_timetaken) * 100, 2);
+			$pts  += $pts1;
+		}
 
 
-        // ================================= staff GD allocation ===============================
-		$colorcode ="Grey";
+		// ================================= staff GD allocation ===============================
+
+		$colorcode = "Grey";
 		// ==============new calculation ============
-echo $involvementpercentagetotal;
-$test1= 0;
-$test1= ($bs + $ce) * 2;
-$test2= ($bs + $ce);
+		// echo $involvementpercentagetotal;
+		$test1 = 0;
+		$test1 = ($bs + $ce) * 2; // Green points - acquire score more than (salary + company expense) * 2
+		$test2 = ($bs + $ce); // amber points - acquire score salary + company expense
 
 
-if ($involvementpercentagetotal == $test1){
-	$colorcode ="Green";
-}elseif ($involvementpercentagetotal == $test2){
-	$colorcode ="Amber";
-}elseif ($involvementpercentagetotal == $bs){
-	$colorcode ="Red";
-}elseif ($involvementpercentagetotal < $bs){
-	$colorcode ="Grey";
-}
-		
-// ============== end new calculation ============
-			// if ($pts  == 100 && $pts > 100){
-			// 	$colorcode ="Green";
-			// }elseif ($pts  >= 50 && $pts <= 99 ){
-			// 	$colorcode ="Amber";
-			// }elseif ($pts  >= 1 && $pts <= 49 ){
-			// 	$colorcode ="Red";
-			// }
-			$insertRowStmt = $connection->prepare("INSERT INTO traffic_light (empid, empname, empdesig, points, colorcode, monthcode,color_score) VALUES (?, ?, ?, ?, ?, ?,?)");
+		if ($involvementpercentagetotal >= $test1) {
+			$colorcode = "Green";
+		} elseif ($involvementpercentagetotal >= $test2) {
+			$colorcode = "Amber";
+		} elseif ($involvementpercentagetotal >= $bs) {
+			$colorcode = "Red";
+		} else {
+			$colorcode = "Grey";
+		}
+		// ============== end new calculation ============
+		// 			if ($pts  == 100 && $pts > 100){
+		// 				$colorcode ="Green";
+		// 			}elseif ($pts  >= 50 && $pts <= 99 ){
+		// 				$colorcode ="Amber";
+		// 			}elseif ($pts  >= 1 && $pts <= 49 ){
+		// 				$colorcode ="Red";
+		// 			}
 
-			$insertRowStmt->bind_param("sssdsss", $id, $post_title, $post_desig, $pts, $colorcode, $currentMonthCode, $involvementpercentagetotal);
-			$insertRowStmt->execute();
-		
-    //    ===================================================
-    }
+		$orgpts = round($pts, 2);
+		$insertRowStmt = $connection->prepare("INSERT INTO traffic_light (empid, empname, empdesig, points, colorcode, monthcode,color_score) VALUES (?, ?, ?, ?, ?, ?,?)");
+
+		$insertRowStmt->bind_param("sssdsss", $id, $post_title, $post_desig, $orgpts, $colorcode, $currentMonthCode, $involvementpercentagetotal);
+		$insertRowStmt->execute();
+
+		//    ===================================================
+	}
 }
 
 
@@ -307,19 +307,23 @@ if ($involvementpercentagetotal == $test1){
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 	<style>
-		.tag-amber {
+			.tag-amber {
+		     width: 100px;
 			background-color: rgb(255, 191, 0);
 		}
 
 		.tag-green {
-			background-color: rgb(0, 255, 0);
+		    width: 120px;
+			background-color: rgb(0, 100, 0);
 		}
 
 		.tag-red {
+		     width: 80px;
 			background-color: rgb(255, 0, 0);
 		}
 
 		.tag-grey {
+		     width: 60px;
 			background-color: rgb(128, 128, 128);
 		}
 	</style>
@@ -337,7 +341,7 @@ if ($involvementpercentagetotal == $test1){
 
 	<!-- Page -->
 	<div class="page">
-		
+
 		<div>
 			<?php include 'includes/header.php'; ?>
 		</div>
@@ -500,36 +504,52 @@ if ($involvementpercentagetotal == $test1){
 						<div class="col-sm-12 col-lg-4 col-xl-4">
 							<div class="card custom-card pb-2">
 								<div class="card-body">
-									<div>
-										<h6 class="card-title mb-1">Monthly Productivity</h6>
-										<p class="text-muted mb-0 card-sub-title">Your productivity Score.</p>
+									<div class='row'>
+									    <div class="col-md-6">
+									        	<h6 class="card-title mb-1">Monthly Productivity</h6>
+										        <p class="text-muted mb-0 card-sub-title">Your productivity Score.</p>
+									    </div>
+									    <div class="col-md-6">
+									        	
+									        	<?php 
+									        		$currentMonthCode1 = date('m') - 1; 
+            	                                    $query = "select * from traffic_light where monthcode='". $currentMonthCode1  ."' and empid='" . $empid ."'";
+            										$select_posts = mysqli_query($connection, $query);
+            										while ($row = mysqli_fetch_assoc($select_posts)) {
+									        	?>
+									        	<h6 class="card-title mb-1">Your Score - <?php echo $row['points']; ?></h6>
+										        <!--<p class="text-muted mb-0 card-sub-title"></p>-->
+										        <?php } ?>
+									    </div>
+									
 									</div>
+									 
 								</div>
 								<div class="user-manager scroll-widget border-top">
 									<div>
 										<?php
-										// $query = "select * from employee  where status='Active' order by  RAND()";
-										// $select_posts = mysqli_query($connection, $query);
-										// while ($row = mysqli_fetch_assoc($select_posts)) {
+								// 		$query = "select * from employee where status='Active' order by  RAND()";
+								// 		$select_posts = mysqli_query($connection, $query);
+								// 		while ($row = mysqli_fetch_assoc($select_posts)) {
 
-										// 	$id = $row['id'];
-										// 	$post_title = $row['empname'];
-										// 	$post_deptid = $row['department_id'];
-										// 	$post_desigid = $row['desig_id'];
-										// 	$post_deptname = "";
-										// 	$post_designame = "";
-										// 	$querydept = "select * from department where id='" .   $post_deptid   . "'";
-										// 	$select_postsdept = mysqli_query($connection, $querydept);
-										// 	while ($rowdept = mysqli_fetch_assoc($select_postsdept)) {
-										// 		$post_deptname = $rowdept['department'];
-										// 	}
-										// 	$querydesig = "select * from designation where id='" .   $post_desigid   . "'";
-										// 	$select_postsdesig = mysqli_query($connection, $querydesig);
-										// 	while ($rowdesig = mysqli_fetch_assoc($select_postsdesig)) {
-										// 		$post_designame = $rowdesig['designation'];
-										// 	}
-
-										$currentMonthCode1 = date('m') - 1; 
+								// 			$id = $row['id'];
+								// 			$post_title = $row['empname'];
+								// 			$post_deptid = $row['department_id'];
+								// 			$post_desigid = $row['desig_id'];
+								// 			$post_deptname = "";
+								// 			$post_designame = "";
+								// 			$querydept = "select * from department where id='" .   $post_deptid   . "'";
+								// 			$select_postsdept = mysqli_query($connection, $querydept);
+								// 			while ($rowdept = mysqli_fetch_assoc($select_postsdept)) {
+								// 				$post_deptname = $rowdept['department'];
+								// 			}
+								// 			$querydesig = "select * from designation where id='" .   $post_desigid   . "'";
+								// 			$select_postsdesig = mysqli_query($connection, $querydesig);
+								// 			while ($rowdesig = mysqli_fetch_assoc($select_postsdesig)) {
+								// 				$post_designame = $rowdesig['designation'];
+								// 			}
+								
+							        	$currentMonthCode1 = date('m') - 1; 
 	                                    $query = "select * from traffic_light where monthcode='". $currentMonthCode1  ."' order by points desc";
 										$select_posts = mysqli_query($connection, $query);
 										while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -537,13 +557,13 @@ if ($involvementpercentagetotal == $test1){
                                             $post_designame = $row['empdesig'];
                                             $post_points = $row['points'];
                                             $post_colorcode = $row['colorcode'];
+                                            $post_colorscore = $row['color_score'];
 
 										?>
 											<div class="d-flex pt-2 pb-2 border-bottom">
-
 												<div class="d-flex ms-3">
 													<span class="main-img-user">
-														
+													
 														<?php
 
 															$colors = array('bg-pink', 'bg-blue', 'bg-green', 'bg-purple', 'bg-orange', 'bg-primary', 'bg-cyan', 'bg-success');
@@ -552,37 +572,37 @@ if ($involvementpercentagetotal == $test1){
 															<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
 																<?php echo strtoupper(substr($post_title, 0, 1)); ?>
 															</div>
-														
+													
 													</span>
 													<div class="ms-3">
 														<h6 class="mg-b-0"><?php echo $post_title;  ?></h6><small class="tx-11 tx-gray-500"><?php echo $post_designame;  ?></small>
 													</div>
 												</div>
-
 												<div class="ms-auto me-3">
-												<?php if ($post_colorcode == "Green"){ ?>
+												    <?php if ($post_colorcode == "Green"){ ?>
 												    <div class="tags">
-														<span class="tag tag-radius tag-round tag-pill tag-green">You are in Green</span>
+														<span class="tag tag-radius tag-round tag-pill tag-green"> Green</span>
 													</div>
 													<?php } elseif ($post_colorcode == "Amber"){?>
 													<div class="tags">
-														<span class="tag tag-radius tag-round tag-pill tag-amber">You are in Amber</span>
+														<span class="tag tag-radius tag-round tag-pill tag-amber"> Amber</span>
 													</div>
 													<?php } elseif ($post_colorcode == "Red"){?>
 													<div class="tags">
-														<span class="tag tag-radius tag-round tag-pill tag-red">You are in Red</span>
+														<span class="tag tag-radius tag-round tag-pill tag-red"> Red</span>
 													</div>
 													<?php } elseif ($post_colorcode == "Grey"){?>
 													<div class="tags">
-														<span class="tag tag-radius tag-round tag-pill tag-grey">You are in Grey</span>
+														<span class="tag tag-radius tag-round tag-pill tag-grey"> Grey</span>
 													</div>
+													
 													<?php } ?>
-													<!-- <h6 class="mg-b-0 font-weight-bold">*****</h6><small class="tx-11 tx-gray-500">Productivity Score</small> -->
-
+													<!--<h6 class="mg-b-0 font-weight-bold"><?php echo $post_colorscore;?></h6><small class="tx-11 tx-gray-500">Productivity Score</small>-->
+													<!--<h6 class="mg-b-0 font-weight-bold"><?php echo $post_points;?></h6><small class="tx-11 tx-gray-500">Productivity points</small>-->
 												</div>
 											</div>
 										<?php } ?>
-										
+									
 									</div>
 								</div>
 							</div>

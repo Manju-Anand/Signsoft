@@ -116,7 +116,7 @@ function showquestions()
         }
         //    ============================== staff allocation =======================
         // ================================= staff DM allocation ===============================
-        $query1 = "select * from staff_dm_allocation where staffid='" . $id . "' AND MONTH(assigndate) = MONTH(CURRENT_DATE)-1";
+        $query1 = "select * from staff_dm_allocation where staffid='" . $id . "' AND MONTH(assigndate) = MONTH(CURRENT_DATE)-1 and work_status='Active'";
         $select_posts1 = mysqli_query($connection, $query1);
         while ($row1 = mysqli_fetch_assoc($select_posts1)) {
             $post_timetaken = 0;
