@@ -13,7 +13,7 @@ if (!$connection) {
 $selectedOrderId = $_POST['selectedOrderId'];
 
 // Query the database based on the selected order ID
-$query = "SELECT * FROM staff_dm_allocation WHERE orderid = '$selectedOrderId'";
+$query = "SELECT * FROM staff_dm_allocation WHERE orderid = '$selectedOrderId' and work_status='Active'";
 $result = mysqli_query($connection, $query);
 $r=0;
 
