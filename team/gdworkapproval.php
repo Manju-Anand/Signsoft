@@ -16,7 +16,7 @@ include "includes/connection.php";
 function showworklist()
 {
     global $connection;
-    $queryemphod = "select * from employee where department_id in (select id from department where dname='Graphics') and hod='Yes'";
+    $queryemphod = "select * from employee where department_id in (select id from department where dname='Graphics') and hod='Yes' and status='Active'";
     $select_postsemphod = mysqli_query($connection, $queryemphod);
     while ($rowemphod = mysqli_fetch_assoc($select_postsemphod)) {
         // $post_empname1 = $rowemphod['empname'];

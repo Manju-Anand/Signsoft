@@ -11,7 +11,7 @@ include "includes/connection.php";
 function showworklist()
 {
     global $connection;
-    $queryemphod = "select * from employee where department_id in (select id from department where dname='Graphics') and hod='Yes'";
+    $queryemphod = "select * from employee where department_id in (select id from department where dname='Graphics') and hod='Yes' and status='Active'";
     $select_postsemphod = mysqli_query($connection, $queryemphod);
     while ($rowemphod = mysqli_fetch_assoc($select_postsemphod)) {
         // $post_empname1 = $rowemphod['empname'];
@@ -199,6 +199,200 @@ function showworklist()
             }
         }
     }
+
+
+       //  ********************************************* Inactive HOD's List***************
+    
+   $queryemphod = "select * from employee where department_id in (select id from department where dname='Graphics') and hod='Yes' and status='Inactive'";
+   $select_postsemphod = mysqli_query($connection, $queryemphod);
+   while ($rowemphod = mysqli_fetch_assoc($select_postsemphod)) {
+      
+       // $post_empname1 = $rowemphod['empname'];
+       $post_emphodid = $rowemphod['id'];
+       $post_completed_date ="";
+       $query = "select * from staff_dm_graphics_allocation where staffid='" . $post_emphodid . "' order by id desc";
+       $select_posts = mysqli_query($connection, $query);
+     
+       while ($row = mysqli_fetch_assoc($select_posts)) {
+           $id = $row['id'];
+           $redirectStat =  $row['redirect_status'];
+           $post_orderid = $row['orderid'];
+           $post_deadline_status = "Not-Done";
+           $post_completed_date ="";
+           $post_staffname ="";
+           $approval_status = "No";
+           $queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
+           $select_postsorder = mysqli_query($connection, $queryorder);
+           while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+
+               $post_brandName = $roworder['brandName'];
+               $post_postings = $row['postings'];
+               $post_deadline = $row['deadline'];
+               $date = new DateTime($post_deadline); // create a DateTime object
+               $formatted_date = $date->format('d-m-Y');
+
+               $post_assigndate = $row['assigndate'];
+               $post_redirectstatus = $row['redirect_status'];
+               $post_assignstaffid = $row['assigned_staffid'];
+               
+                 $post_staffid = $row['staffid'];
+               $post_redirectstaffid = $row['redirect_staffid'];
+
+               $queryemp = "select * from employee where id='" .  $post_assignstaffid . "'";
+               $select_postsemp = mysqli_query($connection, $queryemp);
+               while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
+                   $post_empname = $rowemp['empname'];
+               }
+               // $queryemp = "select * from employee where id='" .  $post_emphodid . "'";
+               // $select_postsemp = mysqli_query($connection, $queryemp);
+               // while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
+               //     $post_hod = $rowemp['hod'];
+               // }
+               $post_wstatus = "Not Yet Updated";
+               if ($redirectStat == "Redirected") {
+
+                   $querywstatus1 = "select * from staff_dm_graphics_allocation where redirect_recordid='" .  $id . "'";
+                   $select_postswstatus1 = mysqli_query($connection, $querywstatus1);
+                   while ($rowwstatus1 = mysqli_fetch_assoc($select_postswstatus1)) {
+                       $checkid = $rowwstatus1['id'];
+                       
+                        $queryemp = "select * from employee where id='" .  $post_redirectstaffid . "'";
+                       $select_postsemp = mysqli_query($connection, $queryemp);
+                       while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
+                           $post_staffname = $rowemp['empname'];
+                       }
+
+                       $queryapproval = "select * from gd_work_approval where workid='" .  $checkid . "'";
+                       $select_postsapproval = mysqli_query($connection, $queryapproval);
+                       while ($rowapproval = mysqli_fetch_assoc($select_postsapproval)) {
+                           $approval_status = "Yes";
+                       }
+                       
+                       $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $checkid . "' order by id desc limit 1";
+                       $select_postswstatus = mysqli_query($connection, $querywstatus);
+                       while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
+                           $post_wstatus = $rowwstatus['work_status'];
+                           $post_completed_date =  $rowwstatus['workdate'];
+                       }
+                   }
+               } else {
+                   
+                   $queryemp = "select * from employee where id='" .  $post_staffid . "'";
+                   $select_postsemp = mysqli_query($connection, $queryemp);
+                   while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
+                       $post_staffname = $rowemp['empname'];
+                   }
+
+                   $queryapproval = "select * from gd_work_approval where workid='" .   $id . "'";
+                       $select_postsapproval = mysqli_query($connection, $queryapproval);
+                       while ($rowapproval = mysqli_fetch_assoc($select_postsapproval)) {
+                           $approval_status = "Yes";
+                       }
+
+                   $querywstatus = "select * from staff_dm_graphics_allocation_details where staff_dm_allocation_id='" .  $id . "' order by id desc limit 1";
+                   $select_postswstatus = mysqli_query($connection, $querywstatus);
+                   while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
+                       $post_wstatus = $rowwstatus['work_status'];
+                       $post_completed_date =  $rowwstatus['workdate'];
+                   }
+               }
+               if (isset($post_completed_date) && $post_completed_date !== "") {
+   
+                   // if ($post_completed_date <= $formatted_date) {
+                   if ($post_completed_date <= $formatted_date && $post_wstatus == "Completed") {
+                       $post_deadline_status = "On-time";
+                   } else {
+   
+                       $post_deadline_status = "Overdue";
+                   }
+               }
+               
+
+
+                   // if ($post_wstatus === 'Completed') {
+                   $i = $i + 1;
+                    if ($approval_status == "Yes"){
+                       echo "<tr style='color:brown;font-weight:bold;'>";
+                   }else {
+                       echo "<tr>";
+                   }
+                   echo "<td>$i</td>";
+                   echo "<td>$post_brandName</td>";
+                   // echo "<td>$post_postings</td>";
+
+                   echo "<td>$post_empname</td>";
+                   echo "<td>$post_assigndate</td>";
+                   echo "<td>$post_staffname</td>";
+                   echo "<td>$formatted_date </td>";
+                   echo "<td>$post_wstatus</td>";
+
+
+                   if ($post_redirectstatus === 'Self') {
+                       echo "<td ><span class='badge bg-primary' style='font-size:15px'>$post_redirectstatus</span></td>";
+                   }
+                   if ($post_redirectstatus === 'Redirected') {
+                       echo "<td ><span class='badge bg-pink' style='font-size:15px'>$post_redirectstatus</span></td>";
+                   }
+
+                   if ($post_deadline_status === "On-time") {
+                       echo "<td ><span class='badge bg-success' style='font-size:15px'>$post_deadline_status</span></td>";
+                   }
+                   if ($post_deadline_status === "Overdue") {
+                       echo "<td ><span class='badge bg-danger' style='font-size:15px'>$post_deadline_status</span></td>";
+                   }
+                   if ($post_deadline_status === "Not-Done") {
+                       echo "<td ><span class='badge bg-warning' style='font-size:15px'>$post_deadline_status</span></td>";
+                   }
+                   // if ($post_deadline_status === "Not-Done") {
+                   //     echo "<td>";
+
+                   //     echo "<a class='btn btn-sm btn-blue btn-disabled' href='' title='Enter Work Details' style='color:white;font: weight 200px;' >
+                   //         <span class='fe fe-edit'> </span></a> &nbsp;";
+   
+    
+                   //     echo "<a class='btn btn-sm btn-gray-dark  view-details-btn btn-disabled' href=''   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+                   //         <span class='fe fe-eye'> </span></a>";
+   
+                   //     echo "</td>";
+                   // }else{
+                   // echo "<td>";
+
+                   // echo "<a class='btn btn-sm btn-blue' href='add-gd-work-approval.php?workid={$id}' title='Enter Work Details' style='color:white;font: weight 200px;'>
+                   //     <span class='fe fe-edit'> </span></a> &nbsp;";
+
+
+                   // echo "<a class='btn btn-sm btn-gray-dark  view-details-btn' href='View-gd-work-approval.php?workid={$id}'   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+                   //     <span class='fe fe-eye'> </span></a>";
+
+                   // echo "</td>";
+                   // }
+                   echo "<td>";
+                   if ($post_deadline_status === "Not-Done") {
+                     
+
+                       echo "<a class='btn btn-sm btn-blue btn-disabled' href='' title='Enter Work Details' style='color:white;font: weight 200px;' >
+                           <span class='fe fe-edit'> </span></a> &nbsp;";
+   
+    
+                   }else{
+                   
+
+                   echo "<a class='btn btn-sm btn-blue' href='add-gd-work-approval.php?workid={$id}' title='Enter Work Details' style='color:white;font: weight 200px;'>
+                       <span class='fe fe-edit'> </span></a> &nbsp;";
+
+
+                  
+                   }
+                   echo "<a class='btn btn-sm btn-gray-dark  view-details-btn' href='view-gd-work-approval.php?workid={$id}'   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+                       <span class='fe fe-eye'> </span></a>";
+                   echo "</td>";
+
+                   echo "</tr>";
+               // }
+           }
+       }
+   }
+   
 }
 
 
