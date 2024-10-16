@@ -191,6 +191,7 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                                 <label class="form-check-label" for="campaignchk">Yes, if it is a campaign</label>
                                                             </div>
                                                         </div>
+                                                        
 
 
 
@@ -214,7 +215,6 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                                 <div class="col-md-3 form-label">Budget:</div>
                                                                 <div class="col-md-9 form-check">
                                                                     <input type="text" class="form-control" name="budget" id="budget" >
-                                                                    
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-4">
@@ -276,19 +276,9 @@ $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
                                                                 <div class="col-md-3 form-label">Result</div>
                                                                 <div class="col-md-9 ">
                                                                    <textarea id="cresult" class="form-control" name="cresult" rows="3"></textarea>
-                                                                    
                                                                 </div>
                                                             </div>
-
-
-                                                            
-
-
-
-
                                                         </div>
-
-
 
                                                     </div>
 
