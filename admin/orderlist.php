@@ -230,6 +230,7 @@ function deleteorderlist()
                                 <div class="card-body">
                                     <div class="card-header border-bottom-0 p-0">
                                         <h6 class="card-title mb-1">List of Orders</h6>
+                                        <div class="popup-content" id="popupContent"></div>
                                         <!-- <p class="text-muted card-sub-title">Searching, ordering and paging goodness will be
 										immediately added to the table, as shown in this example.</p> -->
                                     </div>
@@ -262,7 +263,7 @@ function deleteorderlist()
 
                                             </tbody>
                                         </table>
-                                        <!-- <div class="popup-content" id="popupContent"></div> -->
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -347,6 +348,7 @@ function deleteorderlist()
         popupContainers.forEach(container => {
             container.addEventListener('mouseenter', async () => {
                 const id = container.getAttribute('data-id');
+                // alert (id);
                 const response = await fetch(`get_orderdata.php?id=${id}`); // Replace 'get_data.php' with your backend API endpoint
                 const data = await response.json();
                 popupContent.innerHTML = `

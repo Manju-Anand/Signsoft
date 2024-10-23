@@ -417,6 +417,7 @@ function trafficlight()
 							$activeworks += $result->num_rows;
 						}
 					}
+					
 
 
 					
