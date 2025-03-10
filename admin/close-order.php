@@ -232,6 +232,7 @@ $mainorderid = "";
 <?php
 if (isset($_POST['submit'])) {
     $closestatus = "false";
+
     $supplierstatus = "false";
     $paymentstatus = "false";
     $monthlyreportstatus = "false";
@@ -246,7 +247,15 @@ if (isset($_POST['submit'])) {
 
         date_default_timezone_set("Asia/Calcutta");
         $postdate = date("M d,Y h:i:s a");
-
+        // ============= if customer is poor quality=====================
+if ($cquality == "Poor"){
+    $closestatus = "true";
+    $supplierstatus = "true";
+    $paymentstatus = "true";
+    $monthlyreportstatus = "true";
+    goto ppc1;
+} else {
+// ======================================
         $sql = "SELECT * FROM payment_supplier where orderid='" . $orderid . "'";
         $result = $connection->query($sql);
 
@@ -335,11 +344,12 @@ if (isset($_POST['submit'])) {
                 goto ppc1;
             }
         }
+    }
 ppc1:
         // =======================================================================================
         if ($closestatus == "false") {
                 if( $monthlyreportstatus == "false"){
-                    echo "<script> alert('HauiMonthly Report Not Submitted.'); </script>";
+                    echo "<script> alert('Monthly Report Not Submitted.'); </script>";
                 }
 
                 if ( $paymentstatus == "false"){
@@ -388,7 +398,9 @@ ppc1:
 
             if ($connection->query($querycategory) === TRUE) {
             }
-            if ($orderstatus = "Renew-Order") {
+
+            if ($orderstatus == "Renew-Order") {
+
                 $sqlneworder = "SELECT * FROM order_customers where id='" . $orderid . "'";
                 $resultneworder = $connection->query($sqlneworder);
 

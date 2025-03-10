@@ -407,7 +407,74 @@ $orgpts=round($pts,2);
 
 					<!-- Row -->
 					<div class="row row-sm">
-						<div class="col-sm-6 col-xl-3 col-lg-6">
+						<div class="col-sm-6 col-xl-4 col-lg-6">
+							<div class="card custom-card" id="solid-alert">
+								<div class="card-body">
+									
+										<h6 class="card-title">GST Alerts</h6><br>
+
+									<div class="text-wrap">
+										<div class="example">
+											<?php
+											// Function to check if a date is between 1 to 10 of any month
+											function isDateBetween1To10($date)
+											{
+												// Convert the date string to a DateTime object
+												$dateTime = new DateTime($date);
+
+												// Extract the day of the month
+												$dayOfMonth = (int)$dateTime->format('d');
+
+												// Check if the day of the month is between 1 to 10
+												return ($dayOfMonth >= 1 && $dayOfMonth <= 10);
+											}
+											// Function to check if a date is between 1 to 10 of any month
+											function isDateBetween11To17($date)
+											{
+												// Convert the date string to a DateTime object
+												$dateTime = new DateTime($date);
+
+												// Extract the day of the month
+												$dayOfMonth = (int)$dateTime->format('d');
+
+												// Check if the day of the month is between 1 to 10
+												return ($dayOfMonth >= 11 && $dayOfMonth <= 17);
+											}
+
+											// Get the current date
+											$currentDate = date('Y-m-d');
+											if (isDateBetween1To10($currentDate)) {
+												// echo "$currentDate is between 1 to 10 of the month.";
+
+											?>
+												<div class="alert alert-solid-warning" role="alert">
+													<button aria-label="Close" class="btn-close float-end" data-bs-dismiss="alert" type="button">
+														<span aria-hidden="true">&times;</span></button>
+													<strong>Warning!</strong> Month Beginning! Check Gst Amount to be paid.
+												</div>
+												<?php }
+
+											if (isDateBetween11To17($currentDate)) {
+												$currentMonth = date('m', strtotime($currentDate)); // Month in numeric format (01-12)
+												$currentYear = date('Y', strtotime($currentDate)); // Year in four-digit format
+
+												$query = "SELECT * FROM gstamt WHERE MONTH(paiddate) = '$currentMonth' AND YEAR(paiddate) = '$currentYear'";
+												$result = mysqli_query($connection, $query);
+												if (mysqli_num_rows($result) > 0) {
+												?>
+													<div class="alert alert-solid-danger mg-b-0" role="alert">
+														<button aria-label="Close" class="btn-close float-end" data-bs-dismiss="alert" type="button">
+															<span aria-hidden="true">&times;</span></button>
+														<strong>Oh snap!</strong> Pay The GST amount for this month!.....
+													</div>
+											<?php }
+											} ?>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-xl-2 col-lg-6">
 							<div class="card custom-card">
 								<div class="card-body dash1">
 									<div class="d-flex">
@@ -429,7 +496,7 @@ $orgpts=round($pts,2);
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6 col-xl-3 col-lg-6">
+						<div class="col-sm-6 col-xl-2 col-lg-6">
 							<div class="card custom-card">
 								<div class="card-body dash1">
 									<div class="d-flex">
@@ -452,7 +519,7 @@ $orgpts=round($pts,2);
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6 col-xl-3 col-lg-6">
+						<div class="col-sm-6 col-xl-2 col-lg-6">
 							<div class="card custom-card">
 								<div class="card-body dash1">
 									<div class="d-flex">
@@ -475,7 +542,7 @@ $orgpts=round($pts,2);
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6 col-xl-3 col-lg-6">
+						<div class="col-sm-6 col-xl-2 col-lg-6">
 							<?php
 							$sql = "SELECT * FROM employee";
 							$result = $connection->query($sql);
@@ -507,76 +574,12 @@ $orgpts=round($pts,2);
 								</div>
 							</div>
 						</div>
+
 					</div>
 					<!--End  Row -->
 
 					
-					<div class="card custom-card" id="solid-alert">
-						<div class="card-body">
-							<div>
-								<h6 class="card-title">GST Alerts</h6>
-
-							</div>
-							<div class="text-wrap">
-								<div class="example">
-									<?php
-									// Function to check if a date is between 1 to 10 of any month
-									function isDateBetween1To10($date)
-									{
-										// Convert the date string to a DateTime object
-										$dateTime = new DateTime($date);
-
-										// Extract the day of the month
-										$dayOfMonth = (int)$dateTime->format('d');
-
-										// Check if the day of the month is between 1 to 10
-										return ($dayOfMonth >= 1 && $dayOfMonth <= 10);
-									}
-									// Function to check if a date is between 1 to 10 of any month
-									function isDateBetween11To17($date)
-									{
-										// Convert the date string to a DateTime object
-										$dateTime = new DateTime($date);
-
-										// Extract the day of the month
-										$dayOfMonth = (int)$dateTime->format('d');
-
-										// Check if the day of the month is between 1 to 10
-										return ($dayOfMonth >= 11 && $dayOfMonth <= 17);
-									}
-
-									// Get the current date
-									$currentDate = date('Y-m-d');
-									if (isDateBetween1To10($currentDate)) {
-										// echo "$currentDate is between 1 to 10 of the month.";
-
-									?>
-										<div class="alert alert-solid-warning" role="alert">
-											<button aria-label="Close" class="btn-close float-end" data-bs-dismiss="alert" type="button">
-												<span aria-hidden="true">&times;</span></button>
-											<strong>Warning!</strong> Month Beginning! Check Gst Amount to be paid.
-										</div>
-										<?php }
-
-									if (isDateBetween11To17($currentDate)) {
-										$currentMonth = date('m', strtotime($currentDate)); // Month in numeric format (01-12)
-										$currentYear = date('Y', strtotime($currentDate)); // Year in four-digit format
-
-										$query = "SELECT * FROM gstamt WHERE MONTH(paiddate) = '$currentMonth' AND YEAR(paiddate) = '$currentYear'";
-										$result = mysqli_query($connection, $query);
-										if (mysqli_num_rows($result) > 0) {
-										?>
-											<div class="alert alert-solid-danger mg-b-0" role="alert">
-												<button aria-label="Close" class="btn-close float-end" data-bs-dismiss="alert" type="button">
-													<span aria-hidden="true">&times;</span></button>
-												<strong>Oh snap!</strong> Pay The GST amount for this month!.....
-											</div>
-									<?php }
-									} ?>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 					<!-- Row -->
 					<div class="row row-sm">
 						
@@ -586,7 +589,7 @@ $orgpts=round($pts,2);
 							<div class="card custom-card pb-2">
 								<div class="card-body">
 									<div>
-										<h6 class="card-title mb-1">Renewal Customers List</h6>
+										<h6 class="card-title mb-1">Renewal DM Customers List</h6>
 										<p class="text-muted mb-0 card-sub-title">Please renew these DM Clients.</p>
 									</div>
 								</div>
@@ -697,7 +700,7 @@ $orgpts=round($pts,2);
 							</div>
 						</div>
 						<div class="col-sm-12 col-lg-12 col-xl-4">
-						<div class="card custom-card">
+							<div class="card custom-card">
 								<div class="card-body">
 									<div>
 										<h6 class="card-title mb-1">Pending Workstatus</h6>
@@ -905,6 +908,111 @@ $orgpts=round($pts,2);
 												</div>
 											</div>
 										<?php } ?>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-lg-12  col-xl-4">
+
+
+							<div class="card custom-card pb-2">
+								<div class="card-body">
+									<div>
+										<h6 class="card-title mb-1">Missed Deadlines</h6>
+										<p class="text-muted mb-0 card-sub-title">Please check these Works.</p>
+									</div>
+								</div>
+								<div class="user-manager scroll-widget border-top">
+									<div>
+										<?php
+
+$post_completed_date ="";
+
+$query = "select * from staff_allocation order by id desc";
+$select_posts = mysqli_query($connection, $query);
+$i = 0;
+while ($row = mysqli_fetch_assoc($select_posts)) {
+	$id = $row['id'];
+	$post_assignstaffid=$row['empid'];
+	$post_orderid = $row['orderid'];
+	$post_deadline_status = "Not-Done";
+	$queryorder = "select * from order_customers where id='" .  $post_orderid . "' and order_status='Active'";
+	$select_postsorder = mysqli_query($connection, $queryorder);
+	while ($roworder = mysqli_fetch_assoc($select_postsorder)) {
+		$post_ordertype = $roworder['ordertype'];
+		if ($post_ordertype == "Internal"){
+			$post_brandName = $roworder['projectname'];
+		} else {
+		$post_brandName = $roworder['brandName'];
+		}
+
+		$post_deadline = $row['deadline'];
+		$date = new DateTime($post_deadline); // create a DateTime object
+		$formatted_date = $date->format('d-m-Y');
+
+		$post_assigndate = $row['assignedDate'];
+		$queryemp = "select * from employee where id='" .  $post_assignstaffid . "'";
+		$select_postsemp = mysqli_query($connection, $queryemp);
+		while ($rowemp = mysqli_fetch_assoc($select_postsemp)) {
+			$post_empname = $rowemp['empname'];
+		}
+
+$post_smallmsg="Work Details not entered";
+	 
+   
+		$post_wstatus = "Not Yet Updated";
+		
+
+			$querywstatus = "select * from staff_allocation_details where staff_allocation_id='" .  $id . "' order by id desc limit 1";
+			$select_postswstatus = mysqli_query($connection, $querywstatus);
+			while ($rowwstatus = mysqli_fetch_assoc($select_postswstatus)) {
+				$post_wstatus = $rowwstatus['work_status'];
+				$post_completed_date =  $rowwstatus['workdate'];
+			}
+				if ($post_wstatus == "Completed"){
+							if (isset($post_completed_date) && $post_completed_date !== "") {
+				
+							if ($post_completed_date <= $formatted_date) {
+			
+								$post_deadline_status = "On-time";
+							} else {
+
+								$post_deadline_status = "Overdue";
+								$post_smallmsg="Deadline Missed";
+							}
+						}
+				}
+									
+										?>
+
+
+										
+											<div class="d-flex pt-2 pb-2 border-bottom">
+												<div class="d-flex ms-3">
+													<span class="main-img-user">
+														
+														<?php
+
+															$colors = array('bg-pink', 'bg-blue', 'bg-green', 'bg-purple', 'bg-orange', 'bg-primary', 'bg-cyan', 'bg-success');
+															$randomColor = $colors[array_rand($colors)];
+														?>
+															<div class="avatar avatar-sm <?php echo $randomColor; ?> tx-fixed-white">
+																<?php echo strtoupper(substr($post_brandName , 0, 1)); ?>
+															</div>
+														
+													</span>
+													<div class="ms-3">
+														<h6 class="mg-b-0"><?php echo $post_brandName ;  ?></h6><small class="tx-11 tx-gray-500"><?php echo $post_empname;  ?></small>
+													</div>
+												</div>
+												<div class="ms-auto me-3">
+												<!-- font-weight-bold -->
+													<h6 class="mg-b-0"><?php echo $post_deadline_status?></h6><small class="tx-11 tx-gray-500"><?php echo  $post_smallmsg ?></small>
+												</div>
+											</div>
+										<?php }} ?>
 										
 									</div>
 								</div>

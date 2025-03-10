@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ob_start();
 if (!isset($_SESSION['adminname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: signin.php');
@@ -27,8 +27,7 @@ function showorderlist()
         $post_custName = $row['custName'];
         $post_brandName = $row['brandName'];
         $post_order_status = $row['order_status'];
-        // $post_created = $row['created'];
-        // $post_modified = $row['modified'];
+
         $post_custPhone = $row['custPhone'];
         $post_custEmail = $row['custEmail'];
         $post_phoneno = $row['custPhone'];
@@ -88,17 +87,17 @@ function deleteorderlist()
     global $connection;
     if (isset($_GET['delete'])) {
         $the_cat_id = $_GET['delete'];
-        $query = "DELETE FROM order_category WHERE empid = '" . $the_cat_id . "'";
+        $query = "DELETE FROM order_category WHERE order_id = '" . $the_cat_id . "'";
         $delete_query = mysqli_query($connection, $query);
         if (!$delete_query) {
             die('QUERY FAILED' . mysqli_error($connection));
         }
-        $query = "DELETE FROM order_subcategory WHERE empid = '" . $the_cat_id . "'";
+        $query = "DELETE FROM order_subcategory WHERE order_id = '" . $the_cat_id . "'";
         $delete_query = mysqli_query($connection, $query);
         if (!$delete_query) {
             die('QUERY FAILED' . mysqli_error($connection));
         }
-        $query = "DELETE FROM order_followup WHERE empid = '" . $the_cat_id . "'";
+        $query = "DELETE FROM order_followup WHERE order_id = '" . $the_cat_id . "'";
         $delete_query = mysqli_query($connection, $query);
         if (!$delete_query) {
             die('QUERY FAILED' . mysqli_error($connection));
@@ -366,5 +365,6 @@ function deleteorderlist()
     </script>
 
 </body>
-
 </html>
+
+<?php ob_flush(); ?>

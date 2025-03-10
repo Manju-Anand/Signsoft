@@ -48,9 +48,9 @@ include "includes/connection.php";
 
 
     <!-- Loader -->
-    <div id="global-loader">
+    <!-- <div id="global-loader">
         <img src="../assets/img/loader.svg" class="loader-img" alt="Loader">
-    </div>
+    </div> -->
     <!-- End Loader -->
 
     <!-- Page -->
@@ -359,7 +359,7 @@ include "includes/connection.php";
                                                                 '" . mysqli_real_escape_string($connection, $_SESSION['adminempid']) . "','" . mysqli_real_escape_string($connection, $orderstatus) . "',
                                                                 '" . mysqli_real_escape_string($connection, $statusreason) . "','External',
                                                                 '" . mysqli_real_escape_string($connection, $cquality) . "','" . mysqli_real_escape_string($connection, $gstin) . "',
-                                                                ,'" . mysqli_real_escape_string($connection, $orderexpense) . "')";
+                                                                '" . mysqli_real_escape_string($connection, $orderexpense) . "')";
 
                                         if ($connection->query($sql) === TRUE) {
 

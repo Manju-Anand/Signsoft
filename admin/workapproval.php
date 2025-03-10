@@ -57,18 +57,18 @@ function showworklist()
                         $post_wstatus = $rowwstatus['work_status'];
                         $post_completed_date =  $rowwstatus['workdate'];
                     }
-               if ($post_wstatus == "Completed"){
-                if (isset($post_completed_date) && $post_completed_date !== "") {
-    
-                if ($post_completed_date <= $formatted_date) {
-   
-                    $post_deadline_status = "On-time";
-                } else {
+                        if ($post_wstatus == "Completed"){
+                                    if (isset($post_completed_date) && $post_completed_date !== "") {
+                        
+                                    if ($post_completed_date <= $formatted_date) {
+                    
+                                        $post_deadline_status = "On-time";
+                                    } else {
 
-                    $post_deadline_status = "Overdue";
-                }
-            }
-        }
+                                        $post_deadline_status = "Overdue";
+                                    }
+                                }
+                        }
                 
 
                     $i = $i + 1;
@@ -92,18 +92,18 @@ function showworklist()
                     if ($post_deadline_status === "Not-Done") {
                         echo "<td ><span class='badge bg-warning' style='font-size:15px'>$post_deadline_status</span></td>";
                     }
-                    if ($post_deadline_status === "Not-Done") {
-                        echo "<td>";
+                    // if ($post_deadline_status === "Not-Done") {
+                    //     echo "<td>";
 
-                        echo "<a class='btn btn-sm btn-blue btn-disabled' href='' title='Enter Work Details' style='color:white;font: weight 200px;' >
-                            <span class='fe fe-edit'> </span></a> &nbsp;";
+                    //     echo "<a class='btn btn-sm btn-blue btn-disabled' href='' title='Enter Work Details' style='color:white;font: weight 200px;' >
+                    //         <span class='fe fe-edit'> </span></a> &nbsp;";
     
      
-                        echo "<a class='btn btn-sm btn-gray-dark  view-details-btn btn-disabled' href=''   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
-                            <span class='fe fe-eye'> </span></a>";
+                    //     echo "<a class='btn btn-sm btn-gray-dark  view-details-btn btn-disabled' href=''   data-recordid={$id} title='View work Details' style='color:white;font: weight 200px;'>
+                    //         <span class='fe fe-eye'> </span></a>";
     
-                        echo "</td>";
-                    }else{
+                    //     echo "</td>";
+                    // }else{
                     echo "<td>";
 
                     echo "<a class='btn btn-sm btn-blue' href='add-work-approval.php?workid={$id}' title='Enter Work Details' style='color:white;font: weight 200px;'>
@@ -114,7 +114,7 @@ function showworklist()
                         <span class='fe fe-eye'> </span></a>";
 
                     echo "</td>";
-                    }
+                    // }
                     
 
 
